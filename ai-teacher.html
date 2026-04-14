@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Teacher - Maya Didi</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+        body{background:#f0f4f8;display:flex;flex-direction:column;height:100vh}
+       .header{background:#8b5cf6;color:white;padding:12px 16px;display:flex;align-items:center;gap:12px}
+       .header button{background:white;color:#8b5cf6;border:none;padding:8px 12px;border-radius:8px;font-weight:600}
+       .chat-box{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+       .msg{padding:12px 16px;border-radius:16px;max-width:80%;line-height:1.5}
+       .msg-ai{background:white;align-self:flex-start;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+       .msg-user{background:#8b5cf6;color:white;align-self:flex-end}
+       .msg-hindi{font-size:14px;color:#6b7280;margin-top:4px;border-top:1px dashed #e5e7eb;padding-top:4px}
+       .input-area{display:flex;padding:12px;background:white;border-top:1px solid #e5e7eb}
+       .input-area input{flex:1;padding:12px;border:2px solid #d1d5db;border-radius:20px 0 0 20px;font-size:16px}
+       .input-area button{border-radius:0 20px 20px 0;background:#8b5cf6;color:white;border:none;padding:0 20px;font-weight:600}
+       .suggest{display:flex;gap:8px;padding:0 12px 12px;overflow-x:auto}
+       .suggest button{background:#e5e7eb;border:none;padding:8px 12px;border-radius:20px;font-size:13px;white-space:nowrap}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button onclick="location.href='index.html'">← वापस</button>
+        <h2>🤖 AI Teacher Maya Didi</h2>
+    </div>
+
+    <div class="suggest">
+        <button onclick="ask('Verb क्या है?')">Verb क्या है?</button>
+        <button onclick="ask('How are you का मतलब')">How are you?</button>
+        <button onclick="ask('Present tense समझाओ')">Present Tense</button>
+        <button onclick="ask('Thank you कब बोलते हैं')">Thank you कब?</button>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+        <div class="msg msg-ai">
+            Hi! I am Maya Didi AI 👩‍🏫<div class="msg-hindi">नमस्ते! मैं Maya Didi AI हूँ। English का कोई भी Doubt पूछो। मैं Hindi और English दोनों में समझाऊँगी।</div>
+        </div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="chatInput" placeholder="यहाँ अपना सवाल लिखो...">
+        <button onclick="sendMsg()">भेजो</button>
+    </div>
+
+<script>
+const aiDB = {
+    'verb': {en:'Verb is an action word. It shows what someone does.', hi:'Verb = काम बताने वाला शब्द। जैसे: run भागना, eat खाना, sleep सोना।'},
+    'noun': {en:'Noun is a naming word for person, place, or thing.', hi:'Noun = नाम वाले शब्द। जैसे: Ram राम, Delhi दिल्ली, Book किताब।'},
+    'how are you': {en:'"How are you?" is used to ask about someone\'s wellbeing.', hi:'"How are you?" = आप कैसे हैं? किसी का हाल-चाल पूछते हैं। जवाब: "I am fine" = मैं ठीक हूँ।'},
+    'thank you': {en:'"Thank you" is used to show gratitude when someone helps you.', hi:'"Thank you" = धन्यवाद। जब कोई मदद करे तो बोलते हैं।'},
+    'present tense': {en:'Present Tense = for actions happening now. Structure: Subject + Verb. Ex: I eat.', hi:'Present Tense = अभी हो रहे काम के लिए। जैसे: I eat = मैं खाता हूँ।'},
+    'past tense': {en:'Past Tense = for completed actions. Use 2nd form of verb. Ex: I ate.', hi:'Past Tense = जो हो चुका। Verb की 2nd form। जैसे: I ate = मैंने खाया।'},
+    'future': {en:'Future Tense = for actions that will happen. Use will/shall. Ex: I will eat.', hi:'Future Tense = जो होगा। Will/Shall लगाओ। जैसे: I will eat = मैं खाऊँगा।'},
+    'hello': {en:'"Hello" is a greeting used when you meet someone.', hi:'Hello = नमस्ते। मिलने पर बोलते हैं 👋'},
+    'sorry': {en:'"Sorry" is used to apologize for a mistake.', hi:'Sorry = माफ़ करें। गलती होने पर बोलते हैं।'},
+    'please': {en:'"Please" is used to make a polite request.', hi:'Please = कृपया। Request करने के लिए। जैसे: Please help me = कृपया मेरी मदद करें।'}
+};
+
+const synth = window.speechSynthesis;
+function speak(text){
+    if(!synth) return;
+    synth.cancel();
+    const ut = new SpeechSynthesisUtterance(text);
+    ut.lang = 'en-US'; ut.rate = 0.9;
+    synth.speak(ut);
+}
+
+function aiReply(msg){
+    msg = msg.toLowerCase();
+    for(let key in aiDB){
+        if(msg.includes(key)) return aiDB[key];
+    }
+    return {
+        en:'I did not understand. Please ask in simple words. Ex: "What is verb?"',
+        hi:'मैं समझी नहीं 🤔 आसान शब्दों में पूछो। जैसे: "Verb क्या है?" या "How are you का मतलब?"'
+    };
+}
+
+function addMsg(text, isUser){
+    const box = document.getElementById('chatBox');
+    if(isUser){
+        box.innerHTML += `<div class="msg msg-user">${text}</div>`;
+    } else {
+        box.innerHTML += `<div class="msg msg-ai">${text.en}<div class="msg-hindi">${text.hi}</div></div>`;
+        speak(text.en);
+    }
+    box.scrollTop = box.scrollHeight;
+}
+
+function sendMsg(){
+    const input = document.getElementById('chatInput');
+    const txt = input.value.trim();
+    if(!txt) return;
+    addMsg(txt, true);
+    input.value = '';
+    setTimeout(() => addMsg(aiReply(txt), false), 600);
+}
+
+function ask(q){
+    document.getElementById('chatInput').value = q;
+    sendMsg();
+}
+
+document.getElementById('chatInput').onkeypress = e => e.key === 'Enter' && sendMsg();
+</script>
+</body>
+</html>
