@@ -7,37 +7,48 @@
     <style>
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
         body{background:#f0f4f8;color:#1f2937}
-       .header{background:#3b82f6;color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-       .stats{display:flex;gap:16px;font-weight:600}
-       .container{max-width:500px;margin:0 auto;padding:16px}
-       .card{background:white;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-       .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
-       .day{aspect-ratio:1;background:#e5e7eb;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
-       .day.active{background:#3b82f6;color:white;border-color:#1d4ed8}
-       .day.locked{background:#f3f4f6;color:#9ca3af;cursor:not-allowed}
-       .day.done{background:#10b981;color:white}
-       .day small{font-size:10px;font-weight:400}
-       .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
-       .hindi{font-size:16px;text-align:center;color:#6b7280;margin-bottom:20px}
-       .options{display:grid;gap:10px}
-       .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
-       .btn-opt{background:#e5e7eb;color:#1f2937;text-align:left}
-       .btn-opt:hover{background:#d1d5db}
-       .btn-correct{background:#10b981!important;color:white!important}
-       .btn-wrong{background:#ef4444!important;color:white!important}
-       .btn-main{background:#3b82f6;color:white;width:100%;margin-top:12px}
-       .btn-main:disabled{background:#9ca3af}
-       .btn-voice{background:#8b5cf6;color:white;width:100%;margin:8px 0}
-       .btn-ads{background:#f59e0b;color:white;width:100%;margin-top:12px}
+     .header{background:#3b82f6;color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+     .stats{display:flex;gap:16px;font-weight:600}
+     .container{max-width:500px;margin:0 auto;padding:16px}
+     .card{background:white;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+     .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
+     .day{aspect-ratio:1;background:#e5e7eb;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
+     .day.active{background:#3b82f6;color:white;border-color:#1d4ed8}
+     .day.locked{background:#f3f4f6;color:#9ca3af;cursor:not-allowed}
+     .day.done{background:#10b981;color:white}
+     .day small{font-size:10px;font-weight:400}
+     .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
+     .hindi{font-size:16px;text-align:center;color:#6b7280;margin-bottom:20px}
+     .options{display:grid;gap:10px}
+     .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
+     .btn-opt{background:#e5e7eb;color:#1f2937;text-align:left}
+     .btn-opt:hover{background:#d1d5db}
+     .btn-correct{background:#10b981!important;color:white!important}
+     .btn-wrong{background:#ef4444!important;color:white!important}
+     .btn-main{background:#3b82f6;color:white;width:100%;margin-top:12px}
+     .btn-main:disabled{background:#9ca3af}
+     .btn-voice{background:#8b5cf6;color:white;width:100%;margin:8px 0}
+     .btn-ads{background:#f59e0b;color:white;width:100%;margin-top:12px}
+     .btn-toggle{background:#8b5cf6;color:white;width:100%;margin-bottom:12px}
         input{width:100%;padding:14px;border:2px solid #d1d5db;border-radius:12px;font-size:16px;margin:12px 0}
         input:focus{outline:none;border-color:#3b82f6}
-       .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
-       .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px}
-       .top-btns{display:flex;gap:8px;margin-bottom:12px}
-       .top-btns.btn{flex:1;padding:10px;font-size:14px}
-       .hidden{display:none}
-       .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:30}
-       .modal-content{background:white;padding:24px;border-radius:16px;text-align:center;max-width:300px}
+     .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
+     .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px}
+     .hidden{display:none}
+     .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:30}
+     .modal-content{background:white;padding:24px;border-radius:16px;text-align:center;max-width:300px}
+     .chat-section{background:white;border-radius:16px;padding:0;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1);display:none;flex-direction:column;height:70vh}
+     .chat-head{background:#8b5cf6;color:white;padding:16px;border-radius:16px 16px 0 0;font-weight:700;text-align:center}
+     .chat-msgs{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+     .msg{padding:12px 16px;border-radius:16px;max-width:80%;line-height:1.5}
+     .msg-ai{background:#f3f4f6;align-self:flex-start}
+     .msg-user{background:#8b5cf6;color:white;align-self:flex-end}
+     .msg-hindi{font-size:13px;color:#6b7280;margin-top:4px;border-top:1px dashed #e5e7eb;padding-top:4px}
+     .chat-input{display:flex;padding:12px;border-top:1px solid #e5e7eb;background:white;border-radius:0 0 16px 16px}
+     .chat-input input{margin:0;border-radius:20px 0 0 20px;flex:1}
+     .chat-input button{border-radius:0 20px 20px 0;background:#8b5cf6;color:white;border:none;padding:0 20px;font-weight:600}
+     .suggest{display:flex;gap:8px;padding:12px;overflow-x:auto;background:white}
+     .suggest button{background:#e5e7eb;border:none;padding:8px 12px;border-radius:20px;font-size:13px;white-space:nowrap}
     </style>
 </head>
 <body>
@@ -51,33 +62,51 @@
     </div>
 
     <div class="container">
-        <div class="top-btns">
-            <button class="btn btn-main" onclick="location.href='ai-teacher.html'">🤖 AI Teacher से बात करो</button>
-        </div>
+        <button class="btn btn-toggle" id="toggleBtn" onclick="toggleSection()">🤖 AI Teacher से बात करो</button>
 
-        <div class="card" id="homeScreen">
-            <h3>UNIT 1: BASICS - 30 DAYS</h3>
-            <p style="color:#6b7280;margin:8px 0">Day चुनो और सीखना शुरू करो</p>
-            <div class="day-grid" id="dayGrid"></div>
-        </div>
-
-        <div class="card hidden" id="quizScreen">
-            <button class="btn" style="background:#e5e7eb;margin-bottom:12px" onclick="goHome()">← वापस Days पे</button>
-            <h3 id="dayTitle">Day 1: Greetings</h3>
-            <p style="text-align:center;font-weight:600"><span id="qNo">0</span>/10 सही</p>
-
-            <div class="grammar" id="grammarBox"></div>
-
-            <div id="questionArea">
-                <div class="question" id="question">Loading...</div>
-                <button class="btn btn-voice" onclick="speakQ()">🔊 सुनो</button>
-                <div class="hindi" id="hint">Loading...</div>
-                <div class="options" id="options"></div>
-                <input type="text" id="textAns" class="hidden" placeholder="यहाँ टाइप करो...">
+        <div id="quizSection">
+            <div class="card" id="homeScreen">
+                <h3>UNIT 1: BASICS - 30 DAYS</h3>
+                <p style="color:#6b7280;margin:8px 0">Day चुनो और सीखना शुरू करो</p>
+                <div class="day-grid" id="dayGrid"></div>
             </div>
 
-            <div class="feedback" id="feedback"></div>
-            <button class="btn btn-main" id="nextBtn" disabled>जांच करो</button>
+            <div class="card hidden" id="quizScreen">
+                <button class="btn" style="background:#e5e7eb;margin-bottom:12px" onclick="goHome()">← वापस Days पे</button>
+                <h3 id="dayTitle">Day 1: Greetings</h3>
+                <p style="text-align:center;font-weight:600"><span id="qNo">0</span>/10 सही</p>
+
+                <div class="grammar" id="grammarBox"></div>
+
+                <div id="questionArea">
+                    <div class="question" id="question">Loading...</div>
+                    <button class="btn btn-voice" onclick="speakQ()">🔊 सुनो</button>
+                    <div class="hindi" id="hint">Loading...</div>
+                    <div class="options" id="options"></div>
+                    <input type="text" id="textAns" class="hidden" placeholder="यहाँ टाइप करो...">
+                </div>
+
+                <div class="feedback" id="feedback"></div>
+                <button class="btn btn-main" id="nextBtn" disabled>जांच करो</button>
+            </div>
+        </div>
+
+        <div class="chat-section" id="chatSection">
+            <div class="chat-head">🤖 AI Teacher Maya Didi</div>
+            <div class="suggest">
+                <button onclick="ask('Verb क्या है?')">Verb क्या है?</button>
+                <button onclick="ask('How are you का मतलब')">How are you?</button>
+                <button onclick="ask('Present tense समझाओ')">Present Tense</button>
+                <button onclick="ask('Thank you कब बोलते हैं')">Thank you कब?</button>
+            </div>
+            <div class="chat-msgs" id="chatMsgs">
+                <div class="msg msg-ai">
+                    Hi! I am Maya Didi AI 👩‍🏫<div class="msg-hindi">नमस्ते! मैं Maya Didi AI हूँ। English का कोई भी Doubt पूछो। मैं Hindi और English दोनों में समझाऊँगी।</div>
+                </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="यहाँ अपना सवाल लिखो...">
+                <button onclick="sendMsg()">भेजो</button>
+            </div>
         </div>
     </div>
 
@@ -126,15 +155,15 @@ const lessonData = {
     }
 };
 
-let data = { streak:0, hearts:3, xp:0, currentDay:1, currentQ:0, score:0, days:[] };
+let data = { streak:0, hearts:3, xp:0, currentDay:1, currentQ:0, score:0, days:[], isChatMode:false };
 for(let i=1;i<=30;i++) data.days.push({day:i, unlocked:i<=2, done:false});
 
 const el = id => document.getElementById(id);
 const synth = window.speechSynthesis;
 
-function save(){ localStorage.setItem('mayaDidi3', JSON.stringify(data)); }
+function save(){ localStorage.setItem('mayaDidi32', JSON.stringify(data)); }
 function load(){
-    const d = localStorage.getItem('mayaDidi3');
+    const d = localStorage.getItem('mayaDidi32');
     if(d) Object.assign(data, JSON.parse(d));
 }
 
@@ -142,14 +171,28 @@ function speak(text){
     if(!synth) return;
     synth.cancel();
     const ut = new SpeechSynthesisUtterance(text);
-    ut.lang = 'en-US';
-    ut.rate = 0.9;
+    ut.lang = 'en-US'; ut.rate = 0.9;
     synth.speak(ut);
 }
 
 function speakQ(){
     const q = lessonData[data.currentDay].questions[data.currentQ];
     speak(q.speak);
+}
+
+function toggleSection(){
+    data.isChatMode =!data.isChatMode;
+    if(data.isChatMode){
+        el('quizSection').style.display = 'none';
+        el('chatSection').style.display = 'flex';
+        el('toggleBtn').textContent = '📚 Quiz पे वापस जाओ';
+        el('toggleBtn').style.background = '#3b82f6';
+    } else {
+        el('quizSection').style.display = 'block';
+        el('chatSection').style.display = 'none';
+        el('toggleBtn').textContent = '🤖 AI Teacher से बात करो';
+        el('toggleBtn').style.background = '#8b5cf6';
+    }
 }
 
 function renderHome(){
@@ -269,6 +312,58 @@ function watchAd(){
 }
 
 function closeModal(){ el('noHeartModal').style.display = 'none'; }
+
+// AI Chat Functions
+const aiDB = {
+    'verb': {en:'Verb is an action word. It shows what someone does.', hi:'Verb = काम बताने वाला शब्द। जैसे: run भागना, eat खाना, sleep सोना।'},
+    'noun': {en:'Noun is a naming word for person, place, or thing.', hi:'Noun = नाम वाले शब्द। जैसे: Ram राम, Delhi दिल्ली, Book किताब।'},
+    'how are you': {en:'"How are you?" is used to ask about someone\'s wellbeing.', hi:'"How are you?" = आप कैसे हैं? किसी का हाल-चाल पूछते हैं। जवाब: "I am fine" = मैं ठीक हूँ।'},
+    'thank you': {en:'"Thank you" is used to show gratitude when someone helps you.', hi:'"Thank you" = धन्यवाद। जब कोई मदद करे तो बोलते हैं।'},
+    'present tense': {en:'Present Tense = for actions happening now. Structure: Subject + Verb. Ex: I eat.', hi:'Present Tense = अभी हो रहे काम के लिए। जैसे: I eat = मैं खाता हूँ।'},
+    'past tense': {en:'Past Tense = for completed actions. Use 2nd form of verb. Ex: I ate.', hi:'Past Tense = जो हो चुका। Verb की 2nd form। जैसे: I ate = मैंने खाया।'},
+    'future': {en:'Future Tense = for actions that will happen. Use will/shall. Ex: I will eat.', hi:'Future Tense = जो होगा। Will/Shall लगाओ। जैसे: I will eat = मैं खाऊँगा।'},
+    'hello': {en:'"Hello" is a greeting used when you meet someone.', hi:'Hello = नमस्ते। मिलने पर बोलते हैं 👋'},
+    'sorry': {en:'"Sorry" is used to apologize for a mistake.', hi:'Sorry = माफ़ करें। गलती होने पर बोलते हैं।'},
+    'please': {en:'"Please" is used to make a polite request.', hi:'Please = कृपया। Request करने के लिए। जैसे: Please help me = कृपया मेरी मदद करें।'}
+};
+
+function aiReply(msg){
+    msg = msg.toLowerCase();
+    for(let key in aiDB){
+        if(msg.includes(key)) return aiDB[key];
+    }
+    return {
+        en:'I did not understand. Please ask in simple words. Ex: "What is verb?"',
+        hi:'मैं समझी नहीं 🤔 आसान शब्दों में पूछो। जैसे: "Verb क्या है?" या "How are you का मतलब?"'
+    };
+}
+
+function addMsg(text, isUser){
+    const box = el('chatMsgs');
+    if(isUser){
+        box.innerHTML += `<div class="msg msg-user">${text}</div>`;
+    } else {
+        box.innerHTML += `<div class="msg msg-ai">${text.en}<div class="msg-hindi">${text.hi}</div></div>`;
+        speak(text.en);
+    }
+    box.scrollTop = box.scrollHeight;
+}
+
+function sendMsg(){
+    const input = el('chatInput');
+    const txt = input.value.trim();
+    if(!txt) return;
+    addMsg(txt, true);
+    input.value = '';
+    setTimeout(() => addMsg(aiReply(txt), false), 600);
+}
+
+function ask(q){
+    el('chatInput').value = q;
+    sendMsg();
+}
+
+el('chatInput').onkeypress = e => e.key === 'Enter' && sendMsg();
 
 load(); renderHome();
 window.onbeforeunload = save;
