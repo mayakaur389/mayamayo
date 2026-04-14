@@ -112,22 +112,6 @@ const mayaDialogues = {
   streakMiss: ["अरे! कल आई ही नहीं तू 😭 मेरा 🔥 Streak टूट गया। आज पक्का करना Lesson"]
 };
 
-function mayaTeachGrammar(question, correctAnswer, userAnswer){
-  const rules = {
-    "drinks": "बेटा देखो, He/She/It के साथ verb में 's' लगता है। She + drinks = She drinks। मतलब वह पानी पीती है। I/You/We/They के साथ s नहीं लगता - I drink, We drink।",
-    "goes": "अरे! He/She के साथ go नहीं, goes होता है। He goes to school = वह स्कूल जाता है। याद रखना बेटा।",
-    "your": "यहां 'your' आएगा बेटा। What is your name? = तुम्हारा नाम क्या है? My = मेरा, Your = तुम्हारा।",
-    "brushes": "She के साथ brush नहीं brushes। She brushes her teeth = वह दांत साफ करती है। He/She + s का रूल।",
-    "is": "Present Continuous में He/She के साथ 'is' लगता है। She is reading = वह पढ़ रही है। I am, You are, We are।",
-    "likes": "He/She के साथ like नहीं likes। She likes mango = उसे आम पसंद है।",
-    "eats": "She eats food = वह खाना खाती है। He/She + s लगाना मत भूलना।",
-    "plays": "We play, They play, पर He plays, She plays। समझ गए?",
-    "reads": "He reads book = वह किताब पढ़ता है। s लगा दिया ना?",
-    "writes": "She writes letter = वह चिट्ठी लिखती है।"
-  };
-  return rules[correctAnswer] || `सही जवाब "${correctAnswer}" है बेटा। इसका मतलब समझो: "${question}" में ${correctAnswer} use होता है। अगली बार ध्यान रखना 💛`;
-}
-
 function showMayaMessage(text, speak=true, keepOnScreen=false){
   const mayaHTML = `<div class="maya-box" id="mayaBox"><div class="maya-avatar">👩‍🏫</div><div class="maya-text">${text}</div></div>`;
   if(speak &&!currentLesson.mayaSpoken) {
@@ -136,7 +120,6 @@ function showMayaMessage(text, speak=true, keepOnScreen=false){
     const msg=new SpeechSynthesisUtterance(text.replace(/<[^>]*>/g, ''));
     msg.lang='hi-IN';
     msg.rate=0.85;
-
     msg.onend = function() {
       currentLesson.mayaSpoken = false;
       if(!keepOnScreen){
@@ -146,7 +129,6 @@ function showMayaMessage(text, speak=true, keepOnScreen=false){
         }, 1000);
       }
     };
-
     speechSynthesis.speak(msg);
   }
   return mayaHTML;
@@ -169,7 +151,6 @@ function showAdPopup(type='hearts'){
   const title = document.getElementById('adTitle');
   const text = document.getElementById('adText');
   const skipBtn = document.getElementById('adSkipBtn');
-
   if(type === 'hearts'){
     title.innerText = '❤️ Heart खत्म हो गए!';
     text.innerHTML = 'अरे बेटा! Heart खत्म हो गए 😢<br><br>1 छोटा Ad देख लो, <b>3 Heart एकदम फ्री</b> मिलेंगे 💛<br><br>Ad सिर्फ 5 सेकंड का है';
@@ -179,14 +160,12 @@ function showAdPopup(type='hearts'){
     text.innerHTML = 'शाबाश बेटा! Lesson पूरा कर लिया 💛<br><br>अगला Lesson शुरू करने से पहले 1 छोटा Ad देख लो<br><br>सिर्फ 5 सेकंड';
     skipBtn.style.display = 'none';
   }
-
   document.getElementById('adPopup').style.display = 'flex';
 }
 
 function watchAd(){
   document.getElementById('adPopup').style.display = 'none';
   alert("📺 Ad चल रहा है... 5...4...3...2...1... 🎉");
-
   if(adType === 'hearts'){
     userData.hearts = 3;
     loadTab('home');
@@ -199,7 +178,6 @@ function watchAd(){
       content.innerHTML = getHomeHTML() + showMayaMessage("धन्यवाद बेटा! अब Day " + (userData.unlockedDay) + " पे क्लिक करके शुरू करो 💛", true, true);
     }, 300);
   }
-
   updateStats();
 }
 
@@ -382,184 +360,145 @@ function showQuestion(){
   }
 
   let questionHTML = '';
-  if(q.type === 'speak'){
+  if(q.type === "speak"){
     questionHTML = `
-      <div class="question-box">
-        <div class="q-title">सवाल ${currentLesson.qIndex+1}/10: इसे बोलो 🎤</div>
-        <div class="hi">${q.a}</div>
-        <div class="en">English: ${q.q}</div>
-        <button onclick="speak('${q.q}')">🔊 सुनो</button>
-        <button class="btn-mic" id="micBtn" onclick="startMic('${q.q}')">🎤 बोलो</button>
-        <div class="result" id="result"></div>
-      </div>`;
-  } else if(q.type === 'fill'){
+      <div class="question-box q-title">इसका हिंदी में क्या मतलब है?</div>
+      <div class="question-box en">${q.q}</div>
+      <div class="question-box hi">${q.a}</div>
+      <button class="btn-mic" onclick="speakQuestion('${q.q}', this)">🔊 बोल के सुनो</button>
+      <button class="btn-check" onclick="nextQuestion()">अगला सवाल</button>
+    `;
+  } else if(q.type === "fill"){
     questionHTML = `
-      <div class="question-box">
-        <div class="q-title">सवाल ${currentLesson.qIndex+1}/10: खाली जगह भरें ✍️</div>
-        <div class="en">${q.q.replace('___', '_____')}</div>
-        <div class="hi">${q.hi}</div>
-        ${q.options.map(opt => `<div class="option" onclick="selectOption(this,'${opt}')">${opt}</div>`).join('')}
-        <button class="btn-check" onclick="checkFill('${q.a}')">चेक करें</button>
-        <div class="result" id="result"></div>
-      </div>`;
+      <div class="question-box q-title">खाली जगह भरो</div>
+      <div class="question-box en">${q.q}</div>
+      <div class="question-box hi">${q.hi}</div>
+      ${q.options.map(opt => `<div class="option" onclick="selectOption('${opt}', this)">${opt}</div>`).join('')}
+      <button class="btn-check" onclick="checkAnswer()">Check करो</button>
+      <div class="result" id="result"></div>
+    `;
   }
 
   content.innerHTML = `
   <div class="lesson-card">
     <h3>Day ${currentLesson.day}: ${l.title} - ${currentLesson.correct}/10 सही
-      <button class="btn-tip" onclick="currentLesson.showGrammar=true; showQuestion()">💡 Tip</button>
+      <button class="btn-tip" onclick="showGrammarTip()">💡 Tip</button>
     </h3>
     <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
     ${questionHTML}
   </div>`;
 }
 
-function selectOption(el, opt){
-  document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+function showGrammarTip(){
+  const l = lessons[currentLesson.day];
+  alert("📖 Maya Didi का Tip:\n\n" + l.ruleShort);
+}
+
+function selectOption(opt, el){
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
   currentLesson.selectedOption = opt;
 }
 
-function checkFill(correctAnswer){
-  if(!currentLesson.selectedOption) return alert('Maya Didi: पहले कोई Option चुनो बेटा');
-  const resultDiv = document.getElementById('result');
+function checkAnswer(){
+  if(!currentLesson.selectedOption) return alert('पहले कोई Option चुनो बेटा');
   const l = lessons[currentLesson.day];
   const q = l.questions[currentLesson.qIndex];
+  const resultEl = document.getElementById('result');
 
-  if(currentLesson.selectedOption === correctAnswer){
-    resultDiv.innerText = 'सही! ✅ +10 XP';
-    resultDiv.className = 'result correct';
-    userData.xp += 10;
+  if(currentLesson.selectedOption === q.a){
+    resultEl.innerText = "✅ शाबाश! सही है";
+    resultEl.className = "result correct";
     currentLesson.correct++;
-    const msg = mayaDialogues.correctAnswer[Math.floor(Math.random()*mayaDialogues.correctAnswer.length)];
-    content.insertAdjacentHTML('afterbegin', showMayaMessage(msg, true));
+    userData.xp += 10;
+    const msgs = mayaDialogues.correctAnswer;
+    content.innerHTML += showMayaMessage(msgs[Math.floor(Math.random()*msgs.length)], true);
     setTimeout(nextQuestion, 2500);
   } else {
-    resultDiv.innerText = 'गलत ❌ सही: ' + correctAnswer;
-    resultDiv.className = 'result wrong';
+    resultEl.innerText = "❌ गलत। सही जवाब: " + q.a;
+    resultEl.className = "result wrong";
     userData.hearts--;
-    const msg = mayaTeachGrammar(q.q, correctAnswer, currentLesson.selectedOption);
-    content.insertAdjacentHTML('afterbegin', showMayaMessage(msg, true, true));
-
-    setTimeout(()=>{
-      if(!currentLesson.mayaSpoken) nextQuestion();
-      else {
-        const checkSpeech = setInterval(()=>{
-          if(!currentLesson.mayaSpoken){
-            clearInterval(checkSpeech);
-            setTimeout(nextQuestion, 2000);
-          }
-        }, 500);
-      }
-    }, 1000);
-
+    const teachMsg = mayaTeachGrammar(q.q, q.a, currentLesson.selectedOption);
+    content.innerHTML += showMayaMessage(teachMsg, true, true);
     if(userData.hearts <= 0){
-      setTimeout(()=>{showAdPopup('hearts')}, 6000);
+      setTimeout(()=> showAdPopup('hearts'), 4000);
+    } else {
+      setTimeout(nextQuestion, 5000);
     }
   }
   updateStats();
 }
 
-function startMic(correctAnswer){
-  if(userData.hearts <= 0) {
-    showAdPopup('hearts');
-    return;
-  }
-  const micBtn = document.getElementById('micBtn');
-  const resultDiv = document.getElementById('result');
-  const l = lessons[currentLesson.day];
-  const q = l.questions[currentLesson.qIndex];
-
-  if(!('webkitSpeechRecognition' in window)){
-    alert('Maya Didi: बेटा Chrome में खोल, Mic सपोर्ट नहीं है यहाँ 😢');
-    return;
-  }
-
-  const recognition = new webkitSpeechRecognition();
-  recognition.lang = 'en-US';
-  recognition.continuous = false;
-
-  micBtn.classList.add('listening');
-  micBtn.innerText = '🎤 सुन रही हूँ...';
-  resultDiv.innerText = '';
-
-  recognition.onresult = function(event){
-    const spoken = event.results[0][0].transcript.toLowerCase().trim();
-    const correct = correctAnswer.toLowerCase().replace(/[.?']/g,'').trim();
-    micBtn.classList.remove('listening');
-    micBtn.innerText = '🎤 बोलो';
-
-    if(spoken === correct){
-      resultDiv.innerText = 'सही! ✅ +10 XP';
-      resultDiv.className = 'result correct';
-      userData.xp += 10;
-      currentLesson.correct++;
-      const msg = mayaDialogues.correctAnswer[Math.floor(Math.random()*mayaDialogues.correctAnswer.length)];
-      content.insertAdjacentHTML('afterbegin', showMayaMessage(msg, true));
-      setTimeout(nextQuestion, 2500);
-    } else {
-      resultDiv.innerText = `गलत ❌ तुमने बोला: "${spoken}"`;
-      resultDiv.className = 'result wrong';
-      userData.hearts--;
-      const msg = mayaTeachGrammar(q.q, correctAnswer, spoken);
-      content.insertAdjacentHTML('afterbegin', showMayaMessage(msg, true, true));
-
-      setTimeout(()=>{
-        if(!currentLesson.mayaSpoken) nextQuestion();
-        else {
-          const checkSpeech = setInterval(()=>{
-            if(!currentLesson.mayaSpoken){
-              clearInterval(checkSpeech);
-              setTimeout(nextQuestion, 2000);
-            }
-          }, 500);
-        }
-      }, 1000);
-
-      if(userData.hearts <= 0){
-        setTimeout(()=>{showAdPopup('hearts')}, 6000);
-      }
-    }
-    updateStats();
-  };
-
-  recognition.onerror = function(){
-    micBtn.classList.remove('listening');
-    micBtn.innerText = '🎤 बोलो';
-    resultDiv.innerText = 'आवाज साफ नहीं आई बेटा, फिर से बोल';
-    resultDiv.className = 'result wrong';
-    showMayaMessage('आवाज साफ नहीं आई बेटा, फिर से बोलो', true);
-  };
-
-  recognition.start();
+function speakQuestion(text, btn){
+  btn.classList.add('listening');
+  speechSynthesis.cancel();
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.lang = 'en-US';
+  msg.rate = 0.9;
+  msg.onend = ()=> btn.classList.remove('listening');
+  speechSynthesis.speak(msg);
 }
 
 function nextQuestion(){
   currentLesson.qIndex++;
+  currentLesson.selectedOption = null;
+  currentLesson.mayaSpoken = false;
   const l = lessons[currentLesson.day];
+
   if(currentLesson.qIndex >= l.questions.length){
-    userData.lessonsCompleted++;
+    if(currentLesson.correct >= 7){
+      userData.unlockedDay = Math.max(userData.unlockedDay, currentLesson.day + 1);
+      userData.lessonsCompleted++;
+      if(userData.lastOpen!== new Date().toDateString()) userData.streak++;
 
-    if(currentLesson.correct === 10){
-      const msg = mayaDialogues.perfectScore[Math.floor(Math.random()*mayaDialogues.perfectScore.length)].replace('{next}', currentLesson.day+1);
-      if(currentLesson.day === userData.unlockedDay) {
-        userData.unlockedDay++;
-        localStorage.setItem('unlockedDay', userData.unlockedDay);
-      }
-      if(currentLesson.day === 1 && userData.streak === 0) userData.streak = 1;
-      updateStats();
-
-      if(userData.lessonsCompleted % 2 === 0){
-        setTimeout(()=>{showAdPopup('lesson')}, 1000);
+      let msg = '';
+      if(currentLesson.correct === 10){
+        msg = mayaDialogues.perfectScore.replace('{next}', userData.unlockedDay);
       } else {
-        alert(msg);
-        mayaSpeak(msg);
-        loadTab('home');
+        msg = mayaDialogues.lessonPass.replace('{day}', currentLesson.day).replace('{next}', userData.unlockedDay);
       }
-    } else if(currentLesson.correct >= 7){
-      if(currentLesson.day === userData.unlockedDay) {
-        userData.unlockedDay++;
-        localStorage.setItem('unlockedDay', userData.unlockedDay);
-      }
-      if(currentLesson.day === 1 && userData.streak === 0) userData.streak = 1;
-      const
+
+      content.innerHTML = getHomeHTML() + showMayaMessage(msg, true, true);
+      setTimeout(()=> showAdPopup('lesson'), 3000);
+    } else {
+      const msg = mayaDialogues.lessonFail[Math.floor(Math.random()*mayaDialogues.lessonFail.length)];
+      content.innerHTML = getHomeHTML() + showMayaMessage(msg, true, true);
+    }
+    updateStats();
+    return;
+  }
+  showQuestion();
+}
+
+function loadTab(tab){
+  tabs.forEach(t => t.classList.remove('active'));
+  document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+  if(tab === 'home'){
+    document.getElementById('unitName').innerText = 'Unit 1: Basics';
+    content.innerHTML = getHomeHTML();
+  } else if(tab === 'profile'){
+    document.getElementById('unitName').innerText = 'My Profile';
+    content.innerHTML = `
+      <div class="lesson-card">
+        <h3>📊 मेरी Progress</h3>
+        <p><b>🔥 Streak:</b> ${userData.streak} दिन लगातार</p>
+        <p><b>⚡ Total XP:</b> ${userData.xp}</p>
+        <p><b>📚 Lessons Complete:</b> ${userData.lessonsCompleted}/30</p>
+        <p><b>❤️ Hearts:</b> ${userData.hearts}/3</p>
+        <button onclick="userData = {streak:0,hearts:3,xp:0,unlockedDay:1,lastOpen:new Date().toDateString(),lessonsCompleted:0}; updateStats(); loadTab('home')">🔄 Reset Progress</button>
+      </div>
+      ${showMayaMessage("शाबाश बेटा! इतनी Progress कर ली 💛 रोज़ आना मत भूलना", true)}
+    `;
+  }
+}
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', ()=> loadTab(tab.dataset.tab));
+});
+
+updateStats();
+loadTab('home');
+</script>
+</body>
+</html>
