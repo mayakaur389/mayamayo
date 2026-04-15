@@ -73,6 +73,7 @@ input:focus{outline:none;border-color:#3b82f6}
 <div id="progress" style="color:#6b7280;margin:8px 0"></div>
 <div class="question" id="question"></div>
 <div class="hindi" id="hindi"></div>
+<button class="btn btn-voice" onclick="speakQuestion()">🔊 सवाल सुनो</button>
 <div class="options" id="options"></div>
 <div class="feedback" id="feedback"></div>
 <div class="grammar hidden" id="grammar"></div>
@@ -111,16 +112,46 @@ let lessonData={1:{title:"Greetings",questions:[{q:"How to say 'नमस्त�
 let state={xp:0,hearts:3,streak:0,currentDay:1,currentQ:0,score:0,completedDays:[]};
 let lastAIText='';
 let quizMode=true;
+function speakText(text){
+speechSynthesis.cancel();
+let msg=new SpeechSynthesisUtterance(text);
+msg.lang='en-US';
+msg.rate=0.8;
+msg.pitch=1.2;
+msg.volume=1;
+let voices = speechSynthesis.getVoices();
+let femaleVoice = voices.find(voice => voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female'));
+if(femaleVoice) msg.voice = femaleVoice;
+speechSynthesis.speak(msg);
+}
 function saveState(){localStorage.setItem('mayaDidi',JSON.stringify({xp:state.xp,hearts:state.hearts,streak:state.streak,completedDays:state.completedDays}))}
 function loadState(){let s=localStorage.getItem('mayaDidi');if(s){let d=JSON.parse(s);state.xp=d.xp||0;state.hearts=d.hearts||3;state.streak=d.streak||0;state.completedDays=d.completedDays||[]}updateStats()}
 function updateStats(){document.getElementById('xp').textContent=state.xp;document.getElementById('hearts').textContent=state.hearts;document.getElementById('streak').textContent=state.streak}
 function toggleSection(){quizMode=!quizMode;document.getElementById('quizSection').style.display=quizMode?'block':'none';document.getElementById('chatSection').style.display=quizMode?'none':'flex';document.getElementById('toggleBtn').textContent=quizMode?'🤖 AI Teacher से बात करो':'📚 Lesson पे वापस जाओ';if(!quizMode&&document.getElementById('chatMsgs').children.length===0){addMsg('Namaste! Main Maya Didi hoon 🙏 Aaj kya seekhna hai?','ai','नमस्ते! मैं माया दीदी हूँ। आज क्या सीखना है?')}}
 function renderDays(){let g=document.getElementById('dayGrid');g.innerHTML='';for(let i=1;i<=30;i++){let d=document.createElement('div');d.className='day';if(state.completedDays.includes(i)){d.classList.add('done');d.innerHTML=`${i}<br><small>✓</small>`}else if(i===state.currentDay||i===1||state.completedDays.includes(i-1)){d.classList.add('active');d.innerHTML=`${i}<br><small>Start</small>`;d.onclick=()=>startDay(i)}else{d.classList.add('locked');d.innerHTML=`${i}<br><small>🔒</small>`}g.appendChild(d)}}
 function startDay(day){if(!lessonData[day]){alert('Day '+day+' जल्दी आ रहा है!');return}state.currentDay=day;state.currentQ=0;state.score=0;document.getElementById('homeScreen').classList.add('hidden');document.getElementById('quizScreen').classList.remove('hidden');document.getElementById('dayNum').textContent=day;document.getElementById('dayTitle').textContent=lessonData[day].title;showQ()}
-function showQ(){let q=lessonData[state.currentDay].questions[state.currentQ];document.getElementById('question').textContent=q.q;document.getElementById('hindi').textContent=q.h;document.getElementById('progress').textContent=`सवाल ${state.currentQ+1}/${lessonData[state.currentDay].questions.length}`;document.getElementById('feedback').textContent='';document.getElementById('grammar').classList.add('hidden');document.getElementById('nextBtn').classList.add('hidden');document.getElementById('finishBtn').classList.add('hidden');let o=document.getElementById('options');o.innerHTML='';q.options.forEach((opt,i)=>{let b=document.createElement('button');b.className='btn btn-opt';b.textContent=opt;b.onclick=()=>checkAns(i);o.appendChild(b)})}
-function checkAns(i){let q=lessonData[state.currentDay].questions[state.currentQ];let btns=document.querySelectorAll('.btn-opt');btns.forEach(b=>b.disabled=true);if(i===q.correct){btns[i].classList.add('btn-correct');document.getElementById('feedback').textContent='🎉 सही जवाब!';document.getElementById('feedback').style.color='#10b981';state.score++}else{btns[i].classList.add('btn-wrong');btns[q.correct].classList.add('btn-correct');document.getElementById('feedback').textContent='❌ गलत! सही: '+q.options[q.correct];document.getElementById('feedback').style.color='#ef4444';state.hearts--;updateStats();saveState();if(state.hearts<=0){document.getElementById('heartModal').style.display='flex';return}}document.getElementById('grammar').textContent='💡 '+q.grammar;document.getElementById('grammar').classList.remove('hidden');if(state.currentQ<lessonData[state.currentDay].questions.length-1){document.getElementById('nextBtn').classList.remove('hidden')}else{document.getElementById('finishBtn').classList.remove('hidden')}}
+function showQ(){
+let q=lessonData[state.currentDay].questions[state.currentQ];
+document.getElementById('question').textContent=q.q;
+document.getElementById('hindi').textContent=q.h;
+document.getElementById('progress').textContent=`सवाल ${state.currentQ+1}/${lessonData[state.currentDay].questions.length}`;
+document.getElementById('feedback').textContent='';
+document.getElementById('grammar').classList.add('hidden');
+document.getElementById('nextBtn').classList.add('hidden');
+document.getElementById('finishBtn').classList.add('hidden');
+let o=document.getElementById('options');
+o.innerHTML='';
+q.options.forEach((opt,i)=>{let b=document.createElement('button');b.className='btn btn-opt';b.textContent=opt;b.onclick=()=>checkAns(i);o.appendChild(b)});
+// सवाल Auto बोलो
+setTimeout(()=>{speakText(q.q)},300);
+}
+function speakQuestion(){
+let q=lessonData[state.currentDay].questions[state.currentQ];
+speakText(q.q);
+}
+function checkAns(i){let q=lessonData[state.currentDay].questions[state.currentQ];let btns=document.querySelectorAll('.btn-opt');btns.forEach(b=>b.disabled=true);if(i===q.correct){btns[i].classList.add('btn-correct');document.getElementById('feedback').textContent='🎉 सही जवाब!';document.getElementById('feedback').style.color='#10b981';state.score++;speakText('Correct! Well done!')}else{btns[i].classList.add('btn-wrong');btns[q.correct].classList.add('btn-correct');document.getElementById('feedback').textContent='❌ गलत! सही: '+q.options[q.correct];document.getElementById('feedback').style.color='#ef4444';state.hearts--;updateStats();saveState();speakText('Wrong answer. The correct answer is '+q.options[q.correct]);if(state.hearts<=0){document.getElementById('heartModal').style.display='flex';return}}document.getElementById('grammar').textContent='💡 '+q.grammar;document.getElementById('grammar').classList.remove('hidden');if(state.currentQ<lessonData[state.currentDay].questions.length-1){document.getElementById('nextBtn').classList.remove('hidden')}else{document.getElementById('finishBtn').classList.remove('hidden')}}
 function nextQ(){state.currentQ++;showQ()}
-function finishDay(){if(!state.completedDays.includes(state.currentDay)){state.completedDays.push(state.currentDay);state.xp+=10;state.streak++;state.currentDay++;saveState();updateStats()}document.getElementById('quizScreen').classList.add('hidden');document.getElementById('homeScreen').classList.remove('hidden');renderDays();alert(`🎉 Day ${state.currentDay-1} पूरा! +10 XP मिले!`)}
+function finishDay(){if(!state.completedDays.includes(state.currentDay)){state.completedDays.push(state.currentDay);state.xp+=10;state.streak++;state.currentDay++;saveState();updateStats();speakText('Congratulations! Day completed. You earned 10 XP!')}document.getElementById('quizScreen').classList.add('hidden');document.getElementById('homeScreen').classList.remove('hidden');renderDays();alert(`🎉 Day ${state.currentDay-1} पूरा! +10 XP मिले!`)}
 function watchAd(){state.hearts=3;updateStats();saveState();closeModal();alert('Video देख लिया! +3 ❤️ मिले')}
 function closeModal(){document.getElementById('heartModal').style.display='none'}
 function addMsg(text,sender,hindi=''){
@@ -140,16 +171,7 @@ if(sender==='ai')lastAIText=text;
 }
 function speakLast(){
 if(!lastAIText){alert('पहले AI से कुछ पूछो!');return}
-speechSynthesis.cancel();
-let msg=new SpeechSynthesisUtterance(lastAIText);
-msg.lang='en-US';
-msg.rate=0.8;
-msg.pitch=1.2;
-msg.volume=1;
-let voices = speechSynthesis.getVoices();
-let femaleVoice = voices.find(voice => voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female'));
-if(femaleVoice) msg.voice = femaleVoice;
-speechSynthesis.speak(msg);
+speakText(lastAIText);
 }
 function sendChat(){
 let i=document.getElementById('chatInput');
@@ -160,15 +182,7 @@ i.value='';
 setTimeout(()=>{
 let r=getAIReply(t);
 addMsg(r.en,'ai',r.hi);
-let msg=new SpeechSynthesisUtterance(r.en);
-msg.lang='en-US';
-msg.rate=0.8;
-msg.pitch=1.2;
-msg.volume=1;
-let voices = speechSynthesis.getVoices();
-let femaleVoice = voices.find(voice => voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female'));
-if(femaleVoice) msg.voice = femaleVoice;
-speechSynthesis.speak(msg);
+speakText(r.en);
 },500)
 }
 function sendSuggest(t){document.getElementById('chatInput').value=t;sendChat()}
