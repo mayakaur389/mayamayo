@@ -5,56 +5,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Maya Didi - Learn English</title>
 <style>
+:root{
+--bg:#f0f4f8;--card:#ffffff;--text:#1f2937;--text2:#6b7280;--primary:#3b82f6;--ai:#8b5cf6;--ok:#10b981;--bad:#ef4444;--opt:#e5e7eb;
+}
+[data-theme="dark"]{
+--bg:#111827;--card:#1f2937;--text:#f9fafb;--text2:#9ca3af;--primary:#60a5fa;--ai:#a78bfa;--ok:#34d399;--bad:#f87171;--opt:#374151;
+}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#f0f4f8;color:#1f2937}
-.header{background:#3b82f6;color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-.stats{display:flex;gap:16px;font-weight:600}
+body{background:var(--bg);color:var(--text);transition:0.3s}
+.header{background:var(--primary);color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+.stats{display:flex;gap:12px;font-weight:600;align-items:center}
+.icon-btn{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:50%;width:32px;height:32px;cursor:pointer}
 .container{max-width:500px;margin:0 auto;padding:16px}
-.card{background:white;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.card{background:var(--card);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
 .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
-.day{aspect-ratio:1;background:#e5e7eb;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
-.day.active{background:#3b82f6;color:white;border-color:#1d4ed8}
-.day.locked{background:#f3f4f6;color:#9ca3af;cursor:not-allowed}
-.day.done{background:#10b981;color:white}
+.day{aspect-ratio:1;background:var(--opt);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
+.day.active{background:var(--primary);color:white;border-color:#1d4ed8}
+.day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
+.day.done{background:var(--ok);color:white}
 .day small{font-size:10px;font-weight:400}
 .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
-.hindi{font-size:16px;text-align:center;color:#6b7280;margin-bottom:20px}
+.hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
 .options{display:grid;gap:10px}
 .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
-.btn-opt{background:#e5e7eb;color:#1f2937;text-align:left}
-.btn-opt:hover{background:#d1d5db}
-.btn-correct{background:#10b981!important;color:white!important}
-.btn-wrong{background:#ef4444!important;color:white!important}
-.btn-main{background:#3b82f6;color:white;width:100%;margin-top:12px}
+.btn-opt{background:var(--opt);color:var(--text);text-align:left}
+.btn-opt:hover{filter:brightness(0.9)}
+.btn-correct{background:var(--ok)!important;color:white!important}
+.btn-wrong{background:var(--bad)!important;color:white!important}
+.btn-main{background:var(--primary);color:white;width:100%;margin-top:12px}
 .btn-main:disabled{background:#9ca3af}
-.btn-voice{background:#8b5cf6;color:white;width:100%;margin:8px 0}
-.btn-ads{background:#f59e0b;color:white;width:100%;margin-top:12px}
-.btn-toggle{background:#8b5cf6;color:white;width:100%;margin-bottom:12px}
-input{width:100%;padding:14px;border:2px solid #d1d5db;border-radius:12px;font-size:16px;margin:12px 0}
-input:focus{outline:none;border-color:#3b82f6}
+.btn-voice{background:var(--ai);color:white;width:100%;margin:8px 0}
+.btn-share{background:#25D366;color:white;width:100%;margin-top:8px}
+.btn-toggle{background:var(--ai);color:white;width:100%;margin-bottom:12px}
+input{width:100%;padding:14px;border:2px solid var(--opt);border-radius:12px;font-size:16px;margin:12px 0;background:var(--card);color:var(--text)}
+input:focus{outline:none;border-color:var(--primary)}
 .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
-.grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px}
+.grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px;color:#1f2937}
+[data-theme="dark"].grammar{background:#78350f;color:#fef3c7}
 .hidden{display:none}
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:30}
-.modal-content{background:white;padding:24px;border-radius:16px;text-align:center;max-width:300px}
-.chat-section{background:white;border-radius:16px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1);display:none;flex-direction:column;height:calc(100vh - 200px);max-height:600px;position:relative;overflow:hidden}
-.chat-head{background:#8b5cf6;color:white;padding:16px;font-weight:700;text-align:center;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.modal-content{background:var(--card);padding:24px;border-radius:16px;text-align:center;max-width:300px}
+.chat-section{background:var(--card);border-radius:16px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1);display:none;flex-direction:column;height:calc(100vh - 200px);max-height:600px;position:relative;overflow:hidden}
+.chat-head{background:var(--ai);color:white;padding:16px;font-weight:700;text-align:center;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .chat-msgs{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch}
 .msg{padding:12px 16px;border-radius:16px;max-width:80%;line-height:1.5;word-wrap:break-word}
-.msg-ai{background:#f3f4f6;align-self:flex-start}
-.msg-user{background:#8b5cf6;color:white;align-self:flex-end}
-.msg-hindi{font-size:13px;color:#6b7280;margin-top:4px;border-top:1px dashed #e5e7eb;padding-top:4px}
-.chat-input{display:flex;padding:12px;border-top:1px solid #e5e7eb;background:white;flex-shrink:0;position:sticky;bottom:0}
+.msg-ai{background:var(--opt);align-self:flex-start}
+.msg-user{background:var(--ai);color:white;align-self:flex-end}
+.msg-hindi{font-size:13px;color:var(--text2);margin-top:4px;border-top:1px dashed var(--opt);padding-top:4px}
+.chat-input{display:flex;padding:12px;border-top:1px solid var(--opt);background:var(--card);flex-shrink:0;position:sticky;bottom:0}
 .chat-input input{margin:0;border-radius:20px 0 0 20px;flex:1}
-.chat-input button{border-radius:0 20px 20px 0;background:#8b5cf6;color:white;border:none;padding:0 20px;font-weight:600}
-.suggest{display:flex;gap:8px;padding:12px;overflow-x:auto;background:white;flex-shrink:0}
-.suggest button{background:#e5e7eb;border:none;padding:8px 12px;border-radius:20px;font-size:13px;white-space:nowrap}
+.chat-input button{border-radius:0 20px 20px 0;background:var(--ai);color:white;border:none;padding:0 20px;font-weight:600}
+.suggest{display:flex;gap:8px;padding:12px;overflow-x:auto;background:var(--card);flex-shrink:0}
+.suggest button{background:var(--opt);border:none;padding:8px 12px;border-radius:20px;font-size:13px;white-space:nowrap;color:var(--text)}
+.progress-wrap{background:var(--opt);border-radius:10px;height:8px;margin-bottom:16px}
+.progress-bar{background:var(--primary);height:8px;border-radius:10px;width:0%;transition:0.3s}
 </style>
 </head>
 <body>
 <div class="header">
 <h2>Maya Didi</h2>
 <div class="stats">
+<button class="icon-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
 <span>🔥 <span id="streak">0</span></span>
 <span>❤️ <span id="hearts">3</span></span>
 <span>⚡ <span id="xp">0</span></span>
@@ -65,12 +76,13 @@ input:focus{outline:none;border-color:#3b82f6}
 <div id="quizSection">
 <div class="card" id="homeScreen">
 <h3>UNIT 1: BASICS - 30 DAYS</h3>
-<p style="color:#6b7280;margin:8px 0">Day चुनो और सीखना शुरू करो</p>
+<p style="color:var(--text2);margin:8px 0">Day चुनो और सीखना शुरू करो</p>
 <div class="day-grid" id="dayGrid"></div>
 </div>
 <div class="card hidden" id="quizScreen">
 <h3>Day <span id="dayNum"></span>: <span id="dayTitle"></span></h3>
-<div id="progress" style="color:#6b7280;margin:8px 0"></div>
+<div id="progress" style="color:var(--text2);margin:8px 0"></div>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
 <div class="question" id="question"></div>
 <div class="hindi" id="hindi"></div>
 <button class="btn btn-voice" onclick="speakQuestion()">🔊 सवाल सुनो</button>
@@ -79,6 +91,7 @@ input:focus{outline:none;border-color:#3b82f6}
 <div class="grammar hidden" id="grammar"></div>
 <button class="btn btn-main hidden" id="nextBtn" onclick="nextQ()">अगला सवाल</button>
 <button class="btn btn-main hidden" id="finishBtn" onclick="finishDay()">पूरा हुआ! +10 XP</button>
+<button class="btn btn-share hidden" id="shareBtn" onclick="shareResult()">📱 WhatsApp पे Share करो</button>
 </div>
 </div>
 <div class="chat-section" id="chatSection">
@@ -102,30 +115,53 @@ Maya Didi - AI Teacher
 <div class="modal" id="heartModal">
 <div class="modal-content">
 <h3>❤️ Heart खत्म!</h3>
-<p style="margin:16px 0;color:#6b7280">Video देखकर 1 Heart पाओ</p>
-<button class="btn btn-ads" onclick="watchAd()">Video देखें</button>
+<p style="margin:16px 0;color:var(--text2)">Video देखकर 1 Heart पाओ</p>
+<button class="btn btn-ads" onclick="watchAd()" style="background:#f59e0b;color:white;width:100%;margin-top:12px">Video देखें</button>
 <button class="btn btn-main" style="background:#6b7280;margin-top:8px" onclick="closeModal()">बंद करें</button>
 </div>
 </div>
+<audio id="correctSound" src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c153bc.mp3"></audio>
+<audio id="wrongSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_2c1e4b7a7e.mp3"></audio>
 <script>
 let lessonData={1:{title:"Greetings",questions:[{q:"How to say 'नमस्ते' in English?",h:"'नमस्ते' को English में कैसे बोलते?",options:["Hello","Bye","Thanks","Sorry"],correct:0,grammar:"'Hello' = नमस्ते। किसी से मिलने पर बोलते हैं।"},{q:"How to say 'शुक्रिया'?",h:"'शुक्रिया' को English में?",options:["Sorry","Please","Thank you","Welcome"],correct:2,grammar:"'Thank you' = धन्यवाद। मदद के बाद बोलते हैं।"},{q:"Reply to 'How are you?'",h:"'How are you?' का जवाब?",options:["I am fine","You are fine","He is fine","We are fine"],correct:0,grammar:"'I am fine' = मैं ठीक हूँ। सबसे common जवाब।"},{q:"How to say 'फिर मिलेंगे'?",h:"'फिर मिलेंगे' English में?",options:["See you","Meet you","Look you","Find you"],correct:0,grammar:"'See you' = फिर मिलेंगे। जाते समय बोलते हैं।"},{q:"How to say 'माफ़ करना'?",h:"'माफ़ करना' English में?",options:["Thank you","Sorry","Please","Excuse me"],correct:1,grammar:"'Sorry' = माफ़ करना। गलती होने पर बोलते हैं।"}]},2:{title:"Introducing Yourself",questions:[{q:"How to say 'मेरा नाम ___ है'?",h:"'मेरा नाम ___ है' English में?",options:["My name is ___","I name is ___","Me name is ___","Your name is ___"],correct:0,grammar:"'My name is' = मेरा नाम है। Name बताने के लिए।"},{q:"How to ask 'तुम्हारा नाम क्या है?'",h:"'तुम्हारा नाम क्या है?' English में?",options:["What your name?","What is your name?","What are your name?","What is you name?"],correct:1,grammar:"'What is your name?' = तुम्हारा नाम क्या है? 'is' लगाना जरूरी।"},{q:"How to say 'मैं भारत से हूँ'?",h:"'मैं भारत से हूँ' English में?",options:["I am from India","I from India","I am India","Me from India"],correct:0,grammar:"'I am from' = मैं ___ से हूँ। Country बताने के लिए।"},{q:"How to say 'मैं 25 साल का हूँ'?",h:"'मैं 25 साल का हूँ' English में?",options:["I am 25 years old","I have 25 years","I am 25 year","I 25 years old"],correct:0,grammar:"'I am ___ years old' = मैं ___ साल का हूँ। Age बताने के लिए।"},{q:"How to say 'आपसे मिलकर खुशी हुई'?",h:"'आपसे मिलकर खुशी हुई' English में?",options:["Nice to meet you","Happy to meet you","Good to meet you","All correct"],correct:3,grammar:"तीनों सही हैं! 'Nice to meet you' सबसे common है।"}]}};
-let state={xp:0,hearts:3,streak:0,currentDay:1,currentQ:0,score:0,completedDays:[]};
-let lastAIText='';
-let quizMode=true;
+let state={xp:0,hearts:3,streak:0,currentDay:1,currentQ:0,score:0,completedDays:[],theme:'light',lastPlayDate:''};
+let lastAIText='';let quizMode=true;
+
+function toggleTheme(){
+state.theme=state.theme==='light'?'dark':'light';
+document.documentElement.setAttribute('data-theme',state.theme);
+document.getElementById('themeBtn').textContent=state.theme==='light'?'🌙':'☀️';
+saveState();
+}
+function playSound(id){document.getElementById(id).play().catch(e=>{});}
 function speakText(text){
 speechSynthesis.cancel();
 let msg=new SpeechSynthesisUtterance(text);
-msg.lang='en-US';
-msg.rate=0.8;
-msg.pitch=1.2;
-msg.volume=1;
-let voices = speechSynthesis.getVoices();
-let femaleVoice = voices.find(voice => voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female'));
-if(femaleVoice) msg.voice = femaleVoice;
+msg.lang='en-US';msg.rate=0.8;msg.pitch=1.2;msg.volume=1;
+let voices=speechSynthesis.getVoices();
+let femaleVoice=voices.find(v=>v.name.includes('Female')||v.name.includes('Zira')||v.name.includes('Samantha')||v.name.includes('Google UK English Female'));
+if(femaleVoice) msg.voice=femaleVoice;
 speechSynthesis.speak(msg);
 }
-function saveState(){localStorage.setItem('mayaDidi',JSON.stringify({xp:state.xp,hearts:state.hearts,streak:state.streak,completedDays:state.completedDays}))}
-function loadState(){let s=localStorage.getItem('mayaDidi');if(s){let d=JSON.parse(s);state.xp=d.xp||0;state.hearts=d.hearts||3;state.streak=d.streak||0;state.completedDays=d.completedDays||[]}updateStats()}
+function checkDailyReminder(){
+let today=new Date().toDateString();
+if(state.lastPlayDate!==today && state.completedDays.length>0 &&!state.completedDays.includes(state.currentDay)){
+setTimeout(()=>{
+if(Notification.permission==="granted"){
+new Notification("Maya Didi 👩‍🏫",{body:"आज का English Lesson बाकी है! आओ सीखते हैं 💛",icon:"https://i.ibb.co/9kqY7yP/girl-teacher.png"});
+}else if(Notification.permission!=="denied"){Notification.requestPermission();}
+},3000);
+}
+state.lastPlayDate=today;saveState();
+}
+function saveState(){localStorage.setItem('mayaDidi',JSON.stringify(state))}
+function loadState(){
+let s=localStorage.getItem('mayaDidi');
+if(s){Object.assign(state,JSON.parse(s))}
+document.documentElement.setAttribute('data-theme',state.theme);
+document.getElementById('themeBtn').textContent=state.theme==='light'?'🌙':'☀️';
+updateStats();checkDailyReminder();
+}
 function updateStats(){document.getElementById('xp').textContent=state.xp;document.getElementById('hearts').textContent=state.hearts;document.getElementById('streak').textContent=state.streak}
 function toggleSection(){quizMode=!quizMode;document.getElementById('quizSection').style.display=quizMode?'block':'none';document.getElementById('chatSection').style.display=quizMode?'none':'flex';document.getElementById('toggleBtn').textContent=quizMode?'🤖 AI Teacher से बात करो':'📚 Lesson पे वापस जाओ';if(!quizMode&&document.getElementById('chatMsgs').children.length===0){addMsg('Namaste! Main Maya Didi hoon 🙏 Aaj kya seekhna hai?','ai','नमस्ते! मैं माया दीदी हूँ। आज क्या सीखना है?')}}
 function renderDays(){let g=document.getElementById('dayGrid');g.innerHTML='';for(let i=1;i<=30;i++){let d=document.createElement('div');d.className='day';if(state.completedDays.includes(i)){d.classList.add('done');d.innerHTML=`${i}<br><small>✓</small>`}else if(i===state.currentDay||i===1||state.completedDays.includes(i-1)){d.classList.add('active');d.innerHTML=`${i}<br><small>Start</small>`;d.onclick=()=>startDay(i)}else{d.classList.add('locked');d.innerHTML=`${i}<br><small>🔒</small>`}g.appendChild(d)}}
@@ -135,88 +171,67 @@ let q=lessonData[state.currentDay].questions[state.currentQ];
 document.getElementById('question').textContent=q.q;
 document.getElementById('hindi').textContent=q.h;
 document.getElementById('progress').textContent=`सवाल ${state.currentQ+1}/${lessonData[state.currentDay].questions.length}`;
+document.getElementById('progressBar').style.width=((state.currentQ+1)/lessonData[state.currentDay].questions.length*100)+'%';
 document.getElementById('feedback').textContent='';
 document.getElementById('grammar').classList.add('hidden');
 document.getElementById('nextBtn').classList.add('hidden');
 document.getElementById('finishBtn').classList.add('hidden');
-let o=document.getElementById('options');
-o.innerHTML='';
+document.getElementById('shareBtn').classList.add('hidden');
+let o=document.getElementById('options');o.innerHTML='';
 q.options.forEach((opt,i)=>{let b=document.createElement('button');b.className='btn btn-opt';b.textContent=opt;b.onclick=()=>checkAns(i);o.appendChild(b)});
-// सवाल Auto बोलो
 setTimeout(()=>{speakText(q.q)},300);
 }
-function speakQuestion(){
+function speakQuestion(){let q=lessonData[state.currentDay].questions[state.currentQ];speakText(q.q);}
+function checkAns(i){
 let q=lessonData[state.currentDay].questions[state.currentQ];
-speakText(q.q);
+let btns=document.querySelectorAll('.btn-opt');btns.forEach(b=>b.disabled=true);
+if(i===q.correct){
+btns[i].classList.add('btn-correct');document.getElementById('feedback').textContent='🎉 सही जवाब!';document.getElementById('feedback').style.color='var(--ok)';state.score++;
+playSound('correctSound');speakText('Correct! Well done!');
+}else{
+btns[i].classList.add('btn-wrong');btns[q.correct].classList.add('btn-correct');
+document.getElementById('feedback').textContent='❌ गलत! सही: '+q.options[q.correct];document.getElementById('feedback').style.color='var(--bad)';state.hearts--;
+playSound('wrongSound');speakText('Wrong answer. The correct answer is '+q.options[q.correct]);
+updateStats();saveState();if(state.hearts<=0){document.getElementById('heartModal').style.display='flex';return}
 }
-function checkAns(i){let q=lessonData[state.currentDay].questions[state.currentQ];let btns=document.querySelectorAll('.btn-opt');btns.forEach(b=>b.disabled=true);if(i===q.correct){btns[i].classList.add('btn-correct');document.getElementById('feedback').textContent='🎉 सही जवाब!';document.getElementById('feedback').style.color='#10b981';state.score++;speakText('Correct! Well done!')}else{btns[i].classList.add('btn-wrong');btns[q.correct].classList.add('btn-correct');document.getElementById('feedback').textContent='❌ गलत! सही: '+q.options[q.correct];document.getElementById('feedback').style.color='#ef4444';state.hearts--;updateStats();saveState();speakText('Wrong answer. The correct answer is '+q.options[q.correct]);if(state.hearts<=0){document.getElementById('heartModal').style.display='flex';return}}document.getElementById('grammar').textContent='💡 '+q.grammar;document.getElementById('grammar').classList.remove('hidden');if(state.currentQ<lessonData[state.currentDay].questions.length-1){document.getElementById('nextBtn').classList.remove('hidden')}else{document.getElementById('finishBtn').classList.remove('hidden')}}
+document.getElementById('grammar').textContent='💡 '+q.grammar;document.getElementById('grammar').classList.remove('hidden');
+if(state.currentQ<lessonData[state.currentDay].questions.length-1){document.getElementById('nextBtn').classList.remove('hidden')}
+else{document.getElementById('finishBtn').classList.remove('hidden');document.getElementById('shareBtn').classList.remove('hidden')}
+}
 function nextQ(){state.currentQ++;showQ()}
-function finishDay(){if(!state.completedDays.includes(state.currentDay)){state.completedDays.push(state.currentDay);state.xp+=10;state.streak++;state.currentDay++;saveState();updateStats();speakText('Congratulations! Day completed. You earned 10 XP!')}document.getElementById('quizScreen').classList.add('hidden');document.getElementById('homeScreen').classList.remove('hidden');renderDays();alert(`🎉 Day ${state.currentDay-1} पूरा! +10 XP मिले!`)}
+function finishDay(){
+if(!state.completedDays.includes(state.currentDay)){state.completedDays.push(state.currentDay);state.xp+=10;state.streak++;state.currentDay++;saveState();updateStats();}
+speakText('Congratulations! Day completed. You earned 10 XP!');
+document.getElementById('quizScreen').classList.add('hidden');document.getElementById('homeScreen').classList.remove('hidden');renderDays();
+alert(`🎉 Day ${state.currentDay-1} पूरा! +10 XP मिले!`);
+}
+function shareResult(){
+let text=`🎉 मैंने Maya Didi App पे Day ${state.currentDay-1} Complete कर लिया! ${state.score}/${lessonData[state.currentDay-1].questions.length} Score ✅ तुम भी English सीखो: https://mayakaur389.github.io/mayamayo/`;
+window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank');
+}
 function watchAd(){state.hearts=3;updateStats();saveState();closeModal();alert('Video देख लिया! +3 ❤️ मिले')}
 function closeModal(){document.getElementById('heartModal').style.display='none'}
 function addMsg(text,sender,hindi=''){
-let box=document.getElementById('chatMsgs');
-let d=document.createElement('div');
-d.className='msg msg-'+sender;
-d.textContent=text;
-if(hindi){
-let h=document.createElement('div');
-h.className='msg-hindi';
-h.textContent=hindi;
-d.appendChild(h)
+let box=document.getElementById('chatMsgs');let d=document.createElement('div');d.className='msg msg-'+sender;d.textContent=text;
+if(hindi){let h=document.createElement('div');h.className='msg-hindi';h.textContent=hindi;d.appendChild(h)}
+box.appendChild(d);box.scrollTop=box.scrollHeight;if(sender==='ai')lastAIText=text;
 }
-box.appendChild(d);
-box.scrollTop=box.scrollHeight;
-if(sender==='ai')lastAIText=text;
-}
-function speakLast(){
-if(!lastAIText){alert('पहले AI से कुछ पूछो!');return}
-speakText(lastAIText);
-}
+function speakLast(){if(!lastAIText){alert('पहले AI से कुछ पूछो!');return}speakText(lastAIText);}
 function sendChat(){
-let i=document.getElementById('chatInput');
-let t=i.value.trim();
-if(!t)return;
-addMsg(t,'user');
-i.value='';
-setTimeout(()=>{
-let r=getAIReply(t);
-addMsg(r.en,'ai',r.hi);
-speakText(r.en);
-},500)
+let i=document.getElementById('chatInput');let t=i.value.trim();if(!t)return;
+addMsg(t,'user');i.value='';
+setTimeout(()=>{let r=getAIReply(t);addMsg(r.en,'ai',r.hi);speakText(r.en);},500)
 }
 function sendSuggest(t){document.getElementById('chatInput').value=t;sendChat()}
 function getAIReply(t){
 t=t.toLowerCase().trim();
-const grammarDB = {
-'hello': {en:"'Hello' = नमस्ते. Use when you meet someone. Example: Hello, how are you?", hi:"'Hello' = नमस्ते। मिलने पर बोलो। Example: Hello, how are you?"},
-'thank': {en:"'Thank you' = धन्यवाद. Reply with 'You're welcome' or 'Most welcome'.", hi:"'Thank you' = धन्यवाद। जवाब: 'You're welcome'"},
-'name': {en:"'My name is Rahul' = मेरा नाम राहुल है. To ask: 'What is your name?'", hi:"'My name is Rahul' = मेरा नाम राहुल है। पूछो: 'What is your name?'"},
-'how are': {en:"'How are you?' = आप कैसे हैं? Reply: 'I am fine, thank you' = मैं ठीक हूँ, शुक्रिया", hi:"'How are you?' = आप कैसे हैं? जवाब: 'I am fine, thank you'"},
-'sorry': {en:"'Sorry' = माफ़ करना. Use when you make a mistake. Example: Sorry, I am late.", hi:"'Sorry' = माफ़ करना। गलती पर बोलो। Example: Sorry, I am late."},
-'bye': {en:"'Bye' or 'Goodbye' = अलविदा. 'See you' = फिर मिलेंगे.", hi:"'Bye' = अलविदा। 'See you' = फिर मिलेंगे।"},
-'please': {en:"'Please' = कृपया. Use for requests. Example: Please help me.", hi:"'Please' = कृपया। Request के लिए। Example: Please help me."},
-'yes': {en:"'Yes' = हाँ. 'No' = नहीं. Example: Yes, I am ready.", hi:"'Yes' = हाँ। 'No' = नहीं। Example: Yes, I am ready."},
-'i am': {en:"'I am' = मैं हूँ. Used to tell about yourself. Example: I am a student = मैं छात्र हूँ", hi:"'I am' = मैं हूँ। अपने बारे में बताने के लिए। Example: I am a student"},
-'you are': {en:"'You are' = तुम हो/आप हैं. Example: You are my friend = तुम मेरे दोस्त हो", hi:"'You are' = तुम हो। Example: You are my friend"},
-'what': {en:"'What' = क्या. Used to ask questions. Example: What is this? = यह क्या है?", hi:"'What' = क्या। सवाल पूछने के लिए। Example: What is this?"},
-'where': {en:"'Where' = कहाँ. Example: Where are you? = तुम कहाँ हो?", hi:"'Where' = कहाँ। Example: Where are you?"},
-'when': {en:"'When' = कब. Example: When will you come? = तुम कब आओगे?", hi:"'When' = कब। Example: When will you come?"},
-'good morning': {en:"'Good morning' = सुप्रभात/शुभ प्रभात. Use before 12 PM.", hi:"'Good morning' = सुप्रभात। दोपहर 12 से पहले बोलो।"},
-'good night': {en:"'Good night' = शुभ रात्रि. Use when going to sleep.", hi:"'Good night' = शुभ रात्रि। सोने से पहले बोलो।"}
-};
-for(let key in grammarDB){
-if(t.includes(key)){
-return grammarDB[key];
-}
-}
-return {
-en:"I understand you want to learn English. Try asking: 'What is Hello?' or 'How to say धन्यवाद?'",
-hi:"मैं समझ गया आप इंग्लिश सीखना चाहते हैं। पूछो: 'Hello क्या है?' या 'धन्यवाद कैसे बोलते हैं?'"
-};
+const grammarDB={'hello':{en:"'Hello' = नमस्ते. Use when you meet someone. Example: Hello, how are you?",hi:"'Hello' = नमस्ते। मिलने पर बोलो। Example: Hello, how are you?"},'thank':{en:"'Thank you' = धन्यवाद. Reply with 'You're welcome'.",hi:"'Thank you' = धन्यवाद। जवाब: 'You're welcome'"},'name':{en:"'My name is Rahul' = मेरा नाम राहुल है. To ask: 'What is your name?'",hi:"'My name is Rahul' = मेरा नाम राहुल है। पूछो: 'What is your name?'"},'how are':{en:"'How are you?' = आप कैसे हैं? Reply: 'I am fine, thank you'",hi:"'How are you?' = आप कैसे हैं? जवाब: 'I am fine, thank you'"},'sorry':{en:"'Sorry' = माफ़ करना. Use when you make a mistake.",hi:"'Sorry' = माफ़ करना। गलती पर बोलो।"},'bye':{en:"'Bye' or 'Goodbye' = अलविदा. 'See you' = फिर मिलेंगे.",hi:"'Bye' = अलविदा। 'See you' = फिर मिलेंगे।"},'please':{en:"'Please' = कृपया. Use for requests.",hi:"'Please' = कृपया। Request के लिए।"},'yes':{en:"'Yes' = हाँ. 'No' = नहीं.",hi:"'Yes' = हाँ। 'No' = नहीं।"},'i am':{en:"'I am' = मैं हूँ. Example: I am a student",hi:"'I am' = मैं हूँ। Example: I am a student"},'you are':{en:"'You are' = तुम हो/आप हैं.",hi:"'You are' = तुम हो।"},'what':{en:"'What' = क्या. Example: What is this?",hi:"'What' = क्या। Example: What is this?"},'where':{en:"'Where' = कहाँ. Example: Where are you?",hi:"'Where' = कहाँ।"},'when':{en:"'When' = कब. Example: When will you come?",hi:"'When' = कब।"},'good morning':{en:"'Good morning' = सुप्रभात. Use before 12 PM.",hi:"'Good morning' = सुप्रभात।"},'good night':{en:"'Good night' = शुभ रात्रि. Use when going to sleep.",hi:"'Good night' = शुभ रात्रि।"}};
+for(let key in grammarDB){if(t.includes(key)){return grammarDB[key]}}
+return{en:"I understand you want to learn English. Try asking: 'What is Hello?' or 'How to say धन्यवाद?'",hi:"मैं समझ गया आप इंग्लिश सीखना चाहते हैं। पूछो: 'Hello क्या है?' या 'धन्यवाद कैसे बोलते हैं?'"}
 }
 loadState();renderDays();
-speechSynthesis.onvoiceschanged = () => { speechSynthesis.getVoices(); };
+speechSynthesis.onvoiceschanged=()=>{speechSynthesis.getVoices()};
+if("Notification" in window && Notification.permission==="default"){Notification.requestPermission();}
 </script>
 </body>
 </html>
