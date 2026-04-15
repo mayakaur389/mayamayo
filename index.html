@@ -38,7 +38,7 @@ input:focus{outline:none;border-color:#3b82f6}
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:30}
 .modal-content{background:white;padding:24px;border-radius:16px;text-align:center;max-width:300px}
 .chat-section{background:white;border-radius:16px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1);display:none;flex-direction:column;height:calc(100vh - 200px);max-height:600px;position:relative;overflow:hidden}
-.chat-head{background:#8b5cf6;color:white;padding:16px;font-weight:700;text-align:center;flex-shrink:0}
+.chat-head{background:#8b5cf6;color:white;padding:16px;font-weight:700;text-align:center;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .chat-msgs{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch}
 .msg{padding:12px 16px;border-radius:16px;max-width:80%;line-height:1.5;word-wrap:break-word}
 .msg-ai{background:#f3f4f6;align-self:flex-start}
@@ -81,7 +81,10 @@ input:focus{outline:none;border-color:#3b82f6}
 </div>
 </div>
 <div class="chat-section" id="chatSection">
-<div class="chat-head">Maya Didi - AI Teacher</div>
+<div class="chat-head">
+<img src="https://i.ibb.co/9kqY7yP/girl-teacher.png" style="width:40px;height:40px;border-radius:50%;margin-right:10px">
+Maya Didi - AI Teacher
+</div>
 <div class="chat-msgs" id="chatMsgs"></div>
 <div class="suggest">
 <button onclick="sendSuggest('Hello kaise bole?')">Hello kaise bole?</button>
@@ -107,6 +110,7 @@ input:focus{outline:none;border-color:#3b82f6}
 let lessonData={1:{title:"Greetings",questions:[{q:"How to say 'नमस्ते' in English?",h:"'नमस्ते' को English में कैसे बोलते?",options:["Hello","Bye","Thanks","Sorry"],correct:0,grammar:"'Hello' = नमस्ते। किसी से मिलने पर बोलते हैं।"},{q:"How to say 'शुक्रिया'?",h:"'शुक्रिया' को English में?",options:["Sorry","Please","Thank you","Welcome"],correct:2,grammar:"'Thank you' = धन्यवाद। मदद के बाद बोलते हैं।"},{q:"Reply to 'How are you?'",h:"'How are you?' का जवाब?",options:["I am fine","You are fine","He is fine","We are fine"],correct:0,grammar:"'I am fine' = मैं ठीक हूँ। सबसे common जवाब।"},{q:"How to say 'फिर मिलेंगे'?",h:"'फिर मिलेंगे' English में?",options:["See you","Meet you","Look you","Find you"],correct:0,grammar:"'See you' = फिर मिलेंगे। जाते समय बोलते हैं।"},{q:"How to say 'माफ़ करना'?",h:"'माफ़ करना' English में?",options:["Thank you","Sorry","Please","Excuse me"],correct:1,grammar:"'Sorry' = माफ़ करना। गलती होने पर बोलते हैं।"}]},2:{title:"Introducing Yourself",questions:[{q:"How to say 'मेरा नाम ___ है'?",h:"'मेरा नाम ___ है' English में?",options:["My name is ___","I name is ___","Me name is ___","Your name is ___"],correct:0,grammar:"'My name is' = मेरा नाम है। Name बताने के लिए।"},{q:"How to ask 'तुम्हारा नाम क्या है?'",h:"'तुम्हारा नाम क्या है?' English में?",options:["What your name?","What is your name?","What are your name?","What is you name?"],correct:1,grammar:"'What is your name?' = तुम्हारा नाम क्या है? 'is' लगाना जरूरी।"},{q:"How to say 'मैं भारत से हूँ'?",h:"'मैं भारत से हूँ' English में?",options:["I am from India","I from India","I am India","Me from India"],correct:0,grammar:"'I am from' = मैं ___ से हूँ। Country बताने के लिए।"},{q:"How to say 'मैं 25 साल का हूँ'?",h:"'मैं 25 साल का हूँ' English में?",options:["I am 25 years old","I have 25 years","I am 25 year","I 25 years old"],correct:0,grammar:"'I am ___ years old' = मैं ___ साल का हूँ। Age बताने के लिए।"},{q:"How to say 'आपसे मिलकर खुशी हुई'?",h:"'आपसे मिलकर खुशी हुई' English में?",options:["Nice to meet you","Happy to meet you","Good to meet you","All correct"],correct:3,grammar:"तीनों सही हैं! 'Nice to meet you' सबसे common है।"}]}};
 let state={xp:0,hearts:3,streak:0,currentDay:1,currentQ:0,score:0,completedDays:[]};
 let lastAIText='';
+let quizMode=true;
 function saveState(){localStorage.setItem('mayaDidi',JSON.stringify({xp:state.xp,hearts:state.hearts,streak:state.streak,completedDays:state.completedDays}))}
 function loadState(){let s=localStorage.getItem('mayaDidi');if(s){let d=JSON.parse(s);state.xp=d.xp||0;state.hearts=d.hearts||3;state.streak=d.streak||0;state.completedDays=d.completedDays||[]}updateStats()}
 function updateStats(){document.getElementById('xp').textContent=state.xp;document.getElementById('hearts').textContent=state.hearts;document.getElementById('streak').textContent=state.streak}
@@ -120,47 +124,85 @@ function finishDay(){if(!state.completedDays.includes(state.currentDay)){state.c
 function watchAd(){state.hearts=3;updateStats();saveState();closeModal();alert('Video देख लिया! +3 ❤️ मिले')}
 function closeModal(){document.getElementById('heartModal').style.display='none'}
 function addMsg(text,sender,hindi=''){
-    let box=document.getElementById('chatMsgs');
-    let d=document.createElement('div');
-    d.className='msg msg-'+sender;
-    d.textContent=text;
-    if(hindi){
-        let h=document.createElement('div');
-        h.className='msg-hindi';
-        h.textContent=hindi;
-        d.appendChild(h)
-    }
-    box.appendChild(d);
-    box.scrollTop=box.scrollHeight;
-    if(sender==='ai')lastAIText=text;
+let box=document.getElementById('chatMsgs');
+let d=document.createElement('div');
+d.className='msg msg-'+sender;
+d.textContent=text;
+if(hindi){
+let h=document.createElement('div');
+h.className='msg-hindi';
+h.textContent=hindi;
+d.appendChild(h)
+}
+box.appendChild(d);
+box.scrollTop=box.scrollHeight;
+if(sender==='ai')lastAIText=text;
 }
 function speakLast(){
-    if(!lastAIText){alert('पहले AI से कुछ पूछो!');return}
-    speechSynthesis.cancel();
-    let msg=new SpeechSynthesisUtterance(lastAIText);
-    msg.lang='en-US';
-    msg.rate=0.9;
-    speechSynthesis.speak(msg);
+if(!lastAIText){alert('पहले AI से कुछ पूछो!');return}
+speechSynthesis.cancel();
+let msg=new SpeechSynthesisUtterance(lastAIText);
+msg.lang='en-US';
+msg.rate=0.8;
+msg.pitch=1.2;
+msg.volume=1;
+let voices = speechSynthesis.getVoices();
+let femaleVoice = voices.find(voice => voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female'));
+if(femaleVoice) msg.voice = femaleVoice;
+speechSynthesis.speak(msg);
 }
 function sendChat(){
-    let i=document.getElementById('chatInput');
-    let t=i.value.trim();
-    if(!t)return;
-    addMsg(t,'user');
-    i.value='';
-    setTimeout(()=>{
-        let r=getAIReply(t);
-        addMsg(r.en,'ai',r.hi);
-        let msg=new SpeechSynthesisUtterance(r.en);
-        msg.lang='en-US';
-        msg.rate=0.9;
-        speechSynthesis.speak(msg);
-    },500)
+let i=document.getElementById('chatInput');
+let t=i.value.trim();
+if(!t)return;
+addMsg(t,'user');
+i.value='';
+setTimeout(()=>{
+let r=getAIReply(t);
+addMsg(r.en,'ai',r.hi);
+let msg=new SpeechSynthesisUtterance(r.en);
+msg.lang='en-US';
+msg.rate=0.8;
+msg.pitch=1.2;
+msg.volume=1;
+let voices = speechSynthesis.getVoices();
+let femaleVoice = voices.find(voice => voice.name.includes('Female') || voice.name.includes('Zira') || voice.name.includes('Samantha') || voice.name.includes('Google UK English Female'));
+if(femaleVoice) msg.voice = femaleVoice;
+speechSynthesis.speak(msg);
+},500)
 }
 function sendSuggest(t){document.getElementById('chatInput').value=t;sendChat()}
-function getAIReply(t){t=t.toLowerCase();if(t.includes('hello')||t.includes('नमस्ते'))return{en:"'Hello' means नमस्ते. Use it when you meet someone.",hi:"'Hello' का मतलब नमस्ते। किसी से मिलने पर बोलो।"};if(t.includes('thank'))return{en:"'Thank you' means धन्यवाद. Reply with 'Welcome' or 'Most welcome'.",hi:"'Thank you' = धन्यवाद। जवाब में 'Welcome' बोलो।"};if(t.includes('name'))return{en:"'My name is Rahul' = मेरा नाम राहुल है. Ask 'What is your name?'",hi:"'My name is Rahul' = मेरा नाम राहुल है। पूछो 'What is your name?'"};if(t.includes('how are'))return{en:"Reply: 'I am fine, thank you' = मैं ठीक हूँ, शुक्रिया",hi:"जवाब: 'I am fine, thank you' = मैं ठीक हूँ, शुक्रिया"};if(t.includes('sorry'))return{en:"'Sorry' = माफ़ करना। Use when you make a mistake.",hi:"'Sorry' = माफ़ करना। गलती पर बोलो।"};if(t.includes('bye')||t.includes('अलविदा'))return{en:"'Bye' or 'See you' = फिर मिलेंगे। Use when leaving.",hi:"'Bye' या 'See you' = फिर मिलेंगे। जाते समय बोलो।"};return{en:"Good question! Try: 'I am learning English' = मैं इंग्लिश सीख रहा हूँ",hi:"अच्छा सवाल! बोलो: 'I am learning English' = मैं इंग्लिश सीख रहा हूँ"}}
-let quizMode=true;
+function getAIReply(t){
+t=t.toLowerCase().trim();
+const grammarDB = {
+'hello': {en:"'Hello' = नमस्ते. Use when you meet someone. Example: Hello, how are you?", hi:"'Hello' = नमस्ते। मिलने पर बोलो। Example: Hello, how are you?"},
+'thank': {en:"'Thank you' = धन्यवाद. Reply with 'You're welcome' or 'Most welcome'.", hi:"'Thank you' = धन्यवाद। जवाब: 'You're welcome'"},
+'name': {en:"'My name is Rahul' = मेरा नाम राहुल है. To ask: 'What is your name?'", hi:"'My name is Rahul' = मेरा नाम राहुल है। पूछो: 'What is your name?'"},
+'how are': {en:"'How are you?' = आप कैसे हैं? Reply: 'I am fine, thank you' = मैं ठीक हूँ, शुक्रिया", hi:"'How are you?' = आप कैसे हैं? जवाब: 'I am fine, thank you'"},
+'sorry': {en:"'Sorry' = माफ़ करना. Use when you make a mistake. Example: Sorry, I am late.", hi:"'Sorry' = माफ़ करना। गलती पर बोलो। Example: Sorry, I am late."},
+'bye': {en:"'Bye' or 'Goodbye' = अलविदा. 'See you' = फिर मिलेंगे.", hi:"'Bye' = अलविदा। 'See you' = फिर मिलेंगे।"},
+'please': {en:"'Please' = कृपया. Use for requests. Example: Please help me.", hi:"'Please' = कृपया। Request के लिए। Example: Please help me."},
+'yes': {en:"'Yes' = हाँ. 'No' = नहीं. Example: Yes, I am ready.", hi:"'Yes' = हाँ। 'No' = नहीं। Example: Yes, I am ready."},
+'i am': {en:"'I am' = मैं हूँ. Used to tell about yourself. Example: I am a student = मैं छात्र हूँ", hi:"'I am' = मैं हूँ। अपने बारे में बताने के लिए। Example: I am a student"},
+'you are': {en:"'You are' = तुम हो/आप हैं. Example: You are my friend = तुम मेरे दोस्त हो", hi:"'You are' = तुम हो। Example: You are my friend"},
+'what': {en:"'What' = क्या. Used to ask questions. Example: What is this? = यह क्या है?", hi:"'What' = क्या। सवाल पूछने के लिए। Example: What is this?"},
+'where': {en:"'Where' = कहाँ. Example: Where are you? = तुम कहाँ हो?", hi:"'Where' = कहाँ। Example: Where are you?"},
+'when': {en:"'When' = कब. Example: When will you come? = तुम कब आओगे?", hi:"'When' = कब। Example: When will you come?"},
+'good morning': {en:"'Good morning' = सुप्रभात/शुभ प्रभात. Use before 12 PM.", hi:"'Good morning' = सुप्रभात। दोपहर 12 से पहले बोलो।"},
+'good night': {en:"'Good night' = शुभ रात्रि. Use when going to sleep.", hi:"'Good night' = शुभ रात्रि। सोने से पहले बोलो।"}
+};
+for(let key in grammarDB){
+if(t.includes(key)){
+return grammarDB[key];
+}
+}
+return {
+en:"I understand you want to learn English. Try asking: 'What is Hello?' or 'How to say धन्यवाद?'",
+hi:"मैं समझ गया आप इंग्लिश सीखना चाहते हैं। पूछो: 'Hello क्या है?' या 'धन्यवाद कैसे बोलते हैं?'"
+};
+}
 loadState();renderDays();
+speechSynthesis.onvoiceschanged = () => { speechSynthesis.getVoices(); };
 </script>
 </body>
 </html>
