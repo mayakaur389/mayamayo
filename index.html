@@ -131,53 +131,75 @@ let lessonData = {
 1: {title:"Greetings",hasVoice:true,questions:[
 {q:"How to say 'नमस्ते' in English?",h:"'नमस्ते' को English में कैसे बोलते?",options:["Hello","Bye","Thanks","Sorry"],correct:0,grammar:"'Hello' = नमस्ते। किसी से मिलने पर बोलते हैं।",answer:"hello"},
 {q:"How to say 'शुक्रिया'?",h:"'शुक्रिया' को English में?",options:["Sorry","Please","Thank you","Welcome"],correct:2,grammar:"'Thank you' = धन्यवाद। मदद के बाद बोलते हैं।",answer:"thank you"},
-{q:"Reply to 'How are you?'",h:"'How are you?' का जवाब?",options:["I am fine","You are fine","He is fine","We are fine"],correct:0,grammar:"'I am fine' = मैं ठीक हूँ। सबसे common जवाब।",answer:"i am fine"}
+{q:"Reply to 'How are you?'",h:"'How are you?' का जवाब?",options:["I am fine","You are fine","He is fine","We are fine"],correct:0,grammar:"'I am fine' = मैं ठीक हूँ। सबसे common जवाब।",answer:"i am fine"},
+{q:"How to say 'फिर मिलेंगे'?",h:"'फिर मिलेंगे' English में?",options:["See you","Meet you","Look you","Find you"],correct:0,grammar:"'See you' = फिर मिलेंगे। जाते समय बोलते हैं।",answer:"see you"},
+{q:"How to say 'माफ़ करना'?",h:"'माफ़ करना' English में?",options:["Thank you","Sorry","Please","Excuse me"],correct:1,grammar:"'Sorry' = माफ़ करना। गलती होने पर बोलते हैं।",answer:"sorry"}
 ]},
-2: {title:"Introducing Yourself",hasVoice:false,questions:[
-{q:"How to say 'मेरा नाम ___ है'?",h:"'मेरा नाम ___ है' English में?",options:["My name is ___","I name is ___","Me name is ___","Your name is ___"],correct:0,grammar:"'My name is' = मेरा नाम है। Name बताने के लिए।"},
-{q:"How to ask 'तुम्हारा नाम क्या है?'",h:"'तुम्हारा नाम क्या है?' English में?",options:["What your name?","What is your name?","What are your name?","What is you name?"],correct:1,grammar:"'What is your name?' = तुम्हारा नाम क्या है? 'is' लगाना जरूरी।"},
-{q:"How to say 'मैं भारत से हूँ'?",h:"'मैं भारत से हूँ' English में?",options:["I am from India","I am India","Me from India"],correct:0,grammar:"'I am from' = मैं ___ से हूँ। Country बताने के लिए।"}
+2: {title:"Introducing Yourself",hasVoice:true,questions:[
+{q:"How to say 'मेरा नाम ___ है'?",h:"'मेरा नाम ___ है' English में?",options:["My name is ___","I name is ___","Me name is ___","Your name is ___"],correct:0,grammar:"'My name is' = मेरा नाम है। Name बताने के लिए।",answer:"my name is"},
+{q:"How to ask 'तुम्हारा नाम क्या है?'",h:"'तुम्हारा नाम क्या है?' English में?",options:["What your name?","What is your name?","What are your name?","What is you name?"],correct:1,grammar:"'What is your name?' = तुम्हारा नाम क्या है? 'is' लगाना जरूरी।",answer:"what is your name"},
+{q:"How to say 'मैं भारत से हूँ'?",h:"'मैं भारत से हूँ' English में?",options:["I am from India","I am India","Me from India"],correct:0,grammar:"'I am from' = मैं ___ से हूँ। Country बताने के लिए।",answer:"i am from india"},
+{q:"How to say 'मैं 25 साल का हूँ'?",h:"'मैं 25 साल का हूँ' English में?",options:["I am 25 years old","I have 25 years","I am 25 year","I 25 years old"],correct:0,grammar:"'I am ___ years old' = मैं ___ साल का हूँ। Age बताने के लिए।",answer:"i am 25 years old"},
+{q:"How to say 'आपसे मिलकर खुशी हुई'?",h:"'आपसे मिलकर खुशी हुई' English में?",options:["Nice to meet you","Happy to meet you","Good to meet you","All correct"],correct:3,grammar:"तीनों सही हैं! 'Nice to meet you' सबसे common है।",answer:"nice to meet you"}
 ]},
 3: {title:"Daily Routine",hasVoice:true,questions:[
 {q:"How to say 'मैं सुबह 7 बजे उठता हूँ'?",h:"'मैं सुबह 7 बजे उठता हूँ' English में?",options:["I wake up at 7 AM","I am wake up at 7 AM","I waking up at 7 AM","I wakes up at 7 AM"],correct:0,grammar:"'wake up' = उठना। 'at 7 AM' = 7 बजे सुबह।",answer:"i wake up at 7 am"},
 {q:"How to say 'मैं नाश्ता करता हूँ'?",h:"'मैं नाश्ता करता हूँ' English में?",options:["I eat breakfast","I am eat breakfast","I eating breakfast","I eats breakfast"],correct:0,grammar:"'eat breakfast' = नाश्ता करना।",answer:"i eat breakfast"},
-{q:"How to say 'मैं स्कूल जाता हूँ'?",h:"'मैं स्कूल जाता हूँ' English में?",options:["I go to school","I going to school","I am go to school","I goes to school"],correct:0,grammar:"'go to school' = स्कूल जाना। 'I' के साथ 'go' लगता है।",answer:"i go to school"}
+{q:"How to say 'मैं स्कूल जाता हूँ'?",h:"'मैं स्कूल जाता हूँ' English में?",options:["I go to school","I going to school","I am go to school","I goes to school"],correct:0,grammar:"'go to school' = स्कूल जाना। 'I' के साथ 'go' लगता है।",answer:"i go to school"},
+{q:"How to say 'मैं रात 10 बजे सोता हूँ'?",h:"'मैं रात 10 बजे सोता हूँ' English में?",options:["I sleep at 10 PM","I am sleep at 10 PM","I sleeping at 10 PM","I sleeps at 10 PM"],correct:0,grammar:"'sleep' = सोना। 'at 10 PM' = रात 10 बजे।",answer:"i sleep at 10 pm"},
+{q:"How to say 'मैं अपना काम करता हूँ'?",h:"'मैं अपना काम करता हूँ' English में?",options:["I do my work","I am do my work","I doing my work","I does my work"],correct:0,grammar:"'do my work' = अपना काम करना।",answer:"i do my work"}
 ]},
-4: {title:"Family Members",hasVoice:false,questions:[
-{q:"How to say 'यह मेरी माँ है'?",h:"'यह मेरी माँ है' English में?",options:["This is my mother","This is my father","This is my sister","This is my brother"],correct:0,grammar:"'Mother' = माँ। 'This is' = यह है।"},
-{q:"How to say 'वह मेरा भाई है'?",h:"'वह मेरा भाई है' English में?",options:["He is my brother","She is my brother","I am my brother","You are my brother"],correct:0,grammar:"'Brother' = भाई। लड़के के लिए 'He' लगता है।"},
-{q:"How to say 'मेरी एक बहन है'?",h:"'मेरी एक बहन है' English में?",options:["I have one sister","I am one sister","I have one brother","I is one sister"],correct:0,grammar:"'Have' = पास होना। 'One sister' = एक बहन।"}
+4: {title:"Family Members",hasVoice:true,questions:[
+{q:"How to say 'यह मेरी माँ है'?",h:"'यह मेरी माँ है' English में?",options:["This is my mother","This is my father","This is my sister","This is my brother"],correct:0,grammar:"'Mother' = माँ। 'This is' = यह है।",answer:"this is my mother"},
+{q:"How to say 'वह मेरा भाई है'?",h:"'वह मेरा भाई है' English में?",options:["He is my brother","She is my brother","I am my brother","You are my brother"],correct:0,grammar:"'Brother' = भाई। लड़के के लिए 'He' लगता है।",answer:"he is my brother"},
+{q:"How to say 'मेरी एक बहन है'?",h:"'मेरी एक बहन है' English में?",options:["I have one sister","I am one sister","I have one brother","I is one sister"],correct:0,grammar:"'Have' = पास होना। 'One sister' = एक बहन।",answer:"i have one sister"},
+{q:"How to say 'हमारा परिवार बड़ा है'?",h:"'हमारा परिवार बड़ा है' English में?",options:["Our family is big","My family is big","Your family is big","Their family is big"],correct:0,grammar:"'Our' = हमारा। 'Family' = परिवार। 'Big' = बड़ा।",answer:"our family is big"},
+{q:"How to say 'मेरे पापा डॉक्टर हैं'?",h:"'मेरे पापा डॉक्टर हैं' English में?",options:["My father is a doctor","My father are a doctor","My father is doctor","My father a doctor"],correct:0,grammar:"'Doctor' के पहले 'a' लगता है। 'Is' = है।",answer:"my father is a doctor"}
 ]},
 5: {title:"Food & Drinks",hasVoice:true,questions:[
 {q:"How to say 'मुझे भूख लगी है'?",h:"'मुझे भूख लगी है' English में?",options:["I am hungry","I am thirsty","I am happy","I am sad"],correct:0,grammar:"'Hungry' = भूखा। 'I am' = मैं हूँ।",answer:"i am hungry"},
 {q:"How to say 'मुझे पानी चाहिए'?",h:"'मुझे पानी चाहिए' English में?",options:["I want water","I want food","I want tea","I want milk"],correct:0,grammar:"'Want' = चाहिए। 'Water' = पानी।",answer:"i want water"},
-{q:"How to say 'मुझे चाय पसंद है'?",h:"'मुझे चाय पसंद है' English में?",options:["I like tea","I like coffee","I like milk","I like juice"],correct:0,grammar:"'Like' = पसंद करना। 'Tea' = चाय।",answer:"i like tea"}
+{q:"How to say 'मुझे चाय पसंद है'?",h:"'मुझे चाय पसंद है' English में?",options:["I like tea","I like coffee","I like milk","I like juice"],correct:0,grammar:"'Like' = पसंद करना। 'Tea' = चाय।",answer:"i like tea"},
+{q:"How to say 'यह खाना स्वादिष्ट है'?",h:"'यह खाना स्वादिष्ट है' English में?",options:["This food is tasty","This food is bad","This food is hot","This food is cold"],correct:0,grammar:"'Tasty' = स्वादिष्ट। 'Food' = खाना।",answer:"this food is tasty"},
+{q:"How to say 'मैं रोटी खाता हूँ'?",h:"'मैं रोटी खाता हूँ' English में?",options:["I eat roti","I drink roti","I eat rice","I eat bread"],correct:0,grammar:"'Eat' = खाना। 'Roti' को English में भी 'roti' या 'bread' बोलते हैं।",answer:"i eat roti"}
 ]},
 6: {title:"Numbers 1-10",hasVoice:true,questions:[
 {q:"How to say 'एक' in English?",h:"'एक' को English में?",options:["One","Two","Three","Four"],correct:0,grammar:"'One' = एक। Counting शुरू होती है।",answer:"one"},
 {q:"How to say 'पाँच' in English?",h:"'पाँच' को English में?",options:["Three","Four","Five","Six"],correct:2,grammar:"'Five' = पाँच।",answer:"five"},
-{q:"How to say 'दस' in English?",h:"'दस' को English में?",options:["Eight","Nine","Ten","Eleven"],correct:2,grammar:"'Ten' = दस।",answer:"ten"}
+{q:"How to say 'दस' in English?",h:"'दस' को English में?",options:["Eight","Nine","Ten","Eleven"],correct:2,grammar:"'Ten' = दस।",answer:"ten"},
+{q:"How to say 'तीन' in English?",h:"'तीन' को English में?",options:["One","Two","Three","Four"],correct:2,grammar:"'Three' = तीन।",answer:"three"},
+{q:"How to say 'सात' in English?",h:"'सात' को English में?",options:["Five","Six","Seven","Eight"],correct:2,grammar:"'Seven' = सात।",answer:"seven"}
 ]},
 7: {title:"Colors",hasVoice:true,questions:[
 {q:"How to say 'लाल' in English?",h:"'लाल' को English में?",options:["Red","Blue","Green","Yellow"],correct:0,grammar:"'Red' = लाल रंग।",answer:"red"},
 {q:"How to say 'नीला' in English?",h:"'नीला' को English में?",options:["Red","Blue","Black","White"],correct:1,grammar:"'Blue' = नीला/आसमानी रंग।",answer:"blue"},
-{q:"How to say 'हरा' in English?",h:"'हरा' को English में?",options:["Green","Grey","Brown","Pink"],correct:0,grammar:"'Green' = हरा रंग। पेड़-पौधों का रंग।",answer:"green"}
+{q:"How to say 'हरा' in English?",h:"'हरा' को English में?",options:["Green","Grey","Brown","Pink"],correct:0,grammar:"'Green' = हरा रंग। पेड़-पौधों का रंग।",answer:"green"},
+{q:"How to say 'पीला' in English?",h:"'पीला' को English में?",options:["Yellow","Orange","Purple","Brown"],correct:0,grammar:"'Yellow' = पीला रंग। सूरज का रंग।",answer:"yellow"},
+{q:"How to say 'काला' in English?",h:"'काला' को English में?",options:["White","Black","Blue","Green"],correct:1,grammar:"'Black' = काला रंग।",answer:"black"}
 ]},
 8: {title:"Days of Week",hasVoice:true,questions:[
 {q:"How to say 'सोमवार' in English?",h:"'सोमवार' को English में?",options:["Monday","Tuesday","Wednesday","Thursday"],correct:0,grammar:"'Monday' = सोमवार। Week का पहला दिन।",answer:"monday"},
 {q:"How to say 'शुक्रवार' in English?",h:"'शुक्रवार' को English में?",options:["Friday","Saturday","Sunday","Monday"],correct:0,grammar:"'Friday' = शुक्रवार।",answer:"friday"},
-{q:"How to say 'रविवार' in English?",h:"'रविवार' को English में?",options:["Saturday","Sunday","Monday","Tuesday"],correct:1,grammar:"'Sunday' = रविवार। Holiday का दिन।",answer:"sunday"}
+{q:"How to say 'रविवार' in English?",h:"'रविवार' को English में?",options:["Saturday","Sunday","Monday","Tuesday"],correct:1,grammar:"'Sunday' = रविवार। Holiday का दिन।",answer:"sunday"},
+{q:"How to say 'बुधवार' in English?",h:"'बुधवार' को English में?",options:["Monday","Tuesday","Wednesday","Thursday"],correct:2,grammar:"'Wednesday' = बुधवार।",answer:"wednesday"},
+{q:"How to say 'शनिवार' in English?",h:"'शनिवार' को English में?",options:["Friday","Saturday","Sunday","Monday"],correct:1,grammar:"'Saturday' = शनिवार।",answer:"saturday"}
 ]},
 9: {title:"Common Verbs",hasVoice:true,questions:[
 {q:"How to say 'खाना' in English?",h:"'खाना' verb English में?",options:["Eat","Drink","Sleep","Run"],correct:0,grammar:"'Eat' = खाना। Example: I eat rice",answer:"eat"},
 {q:"How to say 'पीना' in English?",h:"'पीना' verb English में?",options:["Eat","Drink","Read","Write"],correct:1,grammar:"'Drink' = पीना। Example: I drink water",answer:"drink"},
-{q:"How to say 'सोना' in English?",h:"'सोना' verb English में?",options:["Sleep","Wake","Walk","Talk"],correct:0,grammar:"'Sleep' = सोना। Example: I sleep at night",answer:"sleep"}
+{q:"How to say 'सोना' in English?",h:"'सोना' verb English में?",options:["Sleep","Wake","Walk","Talk"],correct:0,grammar:"'Sleep' = सोना। Example: I sleep at night",answer:"sleep"},
+{q:"How to say 'पढ़ना' in English?",h:"'पढ़ना' verb English में?",options:["Read","Write","Speak","Listen"],correct:0,grammar:"'Read' = पढ़ना। Example: I read books",answer:"read"},
+{q:"How to say 'लिखना' in English?",h:"'लिखना' verb English में?",options:["Read","Write","Draw","Paint"],correct:1,grammar:"'Write' = लिखना। Example: I write English",answer:"write"}
 ]},
 10: {title:"Shopping Basics",hasVoice:true,questions:[
 {q:"How to say 'यह कितने का है?'",h:"'यह कितने का है?' English में?",options:["How much is this?","What is this?","Where is this?","Who is this?"],correct:0,grammar:"'How much' = कितने का। Price पूछने के लिए।",answer:"how much is this"},
 {q:"How to say 'बहुत महंगा है'",h:"'बहुत महंगा है' English में?",options:["Very expensive","Very cheap","Very good","Very bad"],correct:0,grammar:"'Expensive' = महंगा। 'Cheap' = सस्ता।",answer:"very expensive"},
-{q:"How to say 'मुझे ये चाहिए'",h:"'मुझे ये चाहिए' English में?",options:["I want this","I like this","I have this","I see this"],correct:0,grammar:"'I want this' = मुझे ये चाहिए।",answer:"i want this"}
-]}let state = {xp:0,hearts:3,streak:0,currentDay:1,currentQ:0,score:0,completedDays:[],theme:'light',lastPlayDate:'',isPractice:false};
+{q:"How to say 'मुझे ये चाहिए'",h:"'मुझे ये चाहिए' English में?",options:["I want this","I like this","I have this","I see this"],correct:0,grammar:"'I want this' = मुझे ये चाहिए।",answer:"i want this"},
+{q:"How to say 'क्या आपके पास है?'",h:"'क्या आपके पास है?' English में?",options:["Do you have it?","You have it?","Have you it?","It you have?"],correct:0,grammar:"'Do you have' = क्या तुम्हारे पास है?",answer:"do you have it"},
+{q:"How to say 'सस्ता वाला दिखाओ'",h:"'सस्ता वाला दिखाओ' English में?",options:["Show me cheaper one","Show cheaper me","Cheaper show me","Me show cheaper"],correct:0,grammar:"'Cheaper one' = सस्ता वाला। 'Show me' = मुझे दिखाओ।",answer:"show me cheaper one"}
+]}
+};
+let state = {xp:0,hearts:3,streak:0,currentDay:1,currentQ:0,score:0,completedDays:[],theme:'light',lastPlayDate:'',isPractice:false};
 let lastAIText = '';
 let quizMode = true;
 let recognition;
@@ -235,36 +257,4 @@ document.getElementById('progress').textContent=`सवाल ${state.currentQ+1
 document.getElementById('progressBar').style.width=((state.currentQ+1)/dayData.questions.length*100)+'%';
 document.getElementById('feedback').textContent='';
 document.getElementById('grammar').classList.add('hidden');
-document.getElementById('nextBtn').classList.add('hidden');
-document.getElementById('finishBtn').classList.add('hidden');
-document.getElementById('shareBtn').classList.add('hidden');
-document.getElementById('spokenText').classList.add('hidden');
-document.getElementById('speakBtn').classList.toggle('hidden',!dayData.hasVoice);
-let o=document.getElementById('options');o.innerHTML='';
-q.options.forEach((opt,i)=>{let b=document.createElement('button');b.className='btn btn-opt';b.textContent=opt;b.onclick=()=>checkAns(i);o.appendChild(b)});
-setTimeout(()=>{speakText(q.q)},300);
-}
-function speakQuestion(){let q=lessonData[state.currentDay].questions[state.currentQ];speakText(q.q);}
-function checkAns(i){let q=lessonData[state.currentDay].questions[state.currentQ];let btns=document.querySelectorAll('.btn-opt');btns.forEach(b=>b.disabled=true);if(i===q.correct){btns[i].classList.add('btn-correct');document.getElementById('feedback').textContent='🎉 सही जवाब!';document.getElementById('feedback').style.color='var(--ok)';state.score++;playSound('correctSound');speakText('Correct! Well done!');}else{btns[i].classList.add('btn-wrong');btns[q.correct].classList.add('btn-correct');document.getElementById('feedback').textContent='❌ गलत! सही: '+q.options[q.correct];document.getElementById('feedback').style.color='var(--bad)';if(!state.isPractice){state.hearts--;updateStats();saveState();if(state.hearts<=0){document.getElementById('heartModal').style.display='flex';return}}playSound('wrongSound');speakText('Wrong answer. The correct answer is '+q.options[q.correct]);}document.getElementById('grammar').textContent='💡 '+q.grammar;document.getElementById('grammar').classList.remove('hidden');if(state.currentQ<lessonData[state.currentDay].questions.length-1){document.getElementById('nextBtn').classList.remove('hidden')}else{document.getElementById('finishBtn').classList.remove('hidden');document.getElementById('shareBtn').classList.remove('hidden')}}
-function nextQ(){state.currentQ++;showQ()}
-function finishDay(){if(!state.isPractice &&!state.completedDays.includes(state.currentDay)){state.completedDays.push(state.currentDay);state.xp+=10;state.streak++;state.currentDay++;saveState();updateStats();speakText('Congratulations! Day completed. You earned 10 XP!');alert(`🎉 Day ${state.currentDay-1} पूरा! +10 XP मिले!`);}else{speakText('Practice completed! Well done!');alert('Practice Complete! 🎉')}document.getElementById('quizScreen').classList.add('hidden');document.getElementById('homeScreen').classList.remove('hidden');renderDays();}
-function shareResult(){let text=`🎉 मैंने Maya Didi App पे Day ${state.currentDay-1} Complete कर लिया! ${state.score}/${lessonData[state.currentDay-1].questions.length} Score ✅ तुम भी English सीखो: https://mayakaur389.github.io/mayamayo/`;window.open(`https://wa.me/?text=${encodeURIComponent(text)}`,'_blank');}
-function watchAd(){state.hearts=3;updateStats();saveState();closeModal();alert('Video देख लिया! +3 ❤️ मिले')}
-function closeModal(){document.getElementById('heartModal').style.display='none'}
-function addMsg(text,sender,hindi=''){let box=document.getElementById('chatMsgs');let d=document.createElement('div');d.className='msg msg-'+sender;d.textContent=text;if(hindi){let h=document.createElement('div');h.className='msg-hindi';h.textContent=hindi;d.appendChild(h)}box.appendChild(d);box.scrollTop=box.scrollHeight;if(sender==='ai')lastAIText=text;}
-function speakLast(){if(!lastAIText){alert('पहले AI से कुछ पूछो!');return}speakText(lastAIText);}
-function sendChat(){let i=document.getElementById('chatInput');let t=i.value.trim();if(!t)return;addMsg(t,'user');i.value='';setTimeout(()=>{let r=getAIReply(t);addMsg(r.en,'ai',r.hi);speakText(r.en);},500)}
-function sendSuggest(t){document.getElementById('chatInput').value=t;sendChat()}
-function getAIReply(t){
-t=t.toLowerCase().trim();
-const grammarDB={'hello':{en:"'Hello' = नमस्ते. Use when you meet someone. Example: Hello, how are you?",hi:"'Hello' = नमस्ते। मिलने पर बोलो। Example: Hello, how are you?"},'thank':{en:"'Thank you' = धन्यवाद. Reply with 'You're welcome'.",hi:"'Thank you' = धन्यवाद। जवाब: 'You're welcome'"},'name':{en:"'My name is Rahul' = मेरा नाम राहुल है. To ask: 'What is your name?'",hi:"'My name is Rahul' = मेरा नाम राहुल है। पूछो: 'What is your name?'"},'how are':{en:"'How are you?' = आप कैसे हैं? Reply: 'I am fine, thank you'",hi:"'How are you?' = आप कैसे हैं? जवाब: 'I am fine, thank you'"},'sorry':{en:"'Sorry' = माफ़ करना. Use when you make a mistake.",hi:"'Sorry' = माफ़ करना। गलती पर बोलो।"},'bye':{en:"'Bye' or 'Goodbye' = अलविदा. 'See you' = फिर मिलेंगे.",hi:"'Bye' = अलविदा। 'See you' = फिर मिलेंगे।"},'please':{en:"'Please' = कृपया. Use for requests.",hi:"'Please' = कृपया। Request के लिए।"},'yes':{en:"'Yes' = हाँ. 'No' = नहीं.",hi:"'Yes' = हाँ। 'No' = नहीं।"},'i am':{en:"'I am' = मैं हूँ. Example: I am a student",hi:"'I am' = मैं हूँ। Example: I am a student"},'you are':{en:"'You are' = तुम हो/आप हैं.",hi:"'You are' = तुम हो।"},'what':{en:"'What' = क्या. Example: What is this?",hi:"'What' = क्या। Example: What is this?"},'where':{en:"'Where' = कहाँ. Example: Where are you?",hi:"'Where' = कहाँ।"},'when':{en:"'When' = कब. Example: When will you come?",hi:"'When' = कब।"},'good morning':{en:"'Good morning' = सुप्रभात. Use before 12 PM.",hi:"'Good morning' = सुप्रभात।"},'good night':{en:"'Good night' = शुभ रात्रि. Use when going to sleep.",hi:"'Good night' = शुभ रात्रि।"}};
-for(let key in grammarDB){if(t.includes(key)){return grammarDB[key]}}
-return{en:"I understand you want to learn English. Try asking: 'What is Hello?' or 'How to say धन्यवाद?'",hi:"मैं समझ गया आप इंग्लिश सीखना चाहते हैं। पूछो: 'Hello क्या है?' या 'धन्यवाद कैसे बोलते हैं?'"}
-}
-loadState();renderDays();initSpeech();
-speechSynthesis.onvoiceschanged=()=>{speechSynthesis.getVoices()};
-if("Notification" in window && Notification.permission==="default"){Notification.requestPermission();}
-</script>
-</body>
-</html>
-};
+document.getElementById('
