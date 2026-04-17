@@ -72,7 +72,6 @@
       <span>❤️ <span id="hearts">3</span></span>
       <span>⚡ <span id="xp">0</span></span>
     </div>
-  </div>
   <div class="container">
     <button class="btn btn-toggle" id="toggleBtn" onclick="toggleSection()">🤖 AI Teacher से बात करो</button>
     <div id="quizSection">
@@ -113,7 +112,6 @@
         <button onclick="sendChat()">Send</button>
       </div>
     </div>
-  </div>
   <div class="modal" id="heartModal">
     <div class="modal-content">
       <h3>❤️ Heart खत्म!</h3>
@@ -307,4 +305,10 @@
         let b = document.createElement('button'); b.className = 'btn btn-opt'; b.textContent = opt; b.onclick = () => checkAns(i); o.appendChild(b)
       });
       setTimeout(() => { speakText(q.q) }, 300);
-   
+    }
+
+    function speakQuestion(){ let q = lessonData[state.currentDay].questions[state.currentQ]; speakText(q.q); }
+
+    function checkAns(i){
+      let q = lessonData[state.currentDay].questions[state.currentQ];
+      let btns = document.querySelectorAll('.btn-opt'); btns
