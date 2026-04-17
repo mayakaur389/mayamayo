@@ -72,6 +72,7 @@
       <span>❤️ <span id="hearts">3</span></span>
       <span>⚡ <span id="xp">0</span></span>
     </div>
+  </div>
   <div class="container">
     <button class="btn btn-toggle" id="toggleBtn" onclick="toggleSection()">🤖 AI Teacher से बात करो</button>
     <div id="quizSection">
@@ -193,9 +194,7 @@
         {q:"How to say 'वे दौड़ते हैं'?",h:"'वे दौड़ते हैं' English में?",options:["They run","They runs","They running","They are run"],correct:0,grammar:"'Run' = दौड़ना। 'They' के साथ 'run' ही रहेगा।"},
         {q:"How to say 'तुम सुनो'?",h:"'तुम सुनो' English में?",options:["You listen","You listens","You listening","You are listen"],correct:0,grammar:"'Listen' = सुनना। Order देने के लिए सिर्फ 'Listen' भी बोलते हैं।"}
       ]}
-    };
-
-    let state = {xp:0,hearts:3,streak:0,currentDay:1,currentQ:0,score:0,completedDays:[],theme:'light',lastPlayDate:'',isPractice:false};
+    };    let state = {xp:0,hearts:3,streak:0,currentDay:1,currentQ:0,score:0,completedDays:[],theme:'light',lastPlayDate:'',isPractice:false};
     let lastAIText = '';
     let quizMode = true;
 
@@ -299,16 +298,4 @@
       document.getElementById('grammar').classList.add('hidden');
       document.getElementById('nextBtn').classList.add('hidden');
       document.getElementById('finishBtn').classList.add('hidden');
-      document.getElementById('shareBtn').classList.add('hidden');
-      let o = document.getElementById('options'); o.innerHTML = '';
-      q.options.forEach((opt, i) => {
-        let b = document.createElement('button'); b.className = 'btn btn-opt'; b.textContent = opt; b.onclick = () => checkAns(i); o.appendChild(b)
-      });
-      setTimeout(() => { speakText(q.q) }, 300);
-    }
-
-    function speakQuestion(){ let q = lessonData[state.currentDay].questions[state.currentQ]; speakText(q.q); }
-
-    function checkAns(i){
-      let q = lessonData[state.currentDay].questions[state.currentQ];
-      let btns = document.querySelectorAll('.btn-opt'); btns
+      document.getElementById('shareBtn').
