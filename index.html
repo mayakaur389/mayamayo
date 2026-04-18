@@ -9,51 +9,54 @@
     [data-theme="dark"]{--bg:#111827;--card:#1f2937;--text:#f9fafb;--text2:#9ca3af;--primary:#60a5fa;--ai:#a78bfa;--ok:#34d399;--bad:#f87171;--opt:#374151}
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
     body{background:var(--bg);color:var(--text);transition:0.3s}
-   .header{background:var(--primary);color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-   .stats{display:flex;gap:12px;font-weight:600;align-items:center}
-   .icon-btn{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:50%;width:32px;height:32px;cursor:pointer}
-   .container{max-width:500px;margin:0 auto;padding:16px}
-   .card{background:var(--card);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-   .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
-   .day{aspect-ratio:1;background:var(--opt);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
-   .day.active{background:var(--primary);color:white;border-color:#1d4ed8}
-   .day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
-   .day.done{background:var(--ok);color:white}
-   .day.practice{background:var(--warn);color:white}
-   .day small{font-size:10px;font-weight:400}
-   .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
-   .hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
-   .options{display:grid;gap:10px}
-   .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
-   .btn-opt{background:var(--opt);color:var(--text);text-align:left}
-   .btn-opt:hover{filter:brightness(0.9)}
-   .btn-correct{background:var(--ok)!important;color:white!important}
-   .btn-wrong{background:var(--bad)!important;color:white!important}
-   .btn-main{background:var(--primary);color:white;width:100%;margin-top:12px}
-   .btn-main:disabled{background:#9ca3af}
-   .btn-voice{background:var(--ai);color:white;width:100%;margin:8px 0}
-   .btn-speak{background:var(--p3);color:white;width:100%}
-   .btn-practice{background:var(--warn);color:white;width:100%;margin:8px 0}
-   .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
-   .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px;color:#1f2937}
+  .header{background:var(--primary);color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+  .stats{display:flex;gap:12px;font-weight:600;align-items:center}
+  .icon-btn{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:50%;width:32px;height:32px;cursor:pointer}
+  .container{max-width:500px;margin:0 auto;padding:16px}
+  .card{background:var(--card);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+  .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
+  .day{aspect-ratio:1;background:var(--opt);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px;position:relative}
+  .day.active{background:var(--primary);color:white;border-color:#1d4ed8}
+  .day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
+  .day.done{background:var(--ok);color:white}
+  .day.practice{background:var(--warn);color:white}
+  .day small{font-size:10px;font-weight:400}
+  .day.badge{position:absolute;top:-5px;right:-5px;background:var(--bad);color:white;font-size:9px;padding:2px 5px;border-radius:8px}
+  .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
+  .hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
+  .options{display:grid;gap:10px}
+  .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
+  .btn-opt{background:var(--opt);color:var(--text);text-align:left}
+  .btn-opt:hover{filter:brightness(0.9)}
+  .btn-correct{background:var(--ok)!important;color:white!important}
+  .btn-wrong{background:var(--bad)!important;color:white!important}
+  .btn-main{background:var(--primary);color:white;width:100%;margin-top:12px}
+  .btn-main:disabled{background:#9ca3af}
+  .btn-voice{background:var(--ai);color:white;width:100%;margin:8px 0}
+  .btn-speak{background:var(--p3);color:white;width:100%}
+  .btn-practice{background:var(--warn);color:white;width:100%;margin:8px 0}
+  .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
+  .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px;color:#1f2937}
     [data-theme="dark"].grammar{background:#78350f;color:#fef3c7}
-   .hidden{display:none!important}
-   .screen{display:none}
-   .grid{display:grid;gap:10px}
-   .stat{background:var(--opt);padding:12px;border-radius:12px;text-align:center}
-   .stat-label{font-size:12px;color:var(--text2)}
-   .stat-value{font-size:20px;font-weight:700;color:var(--primary)}
-   .chat-msg{margin:8px 0;padding:10px;border-radius:12px;max-width:85%}
-   .user-msg{background:var(--p1);color:white;margin-left:auto;text-align:right}
-   .ai-msg{background:var(--card);border:2px solid var(--p2);margin-right:auto}
-   .ai-msg b{color:var(--p1)}
-   .typing{display:inline-block}
-   .typing span{display:inline-block;width:6px;height:6px;background:var(--p1);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite}
-   .typing span:nth-child(2){animation-delay:0.2s}
-   .typing span:nth-child(3){animation-delay:0.4s}
+  .hidden{display:none!important}
+  .screen{display:none}
+  .grid{display:grid;gap:10px}
+  .stat{background:var(--opt);padding:12px;border-radius:12px;text-align:center}
+  .stat-label{font-size:12px;color:var(--text2)}
+  .stat-value{font-size:20px;font-weight:700;color:var(--primary)}
+  .chat-msg{margin:8px 0;padding:10px;border-radius:12px;max-width:85%}
+  .user-msg{background:var(--p1);color:white;margin-left:auto;text-align:right}
+  .ai-msg{background:var(--card);border:2px solid var(--p2);margin-right:auto}
+  .ai-msg b{color:var(--p1)}
+  .typing{display:inline-block}
+  .typing span{display:inline-block;width:6px;height:6px;background:var(--p1);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite}
+  .typing span:nth-child(2){animation-delay:0.2s}
+  .typing span:nth-child(3){animation-delay:0.4s}
     @keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}}
-   .progress-wrap{background:var(--opt);border-radius:10px;height:8px;margin-bottom:16px}
-   .progress-bar{background:var(--primary);height:8px;border-radius:10px;width:0%;transition:0.3s}
+  .progress-wrap{background:var(--opt);border-radius:10px;height:8px;margin-bottom:16px}
+  .progress-bar{background:var(--primary);height:8px;border-radius:10px;width:0%;transition:0.3s}
+  .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center;z-index:30}
+  .modal-content{background:var(--card);padding:24px;border-radius:16px;text-align:center;max-width:300px}
   </style>
 </head>
 <body>
@@ -93,7 +96,7 @@
           <div class="stat"><div class="stat-label">XP</div><div class="stat-value" id="xpHome">0</div></div>
         </div>
         <h3>UNIT 1: BASICS - 30 DAYS</h3>
-        <p class="hindi">Day चुनो और सीखना शुरू करो</p>
+        <p class="hindi">Day चुनो। Done Day पे Click = Practice</p>
         <div class="day-grid" id="daysGrid"></div>
         <div class="grid" style="grid-template-columns:1fr 1fr">
           <button class="btn btn-opt" onclick="showStats()">📊 प्रगति</button>
@@ -116,6 +119,16 @@
     </div>
   </div>
 
+  <div class="modal" id="dayModal">
+    <div class="modal-content">
+      <h3 id="modalTitle">Day 1</h3>
+      <p id="modalDesc">I am / You are</p>
+      <button class="btn btn-main" onclick="startDayQuiz()">📝 Start Quiz</button>
+      <button class="btn btn-practice" id="modalPracticeBtn" onclick="startDayPractice()">🔄 Practice This Day</button>
+      <button class="btn btn-opt" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+
 <script>
 const LESSONS = {
   1: {topic:"I am / You are",questions:[
@@ -134,7 +147,7 @@ const LESSONS = {
   ]},
 };
 
-let state = {day:1,q:0,hearts:5,xp:0,streak:0,done:[],wrong:[],isPractice:false};
+let state = {day:1,q:0,hearts:5,xp:0,streak:0,done:[],wrong:[],isPractice:false,selectedDay:1};
 let chatHistory = [];
 
 function showScreen(id){
@@ -165,7 +178,7 @@ function addAIMessage(text){
 
 function showTyping(){
   let chatBox = document.getElementById('chatBox');
-  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span><span></span></div></div>`;
+  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span></div></div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -206,20 +219,46 @@ function askDoubtVoice(){
 
 function getMayaAnswer(q){
   q = q.toLowerCase();
+  // Grammar Rules
   if(q.includes('i am go') || q.includes('am go')){
     return `❌ <b>"I am go"</b> गलत है बेटा।<br><br><b>सही:</b> "I go" या "I am going"<br><br><b>Rule:</b> 'am' के बाद Verb की -ing form लगती है।<br><b>Example:</b><br>✅ I am going - मैं जा रहा हूँ<br>✅ I go - मैं जाता हूँ`;
   }
   if(q.includes('he do') || q.includes('she do')){
-    return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।`;
+    return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।<br><b>Example:</b><br>✅ He does his work - वह अपना काम करता है`;
   }
+  if(q.includes('did not went') || q.includes('did not came')){
+    return `❌ <b>"did not went"</b> गलत है।<br><br><b>सही:</b> "did not go"<br><br><b>Rule:</b> 'did' के बाद हमेशा Verb की 1st form लगती है।<br><b>Example:</b><br>✅ I did not go - मैं नहीं गया<br>✅ She did not come - वह नहीं आई`;
+  }
+  if(q.includes('more better') || q.includes('most best')){
+    return `❌ <b>"more better"</b> गलत है।<br><br><b>सही:</b> "better" या "much better"<br><br><b>Rule:</b> 'better' खुद Comparative है, 'more' नहीं लगेगा।<br><b>Example:</b><br>✅ This is better - यह बेहतर है<br>❌ This is more better`;
+  }
+  if(q.includes('a') && q.includes('an')){
+    return `<b>A / An / The का Use:</b><br><br><b>A</b> = Consonant sound से पहले<br>✅ a book, a car, a university<br><br><b>AN</b> = Vowel sound से पहले<br>✅ an apple, an hour, an honest man<br><br><b>THE</b> = Specific चीज़ के लिए<br>✅ the sun, the Taj Mahal`;
+  }
+  if(q.includes('in') && q.includes('on') && q.includes('at')){
+    return `<b>In / On / At का Difference:</b><br><br><b>IN</b> = बड़े जगह, महीने, साल<br>✅ in India, in 2025, in the room<br><br><b>ON</b> = सतह पर, दिन, तारीख<br>✅ on the table, on Monday, on 5th Jan<br><br><b>AT</b> = Exact point, समय<br>✅ at home, at 5 PM, at the bus stop`;
+  }
+  if(q.includes('has') && q.includes('have')){
+    return `<b>Has / Have का Use:</b><br><br><b>HAS</b> = He, She, It, Name के साथ<br>✅ He has a car, Ram has money<br><br><b>HAVE</b> = I, You, We, They के साथ<br>✅ I have a book, They have time`;
+  }
+  // Translations
   if(q.includes('ka english') || q.includes('का इंग्लिश') || q.includes('translate')){
-    let hindiText = q.replace(/ka english kya hai|ka english|का इंग्लिश क्या है|translate|का इंग्लिश/gi,'').trim();
-    if(hindiText.includes('मैं ठीक हूँ')) return `<b>"मैं ठीक हूँ"</b> = "I am fine" या "I am okay"`;
-    if(hindiText.includes('तुम कहाँ')) return `<b>"तुम कहाँ जा रहे हो?"</b> = "Where are you going?"`;
-    if(hindiText.includes('धन्यवाद')) return `<b>"धन्यवाद"</b> = "Thank you" या "Thanks"`;
-    return `बेटा, "<b>${hindiText}</b>" का English बताने के लिए पूरा वाक्य लिखो 😊`;
+    let hindiText = q.replace(/ka english kya hai|ka english|का इंग्लिश क्या है|translate|का इंग्लिश|ka matlab|का मतलब/gi,'').trim();
+    if(hindiText.includes('मैं ठीक हूँ') || hindiText.includes('main thik hun')) return `<b>"मैं ठीक हूँ"</b> = "I am fine" या "I am okay" या "I'm good"<br><br><b>Conversation:</b><br>A: How are you?<br>B: I am fine, thank you. And you?`;
+    if(hindiText.includes('तुम कहाँ') || hindiText.includes('tum kahan')) return `<b>"तुम कहाँ जा रहे हो?"</b> = "Where are you going?"<br><br><b>Rule:</b> Where = कहाँ, are you going = जा रहे हो`;
+    if(hindiText.includes('धन्यवाद') || hindiText.includes('dhanyawad')) return `<b>"धन्यवाद"</b> = "Thank you" या "Thanks"<br><br><b>Formal:</b> Thank you very much<br><b>Casual:</b> Thanks a lot`;
+    if(hindiText.includes('मुझे भूख लगी') || hindiText.includes('bhookh lagi')) return `<b>"मुझे भूख लगी है"</b> = "I am hungry"<br><br><b>Example:</b> I am hungry, let's eat something`;
+    if(hindiText.includes('माफ करना') || hindiText.includes('sorry')) return `<b>"माफ करना"</b> = "Sorry" या "Excuse me" या "Pardon"<br><br><b>Example:</b> Sorry, I am late - माफ करना, मैं लेट हूँ`;
+    return `बेटा, "<b>${hindiText}</b>" का English बताने के लिए पूरा वाक्य लिखो तो बेहतर समझा पाऊंगी 😊<br><br><b>Example पूछो:</b><br>1. "मैं ठीक हूँ का English क्या है?"<br>2. "तुम कहाँ जा रहे हो का English"`;
   }
-  return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br>क्या तुम Grammar पूछ रहे हो, Translation, या Meaning?<br><br><b>Example:</b><br>1. "I am go सही है या गलत?"<br>2. "मैं ठीक हूँ का English क्या है?"`;
+  // Common Questions
+  if(q.includes('how are you')){
+    return `<b>"How are you?"</b> = "आप कैसे हो?" / "तुम कैसे हो?"<br><br><b>जवाब दो:</b><br>✅ I am fine - मैं ठीक हूँ<br>✅ I am good - मैं अच्छा हूँ<br>✅ Not bad - बुरा नहीं<br>✅ I am great - मैं बहुत अच्छा हूँ`;
+  }
+  if(q.includes('what is your name')){
+    return `<b>"What is your name?"</b> = "तुम्हारा नाम क्या है?"<br><br><b>जवाब दो:</b><br>✅ My name is Ram - मेरा नाम राम है<br>✅ I am Ram - मैं राम हूँ`;
+  }
+  return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br><b>मैं ये सब सिखा सकती हूँ:</b><br>1. Grammar Rules - is/am/are, has/have, do/does<br>2. Translation - Hindi से English<br>3. Daily Sentences - How are you, Thank you<br>4. Tenses - Present, Past, Future<br><br><b>Example पूछो:</b><br>"I am go सही है या गलत?"<br>"मैं ठीक हूँ का English क्या है?"<br>"in on at का difference"`;
 }
 
 function loadDays(){
@@ -227,16 +266,48 @@ function loadDays(){
   grid.innerHTML = '';
   for(let i=1;i<=30;i++){
     let status = state.done.includes(i)? 'done' : i===state.day? 'active' : i<state.day? 'practice' : 'locked';
-    grid.innerHTML += `<div class="day ${status}" onclick="startDay(${i})">${i}<small>Day</small></div>`;
+    let wrongCount = state.wrong.filter(w=>w.day===i).length;
+    let badge = wrongCount > 0? `<span class="badge">${wrongCount}</span>` : '';
+    grid.innerHTML += `<div class="day ${status}" onclick="openDayModal(${i})">${i}${badge}<small>Day</small></div>`;
   }
   updateStats();
 }
 
-function startDay(d){
+function openDayModal(d){
+  state.selectedDay = d;
+  let day = LESSONS[d];
+  document.getElementById('modalTitle').textContent = `Day ${d}`;
+  document.getElementById('modalDesc').textContent = day? day.topic : 'Coming Soon';
+  document.getElementById('modalPracticeBtn').style.display = state.done.includes(d)? 'block' : 'none';
+  document.getElementById('dayModal').style.display = 'flex';
+}
+
+function closeModal(){
+  document.getElementById('dayModal').style.display = 'none';
+}
+
+function startDayQuiz(){
+  closeModal();
+  let d = state.selectedDay;
   if(d > state.day &&!state.done.includes(d-1)) return;
   state.day = d;
   state.q = 0;
   state.isPractice = false;
+  showScreen('quizScreen');
+  loadQuestion();
+}
+
+function startDayPractice(){
+  closeModal();
+  let d = state.selectedDay;
+  let dayWrong = state.wrong.filter(w=>w.day===d);
+  if(dayWrong.length === 0){
+    alert('इस Day में कोई गलत Question नहीं है! 🎉');
+    return;
+  }
+  state.isPractice = true;
+  state.wrong = dayWrong;
+  state.q = 0;
   showScreen('quizScreen');
   loadQuestion();
 }
@@ -264,7 +335,7 @@ function loadQuestion(){
 
   if(state.q >= questions.length){
     if(state.isPractice){
-      state.wrong = [];
+      state.wrong = state.wrong.filter(w=>!questions.includes(w));
       alert('Practice Complete! Shabash 💪');
       showScreen('homeScreen');
       loadDays();
@@ -320,7 +391,7 @@ function checkAnswer(i){
     document.getElementById('grammarBox').classList.remove('hidden');
     if(!state.isPractice){
       let wrongQ = {...q,day:state.day};
-      if(!state.wrong.find(w=>w.q===q.q)) state.wrong.push(wrongQ);
+      if(!state.wrong.find(w=>w.q===q.q && w.day===state.day)) state.wrong.push(wrongQ);
     }
   }
   document.getElementById('nextBtn').disabled = false;
@@ -335,6 +406,7 @@ function nextQuestion(){
 
 function speakText(text){
   if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
     let msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'hi-IN';
     window.speechSynthesis.speak(msg);
