@@ -9,49 +9,49 @@
     [data-theme="dark"]{--bg:#111827;--card:#1f2937;--text:#f9fafb;--text2:#9ca3af;--primary:#60a5fa;--ai:#a78bfa;--ok:#34d399;--bad:#f87171;--opt:#374151}
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
     body{background:var(--bg);color:var(--text);transition:0.3s}
-   .header{background:var(--primary);color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-   .stats{display:flex;gap:12px;font-weight:600;align-items:center}
-   .icon-btn{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:50%;width:32px;height:32px;cursor:pointer}
-   .container{max-width:500px;margin:0 auto;padding:16px}
-   .card{background:var(--card);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-   .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
-   .day{aspect-ratio:1;background:var(--opt);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
-   .day.active{background:var(--primary);color:white;border-color:#1d4ed8}
-   .day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
-   .day.done{background:var(--ok);color:white}
-   .day small{font-size:10px;font-weight:400}
-   .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
-   .hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
-   .options{display:grid;gap:10px}
-   .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
-   .btn-opt{background:var(--opt);color:var(--text);text-align:left}
-   .btn-opt:hover{filter:brightness(0.9)}
-   .btn-correct{background:var(--ok)!important;color:white!important}
-   .btn-wrong{background:var(--bad)!important;color:white!important}
-   .btn-main{background:var(--primary);color:white;width:100%;margin-top:12px}
-   .btn-main:disabled{background:#9ca3af}
-   .btn-voice{background:var(--ai);color:white;width:100%;margin:8px 0}
-   .btn-speak{background:var(--p3);color:white;width:100%}
-   .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
-   .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px;color:#1f2937}
+  .header{background:var(--primary);color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+  .stats{display:flex;gap:12px;font-weight:600;align-items:center}
+  .icon-btn{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:50%;width:32px;height:32px;cursor:pointer}
+  .container{max-width:500px;margin:0 auto;padding:16px}
+  .card{background:var(--card);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+  .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
+  .day{aspect-ratio:1;background:var(--opt);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
+  .day.active{background:var(--primary);color:white;border-color:#1d4ed8}
+  .day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
+  .day.done{background:var(--ok);color:white}
+  .day small{font-size:10px;font-weight:400}
+  .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
+  .hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
+  .options{display:grid;gap:10px}
+  .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
+  .btn-opt{background:var(--opt);color:var(--text);text-align:left}
+  .btn-opt:hover{filter:brightness(0.9)}
+  .btn-correct{background:var(--ok)!important;color:white!important}
+  .btn-wrong{background:var(--bad)!important;color:white!important}
+  .btn-main{background:var(--primary);color:white;width:100%;margin-top:12px}
+  .btn-main:disabled{background:#9ca3af}
+  .btn-voice{background:var(--ai);color:white;width:100%;margin:8px 0}
+  .btn-speak{background:var(--p3);color:white;width:100%}
+  .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
+  .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px;color:#1f2937}
     [data-theme="dark"].grammar{background:#78350f;color:#fef3c7}
-   .hidden{display:none}
-   .screen{display:block}
-   .grid{display:grid;gap:10px}
-   .stat{background:var(--opt);padding:12px;border-radius:12px;text-align:center}
-   .stat-label{font-size:12px;color:var(--text2)}
-   .stat-value{font-size:20px;font-weight:700;color:var(--primary)}
-   .chat-msg{margin:8px 0;padding:10px;border-radius:12px;max-width:85%}
-   .user-msg{background:var(--p1);color:white;margin-left:auto;text-align:right}
-   .ai-msg{background:var(--card);border:2px solid var(--p2);margin-right:auto}
-   .ai-msg b{color:var(--p1)}
-   .typing{display:inline-block}
-   .typing span{display:inline-block;width:6px;height:6px;background:var(--p1);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite}
-   .typing span:nth-child(2){animation-delay:0.2s}
-   .typing span:nth-child(3){animation-delay:0.4s}
+  .hidden{display:none!important}
+  .screen{display:none}
+  .grid{display:grid;gap:10px}
+  .stat{background:var(--opt);padding:12px;border-radius:12px;text-align:center}
+  .stat-label{font-size:12px;color:var(--text2)}
+  .stat-value{font-size:20px;font-weight:700;color:var(--primary)}
+  .chat-msg{margin:8px 0;padding:10px;border-radius:12px;max-width:85%}
+  .user-msg{background:var(--p1);color:white;margin-left:auto;text-align:right}
+  .ai-msg{background:var(--card);border:2px solid var(--p2);margin-right:auto}
+  .ai-msg b{color:var(--p1)}
+  .typing{display:inline-block}
+  .typing span{display:inline-block;width:6px;height:6px;background:var(--p1);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite}
+  .typing span:nth-child(2){animation-delay:0.2s}
+  .typing span:nth-child(3){animation-delay:0.4s}
     @keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}}
-   .progress-wrap{background:var(--opt);border-radius:10px;height:8px;margin-bottom:16px}
-   .progress-bar{background:var(--primary);height:8px;border-radius:10px;width:0%;transition:0.3s}
+  .progress-wrap{background:var(--opt);border-radius:10px;height:8px;margin-bottom:16px}
+  .progress-bar{background:var(--primary);height:8px;border-radius:10px;width:0%;transition:0.3s}
   </style>
 </head>
 <body>
@@ -64,7 +64,7 @@
       <span>⚡ <span id="xp">0</span></span>
     </div>
   <div class="container">
-    <div id="doubtScreen" class="screen hidden">
+    <div id="doubtScreen" class="screen">
       <div class="card">
         <h2>💬 Maya Didi से पूछो</h2>
         <p class="hindi">कोई भी English का Doubt लिखो या बोलो</p>
@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <div id="quizScreen" class="screen hidden">
+    <div id="quizScreen" class="screen">
       <div class="card">
         <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
         <div class="question" id="questionText">Question</div>
@@ -113,7 +113,6 @@
   </div>
 
 <script>
-// 30 Days Data
 const LESSONS = {
   1: {topic:"I am / You are",questions:[
     {q:"I ___ a student",h:"मैं एक छात्र हूँ",o:["am","is","are"],a:0,g:"I के साथ 'am' लगता है"},
@@ -129,21 +128,16 @@ const LESSONS = {
     {q:"We ___ friends",h:"हम दोस्त हैं",o:["is","are","am"],a:1,g:"We/They के साथ 'are' लगता है"},
     {q:"They ___ playing",h:"वे खेल रहे हैं",o:["is","are","am"],a:1,g:"They are = वे हैं"},
   ]},
-  // Day 4-30 भी ऐसे ही add कर देंगे, अभी 3 Day से Start कर
 };
 
 let state = {day:1,q:0,hearts:5,xp:0,streak:0,done:[]};
 let chatHistory = [];
-let currentScreen = 'homeScreen';
 
-// Screen Management
 function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-  currentScreen = id;
+  document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
 }
 
-// Doubt System
 function showDoubtScreen(){
   showScreen('doubtScreen');
   if(chatHistory.length === 0){
@@ -167,7 +161,7 @@ function addAIMessage(text){
 
 function showTyping(){
   let chatBox = document.getElementById('chatBox');
-  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span><span></span></div></div>`;
+  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span></div></div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -212,22 +206,18 @@ function getMayaAnswer(q){
     return `❌ <b>"I am go"</b> गलत है बेटा।<br><br><b>सही:</b> "I go" या "I am going"<br><br><b>Rule:</b> 'am' के बाद Verb की -ing form लगती है।<br><b>Example:</b><br>✅ I am going - मैं जा रहा हूँ<br>✅ I go - मैं जाता हूँ`;
   }
   if(q.includes('he do') || q.includes('she do')){
-    return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।<br><b>Example:</b><br>✅ He does his work - वह अपना काम करता है`;
-  }
-  if(q.includes('did not went') || q.includes('did not came')){
-    return `❌ <b>"did not went"</b> गलत है।<br><br><b>सही:</b> "did not go"<br><br><b>Rule:</b> 'did' के बाद हमेशा Verb की 1st form लगती है।<br><b>Example:</b><br>✅ I did not go - मैं नहीं गया`;
+    return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।`;
   }
   if(q.includes('ka english') || q.includes('का इंग्लिश') || q.includes('translate')){
     let hindiText = q.replace(/ka english kya hai|ka english|का इंग्लिश क्या है|translate|का इंग्लिश/gi,'').trim();
-    if(hindiText.includes('मैं ठीक हूँ')) return `<b>"मैं ठीक हूँ"</b> = "I am fine" या "I am okay"<br><br><b>Example:</b> A: How are you? B: I am fine, thank you.`;
+    if(hindiText.includes('मैं ठीक हूँ')) return `<b>"मैं ठीक हूँ"</b> = "I am fine" या "I am okay"`;
     if(hindiText.includes('तुम कहाँ')) return `<b>"तुम कहाँ जा रहे हो?"</b> = "Where are you going?"`;
     if(hindiText.includes('धन्यवाद')) return `<b>"धन्यवाद"</b> = "Thank you" या "Thanks"`;
-    return `बेटा, "<b>${hindiText}</b>" का English बताने के लिए पूरा वाक्य लिखो तो बेहतर समझा पाऊंगी 😊`;
+    return `बेटा, "<b>${hindiText}</b>" का English बताने के लिए पूरा वाक्य लिखो 😊`;
   }
-  return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br>क्या तुम Grammar पूछ रहे हो, Translation, या Meaning?<br><br><b>Example:</b><br>1. "I am go सही है या गलत?"<br>2. "मैं ठीक हूँ का English क्या है?"<br><br>फिर से पूछो detail में 💪`;
+  return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br>क्या तुम Grammar पूछ रहे हो, Translation, या Meaning?<br><br><b>Example:</b><br>1. "I am go सही है या गलत?"<br>2. "मैं ठीक हूँ का English क्या है?"`;
 }
 
-// Quiz System
 function loadDays(){
   let grid = document.getElementById('daysGrid');
   grid.innerHTML = '';
@@ -239,7 +229,7 @@ function loadDays(){
 }
 
 function startDay(d){
-  if(d > state.day) return;
+  if(d > state.day &&!state.done.includes(d-1)) return;
   state.day = d;
   state.q = 0;
   showScreen('quizScreen');
@@ -248,20 +238,18 @@ function startDay(d){
 
 function loadQuestion(){
   let day = LESSONS[state.day];
-  if(!day) return showScreen('homeScreen');
+  if(!day){showScreen('homeScreen');return;}
   let q = day.questions[state.q];
   document.getElementById('questionText').textContent = q.q;
   document.getElementById('questionHindi').textContent = q.h;
   document.getElementById('feedback').textContent = '';
   document.getElementById('grammarBox').classList.add('hidden');
   document.getElementById('nextBtn').disabled = true;
-
   let opts = document.getElementById('optionsBox');
   opts.innerHTML = '';
   q.o.forEach((opt,i)=>{
     opts.innerHTML += `<button class="btn btn-opt" onclick="checkAnswer(${i})">${opt}</button>`;
   });
-
   let progress = (state.q / day.questions.length) * 100;
   document.getElementById('progressBar').style.width = progress + '%';
 }
@@ -270,7 +258,6 @@ function checkAnswer(i){
   let q = LESSONS[state.day].questions[state.q];
   let btns = document.querySelectorAll('#optionsBox.btn-opt');
   btns.forEach(b=>b.disabled=true);
-
   if(i === q.a){
     btns[i].classList.add('btn-correct');
     document.getElementById('feedback').textContent = '✅ Correct! Shabash!';
@@ -283,7 +270,6 @@ function checkAnswer(i){
     document.getElementById('grammarBox').textContent = q.g;
     document.getElementById('grammarBox').classList.remove('hidden');
   }
-
   document.getElementById('nextBtn').disabled = false;
   updateStats();
 }
@@ -305,7 +291,6 @@ function nextQuestion(){
   }
 }
 
-// Utility
 function speakText(text){
   if('speechSynthesis' in window){
     let msg = new SpeechSynthesisUtterance(text);
@@ -354,7 +339,6 @@ function loadState(){
   if(s) state = JSON.parse(s);
 }
 
-// Init
 window.onload = function(){
   loadState();
   loadDays();
