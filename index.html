@@ -72,20 +72,27 @@ input:focus{outline:none;border-color:var(--primary)}
 <div class="container">
 <button class="btn" onclick="showDoubtScreen()" style="background:var(--p3);width:100%;margin:12px 0">💬 Maya Didi से पूछो</button>
 <div id="quizSection"><div id="doubtScreen" class="screen hidden">
+  <div id="homeScreen" class="screen">
   <div class="card">
-  <div class="card">
-    <h2>💬 Maya Didi से पूछो</h2>
-    <p class="hindi">कोई भी English का Doubt लिखो या बोलो</p>
+    <h1>Maya Didi – AI English Teacher</h1>
+    <p class="hindi">हिंदी से English बोलना सीखो, रोज़ 10 मिनट</p>
 
-    <div id="chatBox" style="height:300px;overflow-y:auto;background:var(--card);border-radius:12px;padding:12px;margin:12px 0;border:2px solid var(--p1)"></div>
+    <button class="btn" onclick="showDoubtScreen()" style="background:var(--p3);width:100%;margin:12px 0">💬 Maya Didi से पूछो</button>
 
-    <textarea id="doubtInput" placeholder="यहाँ अपना सवाल लिखो... जैसे: 'I am go' सही है या गलत?" style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--p1);margin:8px 0;min-height:60px"></textarea>
-
-    <div class="grid" style="grid-template-columns:1fr 1fr">
-      <button class="btn btn-voice" onclick="askDoubt()">📩 पूछो</button>
-      <button class="btn btn-speak" onclick="askDoubtVoice()">🎤 बोल के पूछो</button>
+    <div class="stats">
+      <div class="stat"><div class="stat-label">Streak</div><div class="stat-value" id="streak">0</div></div>
+      <div class="stat"><div class="stat-label">Hearts</div><div class="stat-value" id="hearts">5</div></div>
+      <div class="stat"><div class="stat-label">XP</div><div class="stat-value" id="xp">0</div></div>
     </div>
-    <button class="btn btn-opt" onclick="showScreen('homeScreen')">⬅️ वापस</button>
+
+    <h3>UNIT 1: BASICS - 30 DAYS</h3>
+    <p class="hindi">Day चुनो और सीखना शुरू करो</p>
+    <div class="days" id="daysGrid"></div>
+
+    <div class="grid">
+      <button class="btn btn-opt" onclick="showStats()">📊 प्रगति</button>
+      <button class="btn btn-opt" onclick="resetProgress()">🔄 Reset</button>
+    </div>
   </div>
 </div>
 
