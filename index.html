@@ -19,7 +19,6 @@
    .day.active{background:var(--primary);color:white;border-color:#1d4ed8}
    .day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
    .day.done{background:var(--ok);color:white}
-   .day.practice{background:#f59e0b;color:white}
    .day small{font-size:10px;font-weight:400}
    .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
    .hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
@@ -33,10 +32,6 @@
    .btn-main:disabled{background:#9ca3af}
    .btn-voice{background:var(--ai);color:white;width:100%;margin:8px 0}
    .btn-speak{background:var(--p3);color:white;width:100%}
-   .btn-share{background:#25D366;color:white;width:100%;margin-top:8px}
-   .btn-toggle{background:var(--ai);color:white;width:100%;margin-bottom:12px}
-    input{width:100%;padding:14px;border:2px solid var(--opt);border-radius:12px;font-size:16px;margin:12px 0;background:var(--card);color:var(--text)}
-    input:focus{outline:none;border-color:var(--primary)}
    .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
    .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px;color:#1f2937}
     [data-theme="dark"].grammar{background:#78350f;color:#fef3c7}
@@ -55,6 +50,8 @@
    .typing span:nth-child(2){animation-delay:0.2s}
    .typing span:nth-child(3){animation-delay:0.4s}
     @keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}}
+   .progress-wrap{background:var(--opt);border-radius:10px;height:8px;margin-bottom:16px}
+   .progress-bar{background:var(--primary);height:8px;border-radius:10px;width:0%;transition:0.3s}
   </style>
 </head>
 <body>
@@ -63,10 +60,9 @@
     <div class="stats">
       <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
       <span>🔥 <span id="streak">0</span></span>
-      <span>❤️ <span id="hearts">3</span></span>
+      <span>❤️ <span id="hearts">5</span></span>
       <span>⚡ <span id="xp">0</span></span>
     </div>
-  </div>
   <div class="container">
     <div id="doubtScreen" class="screen hidden">
       <div class="card">
@@ -109,6 +105,7 @@
         <div class="hindi" id="questionHindi">Hindi</div>
         <div class="options" id="optionsBox"></div>
         <div class="feedback" id="feedback"></div>
+        <div class="grammar hidden" id="grammarBox"></div>
         <button class="btn btn-main" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
         <button class="btn btn-opt" onclick="showScreen('homeScreen')">⬅️ Home</button>
       </div>
@@ -116,15 +113,37 @@
   </div>
 
 <script>
+// 30 Days Data
+const LESSONS = {
+  1: {topic:"I am / You are",questions:[
+    {q:"I ___ a student",h:"मैं एक छात्र हूँ",o:["am","is","are"],a:0,g:"I के साथ 'am' लगता है"},
+    {q:"You ___ my friend",h:"तुम मेरे दोस्त हो",o:["is","are","am"],a:1,g:"You के साथ 'are' लगता है"},
+    {q:"I ___ happy",h:"मैं खुश हूँ",o:["is","am","are"],a:1,g:"I am = मैं हूँ"},
+  ]},
+  2: {topic:"He/She/It is",questions:[
+    {q:"He ___ a doctor",h:"वह एक डॉक्टर है",o:["are","is","am"],a:1,g:"He/She/It के साथ 'is' लगता है"},
+    {q:"She ___ beautiful",h:"वह सुंदर है",o:["is","are","am"],a:0,g:"She is = वह है"},
+    {q:"It ___ a book",h:"यह एक किताब है",o:["are","is","am"],a:1,g:"It is = यह है"},
+  ]},
+  3: {topic:"We/They are",questions:[
+    {q:"We ___ friends",h:"हम दोस्त हैं",o:["is","are","am"],a:1,g:"We/They के साथ 'are' लगता है"},
+    {q:"They ___ playing",h:"वे खेल रहे हैं",o:["is","are","am"],a:1,g:"They are = वे हैं"},
+  ]},
+  // Day 4-30 भी ऐसे ही add कर देंगे, अभी 3 Day से Start कर
+};
+
+let state = {day:1,q:0,hearts:5,xp:0,streak:0,done:[]};
 let chatHistory = [];
 let currentScreen = 'homeScreen';
 
+// Screen Management
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
   currentScreen = id;
 }
 
+// Doubt System
 function showDoubtScreen(){
   showScreen('doubtScreen');
   if(chatHistory.length === 0){
@@ -148,7 +167,7 @@ function addAIMessage(text){
 
 function showTyping(){
   let chatBox = document.getElementById('chatBox');
-  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span></div></div>`;
+  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span><span></span></div></div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -201,19 +220,92 @@ function getMayaAnswer(q){
   if(q.includes('ka english') || q.includes('का इंग्लिश') || q.includes('translate')){
     let hindiText = q.replace(/ka english kya hai|ka english|का इंग्लिश क्या है|translate|का इंग्लिश/gi,'').trim();
     if(hindiText.includes('मैं ठीक हूँ')) return `<b>"मैं ठीक हूँ"</b> = "I am fine" या "I am okay"<br><br><b>Example:</b> A: How are you? B: I am fine, thank you.`;
-    if(hindiText.includes('तुम कहाँ')) return `<b>"तुम कहाँ जा रहे हो?"</b> = "Where are you going?"<br><br><b>Rule:</b> 'Where' = कहाँ, 'are you going' = जा रहे हो`;
+    if(hindiText.includes('तुम कहाँ')) return `<b>"तुम कहाँ जा रहे हो?"</b> = "Where are you going?"`;
     if(hindiText.includes('धन्यवाद')) return `<b>"धन्यवाद"</b> = "Thank you" या "Thanks"`;
     return `बेटा, "<b>${hindiText}</b>" का English बताने के लिए पूरा वाक्य लिखो तो बेहतर समझा पाऊंगी 😊`;
-  }
-  if(q.includes('in') && q.includes('on') && q.includes('at')){
-    return `<b>In / On / At का Difference:</b><br><br><b>IN</b> = बड़े जगह के लिए<br>✅ in India, in Mumbai, in the room<br><br><b>ON</b> = सतह पर<br>✅ on the table, on Monday<br><br><b>AT</b> = Exact point के लिए<br>✅ at home, at 5 PM`;
-  }
-  if(q.includes('a') && q.includes('an')){
-    return `<b>A / An / The का Use:</b><br><br><b>A</b> = Consonant sound से पहले<br>✅ a book, a car<br><br><b>AN</b> = Vowel sound से पहले<br>✅ an apple, an hour<br><br><b>THE</b> = Specific चीज़ के लिए<br>✅ the sun, the Taj Mahal`;
   }
   return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br>क्या तुम Grammar पूछ रहे हो, Translation, या Meaning?<br><br><b>Example:</b><br>1. "I am go सही है या गलत?"<br>2. "मैं ठीक हूँ का English क्या है?"<br><br>फिर से पूछो detail में 💪`;
 }
 
+// Quiz System
+function loadDays(){
+  let grid = document.getElementById('daysGrid');
+  grid.innerHTML = '';
+  for(let i=1;i<=30;i++){
+    let status = state.done.includes(i)? 'done' : i===state.day? 'active' : i<state.day? 'done' : 'locked';
+    grid.innerHTML += `<div class="day ${status}" onclick="startDay(${i})">${i}<small>Day</small></div>`;
+  }
+  updateStats();
+}
+
+function startDay(d){
+  if(d > state.day) return;
+  state.day = d;
+  state.q = 0;
+  showScreen('quizScreen');
+  loadQuestion();
+}
+
+function loadQuestion(){
+  let day = LESSONS[state.day];
+  if(!day) return showScreen('homeScreen');
+  let q = day.questions[state.q];
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('questionHindi').textContent = q.h;
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('grammarBox').classList.add('hidden');
+  document.getElementById('nextBtn').disabled = true;
+
+  let opts = document.getElementById('optionsBox');
+  opts.innerHTML = '';
+  q.o.forEach((opt,i)=>{
+    opts.innerHTML += `<button class="btn btn-opt" onclick="checkAnswer(${i})">${opt}</button>`;
+  });
+
+  let progress = (state.q / day.questions.length) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+}
+
+function checkAnswer(i){
+  let q = LESSONS[state.day].questions[state.q];
+  let btns = document.querySelectorAll('#optionsBox.btn-opt');
+  btns.forEach(b=>b.disabled=true);
+
+  if(i === q.a){
+    btns[i].classList.add('btn-correct');
+    document.getElementById('feedback').textContent = '✅ Correct! Shabash!';
+    state.xp += 10;
+  }else{
+    btns[i].classList.add('btn-wrong');
+    btns[q.a].classList.add('btn-correct');
+    document.getElementById('feedback').textContent = '❌ गलत! सही Answer: ' + q.o[q.a];
+    state.hearts--;
+    document.getElementById('grammarBox').textContent = q.g;
+    document.getElementById('grammarBox').classList.remove('hidden');
+  }
+
+  document.getElementById('nextBtn').disabled = false;
+  updateStats();
+}
+
+function nextQuestion(){
+  state.q++;
+  if(state.q >= LESSONS[state.day].questions.length){
+    if(!state.done.includes(state.day)){
+      state.done.push(state.day);
+      state.xp += 50;
+      state.streak++;
+    }
+    if(state.day < 30) state.day++;
+    saveState();
+    showScreen('homeScreen');
+    loadDays();
+  }else{
+    loadQuestion();
+  }
+}
+
+// Utility
 function speakText(text){
   if('speechSynthesis' in window){
     let msg = new SpeechSynthesisUtterance(text);
@@ -233,8 +325,17 @@ function toggleTheme(){
   }
 }
 
+function updateStats(){
+  document.getElementById('streak').textContent = state.streak;
+  document.getElementById('hearts').textContent = state.hearts;
+  document.getElementById('xp').textContent = state.xp;
+  document.getElementById('streakHome').textContent = state.streak;
+  document.getElementById('heartsHome').textContent = state.hearts;
+  document.getElementById('xpHome').textContent = state.xp;
+}
+
 function showStats(){
-  alert('Stats feature coming soon 💪');
+  alert(`🔥 Streak: ${state.streak} Days\n❤️ Hearts: ${state.hearts}\n⚡ XP: ${state.xp}\n✅ Completed: ${state.done.length}/30 Days`);
 }
 
 function resetProgress(){
@@ -244,17 +345,20 @@ function resetProgress(){
   }
 }
 
-function nextQuestion(){
-  alert('Quiz feature coming soon 💪');
+function saveState(){
+  localStorage.setItem('mayaState',JSON.stringify(state));
+}
+
+function loadState(){
+  let s = localStorage.getItem('mayaState');
+  if(s) state = JSON.parse(s);
 }
 
 // Init
 window.onload = function(){
+  loadState();
+  loadDays();
   showScreen('homeScreen');
-  let grid = document.getElementById('daysGrid');
-  for(let i=1;i<=30;i++){
-    grid.innerHTML += `<div class="day ${i===1?'active':'locked'}">${i}<small>Day</small></div>`;
-  }
 }
 </script>
 </body>
