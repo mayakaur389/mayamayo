@@ -5,53 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maya Didi - Learn English</title>
   <style>
-    :root{--bg:#f0f4f8;--card:#ffffff;--text:#1f2937;--text2:#6b7280;--primary:#3b82f6;--ai:#8b5cf6;--ok:#10b981;--bad:#ef4444;--opt:#e5e7eb;--p1:#3b82f6;--p2:#8b5cf6;--p3:#10b981}
+    :root{--bg:#f0f4f8;--card:#ffffff;--text:#1f2937;--text2:#6b7280;--primary:#3b82f6;--ai:#8b5cf6;--ok:#10b981;--bad:#ef4444;--opt:#e5e7eb;--p1:#3b82f6;--p2:#8b5cf6;--p3:#10b981;--warn:#f59e0b}
     [data-theme="dark"]{--bg:#111827;--card:#1f2937;--text:#f9fafb;--text2:#9ca3af;--primary:#60a5fa;--ai:#a78bfa;--ok:#34d399;--bad:#f87171;--opt:#374151}
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
     body{background:var(--bg);color:var(--text);transition:0.3s}
-  .header{background:var(--primary);color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
-  .stats{display:flex;gap:12px;font-weight:600;align-items:center}
-  .icon-btn{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:50%;width:32px;height:32px;cursor:pointer}
-  .container{max-width:500px;margin:0 auto;padding:16px}
-  .card{background:var(--card);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
-  .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
-  .day{aspect-ratio:1;background:var(--opt);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
-  .day.active{background:var(--primary);color:white;border-color:#1d4ed8}
-  .day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
-  .day.done{background:var(--ok);color:white}
-  .day small{font-size:10px;font-weight:400}
-  .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
-  .hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
-  .options{display:grid;gap:10px}
-  .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
-  .btn-opt{background:var(--opt);color:var(--text);text-align:left}
-  .btn-opt:hover{filter:brightness(0.9)}
-  .btn-correct{background:var(--ok)!important;color:white!important}
-  .btn-wrong{background:var(--bad)!important;color:white!important}
-  .btn-main{background:var(--primary);color:white;width:100%;margin-top:12px}
-  .btn-main:disabled{background:#9ca3af}
-  .btn-voice{background:var(--ai);color:white;width:100%;margin:8px 0}
-  .btn-speak{background:var(--p3);color:white;width:100%}
-  .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
-  .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px;color:#1f2937}
+   .header{background:var(--primary);color:white;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+   .stats{display:flex;gap:12px;font-weight:600;align-items:center}
+   .icon-btn{background:rgba(255,255,255,0.2);border:none;color:white;border-radius:50%;width:32px;height:32px;cursor:pointer}
+   .container{max-width:500px;margin:0 auto;padding:16px}
+   .card{background:var(--card);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+   .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:16px 0}
+   .day{aspect-ratio:1;background:var(--opt);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:700;cursor:pointer;border:3px solid transparent;font-size:14px}
+   .day.active{background:var(--primary);color:white;border-color:#1d4ed8}
+   .day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
+   .day.done{background:var(--ok);color:white}
+   .day.practice{background:var(--warn);color:white}
+   .day small{font-size:10px;font-weight:400}
+   .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
+   .hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
+   .options{display:grid;gap:10px}
+   .btn{padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;transition:0.2s}
+   .btn-opt{background:var(--opt);color:var(--text);text-align:left}
+   .btn-opt:hover{filter:brightness(0.9)}
+   .btn-correct{background:var(--ok)!important;color:white!important}
+   .btn-wrong{background:var(--bad)!important;color:white!important}
+   .btn-main{background:var(--primary);color:white;width:100%;margin-top:12px}
+   .btn-main:disabled{background:#9ca3af}
+   .btn-voice{background:var(--ai);color:white;width:100%;margin:8px 0}
+   .btn-speak{background:var(--p3);color:white;width:100%}
+   .btn-practice{background:var(--warn);color:white;width:100%;margin:8px 0}
+   .feedback{text-align:center;font-weight:700;margin:12px 0;font-size:18px;min-height:28px}
+   .grammar{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;border-radius:8px;margin:16px 0;font-size:14px;color:#1f2937}
     [data-theme="dark"].grammar{background:#78350f;color:#fef3c7}
-  .hidden{display:none!important}
-  .screen{display:none}
-  .grid{display:grid;gap:10px}
-  .stat{background:var(--opt);padding:12px;border-radius:12px;text-align:center}
-  .stat-label{font-size:12px;color:var(--text2)}
-  .stat-value{font-size:20px;font-weight:700;color:var(--primary)}
-  .chat-msg{margin:8px 0;padding:10px;border-radius:12px;max-width:85%}
-  .user-msg{background:var(--p1);color:white;margin-left:auto;text-align:right}
-  .ai-msg{background:var(--card);border:2px solid var(--p2);margin-right:auto}
-  .ai-msg b{color:var(--p1)}
-  .typing{display:inline-block}
-  .typing span{display:inline-block;width:6px;height:6px;background:var(--p1);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite}
-  .typing span:nth-child(2){animation-delay:0.2s}
-  .typing span:nth-child(3){animation-delay:0.4s}
+   .hidden{display:none!important}
+   .screen{display:none}
+   .grid{display:grid;gap:10px}
+   .stat{background:var(--opt);padding:12px;border-radius:12px;text-align:center}
+   .stat-label{font-size:12px;color:var(--text2)}
+   .stat-value{font-size:20px;font-weight:700;color:var(--primary)}
+   .chat-msg{margin:8px 0;padding:10px;border-radius:12px;max-width:85%}
+   .user-msg{background:var(--p1);color:white;margin-left:auto;text-align:right}
+   .ai-msg{background:var(--card);border:2px solid var(--p2);margin-right:auto}
+   .ai-msg b{color:var(--p1)}
+   .typing{display:inline-block}
+   .typing span{display:inline-block;width:6px;height:6px;background:var(--p1);border-radius:50%;margin:0 2px;animation:typing 1.4s infinite}
+   .typing span:nth-child(2){animation-delay:0.2s}
+   .typing span:nth-child(3){animation-delay:0.4s}
     @keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-10px)}}
-  .progress-wrap{background:var(--opt);border-radius:10px;height:8px;margin-bottom:16px}
-  .progress-bar{background:var(--primary);height:8px;border-radius:10px;width:0%;transition:0.3s}
+   .progress-wrap{background:var(--opt);border-radius:10px;height:8px;margin-bottom:16px}
+   .progress-bar{background:var(--primary);height:8px;border-radius:10px;width:0%;transition:0.3s}
   </style>
 </head>
 <body>
@@ -63,6 +65,7 @@
       <span>❤️ <span id="hearts">5</span></span>
       <span>⚡ <span id="xp">0</span></span>
     </div>
+  </div>
   <div class="container">
     <div id="doubtScreen" class="screen">
       <div class="card">
@@ -83,6 +86,7 @@
         <h1>Maya Didi – AI English Teacher</h1>
         <p class="hindi">हिंदी से English बोलना सीखो, रोज़ 10 मिनट</p>
         <button class="btn" onclick="showDoubtScreen()" style="background:var(--p3);width:100%;margin:12px 0">💬 Maya Didi से पूछो</button>
+        <button class="btn btn-practice" onclick="startPractice()">🔄 Practice गलत Questions</button>
         <div class="grid" style="grid-template-columns:repeat(3,1fr);margin:16px 0">
           <div class="stat"><div class="stat-label">Streak</div><div class="stat-value" id="streakHome">0</div></div>
           <div class="stat"><div class="stat-label">Hearts</div><div class="stat-value" id="heartsHome">5</div></div>
@@ -130,7 +134,7 @@ const LESSONS = {
   ]},
 };
 
-let state = {day:1,q:0,hearts:5,xp:0,streak:0,done:[]};
+let state = {day:1,q:0,hearts:5,xp:0,streak:0,done:[],wrong:[],isPractice:false};
 let chatHistory = [];
 
 function showScreen(id){
@@ -161,7 +165,7 @@ function addAIMessage(text){
 
 function showTyping(){
   let chatBox = document.getElementById('chatBox');
-  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span></div></div>`;
+  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span><span></span></div></div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -222,7 +226,7 @@ function loadDays(){
   let grid = document.getElementById('daysGrid');
   grid.innerHTML = '';
   for(let i=1;i<=30;i++){
-    let status = state.done.includes(i)? 'done' : i===state.day? 'active' : i<state.day? 'done' : 'locked';
+    let status = state.done.includes(i)? 'done' : i===state.day? 'active' : i<state.day? 'practice' : 'locked';
     grid.innerHTML += `<div class="day ${status}" onclick="startDay(${i})">${i}<small>Day</small></div>`;
   }
   updateStats();
@@ -232,14 +236,53 @@ function startDay(d){
   if(d > state.day &&!state.done.includes(d-1)) return;
   state.day = d;
   state.q = 0;
+  state.isPractice = false;
+  showScreen('quizScreen');
+  loadQuestion();
+}
+
+function startPractice(){
+  if(state.wrong.length === 0){
+    alert('अभी कोई गलत Question नहीं है बेटा! पहले Quiz खेलो 💪');
+    return;
+  }
+  state.isPractice = true;
+  state.q = 0;
   showScreen('quizScreen');
   loadQuestion();
 }
 
 function loadQuestion(){
-  let day = LESSONS[state.day];
-  if(!day){showScreen('homeScreen');return;}
-  let q = day.questions[state.q];
+  let questions;
+  if(state.isPractice){
+    questions = state.wrong;
+  }else{
+    let day = LESSONS[state.day];
+    if(!day){showScreen('homeScreen');return;}
+    questions = day.questions;
+  }
+
+  if(state.q >= questions.length){
+    if(state.isPractice){
+      state.wrong = [];
+      alert('Practice Complete! Shabash 💪');
+      showScreen('homeScreen');
+      loadDays();
+      return;
+    }
+    if(!state.done.includes(state.day)){
+      state.done.push(state.day);
+      state.xp += 50;
+      state.streak++;
+    }
+    if(state.day < 30) state.day++;
+    saveState();
+    showScreen('homeScreen');
+    loadDays();
+    return;
+  }
+
+  let q = questions[state.q];
   document.getElementById('questionText').textContent = q.q;
   document.getElementById('questionHindi').textContent = q.h;
   document.getElementById('feedback').textContent = '';
@@ -250,18 +293,24 @@ function loadQuestion(){
   q.o.forEach((opt,i)=>{
     opts.innerHTML += `<button class="btn btn-opt" onclick="checkAnswer(${i})">${opt}</button>`;
   });
-  let progress = (state.q / day.questions.length) * 100;
+  let progress = (state.q / questions.length) * 100;
   document.getElementById('progressBar').style.width = progress + '%';
 }
 
 function checkAnswer(i){
-  let q = LESSONS[state.day].questions[state.q];
+  let questions = state.isPractice? state.wrong : LESSONS[state.day].questions;
+  let q = questions[state.q];
   let btns = document.querySelectorAll('#optionsBox.btn-opt');
   btns.forEach(b=>b.disabled=true);
+
   if(i === q.a){
     btns[i].classList.add('btn-correct');
     document.getElementById('feedback').textContent = '✅ Correct! Shabash!';
     state.xp += 10;
+    if(state.isPractice){
+      state.wrong.splice(state.q,1);
+      state.q--;
+    }
   }else{
     btns[i].classList.add('btn-wrong');
     btns[q.a].classList.add('btn-correct');
@@ -269,26 +318,19 @@ function checkAnswer(i){
     state.hearts--;
     document.getElementById('grammarBox').textContent = q.g;
     document.getElementById('grammarBox').classList.remove('hidden');
+    if(!state.isPractice){
+      let wrongQ = {...q,day:state.day};
+      if(!state.wrong.find(w=>w.q===q.q)) state.wrong.push(wrongQ);
+    }
   }
   document.getElementById('nextBtn').disabled = false;
   updateStats();
+  saveState();
 }
 
 function nextQuestion(){
   state.q++;
-  if(state.q >= LESSONS[state.day].questions.length){
-    if(!state.done.includes(state.day)){
-      state.done.push(state.day);
-      state.xp += 50;
-      state.streak++;
-    }
-    if(state.day < 30) state.day++;
-    saveState();
-    showScreen('homeScreen');
-    loadDays();
-  }else{
-    loadQuestion();
-  }
+  loadQuestion();
 }
 
 function speakText(text){
@@ -320,7 +362,7 @@ function updateStats(){
 }
 
 function showStats(){
-  alert(`🔥 Streak: ${state.streak} Days\n❤️ Hearts: ${state.hearts}\n⚡ XP: ${state.xp}\n✅ Completed: ${state.done.length}/30 Days`);
+  alert(`🔥 Streak: ${state.streak} Days\n❤️ Hearts: ${state.hearts}\n⚡ XP: ${state.xp}\n✅ Completed: ${state.done.length}/30 Days\n❌ Wrong: ${state.wrong.length} Questions`);
 }
 
 function resetProgress(){
