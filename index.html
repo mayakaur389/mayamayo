@@ -408,37 +408,6 @@ function checkAnswer(i){
     saveState();
 }
 
-function checkAnswer(i){
-    let questions = state.isPractice? state.wrong : LESSONS[state.day].questions;
-    let q = questions[state.q];
-    let btns = document.querySelectorAll('#optionsBox .btn-opt');
-    btns.forEach(b=>b.disabled=true);
-
-    if(i === q.a){
-        btns[i].classList.add('btn-correct');
-        document.getElementById('feedback').textContent = '✅ Correct! Shabash!';
-        speakText('Correct! Shabash');
-        state.xp += 10;
-        if(state.isPractice){
-            state.wrong.splice(state.q,1);
-            state.q--;
-        }
-    }else{
-        btns[i].classList.add('btn-wrong');
-        btns[q.a].classList.add('btn-correct');
-        document.getElementById('feedback').textContent = '❌ गलत! सही Answer: ' + q.o[q.a];
-        speakText('Galat! Sahi answer hai ' + q.o[q.a]);
-
-        if(state.hearts > 0){
-            state.hearts--;
-        }
-
-        if(state.hearts === 0){
-            showRewardedAd();
-        }
-
-        document.getElementById('grammarBox').textContent = q.r;
-    }
 
 function nextQuestion(){
   state.q++;
