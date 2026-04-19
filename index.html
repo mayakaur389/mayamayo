@@ -296,11 +296,7 @@ function loadDays(){
     let wrongCount = state.wrong.filter(w => w.day === i).length;
     let badge = wrongCount > 0 ? `<span class="badge">${wrongCount}</span>` : '';
     
-    grid.innerHTML += `<div class="day ${status}" onclick="openDayModal(${i})">
-      ${i}
-      <small>Day</small>
-      ${badge}
-    </div>`;
+    grid.innerHTML += `<div class="day ${status}" onclick="openDayModal(${i})">${i}<small>Day</small> ${badge}</div>`;
   }
   
   updateStats();
