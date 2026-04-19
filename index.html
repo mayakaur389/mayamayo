@@ -369,6 +369,17 @@ function loadQuestion(){
   speakText(q.h);
 }
 
+
+    document.getElementById('grammarBox').classList.remove('hidden');
+    if(!state.isPractice){
+      let wrongQ = {...q,day:state.day};
+      if(!state.wrong.find(w=>w.q===q.q && w.day===state.day)) state.wrong.push(wrongQ);
+    }
+  }
+  document.getElementById('nextBtn').disabled = false;
+  updateStats();
+  saveState();
+}
 function checkAnswer(i){
     let questions = state.isPractice? state.wrong : LESSONS[state.day].questions;
     let q = questions[state.q];
@@ -401,17 +412,6 @@ function checkAnswer(i){
         document.getElementById('grammarBox').textContent = q.r;
     }
 }
-    document.getElementById('grammarBox').classList.remove('hidden');
-    if(!state.isPractice){
-      let wrongQ = {...q,day:state.day};
-      if(!state.wrong.find(w=>w.q===q.q && w.day===state.day)) state.wrong.push(wrongQ);
-    }
-  }
-  document.getElementById('nextBtn').disabled = false;
-  updateStats();
-  saveState();
-}
-
 function nextQuestion(){
   state.q++;
   loadQuestion();
