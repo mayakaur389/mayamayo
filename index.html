@@ -419,7 +419,26 @@ function speakText(text){
     window.speechSynthesis.speak(msg);
   }
 }
+function showRewardedAd(){
+    document.getElementById('adPopup').style.display = 'block';
+    speakText('Heart khatam. Video dekho aur do heart pao');
+}
 
+function watchAd(){
+    document.getElementById('adPopup').style.display = 'none';
+    alert('Ad Chal Rahi Hai... 5 second');
+    setTimeout(() => {
+        state.hearts = 2;
+        updateStats();
+        document.getElementById('feedback').textContent = '2 Heart मिल गए! 🎉';
+        speakText('Dhanyawaad. Do heart mil gaye');
+    }, 5000);
+}
+
+function closeAd(){
+    document.getElementById('adPopup').style.display = 'none';
+    document.getElementById('feedback').textContent = 'Heart khatam. App restart karo';
+}
 function toggleTheme(){
   let html = document.documentElement;
   if(html.getAttribute('data-theme') === 'dark'){
