@@ -365,7 +365,8 @@ function loadQuestion(){
     opts.innerHTML += `<button class="btn btn-opt" onclick="checkAnswer(${i})">${opt}</button>`;
   });
   let progress = (state.q / questions.length) * 100;
-  document.getElementById('progressBar').style.width = progress + '%';
+  document.getElementById('progressBar').style.width = progress + '%'; 
+  speakText(q.h);
 }
 
 function checkAnswer(i){
