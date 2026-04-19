@@ -385,7 +385,7 @@ function checkAnswer(i){
             state.wrong.splice(state.q,1);
             state.q--;
         }
-    }else{
+    else
         btns[i].classList.add('btn-wrong');
         btns[q.a].classList.add('btn-correct');
         document.getElementById('feedback').textContent = '❌ गलत! सही Answer: ' + q.o[q.a];
