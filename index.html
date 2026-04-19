@@ -390,6 +390,10 @@ function checkAnswer(i){
     document.getElementById('feedback').textContent = '❌ गलत! सही Answer: ' + q.o[q.a];
         speakText('Galat! Sahi answer hai ' + q.o[q.a]);
     state.hearts--;
+    if(state.hearts === 0){
+    // Ad दिखाओ और Reward दे दो
+    showRewardedAd();
+}
     document.getElementById('grammarBox').textContent = q.g;
     document.getElementById('grammarBox').classList.remove('hidden');
     if(!state.isPractice){
