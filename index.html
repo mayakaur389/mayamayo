@@ -290,12 +290,19 @@ function getMayaAnswer(q){
 function loadDays(){
   let grid = document.getElementById('daysGrid');
   grid.innerHTML = '';
-  for(let i=1;i<=30;i++){
-    let status = state.done.includes(i)? 'done' : i===state.day? 'active' : i<state.day? 'practice' : 'locked';
-    let wrongCount = state.wrong.filter(w=>w.day===i).length;
-    let badge = wrongCount > 0? `<span class="badge">${wrongCount}</span>` : '';
-    grid.innerHTML += `<div class="day ${status}" onclick="openDayModal(${i})">${i}${badge}<small>Day</small></div>`;
+  
+  for(let i=1; i<=30; i++){
+    let status = state.done.includes(i) ? 'done' : i === state.day ? 'active' : i < state.day ? 'practice' : 'locked';
+    let wrongCount = state.wrong.filter(w => w.day === i).length;
+    let badge = wrongCount > 0 ? `<span class="badge">${wrongCount}</span>` : '';
+    
+    grid.innerHTML += `<div class="day ${status}" onclick="openDayModal(${i})">
+      ${i}
+      <small>Day</small>
+      ${badge}
+    </div>`;
   }
+  
   updateStats();
 }
 
