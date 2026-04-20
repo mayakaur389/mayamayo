@@ -1,22 +1,56 @@
 function loadDays(){
   let grid = document.getElementById('daysGrid');
   grid.innerHTML = '';
-  for(let i=1; i<=30; i++){
-    let status = state.done.includes(i)? 'done' : i === state.day? 'active' : i < state.day? 'practice' : 'locked';
-    let wrongCount = state.wrong.filter(w => w.day === i).length;
-    let badge = wrongCount > 0? `<span class="badge">${wrongCount}</span>` : '';
-    grid.innerHTML += `<div class="day ${status}" onclick="openDayModal(${i})">${i}<small>Day</small> ${badge}</div>`;
+  let mode = LANG[currentLang].mode;
+  
+  for(let i = 1; i <= 30; i++){
+    let btn = document.createElement('button');
+    btn.className = 'day-btn';
+    btn.innerHTML = `<div>${i}</div><small>Day</small>`;
+    
+    if(state.done.includes(i)){
+      btn.classList.add('done');
+      btn.innerHTML = `<div>${i}</div><small>✓ Done</small>`;
+    }
+    
+    // Check if lesson exists for current mode
+    if(!LESSONS[mode][i]){
+      btn.classList.add('locked');
+    }
+    
+    btn.onclick = () => openDay(i);
+    grid.appendChild(btn);
   }
-  updateStats();
 }
 
-function openDayModal(d){
-  state.selectedDay = d;
-  let day = LESSONS[d];
-  document.getElementById('modalTitle').textContent = `Day ${d}`;
-  document.getElementById('modalDesc').textContent = day? day.topic : 'Coming Soon';
-  document.getElementById('modalPracticeBtn').style.display = state.done.includes(d)? 'block' : 'none';
-  document.getElementById('dayModal').style.display = 'flex';
+function openDay(day){
+  state.selectedDay = day;
+  let mode = LANG[currentLang].mode;
+  let modal = document.getElementById('dayModal');
+  let title = document.getElementById('modalTitle');
+  let desc = document.getElementById('modalDesc');
+  let startBtn = document.getElementById('startBtn');
+  let practiceBtn = document.getElementById('modalPracticeBtn');
+  
+  title.textContent = `Day ${day}`;
+  
+  if(LESSONS[mode][day]){
+    desc.textContent = LESSONS[mode][day].topic;
+    startBtn.style.display = 'block';
+    if(state.done.includes(day)){
+      practiceBtn.style.display = 'block';
+      startBtn.textContent = t('startBtn') + ' Again';
+    }else{
+      practiceBtn.style.display = 'none';
+      startBtn.textContent = t('startBtn');
+    }
+  }else{
+    desc.textContent = currentLang === 'hi'? 'Coming Soon' : 'Coming Soon';
+    startBtn.style.display = 'none';
+    practiceBtn.style.display = 'none';
+  }
+  
+  modal.style.display = 'block';
 }
 
 function closeModal(){
@@ -24,38 +58,30 @@ function closeModal(){
 }
 
 function startDayQuiz(){
-  closeModal();
-  let d = state.selectedDay;
-  if(d > state.day &&!state.done.includes(d-1)) return;
-  state.day = d;
+  state.day = state.selectedDay;
   state.q = 0;
   state.isPractice = false;
-  showScreen('quizScreen');
+  closeModal();
   loadQuestion();
+  showScreen('quizScreen');
 }
 
 function startDayPractice(){
-  closeModal();
-  let d = state.selectedDay;
-  let dayWrong = state.wrong.filter(w=>w.day===d);
-  if(dayWrong.length === 0){
-    alert('इस Day में कोई गलत Question नहीं है! 🎉');
-    return;
-  }
-  state.isPractice = true;
-  state.wrong = dayWrong;
+  state.day = state.selectedDay;
   state.q = 0;
-  showScreen('quizScreen');
+  state.isPractice = true;
+  closeModal();
   loadQuestion();
+  showScreen('quizScreen');
 }
 
 function startPractice(){
   if(state.wrong.length === 0){
-    alert('अभी कोई गलत Question नहीं है बेटा! पहले Quiz खेलो 💪');
+    alert(currentLang === 'hi'? 'कोई गलत Question नहीं है!' : 'No wrong questions!');
     return;
   }
   state.isPractice = true;
   state.q = 0;
-  showScreen('quizScreen');
   loadQuestion();
+  showScreen('quizScreen');
 }
