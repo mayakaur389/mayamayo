@@ -45,7 +45,7 @@ function loadQuestion(){
 function checkAnswer(i){
   let questions = state.isPractice? state.wrong : LESSONS[state.day].questions;
   let q = questions[state.q];
-  let btns = document.querySelectorAll('#optionsBox.btn-opt');
+  let btns = document.querySelectorAll('#optionsBox .btn-opt');
   btns.forEach(b=>b.disabled=true);
   if(i === q.a){
     btns[i].classList.add('btn-correct');
