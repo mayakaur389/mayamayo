@@ -1,23 +1,20 @@
 function loadDays(){
   let grid = document.getElementById('daysGrid');
   grid.innerHTML = '';
-
-  for(let i = 1; i <= 30; i++){
+  
+  LESSONS.forEach(lesson => {
     let btn = document.createElement('button');
     btn.className = 'day-btn';
-    btn.innerHTML = `<div>${i}</div><small>Day</small>`;
-
-    if(state.done.includes(i)){
+    
+    if(state.done.includes(lesson.day)){
       btn.classList.add('done');
-      let wrongCount = state.wrong.filter(w => {
-        let lesson = LESSONS[i];
-        return lesson && lesson.questions.some(q => q.q === w.q);
-      }).length;
-
-      if(wrongCount > 0){
-        btn.innerHTML = `<div>${i}</div><small>Day</small><span class="badge">${wrongCount}</span>`;
-      }
     }
+    
+    btn.innerHTML = `${lesson.day}<small>${lesson.title}</small>`;
+    btn.onclick = () => openDay(lesson.day);
+    grid.appendChild(btn);
+  });
+}
 
     let lastDone = Math.max(...state.done, 0);
     if(i === lastDone + 1){
