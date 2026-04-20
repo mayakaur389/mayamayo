@@ -18,7 +18,7 @@
   </div>
 
   <div class="container">
-    <div class="screen" id="homeScreen">
+    <div class="screen" id="homeScreen" style="display:block">
       <button class="btn btn-voice" onclick="showDoubtScreen()">💬 Maya Didi से पूछो</button>
       <button class="btn btn-practice" onclick="startPractice()">🔄 Practice गलत Questions</button>
       <div class="card">
@@ -61,7 +61,7 @@
     <div class="modal-content">
       <h3 id="modalTitle"></h3>
       <p id="modalDesc"></p>
-      <button class="btn btn-main" onclick="startDayQuiz()">Start Quiz</button>
+      <button class="btn btn-main" id="startQuizBtn" onclick="startDayQuiz()">Start Quiz</button>
       <button class="btn btn-practice" onclick="startDayPractice()" id="modalPracticeBtn">Practice गलत Questions</button>
       <button class="btn btn-opt" onclick="closeModal()">बंद करें</button>
     </div>
