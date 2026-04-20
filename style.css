@@ -14,7 +14,7 @@ body{background:var(--bg);color:var(--text);transition:0.3s;overflow-x:hidden;pa
 .day.locked{background:var(--bg);color:var(--text2);cursor:not-allowed}
 .day.done{background:var(--ok);color:white}
 .day.practice{background:var(--warn);color:white}
-.day.badge{position:absolute;top:-5px;right:-5px;background:var(--bad);color:white;font-size:9px;padding:2px 5px;border-radius:8px;line-height:1}
+.day .badge{position:absolute;top:-5px;right:-5px;background:var(--bad);color:white;font-size:9px;padding:2px 5px;border-radius:8px;line-height:1}
 .question{font-size:22px;text-align:center;margin:16px 0;font-weight:700}
 .hindi{font-size:16px;text-align:center;color:var(--text2);margin-bottom:20px}
 .options{display:grid;gap:10px}
