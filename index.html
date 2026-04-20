@@ -1,91 +1,343 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maya Didi - English Teacher</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Maya Didi - English Learning</title>
+  <style>
+    :root{
+      --bg:#f0f4f8;
+      --card:#fff;
+      --text:#1e293b;
+      --text2:#64748b;
+      --main:#3b82f6;
+      --main2:#2563eb;
+      --green:#10b981;
+      --orange:#f59e0b;
+      --red:#ef4444;
+      --opt:#e2e8f0;
+      --done:#10b981;
+    }
+    [data-theme="dark"]{
+      --bg:#0f172a;
+      --card:#1e293b;
+      --text:#f1f5f9;
+      --text2:#94a3b8;
+      --main:#60a5fa;
+      --main2:#3b82f6;
+      --green:#34d399;
+      --orange:#fbbf24;
+      --red:#f87171;
+      --opt:#334155;
+      --done:#10b981;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+    body{background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
+   .header{background:var(--main);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+   .header span{font-size:20px;font-weight:700}
+   .stats{display:flex;gap:12px;align-items:center}
+   .stats span{font-weight:600;font-size:14px}
+   .icon-btn{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer}
+   .container{max-width:600px;margin:0 auto;padding:20px}
+   .card{background:var(--card);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+   .btn{width:100%;padding:16px;border:none;border-radius:16px;font-size:16px;font-weight:600;cursor:pointer;margin-bottom:12px;transition:.2s}
+   .btn:active{transform:scale(.98)}
+   .btn-main{background:var(--main);color:#fff}
+   .btn-voice{background:var(--green);color:#fff}
+   .btn-practice{background:var(--orange);color:#fff}
+   .btn-opt{background:var(--opt);color:var(--text);text-align:left}
+   .btn-opt.correct{background:var(--green);color:#fff}
+   .btn-opt.wrong{background:var(--red);color:#fff}
+   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+   .stat{background:var(--opt);padding:16px;border-radius:16px;text-align:center}
+   .stat-label{font-size:12px;color:var(--text2);margin-bottom:4px}
+   .stat-value{font-size:24px;font-weight:700;color:var(--main)}
+   .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:16px}
+   .day-btn{aspect-ratio:1;background:var(--opt);border:none;border-radius:50%;font-weight:700;cursor:pointer;position:relative;transition:.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px;color:var(--text)}
+   .day-btn:active{transform:scale(.95)}
+   .day-btn.done{background:var(--done);color:#fff}
+   .day-btn.current{background:var(--main);color:#fff;box-shadow:0 0 0 3px var(--main2)}
+   .day-btn.locked{opacity:.4;cursor:not-allowed}
+   .day-btn small{font-size:10px;font-weight:400;margin-top:2px}
+   .badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;border-radius:50%;width:20px;height:20px;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:700}
+   .screen{display:none}
+   .screen:first-child{display:block}
+   .progress-wrap{background:var(--opt);height:8px;border-radius:4px;margin-bottom:20px;overflow:hidden}
+   .progress-bar{background:var(--green);height:100%;transition:width.3s}
+   .question{font-size:20px;font-weight:600;margin-bottom:8px}
+   .hindi{color:var(--text2);margin-bottom:20px;font-size:15px}
+   .options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+   .feedback{font-size:18px;font-weight:600;margin:16px 0;text-align:center;min-height:24px}
+   .grammar{background:var(--opt);padding:16px;border-radius:12px;margin-bottom:16px;font-size:14px;color:var(--text2)}
+   .grammar b{color:var(--text)}
+   .hidden{display:none!important}
+   .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000}
+   .modal-content{background:var(--card);padding:24px;border-radius:20px;max-width:90%;width:340px}
+   .modal-content h3{margin-bottom:12px}
+   .modal-content p{color:var(--text2);margin-bottom:20px}
+   .chat-msg{padding:12px;border-radius:12px;margin-bottom:12px;max-width:85%;word-wrap:break-word}
+   .user-msg{background:var(--main);color:#fff;margin-left:auto}
+   .ai-msg{background:var(--opt);color:var(--text)}
+   .typing{display:flex;gap:4px;padding:12px}
+   .typing span{width:8px;height:8px;background:var(--text2);border-radius:50%;animation:bounce 1.4s infinite}
+   .typing span:nth-child(2){animation-delay:.2s}
+   .typing span:nth-child(3){animation-delay:.4s}
+    @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
+    input[type="text"]{width:100%;padding:14px;border:2px solid var(--opt);border-radius:12px;font-size:16px;background:var(--card);color:var(--text);margin-bottom:12px}
+    input[type="text"]:focus{outline:none;border-color:var(--main)}
+  </style>
 </head>
 <body>
   <div class="header">
     <span>Maya Didi</span>
     <div class="stats">
-      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
-      <span>🔥 <span id="streak">0</span></span>
-      <span>❤️ <span id="hearts">5</span></span>
-      <span>⚡ <span id="xp">0</span></span>
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()">🌙</button>
+      <span>🔥<span id="streak">0</span></span>
+      <span>❤️<span id="hearts">5</span></span>
+      <span>⚡<span id="xp">0</span></span>
     </div>
   </div>
 
   <div class="container">
-    <div class="screen" id="homeScreen" style="display:block">
+    <!-- HOME SCREEN -->
+    <div class="screen" id="homeScreen">
       <button class="btn btn-voice" onclick="showDoubtScreen()">💬 Maya Didi से पूछो</button>
       <button class="btn btn-practice" onclick="startPractice()">🔄 Practice गलत Questions</button>
+
       <div class="card">
-        <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
-          <div class="stat"><div class="stat-label">Streak</div><div class="stat-value" id="streakHome">0</div></div>
-          <div class="stat"><div class="stat-label">Hearts</div><div class="stat-value" id="heartsHome">5</div></div>
-          <div class="stat"><div class="stat-label">XP</div><div class="stat-value" id="xpHome">0</div></div>
+        <div class="grid">
+          <div class="stat">
+            <div class="stat-label">Streak</div>
+            <div class="stat-value" id="streakHome">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Hearts</div>
+            <div class="stat-value" id="heartsHome">5</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">XP</div>
+            <div class="stat-value" id="xpHome">0</div>
+          </div>
         </div>
-        <h3>UNIT 1: BASICS - 30 DAYS</h3>
-        <p style="color:var(--text2);font-size:14px;margin:8px 0">Day चुनो। Done Day पे Click = Practice</p>
+
+        <h3 style="margin-top:20px;margin-bottom:8px;">UNIT 1: BASICS - 30 DAYS</h3>
+        <p style="color:var(--text2);margin-bottom:16px;">Day चुनो। Done Day पे Click = Practice</p>
+
         <div class="day-grid" id="daysGrid"></div>
       </div>
     </div>
 
-    <div class="screen" id="quizScreen">
-      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
-      <div class="card">
-        <div class="question" id="questionText"></div>
-        <div class="hindi" id="questionHindi"></div>
-        <div class="options" id="optionsBox"></div>
-        <div class="feedback" id="feedback"></div>
-        <div class="grammar hidden" id="grammarBox"></div>
-      </div>
-      <button class="btn btn-main" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
-    </div>
-
+    <!-- DOUBT SCREEN -->
     <div class="screen" id="doubtScreen">
+      <button class="btn btn-main" onclick="showScreen('homeScreen')" style="margin-bottom:16px;">← Back</button>
       <div class="card">
-        <h3>Maya Didi से पूछो 💬</h3>
-        <div id="chatBox" style="max-height:400px;overflow-y:auto;margin:16px 0"></div>
-        <input type="text" id="doubtInput" placeholder="यहाँ अपना Doubt लिखो..." style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--opt);background:var(--bg);color:var(--text)">
-        <button class="btn btn-voice" onclick="askDoubt()">पूछो</button>
-        <button class="btn btn-speak" onclick="askDoubtVoice()">🎤 बोल के पूछो</button>
-        <button class="btn btn-opt" onclick="showScreen('homeScreen')">← वापस</button>
+        <h3 style="margin-bottom:16px;">Maya Didi से पूछो 😊</h3>
+        <div id="chatBox" style="max-height:400px;overflow-y:auto;margin-bottom:16px;"></div>
+        <input type="text" id="doubtInput" placeholder="Apna doubt likho...">
+        <button class="btn btn-main" onclick="askDoubt()">भेजो</button>
+        <button class="btn btn-voice" onclick="askDoubtVoice()">🎤 बोल के पूछो</button>
       </div>
     </div>
   </div>
 
-  <div class="modal" id="dayModal">
-    <div class="modal-content">
-      <h3 id="modalTitle"></h3>
-      <p id="modalDesc"></p>
-      <button class="btn btn-main" id="startQuizBtn" onclick="startDayQuiz()">Start Quiz</button>
-      <button class="btn btn-practice" onclick="startDayPractice()" id="modalPracticeBtn">Practice गलत Questions</button>
-      <button class="btn btn-opt" onclick="closeModal()">बंद करें</button>
-    </div>
-  </div>
-
+  <!-- AD POPUP -->
   <div class="modal" id="adPopup">
     <div class="modal-content">
-      <h3>😢 Hearts खत्म!</h3>
-      <p>2 Hearts पाने के लिए Video देखो</p>
-      <button class="btn btn-main" onclick="watchAd()">📺 Video देखो</button>
-      <button class="btn btn-opt" onclick="closeAd()">बंद करें</button>
+      <h3>❤️ Hearts Khatam!</h3>
+      <p>Video dekho aur 2 hearts pao</p>
+      <button class="btn btn-main" onclick="watchAd()">Video Dekho</button>
+      <button class="btn btn-opt" onclick="closeAd()">Cancel</button>
     </div>
   </div>
 
-  <script src="js/data.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/dayGrid.js"></script>
-  <script src="js/quiz.js"></script>
-  <script>
-    window.onload = function(){
-      loadState();
-      loadDays();
-      showScreen('homeScreen');
+<script>
+let state = {
+  streak: 0,
+  hearts: 5,
+  xp: 0,
+  done: [],
+  wrong: []
+};
+
+let chatHistory = [];
+
+const LESSONS = [
+  { day: 1, title: "I am", desc: "Basic intro" },
+  { day: 2, title: "You are", desc: "Second person" },
+  { day: 3, title: "He/She is", desc: "Third person" },
+  { day: 4, title: "We are", desc: "Plural" },
+  { day: 5, title: "They are", desc: "Plural 3rd" },
+  { day: 6, title: "Present", desc: "Simple Present" },
+  { day: 7, title: "Questions", desc: "Making questions" },
+  { day: 8, title: "Negatives", desc: "Not sentences" },
+  { day: 9, title: "Have/Has", desc: "Possession" },
+  { day: 10, title: "This/That", desc: "Demonstrative" }
+];
+
+function loadState(){
+  let saved = localStorage.getItem('mayaDidiState');
+  if(saved){
+    state = JSON.parse(saved);
+  }
+  updateStats();
+}
+
+function saveState(){
+  localStorage.setItem('mayaDidiState', JSON.stringify(state));
+}
+
+function loadDays(){
+  let grid = document.getElementById('daysGrid');
+  if(!grid) return;
+  grid.innerHTML = '';
+  LESSONS.forEach(lesson => {
+    let btn = document.createElement('button');
+    btn.className = 'day-btn';
+    if(state.done.includes(lesson.day)){
+      btn.classList.add('done');
     }
-  </script>
+    btn.innerHTML = `${lesson.day}<small>${lesson.title}</small>`;
+    btn.onclick = () => openDay(lesson.day);
+    grid.appendChild(btn);
+  });
+}
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+
+function toggleTheme(){
+  let html = document.documentElement;
+  if(html.getAttribute('data-theme') === 'dark'){
+    html.removeAttribute('data-theme');
+    document.getElementById('themeBtn').textContent = '🌙';
+  }else{
+    html.setAttribute('data-theme','dark');
+    document.getElementById('themeBtn').textContent = '☀️';
+  }
+}
+
+function updateStats(){
+  document.getElementById('streak').textContent = state.streak;
+  document.getElementById('hearts').textContent = state.hearts;
+  document.getElementById('xp').textContent = state.xp;
+  document.getElementById('streakHome').textContent = state.streak;
+  document.getElementById('heartsHome').textContent = state.hearts;
+  document.getElementById('xpHome').textContent = state.xp;
+}
+
+function speakText(text){
+  if('speechSynthesis' in window){
+    window.speechSynthesis.cancel();
+    let msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'hi-IN';
+    window.speechSynthesis.speak(msg);
+  }
+}
+
+function startPractice(){
+  alert('Practice feature jaldi aa raha hai bhai');
+}
+
+function openDay(day){
+  alert('Day ' + day + ': ' + LESSONS[day-1].title + '\nQuiz jaldi aa raha hai');
+}
+
+function showDoubtScreen(){
+  showScreen('doubtScreen');
+  if(chatHistory.length === 0){
+    addAIMessage("नमस्ते! मैं Maya Didi हूँ 😊<br>कोई भी English का Doubt पूछो - Grammar, Translation, Meaning कुछ भी। मैं Example के साथ समझाऊंगी।");
+  }
+}
+
+function addUserMessage(text){
+  chatHistory.push({role:'user',text:text});
+  let chatBox = document.getElementById('chatBox');
+  chatBox.innerHTML += `<div class="chat-msg user-msg">${text}</div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function addAIMessage(text){
+  chatHistory.push({role:'ai',text:text});
+  let chatBox = document.getElementById('chatBox');
+  chatBox.innerHTML += `<div class="chat-msg ai-msg"><b>Maya Didi:</b><br>${text}</div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function showTyping(){
+  let chatBox = document.getElementById('chatBox');
+  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span><span></span></div></div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function removeTyping(){
+  let typing = document.getElementById('typingMsg');
+  if(typing) typing.remove();
+}
+
+function askDoubt(){
+  let input = document.getElementById('doubtInput');
+  let question = input.value.trim();
+  if(!question) return;
+  addUserMessage(question);
+  input.value = '';
+  showTyping();
+  setTimeout(()=>{
+    removeTyping();
+    let answer = getMayaAnswer(question);
+    addAIMessage(answer);
+    speakText(answer.replace(/<br>/g,' ').replace(/<b>|<\/b>/g,''));
+  },1500);
+}
+
+function askDoubtVoice(){
+  if(!('webkitSpeechRecognition' in window)){
+    alert('Chrome में खोलो भाई');
+    return;
+  }
+  let recognition = new webkitSpeechRecognition();
+  recognition.lang = 'hi-IN';
+  recognition.onresult = function(event){
+    let spoken = event.results[0][0].transcript;
+    document.getElementById('doubtInput').value = spoken;
+    askDoubt();
+  };
+  recognition.start();
+}
+
+function getMayaAnswer(q){
+  q = q.toLowerCase();
+  if(q.includes('i am go') || q.includes('am go')){
+    return `❌ <b>"I am go"</b> गलत है बेटा।<br><br><b>सही:</b> "I go" या "I am going"<br><br><b>Rule:</b> 'am' के बाद Verb की -ing form लगती है।<br><b>Example:</b><br>✅ I am going - मैं जा रहा हूँ<br>✅ I go - मैं जाता हूँ`;
+  }
+  if(q.includes('he do') || q.includes('she do')){
+    return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।`;
+  }
+  return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br><b>मैं ये सब सिखा सकती हूँ:</b><br>1. Grammar Rules<br>2. Translation<br>3. Daily Sentences`;
+}
+
+function watchAd(){
+  document.getElementById('adPopup').style.display = 'none';
+  setTimeout(() => {
+    state.hearts = 2;
+    updateStats();
+    saveState();
+    speakText('Dhanyawaad. Do heart mil gaye');
+  }, 1000);
+}
+
+function closeAd(){
+  document.getElementById('adPopup').style.display = 'none';
+  showScreen('homeScreen');
+}
+
+// App Start
+window.onload = function(){
+  loadState();
+  loadDays();
+  showScreen('homeScreen');
+}
+</script>
 </body>
 </html>
