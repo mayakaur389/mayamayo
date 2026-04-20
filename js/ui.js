@@ -59,9 +59,10 @@ function watchAd(){
 
 function closeAd(){
   document.getElementById('adPopup').style.display = 'none';
+  showScreen('homeScreen'); // Ye line add kar di
 }
 
-function showDoubtScreen(){
+nction showDoubtScreen(){
   showScreen('doubtScreen');
   if(chatHistory.length === 0){
     addAIMessage("नमस्ते! मैं Maya Didi हूँ 😊<br>कोई भी English का Doubt पूछो - Grammar, Translation, Meaning कुछ भी। मैं Example के साथ समझाऊंगी।");
