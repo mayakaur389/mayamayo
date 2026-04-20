@@ -14,6 +14,32 @@ function toggleTheme(){
   }
 }
 
+function switchLang(){
+  currentLang = currentLang === 'hi'? 'en' : 'hi';
+  document.getElementById('langBtn').textContent = t('flag');
+  updateLanguage();
+  loadDays();
+  saveState();
+}
+
+function updateLanguage(){
+  document.getElementById('askMayaText').textContent = t('askMaya');
+  document.getElementById('practiceText').textContent = t('practice');
+  document.getElementById('streakLabel').textContent = t('streak');
+  document.getElementById('heartsLabel').textContent = t('hearts');
+  document.getElementById('unitText').textContent = t('unit1');
+  document.getElementById('chooseDayText').textContent = t('chooseDay');
+  document.getElementById('doubtTitle').textContent = t('doubtTitle');
+  document.getElementById('doubtInput').placeholder = t('doubtPlaceholder');
+  document.getElementById('askBtn').textContent = t('askBtn');
+  document.getElementById('voiceBtn').textContent = t('voiceBtn');
+  document.getElementById('backBtn').textContent = t('backBtn');
+  document.getElementById('startBtn').textContent = t('startBtn');
+  document.getElementById('modalPracticeBtn').textContent = t('modalPracticeBtn');
+  document.getElementById('closeBtn').textContent = t('closeBtn');
+  document.getElementById('nextBtn').textContent = t('nextBtn');
+}
+
 function updateStats(){
   document.getElementById('streak').textContent = state.streak;
   document.getElementById('hearts').textContent = state.hearts;
@@ -27,17 +53,17 @@ function speakText(text){
   if('speechSynthesis' in window){
     window.speechSynthesis.cancel();
     let msg = new SpeechSynthesisUtterance(text);
-    msg.lang = 'hi-IN';
+    msg.lang = currentLang === 'hi'? 'hi-IN' : 'en-US';
     window.speechSynthesis.speak(msg);
   }
 }
 
 function showStats(){
-  alert(`🔥 Streak: ${state.streak} Days\n❤️ Hearts: ${state.hearts}\n⚡ XP: ${state.xp}\n✅ Completed: ${state.done.length}/30 Days\n❌ Wrong: ${state.wrong.length} Questions`);
+  alert(`🔥 ${t('streak')}: ${state.streak}\n❤️ ${t('hearts')}: ${state.hearts}\n⚡ XP: ${state.xp}\n✅ Completed: ${state.done.length}/30 Days\n❌ Wrong: ${state.wrong.length} Questions`);
 }
 
 function resetProgress(){
-  if(confirm('सब Reset करना है?')){
+  if(confirm(currentLang === 'hi'? 'सब Reset करना है?' : 'Reset all progress?')){
     localStorage.clear();
     location.reload();
   }
@@ -45,29 +71,28 @@ function resetProgress(){
 
 function showRewardedAd(){
   document.getElementById('adPopup').style.display = 'block';
-  speakText('Heart khatam. Video dekho aur do heart pao');
+  speakText(currentLang === 'hi'? 'Hearts khatam. Video dekho' : 'No hearts. Watch video');
 }
 
 function watchAd(){
   document.getElementById('adPopup').style.display = 'none';
-  alert('Ad Chal Rahi Hai... 5 second');
   setTimeout(() => {
     state.hearts = 2;
     updateStats();
-    document.getElementById('feedback').textContent = '2 Heart मिल गए! 🎉';
-    speakText('Dhanyawaad. Do heart mil gaye');
+    speakText(currentLang === 'hi'? 'Dhanyawaad. Do heart mil gaye' : 'Thanks. You got 2 hearts');
   }, 5000);
 }
 
 function closeAd(){
   document.getElementById('adPopup').style.display = 'none';
-  document.getElementById('feedback').textContent = 'Heart khatam. App restart karo';
 }
 
 function showDoubtScreen(){
   showScreen('doubtScreen');
   if(chatHistory.length === 0){
-    addAIMessage("नमस्ते! मैं Maya Didi हूँ 😊<br>कोई भी English का Doubt पूछो - Grammar, Translation, Meaning कुछ भी। मैं Example के साथ समझाऊंगी।");
+    addAIMessage(currentLang === 'hi'?
+      "नमस्ते! मैं Maya Didi हूँ 😊<br>कोई भी English का Doubt पूछो - Grammar, Translation, Meaning कुछ भी। मैं Example के साथ समझाऊंगी।" :
+      "Hello! I'm Maya Didi 😊<br>Ask me any Hindi doubt - Words, Translation, Meaning anything. I'll explain with examples.");
   }
 }
 
@@ -113,11 +138,11 @@ function askDoubt(){
 
 function askDoubtVoice(){
   if(!('webkitSpeechRecognition' in window)){
-    alert('Chrome में खोलो भाई');
+    alert(currentLang === 'hi'? 'Chrome में खोलो भाई' : 'Open in Chrome please');
     return;
   }
   let recognition = new webkitSpeechRecognition();
-  recognition.lang = 'hi-IN';
+  recognition.lang = currentLang === 'hi'? 'hi-IN' : 'en-US';
   recognition.onresult = function(event){
     let spoken = event.results[0][0].transcript;
     document.getElementById('doubtInput').value = spoken;
@@ -128,41 +153,36 @@ function askDoubtVoice(){
 
 function getMayaAnswer(q){
   q = q.toLowerCase();
-  if(q.includes('i am go') || q.includes('am go')){
-    return `❌ <b>"I am go"</b> गलत है बेटा।<br><br><b>सही:</b> "I go" या "I am going"<br><br><b>Rule:</b> 'am' के बाद Verb की -ing form लगती है।<br><b>Example:</b><br>✅ I am going - मैं जा रहा हूँ<br>✅ I go - मैं जाता हूँ`;
+  
+  // Hindi → English Mode के जवाब
+  if(currentLang === 'hi'){
+    if(q.includes('i am go') || q.includes('am go')){
+      return `❌ <b>"I am go"</b> गलत है बेटा।<br><br><b>सही:</b> "I go" या "I am going"<br><br><b>Rule:</b> 'am' के बाद Verb की -ing form लगती है।<br><b>Example:</b><br>✅ I am going - मैं जा रहा हूँ<br>✅ I go - मैं जाता हूँ`;
+    }
+    if(q.includes('he do') || q.includes('she do')){
+      return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।`;
+    }
+    if(q.includes('ka english') || q.includes('का इंग्लिश') || q.includes('translate')){
+      let hindiText = q.replace(/ka english kya hai|ka english|का इंग्लिश क्या है|translate|का इंग्लिश|ka matlab|का मतलब/gi,'').trim();
+      if(hindiText.includes('मैं ठीक हूँ') || hindiText.includes('main thik hun')) return `<b>"मैं ठीक हूँ"</b> = "I am fine" or "I am okay"<br><b>Conversation:</b><br>A: How are you?<br>B: I am fine, thank you.`;
+      return `बेटा, "<b>${hindiText}</b>" का English बताने के लिए पूरा वाक्य लिखो 😊`;
+    }
+    return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br><b>मैं ये सब सिखा सकती हूँ:</b><br>1. Grammar Rules<br>2. Translation<br>3. Daily Sentences`;
   }
-  if(q.includes('he do') || q.includes('she do')){
-    return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।<br><b>Example:</b><br>✅ He does his work - वह अपना काम करता है`;
+  
+  // English → Hindi Mode के जवाब
+  else {
+    if(q.includes('main') && q.includes('mean')){
+      return `✅ <b>"Main"</b> means <b>"I"</b> in English.<br><br><b>Example:</b><br>Main ek chhatra hoon = I am a student<br>Main khush hoon = I am happy`;
+    }
+    if(q.includes('tum') && q.includes('mean')){
+      return `✅ <b>"Tum"</b> means <b>"You"</b> in English.<br><br><b>Example:</b><br>Tum mere dost ho = You are my friend<br>Tum kahan ho? = Where are you?`;
+    }
+    if(q.includes('how to say') || q.includes('translate')){
+      let engText = q.replace(/how to say|translate|in hindi/gi,'').trim();
+      if(engText.includes('i am fine')) return `<b>"I am fine"</b> = "Main theek hoon" या "Main badhiya hoon"<br><br><b>Conversation:</b><br>A: Tum kaise ho?<br>B: Main theek hoon, shukriya.`;
+      return `Sure! For "<b>${engText}</b>" please write the full sentence 😊`;
+    }
+    return `Got it! 😊<br><br>You asked: "<b>${q}</b>"<br><br><b>I can teach:</b><br>1. Hindi Words Meaning<br>2. Translation<br>3. Daily Hindi Sentences`;
   }
-  if(q.includes('did not went') || q.includes('did not came')){
-    return `❌ <b>"did not went"</b> गलत है।<br><br><b>सही:</b> "did not go"<br><br><b>Rule:</b> 'did' के बाद हमेशा Verb की 1st form लगती है।<br><b>Example:</b><br>✅ I did not go - मैं नहीं गया<br>✅ She did not come - वह नहीं आई`;
-  }
-  if(q.includes('more better') || q.includes('most best')){
-    return `❌ <b>"more better"</b> गलत है।<br><br><b>सही:</b> "better" या "much better"<br><br><b>Rule:</b> 'better' खुद Comparative है, 'more' नहीं लगेगा।<br><b>Example:</b><br>✅ This is better - यह बेहतर है<br>❌ This is more better`;
-  }
-  if(q.includes('a') && q.includes('an')){
-    return `<b>A / An / The का Use:</b><br><br><b>A</b> = Consonant sound से पहले<br>✅ a book, a car, a university<br><br><b>AN</b> = Vowel sound से पहले<br>✅ an apple, an hour, an honest man<br><br><b>THE</b> = Specific चीज़ के लिए<br>✅ the sun, the Taj Mahal`;
-  }
-  if(q.includes('in') && q.includes('on') && q.includes('at')){
-    return `<b>In / On / At का Difference:</b><br><br><b>IN</b> = बड़े जगह, महीने, साल<br>✅ in India, in 2025, in the room<br><br><b>ON</b> = सतह पर, दिन, तारीख<br>✅ on the table, on Monday, on 5th Jan<br><br><b>AT</b> = Exact point, समय<br>✅ at home, at 5 PM, at the bus stop`;
-  }
-  if(q.includes('has') && q.includes('have')){
-    return `<b>Has / Have का Use:</b><br><br><b>HAS</b> = He, She, It, Name के साथ<br>✅ He has a car, Ram has money<br><br><b>HAVE</b> = I, You, We, They के साथ<br>✅ I have a book, They have time`;
-  }
-  if(q.includes('ka english') || q.includes('का इंग्लिश') || q.includes('translate')){
-    let hindiText = q.replace(/ka english kya hai|ka english|का इंग्लिश क्या है|translate|का इंग्लिश|ka matlab|का मतलब/gi,'').trim();
-    if(hindiText.includes('मैं ठीक हूँ') || hindiText.includes('main thik hun')) return `<b>"मैं ठीक हूँ"</b> = "I am fine" या "I am okay" या "I'm good"<br><br><b>Conversation:</b><br>A: How are you?<br>B: I am fine, thank you. And you?`;
-    if(hindiText.includes('तुम कहाँ') || hindiText.includes('tum kahan')) return `<b>"तुम कहाँ जा रहे हो?"</b> = "Where are you going?"<br><br><b>Rule:</b> Where = कहाँ, are you going = जा रहे हो`;
-    if(hindiText.includes('धन्यवाद') || hindiText.includes('dhanyawad')) return `<b>"धन्यवाद"</b> = "Thank you" या "Thanks"<br><br><b>Formal:</b> Thank you very much<br><b>Casual:</b> Thanks a lot`;
-    if(hindiText.includes('मुझे भूख लगी') || hindiText.includes('bhookh lagi')) return `<b>"मुझे भूख लगी है"</b> = "I am hungry"<br><br><b>Example:</b> I am hungry, let's eat something`;
-    if(hindiText.includes('माफ करना') || hindiText.includes('sorry')) return `<b>"माफ करना"</b> = "Sorry" या "Excuse me" या "Pardon"<br><br><b>Example:</b> Sorry, I am late - माफ करना, मैं लेट हूँ`;
-    return `बेटा, "<b>${hindiText}</b>" का English बताने के लिए पूरा वाक्य लिखो तो बेहतर समझा पाऊंगी 😊<br><b>Example पूछो:</b><br>1. "मैं ठीक हूँ का English क्या है?"<br>2. "तुम कहाँ जा रहे हो का English"`;
-  }
-  if(q.includes('how are you')){
-    return `<b>"How are you?"</b> = "आप कैसे हो?" / "तुम कैसे हो?"<br><br><b>जवाब दो:</b><br>✅ I am fine - मैं ठीक हूँ<br>✅ I am good - मैं अच्छा हूँ<br>✅ Not bad - बुरा नहीं<br>✅ I am great - मैं बहुत अच्छा हूँ`;
-  }
-  if(q.includes('what is your name')){
-    return `<b>"What is your name?"</b> = "तुम्हारा नाम क्या है?"<br><br><b>जवाब दो:</b><br>✅ My name is Ram - मेरा नाम राम है<br>✅ I am Ram - मैं राम हूँ`;
-  }
-  return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br><b>मैं ये सब सिखा सकती हूँ:</b><br>1. Grammar Rules - is/am/are, has/have, do/does<br>2. Translation - Hindi से English<br>3. Daily Sentences - How are you, Thank you<br>4. Tenses - Present, Past, Future<br><br><b>Example पूछो:</b><br>"I am go सही है या गलत?"<br>"मैं ठीक हूँ का English क्या है?"<br>"in on at का difference"`;
 }
