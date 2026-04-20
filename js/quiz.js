@@ -60,17 +60,20 @@ function checkAnswer(selected, correct, grammar){
 
     speakText('Galat jawab');
 
-    if(state.hearts <= 0){
-      setTimeout(() => showRewardedAd(), 1000);
-    }
-  }
-
-  document.getElementById('grammarBox').textContent = grammar;
-  document.getElementById('grammarBox').classList.remove('hidden');
-  document.getElementById('nextBtn').disabled = false;
-  updateStats();
-  saveState();
+   if(state.hearts <= 0){ 
+  setTimeout(() => {
+    showRewardedAd();
+    showScreen('homeScreen'); // Quiz screen se hata de
+  }, 1000); 
+  document.getElementById('nextBtn').disabled = true; // Next button band
+} else {
+  document.getElementById('nextBtn').disabled = false; // Hearts bache to Next chalu
 }
+
+document.getElementById('grammarBox').textContent = grammar;
+document.getElementById('grammarBox').classList.remove('hidden');
+updateStats();
+saveState();
 
 function nextQuestion(){
   state.q++;
