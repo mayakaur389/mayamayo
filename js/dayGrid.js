@@ -38,7 +38,7 @@ function openDay(day){
   let modal = document.getElementById('dayModal');
   let title = document.getElementById('modalTitle');
   let desc = document.getElementById('modalDesc');
-  let startBtn = document.querySelector('#dayModal.btn-main');
+  let startBtn = document.getElementById('startQuizBtn');
   let practiceBtn = document.getElementById('modalPracticeBtn');
 
   title.textContent = `Day ${day}`;
@@ -59,7 +59,7 @@ function openDay(day){
     practiceBtn.style.display = 'none';
   }
 
-  modal.style.display = 'block';
+  modal.style.display = 'flex';
 }
 
 function closeModal(){
