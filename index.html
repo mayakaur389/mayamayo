@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maya Didi - Learn English</title>
+  <title>Maya Didi - English Teacher</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="header">
-    <h2>Maya Didi</h2>
+    <span>Maya Didi</span>
     <div class="stats">
       <button class="icon-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
       <span>🔥 <span id="streak">0</span></span>
@@ -16,69 +16,63 @@
       <span>⚡ <span id="xp">0</span></span>
     </div>
   </div>
+
   <div class="container">
-    <div id="doubtScreen" class="screen">
+    <div class="screen" id="homeScreen">
+      <button class="btn btn-voice" onclick="showDoubtScreen()">💬 Maya Didi से पूछो</button>
+      <button class="btn btn-practice" onclick="startPractice()">🔄 Practice गलत Questions</button>
       <div class="card">
-        <h2>💬 Maya Didi से पूछो</h2>
-        <p class="hindi">कोई भी English का Doubt लिखो या बोलो</p>
-        <div id="chatBox" style="height:300px;overflow-y:auto;background:var(--card);border-radius:12px;padding:12px;margin:12px 0;border:2px solid var(--p1)"></div>
-        <textarea id="doubtInput" placeholder="यहाँ अपना सवाल लिखो... जैसे: 'I am go' सही है या गलत?" style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--p1);margin:8px 0;min-height:60px"></textarea>
-        <div class="grid" style="grid-template-columns:1fr 1fr">
-          <button class="btn btn-voice" onclick="askDoubt()">📩 पूछो</button>
-          <button class="btn btn-speak" onclick="askDoubtVoice()">🎤 बोल के पूछो</button>
-        </div>
-        <button class="btn btn-opt" onclick="showScreen('homeScreen')">⬅️ वापस</button>
-      </div>
-    </div>
-    <div id="homeScreen" class="screen">
-      <div class="card">
-        <h1>Maya Didi – AI English Teacher</h1>
-        <p class="hindi">हिंदी से English बोलना सीखो, रोज़ 10 मिनट</p>
-        <button class="btn" onclick="showDoubtScreen()" style="background:var(--p3);width:100%;margin:12px 0">💬 Maya Didi से पूछो</button>
-        <button class="btn btn-practice" onclick="startPractice()">🔄 Practice गलत Questions</button>
-        <div class="grid" style="grid-template-columns:repeat(3,1fr);margin:16px 0">
+        <div class="grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px">
           <div class="stat"><div class="stat-label">Streak</div><div class="stat-value" id="streakHome">0</div></div>
           <div class="stat"><div class="stat-label">Hearts</div><div class="stat-value" id="heartsHome">5</div></div>
           <div class="stat"><div class="stat-label">XP</div><div class="stat-value" id="xpHome">0</div></div>
         </div>
         <h3>UNIT 1: BASICS - 30 DAYS</h3>
-        <p class="hindi">Day चुनो। Done Day पे Click = Practice</p>
+        <p style="color:var(--text2);font-size:14px;margin:8px 0">Day चुनो। Done Day पे Click = Practice</p>
         <div class="day-grid" id="daysGrid"></div>
-        <div class="grid" style="grid-template-columns:1fr 1fr">
-          <button class="btn btn-opt" onclick="showStats()">📊 प्रगति</button>
-          <button class="btn btn-opt" onclick="resetProgress()">🔄 Reset</button>
-        </div>
       </div>
     </div>
-    <div id="quizScreen" class="screen">
+
+    <div class="screen" id="quizScreen">
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
       <div class="card">
-        <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
-        <div class="question" id="questionText">Question</div>
-        <div class="hindi" id="questionHindi">Hindi</div>
+        <div class="question" id="questionText"></div>
+        <div class="hindi" id="questionHindi"></div>
         <div class="options" id="optionsBox"></div>
         <div class="feedback" id="feedback"></div>
         <div class="grammar hidden" id="grammarBox"></div>
-        <button class="btn btn-main" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
-        <button class="btn btn-opt" onclick="showScreen('homeScreen')">⬅️ Home</button>
+      </div>
+      <button class="btn btn-main" id="nextBtn" onclick="nextQuestion()" disabled>Next</button>
+    </div>
+
+    <div class="screen" id="doubtScreen">
+      <div class="card">
+        <h3>Maya Didi से पूछो 💬</h3>
+        <div id="chatBox" style="max-height:400px;overflow-y:auto;margin:16px 0"></div>
+        <input type="text" id="doubtInput" placeholder="यहाँ अपना Doubt लिखो..." style="width:100%;padding:12px;border-radius:12px;border:2px solid var(--opt);background:var(--bg);color:var(--text)">
+        <button class="btn btn-voice" onclick="askDoubt()">पूछो</button>
+        <button class="btn btn-speak" onclick="askDoubtVoice()">🎤 बोल के पूछो</button>
+        <button class="btn btn-opt" onclick="showScreen('homeScreen')">← वापस</button>
       </div>
     </div>
   </div>
+
   <div class="modal" id="dayModal">
     <div class="modal-content">
-      <h3 id="modalTitle">Day 1</h3>
-      <p id="modalDesc">I am / You are</p>
-      <button class="btn btn-main" onclick="startDayQuiz()">📝 Start Quiz</button>
-      <button class="btn btn-practice" id="modalPracticeBtn" onclick="startDayPractice()">🔄 Practice This Day</button>
-      <button class="btn btn-opt" onclick="closeModal()">Cancel</button>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+      <button class="btn btn-main" onclick="startDayQuiz()">Start Quiz</button>
+      <button class="btn btn-practice" onclick="startDayPractice()" id="modalPracticeBtn">Practice गलत Questions</button>
+      <button class="btn btn-opt" onclick="closeModal()">बंद करें</button>
     </div>
   </div>
-  <div id="adPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; text-align:center; padding-top:40%;">
-    <div style="background:white; margin:20px; padding:20px; border-radius:20px;">
-      <h2>❤️ Heart Khatam!</h2>
-      <p>Video dekho aur 2 Heart free pao</p>
-      <button onclick="watchAd()" style="background:#58cc02; color:white; padding:15px 30px; border:none; border-radius:15px; font-size:18px; margin:10px;">▶️ Video Dekho</button>
-      <br>
-      <button onclick="closeAd()" style="background:#ccc; color:black; padding:10px 20px; border:none; border-radius:10px;">Band Karo</button>
+
+  <div class="modal" id="adPopup">
+    <div class="modal-content">
+      <h3>😢 Hearts खत्म!</h3>
+      <p>2 Hearts पाने के लिए Video देखो</p>
+      <button class="btn btn-main" onclick="watchAd()">📺 Video देखो</button>
+      <button class="btn btn-opt" onclick="closeAd()">बंद करें</button>
     </div>
   </div>
 
