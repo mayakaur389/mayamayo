@@ -1,3 +1,5 @@
+let chatHistory = []; // Ye line sabse upar add kar di
+
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
@@ -110,7 +112,7 @@ function askDoubt(){
 }
 
 function askDoubtVoice(){
-  if(!('webkitSpeechRecognition' in window);){
+  if(!('webkitSpeechRecognition' in window)){ // Extra ; remove kar diya
     alert('Chrome में खोलो भाई');
     return;
   }
