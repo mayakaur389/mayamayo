@@ -1,87 +1,62 @@
-function loadDays(){
-  let grid = document.getElementById('daysGrid');
-  grid.innerHTML = '';
-  let mode = LANG[currentLang].mode;
-  
-  for(let i = 1; i <= 30; i++){
-    let btn = document.createElement('button');
-    btn.className = 'day-btn';
-    btn.innerHTML = `<div>${i}</div><small>Day</small>`;
-    
-    if(state.done.includes(i)){
-      btn.classList.add('done');
-      btn.innerHTML = `<div>${i}</div><small>✓ Done</small>`;
-    }
-    
-    // Check if lesson exists for current mode
-    if(!LESSONS[mode][i]){
-      btn.classList.add('locked');
-    }
-    
-    btn.onclick = () => openDay(i);
-    grid.appendChild(btn);
-  }
+:root{
+  --bg:#f0f4f8;--card:#fff;--text:#1e293b;--text2:#64748b;
+  --main:#3b82f6;--main2:#2563eb;--green:#10b981;
+  --orange:#f59e0b;--red:#ef4444;--opt:#e2e8f0;--done:#10b981;
 }
-
-function openDay(day){
-  state.selectedDay = day;
-  let mode = LANG[currentLang].mode;
-  let modal = document.getElementById('dayModal');
-  let title = document.getElementById('modalTitle');
-  let desc = document.getElementById('modalDesc');
-  let startBtn = document.getElementById('startBtn');
-  let practiceBtn = document.getElementById('modalPracticeBtn');
-  
-  title.textContent = `Day ${day}`;
-  
-  if(LESSONS[mode][day]){
-    desc.textContent = LESSONS[mode][day].topic;
-    startBtn.style.display = 'block';
-    if(state.done.includes(day)){
-      practiceBtn.style.display = 'block';
-      startBtn.textContent = t('startBtn') + ' Again';
-    }else{
-      practiceBtn.style.display = 'none';
-      startBtn.textContent = t('startBtn');
-    }
-  }else{
-    desc.textContent = currentLang === 'hi'? 'Coming Soon' : 'Coming Soon';
-    startBtn.style.display = 'none';
-    practiceBtn.style.display = 'none';
-  }
-  
-  modal.style.display = 'block';
+[data-theme="dark"]{
+  --bg:#0f172a;--card:#1e293b;--text:#f1f5f9;--text2:#94a3b8;
+  --main:#60a5fa;--main2:#3b82f6;--green:#34d399;
+  --orange:#fbbf24;--red:#f87171;--opt:#334155;--done:#10b981;
 }
-
-function closeModal(){
-  document.getElementById('dayModal').style.display = 'none';
-}
-
-function startDayQuiz(){
-  state.day = state.selectedDay;
-  state.q = 0;
-  state.isPractice = false;
-  closeModal();
-  loadQuestion();
-  showScreen('quizScreen');
-}
-
-function startDayPractice(){
-  state.day = state.selectedDay;
-  state.q = 0;
-  state.isPractice = true;
-  closeModal();
-  loadQuestion();
-  showScreen('quizScreen');
-}
-
-function startPractice(){
-  if(state.wrong.length === 0){
-    alert(currentLang === 'hi'? 'कोई गलत Question नहीं है!' : 'No wrong questions!');
-    return;
-  }
-  state.isPractice = true;
-  state.q = 0;
-  loadQuestion();
-  showScreen('quizScreen');
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
+.header{background:var(--main);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.header span{font-size:20px;font-weight:700}
+.stats{display:flex;gap:12px;align-items:center}
+.stats span{font-weight:600;font-size:14px}
+.icon-btn{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer}
+.container{max-width:600px;margin:0 auto;padding:20px}
+.card{background:var(--card);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.btn{width:100%;padding:16px;border:none;border-radius:16px;font-size:16px;font-weight:600;cursor:pointer;margin-bottom:12px;transition:.2s}
+.btn:active{transform:scale(.98)}
+.btn-main{background:var(--main);color:#fff}
+.btn-voice{background:var(--green);color:#fff}
+.btn-practice{background:var(--orange);color:#fff}
+.btn-opt{background:var(--opt);color:var(--text);text-align:left}
+.btn-opt.correct{background:var(--green);color:#fff}
+.btn-opt.wrong{background:var(--red);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat{background:var(--opt);padding:16px;border-radius:16px;text-align:center}
+.stat-label{font-size:12px;color:var(--text2);margin-bottom:4px}
+.stat-value{font-size:24px;font-weight:700;color:var(--main)}
+.day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.day-btn{aspect-ratio:1;background:var(--opt);border:none;border-radius:50%;font-weight:700;cursor:pointer;position:relative;transition:.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px}
+.day-btn:active{transform:scale(.95)}
+.day-btn.done{background:var(--done);color:#fff}
+.day-btn.current{background:var(--main);color:#fff;box-shadow:0 0 0 3px var(--main2)}
+.day-btn.locked{opacity:.4;cursor:not-allowed}
+.day-btn small{font-size:10px;font-weight:400;margin-top:2px}
+.badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;border-radius:50%;width:20px;height:20px;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.screen{display:none}
+.screen.active{display:block}
+.progress-wrap{background:var(--opt);height:8px;border-radius:4px;margin-bottom:20px;overflow:hidden}
+.progress-bar{background:var(--green);height:100%;transition:width.3s}
+.question{font-size:20px;font-weight:600;margin-bottom:8px}
+.hindi{color:var(--text2);margin-bottom:20px;font-size:15px}
+.options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.feedback{font-size:18px;font-weight:600;margin:16px 0;text-align:center;min-height:24px}
+.grammar{background:var(--opt);padding:16px;border-radius:12px;margin-bottom:16px;font-size:14px;color:var(--text2)}
+.grammar b{color:var(--text)}
+.hidden{display:none!important}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000}
+.modal-content{background:var(--card);padding:24px;border-radius:20px;max-width:90%;width:340px}
+.modal-content h3{margin-bottom:12px}
+.modal-content p{color:var(--text2);margin-bottom:20px}
+.chat-msg{padding:12px;border-radius:12px;margin-bottom:12px;max-width:85%}
+.user-msg{background:var(--main);color:#fff;margin-left:auto}
+.ai-msg{background:var(--opt);color:var(--text)}
+.typing{display:flex;gap:4px;padding:12px}
+.typing span{width:8px;height:8px;background:var(--text2);border-radius:50%;animation:bounce 1.4s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
