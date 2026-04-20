@@ -59,10 +59,10 @@ function watchAd(){
 
 function closeAd(){
   document.getElementById('adPopup').style.display = 'none';
-  showScreen('homeScreen'); // Ye line add kar di
+  showScreen('homeScreen');
 }
 
-nction showDoubtScreen(){
+function showDoubtScreen(){
   showScreen('doubtScreen');
   if(chatHistory.length === 0){
     addAIMessage("नमस्ते! मैं Maya Didi हूँ 😊<br>कोई भी English का Doubt पूछो - Grammar, Translation, Meaning कुछ भी। मैं Example के साथ समझाऊंगी।");
@@ -110,7 +110,7 @@ function askDoubt(){
 }
 
 function askDoubtVoice(){
-  if(!('webkitSpeechRecognition' in window)){
+  if(!('webkitSpeechRecognition' in window);){
     alert('Chrome में खोलो भाई');
     return;
   }
