@@ -6,12 +6,42 @@ let state = {
   wrong: []
 };
 
+let chatHistory = [];
+let currentDay = 0;
+let currentQ = 0;
+let quizData = [];
+
 const LESSONS = [
-  { day: 1, title: "I am", desc: "Basic intro" },
-  { day: 2, title: "You are", desc: "Second person" },
-  { day: 3, title: "He/She is", desc: "Third person" },
-  { day: 4, title: "We are", desc: "Plural" },
-  { day: 5, title: "They are", desc: "Plural 3rd" }
+  { day: 1, title: "I am", color: "#3b82f6" },
+  { day: 2, title: "You are", color: "#3b82f6" },
+  { day: 3, title: "He/She/It", color: "#3b82f6" },
+  { day: 4, title: "We are", color: "#3b82f6" },
+  { day: 5, title: "They are", color: "#3b82f6" },
+  { day: 6, title: "Present", color: "#8b5cf6" },
+  { day: 7, title: "Questions", color: "#8b5cf6" },
+  { day: 8, title: "Negative", color: "#8b5cf6" },
+  { day: 9, title: "Have/Has", color: "#8b5cf6" },
+  { day: 10, title: "This/That", color: "#8b5cf6" },
+  { day: 11, title: "Articles", color: "#ec4899" },
+  { day: 12, title: "Plural", color: "#ec4899" },
+  { day: 13, title: "My/Your", color: "#ec4899" },
+  { day: 14, title: "His/Her", color: "#ec4899" },
+  { day: 15, title: "Preposition", color: "#ec4899" },
+  { day: 16, title: "Past Simple", color: "#f59e0b" },
+  { day: 17, title: "Was/Were", color: "#f59e0b" },
+  { day: 18, title: "Past Quest", color: "#f59e0b" },
+  { day: 19, title: "Past Neg", color: "#f59e0b" },
+  { day: 20, title: "Irregular", color: "#f59e0b" },
+  { day: 21, title: "Future", color: "#10b981" },
+  { day: 22, title: "Will Quest", color: "#10b981" },
+  { day: 23, title: "Will Neg", color: "#10b981" },
+  { day: 24, title: "Going to", color: "#10b981" },
+  { day: 25, title: "Can/Could", color: "#10b981" },
+  { day: 26, title: "Must/Should", color: "#06b6d4" },
+  { day: 27, title: "May/Might", color: "#06b6d4" },
+  { day: 28, title: "Comparative", color: "#06b6d4" },
+  { day: 29, title: "Superlative", color: "#06b6d4" },
+  { day: 30, title: "Final Test", color: "#ef4444" }
 ];
 
 function loadState(){
@@ -24,25 +54,4 @@ function loadState(){
 
 function saveState(){
   localStorage.setItem('mayaDidiState', JSON.stringify(state));
-}
-
-// Dummy functions - baad me bana lenge
-function startPractice(){
-  alert('Practice feature abhi ban raha hai bhai');
-}
-
-function startDayQuiz(){
-  alert('Quiz abhi ban raha hai');
-}
-
-function startDayPractice(){
-  alert('Practice abhi ban raha hai');
-}
-
-function openDay(){
-  alert('Day click hua - quiz.js banega to chalega');
-}
-
-function closeModal(){
-  document.getElementById('dayModal').style.display = 'none';
 }
