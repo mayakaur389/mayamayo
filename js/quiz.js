@@ -1,94 +1,90 @@
-function loadQuestion(){
-  let questions;
+function openDay(day){
+  currentDay = day;
+  currentQ = 0;
 
-  if(state.isPractice && state.wrong.length > 0){
-    questions = [state.wrong[state.q]];
+  if(day === 1){
+    quizData = [
+      {q: "I ___ a student", h: "मैं एक छात्र हूँ", opt: ["am", "is", "are"], ans: 0, exp: "I के साथ 'am' लगता है"},
+      {q: "I ___ happy", h: "मैं खुश हूँ", opt: ["is", "am", "are"], ans: 1, exp: "I के साथ 'am' लगता है"},
+      {q: "I ___ from India", h: "मैं भारत से हूँ", opt: ["are", "am", "is"], ans: 1, exp: "I के साथ 'am' लगता है"}
+    ];
   }else{
-    questions = LESSONS[state.day].questions;
+    quizData = [
+      {q: "Day " + day + " Quiz", h: "जल्द आ रहा है", opt: ["OK"], ans: 0, exp: "Day " + day + " का quiz bana rahe hain"}
+    ];
   }
 
-  if(state.q >= questions.length){
-    finishDay();
+  showScreen('quizScreen');
+  showQuestion();
+}
+
+function showQuestion(){
+  if(currentQ >= quizData.length){
+    alert('Day ' + currentDay + ' Complete! +10 XP');
+    state.xp += 10;
+    if(!state.done.includes(currentDay)) state.done.push(currentDay);
+    updateStats();
+    saveState();
+    loadDays();
+    showScreen('homeScreen');
     return;
   }
 
-  let q = questions[state.q];
+  let q = quizData[currentQ];
   document.getElementById('questionText').textContent = q.q;
-  document.getElementById('questionHindi').textContent = q.h;
+  document.getElementById('hindiText').textContent = q.h;
+  document.getElementById('progressBar').style.width = ((currentQ+1)/quizData.length*100) + '%';
+  document.getElementById('progressText').textContent = `Question ${currentQ+1}/${quizData.length}`;
 
-  let box = document.getElementById('optionsBox');
-  box.innerHTML = '';
-  q.o.forEach((opt,i)=>{
+  let optBox = document.getElementById('optionsBox');
+  optBox.innerHTML = '';
+  q.opt.forEach((option, i) => {
     let btn = document.createElement('button');
     btn.className = 'btn btn-opt';
-    btn.textContent = opt;
-    btn.onclick = () => checkAnswer(i, q.a, q.g);
-    box.appendChild(btn);
+    btn.textContent = option;
+    btn.onclick = () => checkAnswer(i);
+    optBox.appendChild(btn);
   });
 
   document.getElementById('feedback').textContent = '';
   document.getElementById('grammarBox').classList.add('hidden');
-  document.getElementById('nextBtn').disabled = true;
-
-  let progress = ((state.q + 1) / questions.length) * 100;
-  document.getElementById('progressBar').style.width = progress + '%';
+  document.getElementById('nextBtn').classList.add('hidden');
 }
 
-function checkAnswer(selected, correct, grammar){
-  let buttons = document.querySelectorAll('.btn-opt');
-  buttons.forEach(b => b.disabled = true);
+function checkAnswer(selected){
+  let q = quizData[currentQ];
+  let btns = document.querySelectorAll('#optionsBox.btn-opt');
 
-  if(selected === correct){
-    buttons[selected].classList.add('correct');
-    document.getElementById('feedback').textContent = '✅ सही जवाब!';
-    state.xp += 10;
-    speakText('Sahi jawab');
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if(i === q.ans) b.classList.add('correct');
+    else if(i === selected) b.classList.add('wrong');
+  });
 
-    if(state.isPractice){
-      state.wrong.splice(state.q, 1);
-    }
+  if(selected === q.ans){
+    document.getElementById('feedback').textContent = '✅ Sahi!';
+    state.xp += 2;
   }else{
-    buttons[selected].classList.add('wrong');
-    buttons[correct].classList.add('correct');
-    document.getElementById('feedback').textContent = '❌ गलत जवाब!';
-    state.hearts--;
-
-    let currentQ = LESSONS[state.day].questions[state.q];
-    if(!state.wrong.find(w => w.q === currentQ.q)){
-      state.wrong.push(currentQ);
-    }
-
-    speakText('Galat jawab');
-
-   if(state.hearts <= 0){ 
-  setTimeout(() => {
-    showRewardedAd();
-    showScreen('homeScreen'); // Quiz screen se hata de
-  }, 1000); 
-  document.getElementById('nextBtn').disabled = true; // Next button band
-} else {
-  document.getElementById('nextBtn').disabled = false; // Hearts bache to Next chalu
-}
-
-document.getElementById('grammarBox').textContent = grammar;
-document.getElementById('grammarBox').classList.remove('hidden');
-updateStats();
-saveState();
-
-function nextQuestion(){
-  state.q++;
-  loadQuestion();
-}
-
-function finishDay(){
-  if(!state.done.includes(state.day) &&!state.isPractice){
-    state.done.push(state.day);
-    state.streak++;
-    state.xp += 50;
-    alert(`🎉 Day ${state.day} Complete!\n+50 XP Bonus`);
+    document.getElementById('feedback').textContent = '❌ Galat!';
+    state.hearts -= 1;
+    state.wrong.push({q: q.q, correct: q.opt[q.ans]});
   }
 
+  document.getElementById('grammarBox').innerHTML = `<b>Explanation:</b> ${q.exp}`;
+  document.getElementById('grammarBox').classList.remove('hidden');
+  document.getElementById('nextBtn').classList.remove('hidden');
+  updateStats();
   saveState();
+}
+
+function nextQuestion(){
+  currentQ++;
+  showQuestion();
+}
+
+// App Start
+window.onload = function(){
+  loadState();
   loadDays();
   showScreen('homeScreen');
 }
