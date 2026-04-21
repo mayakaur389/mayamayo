@@ -50,3 +50,9 @@ function loadState(){
 function saveState(){
   localStorage.setItem('mayaDidiState', JSON.stringify(state));
 }
+
+window.onload = function(){
+  loadState();
+  loadDays();
+  showScreen('homeScreen');
+}
