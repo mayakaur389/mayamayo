@@ -41,3 +41,26 @@ function applyTheme(){
     document.getElementById('themeBtn').textContent = '🌙';
   }
 }
+
+function askDoubt(){
+  let input = document.getElementById('doubtInput');
+  let text = input.value.trim();
+  if(!text) return;
+  
+  let chatBox = document.getElementById('chatBox');
+  chatBox.innerHTML += `<div class="chat-msg user-msg">${text}</div>`;
+  input.value = '';
+  
+  chatBox.innerHTML += `<div class="typing"><span></span><span></span></div>`;
+  
+  setTimeout(() => {
+    document.querySelector('.typing').remove();
+    let reply = "Maya Didi: Bhai ye wala doubt abhi Maya Didi seekh rahi hai 😊 Jaldi answer dena start kar degi!";
+    chatBox.innerHTML += `<div class="chat-msg ai-msg">${reply}</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, 1500);
+}
+
+function askDoubtVoice(){
+  alert('Voice feature jaldi aa raha hai 🎤');
+}
