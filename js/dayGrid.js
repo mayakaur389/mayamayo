@@ -10,17 +10,14 @@ function loadDays(){
     // Done days green
     if(state.done.includes(i)){
       btn.classList.add('done');
-      // Red badge for wrong count - demo ke liye
-      if(i === 1) btn.innerHTML = `<b>${i}</b><small>Day</small><span class="badge">4</span>`;
-      else if(i === 3) btn.innerHTML = `<b>${i}</b><small>Day</small><span class="badge">1</span>`;
-      else btn.innerHTML = `<b>${i}</b><small>Day</small>`;
-    }else{
-      btn.innerHTML = `<b>${i}</b><small>Day</small>`;
     }
     
-    // Active day - demo ke liye day 4
-    if(i === 4) btn.classList.add('active');
+    // Active day - jo abhi karna hai
+    if(i === state.done.length + 1){
+      btn.classList.add('active');
+    }
     
+    btn.innerHTML = `<b>${i}</b><small>Day</small>`;
     btn.onclick = () => openDay(i);
     grid.appendChild(btn);
   }
