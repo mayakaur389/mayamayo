@@ -4,14 +4,10 @@ function showScreen(id){
 }
 
 function toggleTheme(){
-  let html = document.documentElement;
-  if(html.getAttribute('data-theme') === 'dark'){
-    html.removeAttribute('data-theme');
-    document.getElementById('themeBtn').textContent = '🌙';
-  }else{
-    html.setAttribute('data-theme','dark');
-    document.getElementById('themeBtn').textContent = '☀️';
-  }
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', state.theme);
+  document.getElementById('themeBtn').textContent = state.theme === 'dark' ? '☀️' : '🌙';
+  saveState();
 }
 
 function updateStats(){
