@@ -44,20 +44,27 @@ const LESSONS = [
   { day: 30, title: "Final Test", color: "#ef4444" }
 ];
 
-function loadState(){
-  let saved = localStorage.getItem('mayaDidiState');
-  if(saved){
-    state = JSON.parse(saved);
-  }
-  updateStats();
-}
-
 function saveState(){
   localStorage.setItem('mayaDidiState', JSON.stringify(state));
 }
 
+function loadState(){
+  let saved = localStorage.getItem('mayaDidiState');
+  if(saved) state = JSON.parse(saved);
+  updateStats();
+}
+
+function getQuizForDay(day){
+  return [
+    {q: "I ___ a student", hindi: "मैं एक छात्र हूँ", opt: ["am", "is", "are"], ans: 0, grammar: "<b>am</b> = I के साथ use होता है"},
+    {q: "You ___ smart", hindi: "तुम स्मार्ट हो", opt: ["am", "is", "are"], ans: 2, grammar: "<b>are</b> = You के साथ use होता है"},
+    {q: "He ___ tall", hindi: "वह लंबा है", opt: ["am", "is", "are"], ans: 1, grammar: "<b>is</b> = He/She के साथ use होता है"}
+  ];
+}
+
 window.onload = function(){
   loadState();
+  applyTheme();
   loadDays();
   showScreen('homeScreen');
 }
