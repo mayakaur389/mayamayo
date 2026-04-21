@@ -31,10 +31,15 @@ function checkAnswer(i){
     document.getElementById('feedback').textContent = 'Sahi! 🎉';
     document.getElementById('feedback').style.color = 'var(--green)';
     state.xp += 10;
+    playSound('correctSound');
   } else {
     document.getElementById('feedback').textContent = 'Galat 😅';
     document.getElementById('feedback').style.color = 'var(--red)';
     state.hearts = Math.max(0, state.hearts - 1);
+    playSound('wrongSound');
+    if(state.hearts <= 0){
+      setTimeout(() => checkHearts(), 1000);
+    }
   }
 
   document.getElementById('grammarBox').innerHTML = q.grammar;
