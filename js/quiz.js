@@ -62,19 +62,14 @@ function checkAnswer(selected){
   });
 
   if(selected === q.ans){
-    document.getElementById('feedback').textContent = '✅ Sahi!';
-    state.xp += 2;
-  }else{
-    document.getElementById('feedback').textContent = '❌ Galat!';
-    state.hearts -= 1;
-    state.wrong.push({q: q.q, correct: q.opt[q.ans]});
-  }
-
-  document.getElementById('grammarBox').innerHTML = `<b>Explanation:</b> ${q.exp}`;
-  document.getElementById('grammarBox').classList.remove('hidden');
-  document.getElementById('nextBtn').classList.remove('hidden');
-  updateStats();
-  saveState();
+  document.getElementById('feedback').textContent = '✅ Sahi!';
+  state.xp += 2;
+  playSound('correct');  // add this
+}else{
+  document.getElementById('feedback').textContent = '❌ Galat!';
+  state.hearts = Math.max(0, state.hearts - 1); // don't go below 0
+  state.wrong.push({q: q.q, correct: q.opt[q.ans]});
+  playSound('wrong');  // add this
 }
 
 function nextQuestion(){
