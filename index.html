@@ -33,55 +33,75 @@
     }
     *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
     body{background:var(--bg);color:var(--text);min-height:100vh;transition:.3s}
-   .header{background:var(--main);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-   .header span{font-size:20px;font-weight:700}
-   .stats{display:flex;gap:12px;align-items:center}
-   .stats span{font-weight:600;font-size:14px}
-   .icon-btn{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer}
-   .container{max-width:600px;margin:0 auto;padding:20px}
-   .card{background:var(--card);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
-   .btn{width:100%;padding:16px;border:none;border-radius:16px;font-size:16px;font-weight:600;cursor:pointer;margin-bottom:12px;transition:.2s}
-   .btn:active{transform:scale(.98)}
-   .btn-main{background:var(--main);color:#fff}
-   .btn-voice{background:var(--green);color:#fff}
-   .btn-practice{background:var(--orange);color:#fff}
-   .btn-opt{background:var(--opt);color:var(--text);text-align:left}
-   .btn-opt.correct{background:var(--green);color:#fff}
-   .btn-opt.wrong{background:var(--red);color:#fff}
-   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-   .stat{background:var(--opt);padding:16px;border-radius:16px;text-align:center}
-   .stat-label{font-size:12px;color:var(--text2);margin-bottom:4px}
-   .stat-value{font-size:24px;font-weight:700;color:var(--main)}
-   .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:16px}
-   .day-btn{aspect-ratio:1;background:var(--opt);border:none;border-radius:50%;font-weight:700;cursor:pointer;position:relative;transition:.2s;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:16px;color:var(--text)}
-   .day-btn:active{transform:scale(.95)}
-   .day-btn.done{background:var(--done);color:#fff}
-   .day-btn.current{background:var(--main);color:#fff;box-shadow:0 0 0 3px var(--main2)}
-   .day-btn.locked{opacity:.4;cursor:not-allowed}
-   .day-btn small{font-size:10px;font-weight:400;margin-top:2px}
-   .badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;border-radius:50%;width:20px;height:20px;font-size:11px;display:flex;align-items:center;justify-content:center;font-weight:700}
-   .screen{display:none}
-   .screen:first-child{display:block}
-   .progress-wrap{background:var(--opt);height:8px;border-radius:4px;margin-bottom:20px;overflow:hidden}
-   .progress-bar{background:var(--green);height:100%;transition:width.3s}
-   .question{font-size:20px;font-weight:600;margin-bottom:8px}
-   .hindi{color:var(--text2);margin-bottom:20px;font-size:15px}
-   .options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-   .feedback{font-size:18px;font-weight:600;margin:16px 0;text-align:center;min-height:24px}
-   .grammar{background:var(--opt);padding:16px;border-radius:12px;margin-bottom:16px;font-size:14px;color:var(--text2)}
-   .grammar b{color:var(--text)}
-   .hidden{display:none!important}
-   .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000}
-   .modal-content{background:var(--card);padding:24px;border-radius:20px;max-width:90%;width:340px}
-   .modal-content h3{margin-bottom:12px}
-   .modal-content p{color:var(--text2);margin-bottom:20px}
-   .chat-msg{padding:12px;border-radius:12px;margin-bottom:12px;max-width:85%;word-wrap:break-word}
-   .user-msg{background:var(--main);color:#fff;margin-left:auto}
-   .ai-msg{background:var(--opt);color:var(--text)}
-   .typing{display:flex;gap:4px;padding:12px}
-   .typing span{width:8px;height:8px;background:var(--text2);border-radius:50%;animation:bounce 1.4s infinite}
-   .typing span:nth-child(2){animation-delay:.2s}
-   .typing span:nth-child(3){animation-delay:.4s}
+  .header{background:var(--main);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+  .header span{font-size:20px;font-weight:700}
+  .stats{display:flex;gap:12px;align-items:center}
+  .stats span{font-weight:600;font-size:14px}
+  .icon-btn{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer}
+  .container{max-width:600px;margin:0 auto;padding:20px}
+  .card{background:var(--card);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+  .btn{width:100%;padding:16px;border:none;border-radius:16px;font-size:16px;font-weight:600;cursor:pointer;margin-bottom:12px;transition:.2s}
+  .btn:active{transform:scale(.98)}
+  .btn-main{background:var(--main);color:#fff}
+  .btn-voice{background:var(--green);color:#fff}
+  .btn-practice{background:var(--orange);color:#fff}
+  .btn-opt{background:var(--opt);color:var(--text);text-align:left}
+  .btn-opt.correct{background:var(--green);color:#fff}
+  .btn-opt.wrong{background:var(--red);color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .stat{background:var(--opt);padding:16px;border-radius:16px;text-align:center}
+  .stat-label{font-size:12px;color:var(--text2);margin-bottom:4px}
+  .stat-value{font-size:24px;font-weight:700;color:var(--main)}
+  .day-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:16px}
+  .day-btn{
+     aspect-ratio:1;
+     background:var(--opt);
+     border:none;
+     border-radius:12px;
+     font-weight:700;
+     cursor:pointer;
+     position:relative;
+     transition:.2s;
+     display:flex;
+     flex-direction:column;
+     align-items:center;
+     justify-content:center;
+     font-size:14px;
+     color:var(--text);
+     padding:4px;
+   }
+  .day-btn:active{transform:scale(.95)}
+  .day-btn b{font-size:16px}
+  .day-btn small{
+     font-size:9px;
+     font-weight:600;
+     margin-top:1px;
+     line-height:1;
+     white-space:nowrap;
+     overflow:hidden;
+     text-overflow:ellipsis;
+     max-width:100%;
+   }
+  .screen{display:none}
+  .screen:first-child{display:block}
+  .progress-wrap{background:var(--opt);height:8px;border-radius:4px;margin-bottom:20px;overflow:hidden}
+  .progress-bar{background:var(--green);height:100%;transition:width.3s}
+  .question{font-size:20px;font-weight:600;margin-bottom:8px}
+  .hindi{color:var(--text2);margin-bottom:20px;font-size:15px}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+  .feedback{font-size:18px;font-weight:600;margin:16px 0;text-align:center;min-height:24px}
+  .grammar{background:var(--opt);padding:16px;border-radius:12px;margin-bottom:16px;font-size:14px;color:var(--text2)}
+  .grammar b{color:var(--text)}
+  .hidden{display:none!important}
+  .modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:1000}
+  .modal-content{background:var(--card);padding:24px;border-radius:20px;max-width:90%;width:340px}
+  .chat-msg{padding:12px;border-radius:12px;margin-bottom:12px;max-width:85%;word-wrap:break-word}
+  .user-msg{background:var(--main);color:#fff;margin-left:auto}
+  .ai-msg{background:var(--opt);color:var(--text)}
+  .typing{display:flex;gap:4px;padding:12px}
+  .typing span{width:8px;height:8px;background:var(--text2);border-radius:50%;animation:bounce 1.4s infinite}
+  .typing span:nth-child(2){animation-delay:.2s}
+  .typing span:nth-child(3){animation-delay:.4s}
     @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
     input[type="text"]{width:100%;padding:14px;border:2px solid var(--opt);border-radius:12px;font-size:16px;background:var(--card);color:var(--text);margin-bottom:12px}
     input[type="text"]:focus{outline:none;border-color:var(--main)}
@@ -121,7 +141,7 @@
         </div>
 
         <h3 style="margin-top:20px;margin-bottom:8px;">UNIT 1: BASICS - 30 DAYS</h3>
-        <p style="color:var(--text2);margin-bottom:16px;">Day चुनो। Done Day पे Click = Practice</p>
+        <p style="color:var(--text2);margin-bottom:16px;">Day चुनो। Done = हरा</p>
 
         <div class="day-grid" id="daysGrid"></div>
       </div>
@@ -138,15 +158,26 @@
         <button class="btn btn-voice" onclick="askDoubtVoice()">🎤 बोल के पूछो</button>
       </div>
     </div>
-  </div>
 
-  <!-- AD POPUP -->
-  <div class="modal" id="adPopup">
-    <div class="modal-content">
-      <h3>❤️ Hearts Khatam!</h3>
-      <p>Video dekho aur 2 hearts pao</p>
-      <button class="btn btn-main" onclick="watchAd()">Video Dekho</button>
-      <button class="btn btn-opt" onclick="closeAd()">Cancel</button>
+    <!-- QUIZ SCREEN -->
+    <div class="screen" id="quizScreen">
+      <button class="btn btn-main" onclick="showScreen('homeScreen')" style="margin-bottom:16px;">← Back</button>
+      <div class="card">
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progressBar" style="width:0%"></div>
+        </div>
+        <p id="progressText" style="color:var(--text2);margin-bottom:16px;font-size:14px;">Question 1/3</p>
+
+        <div class="question" id="questionText">Loading...</div>
+        <div class="hindi" id="hindiText"></div>
+
+        <div class="options" id="optionsBox"></div>
+
+        <div class="feedback" id="feedback"></div>
+        <div class="grammar hidden" id="grammarBox"></div>
+
+        <button class="btn btn-main hidden" id="nextBtn" onclick="nextQuestion()">Next Question</button>
+      </div>
     </div>
   </div>
 
@@ -160,18 +191,41 @@ let state = {
 };
 
 let chatHistory = [];
+let currentDay = 0;
+let currentQ = 0;
+let quizData = [];
 
 const LESSONS = [
-  { day: 1, title: "I am", desc: "Basic intro" },
-  { day: 2, title: "You are", desc: "Second person" },
-  { day: 3, title: "He/She is", desc: "Third person" },
-  { day: 4, title: "We are", desc: "Plural" },
-  { day: 5, title: "They are", desc: "Plural 3rd" },
-  { day: 6, title: "Present", desc: "Simple Present" },
-  { day: 7, title: "Questions", desc: "Making questions" },
-  { day: 8, title: "Negatives", desc: "Not sentences" },
-  { day: 9, title: "Have/Has", desc: "Possession" },
-  { day: 10, title: "This/That", desc: "Demonstrative" }
+  { day: 1, title: "I am", color: "#3b82f6" },
+  { day: 2, title: "You are", color: "#3b82f6" },
+  { day: 3, title: "He/She/It", color: "#3b82f6" },
+  { day: 4, title: "We are", color: "#3b82f6" },
+  { day: 5, title: "They are", color: "#3b82f6" },
+  { day: 6, title: "Present", color: "#8b5cf6" },
+  { day: 7, title: "Questions", color: "#8b5cf6" },
+  { day: 8, title: "Negative", color: "#8b5cf6" },
+  { day: 9, title: "Have/Has", color: "#8b5cf6" },
+  { day: 10, title: "This/That", color: "#8b5cf6" },
+  { day: 11, title: "Articles", color: "#ec4899" },
+  { day: 12, title: "Plural", color: "#ec4899" },
+  { day: 13, title: "My/Your", color: "#ec4899" },
+  { day: 14, title: "His/Her", color: "#ec4899" },
+  { day: 15, title: "Preposition", color: "#ec4899" },
+  { day: 16, title: "Past Simple", color: "#f59e0b" },
+  { day: 17, title: "Was/Were", color: "#f59e0b" },
+  { day: 18, title: "Past Quest", color: "#f59e0b" },
+  { day: 19, title: "Past Neg", color: "#f59e0b" },
+  { day: 20, title: "Irregular", color: "#f59e0b" },
+  { day: 21, title: "Future", color: "#10b981" },
+  { day: 22, title: "Will Quest", color: "#10b981" },
+  { day: 23, title: "Will Neg", color: "#10b981" },
+  { day: 24, title: "Going to", color: "#10b981" },
+  { day: 25, title: "Can/Could", color: "#10b981" },
+  { day: 26, title: "Must/Should", color: "#06b6d4" },
+  { day: 27, title: "May/Might", color: "#06b6d4" },
+  { day: 28, title: "Comparative", color: "#06b6d4" },
+  { day: 29, title: "Superlative", color: "#06b6d4" },
+  { day: 30, title: "Final Test", color: "#ef4444" }
 ];
 
 function loadState(){
@@ -193,10 +247,16 @@ function loadDays(){
   LESSONS.forEach(lesson => {
     let btn = document.createElement('button');
     btn.className = 'day-btn';
+
     if(state.done.includes(lesson.day)){
-      btn.classList.add('done');
+      btn.style.background = 'var(--done)';
+      btn.style.color = '#fff';
+    }else{
+      btn.style.background = lesson.color + '20';
+      btn.style.border = `2px solid ${lesson.color}`;
     }
-    btn.innerHTML = `${lesson.day}<small>${lesson.title}</small>`;
+
+    btn.innerHTML = `<b>${lesson.day}</b><small>${lesson.title}</small>`;
     btn.onclick = () => openDay(lesson.day);
     grid.appendChild(btn);
   });
@@ -241,7 +301,87 @@ function startPractice(){
 }
 
 function openDay(day){
-  alert('Day ' + day + ': ' + LESSONS[day-1].title + '\nQuiz jaldi aa raha hai');
+  currentDay = day;
+  currentQ = 0;
+
+  if(day === 1){
+    quizData = [
+      {q: "I ___ a student", h: "मैं एक छात्र हूँ", opt: ["am", "is", "are"], ans: 0, exp: "I के साथ 'am' लगता है"},
+      {q: "I ___ happy", h: "मैं खुश हूँ", opt: ["is", "am", "are"], ans: 1, exp: "I के साथ 'am' लगता है"},
+      {q: "I ___ from India", h: "मैं भारत से हूँ", opt: ["are", "am", "is"], ans: 1, exp: "I के साथ 'am' लगता है"}
+    ];
+  }else{
+    quizData = [
+      {q: "Day " + day + " Quiz", h: "जल्द आ रहा है", opt: ["OK"], ans: 0, exp: "Day " + day + " का quiz bana rahe hain"}
+    ];
+  }
+
+  showScreen('quizScreen');
+  showQuestion();
+}
+
+function showQuestion(){
+  if(currentQ >= quizData.length){
+    alert('Day ' + currentDay + ' Complete! +10 XP');
+    state.xp += 10;
+    if(!state.done.includes(currentDay)) state.done.push(currentDay);
+    updateStats();
+    saveState();
+    loadDays();
+    showScreen('homeScreen');
+    return;
+  }
+
+  let q = quizData[currentQ];
+  document.getElementById('questionText').textContent = q.q;
+  document.getElementById('hindiText').textContent = q.h;
+  document.getElementById('progressBar').style.width = ((currentQ+1)/quizData.length*100) + '%';
+  document.getElementById('progressText').textContent = `Question ${currentQ+1}/${quizData.length}`;
+
+  let optBox = document.getElementById('optionsBox');
+  optBox.innerHTML = '';
+  q.opt.forEach((option, i) => {
+    let btn = document.createElement('button');
+    btn.className = 'btn btn-opt';
+    btn.textContent = option;
+    btn.onclick = () => checkAnswer(i);
+    optBox.appendChild(btn);
+  });
+
+  document.getElementById('feedback').textContent = '';
+  document.getElementById('grammarBox').classList.add('hidden');
+  document.getElementById('nextBtn').classList.add('hidden');
+}
+
+function checkAnswer(selected){
+  let q = quizData[currentQ];
+  let btns = document.querySelectorAll('#optionsBox.btn-opt');
+
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if(i === q.ans) b.classList.add('correct');
+    else if(i === selected) b.classList.add('wrong');
+  });
+
+  if(selected === q.ans){
+    document.getElementById('feedback').textContent = '✅ Sahi!';
+    state.xp += 2;
+  }else{
+    document.getElementById('feedback').textContent = '❌ Galat!';
+    state.hearts -= 1;
+    state.wrong.push({q: q.q, correct: q.opt[q.ans]});
+  }
+
+  document.getElementById('grammarBox').innerHTML = `<b>Explanation:</b> ${q.exp}`;
+  document.getElementById('grammarBox').classList.remove('hidden');
+  document.getElementById('nextBtn').classList.remove('hidden');
+  updateStats();
+  saveState();
+}
+
+function nextQuestion(){
+  currentQ++;
+  showQuestion();
 }
 
 function showDoubtScreen(){
@@ -267,7 +407,7 @@ function addAIMessage(text){
 
 function showTyping(){
   let chatBox = document.getElementById('chatBox');
-  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span><span></span></div></div>`;
+  chatBox.innerHTML += `<div class="chat-msg ai-msg" id="typingMsg"><b>Maya Didi:</b><br><div class="typing"><span></span><span></span></div></div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -311,28 +451,9 @@ function getMayaAnswer(q){
   if(q.includes('i am go') || q.includes('am go')){
     return `❌ <b>"I am go"</b> गलत है बेटा।<br><br><b>सही:</b> "I go" या "I am going"<br><br><b>Rule:</b> 'am' के बाद Verb की -ing form लगती है।<br><b>Example:</b><br>✅ I am going - मैं जा रहा हूँ<br>✅ I go - मैं जाता हूँ`;
   }
-  if(q.includes('he do') || q.includes('she do')){
-    return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।`;
-  }
   return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br><b>मैं ये सब सिखा सकती हूँ:</b><br>1. Grammar Rules<br>2. Translation<br>3. Daily Sentences`;
 }
 
-function watchAd(){
-  document.getElementById('adPopup').style.display = 'none';
-  setTimeout(() => {
-    state.hearts = 2;
-    updateStats();
-    saveState();
-    speakText('Dhanyawaad. Do heart mil gaye');
-  }, 1000);
-}
-
-function closeAd(){
-  document.getElementById('adPopup').style.display = 'none';
-  showScreen('homeScreen');
-}
-
-// App Start
 window.onload = function(){
   loadState();
   loadDays();
