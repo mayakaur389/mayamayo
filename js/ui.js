@@ -25,6 +25,8 @@ function speakText(text){
     let msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'hi-IN';
     window.speechSynthesis.speak(msg);
+  }else{
+    alert('Voice feature not supported in this browser');
   }
 }
 
