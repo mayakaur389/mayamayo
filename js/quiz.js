@@ -1,85 +1,59 @@
-function openDay(day){
-  currentDay = day;
-  currentQ = 0;
-
-  if(day === 1){
-    quizData = [
-      {q: "I ___ a student", h: "मैं एक छात्र हूँ", opt: ["am", "is", "are"], ans: 0, exp: "I के साथ 'am' लगता है"},
-      {q: "I ___ happy", h: "मैं खुश हूँ", opt: ["is", "am", "are"], ans: 1, exp: "I के साथ 'am' लगता है"},
-      {q: "I ___ from India", h: "मैं भारत से हूँ", opt: ["are", "am", "is"], ans: 1, exp: "I के साथ 'am' लगता है"}
-    ];
-  }else{
-    quizData = [
-      {q: "Day " + day + " Quiz", h: "जल्द आ रहा है", opt: ["OK"], ans: 0, exp: "Day " + day + " का quiz bana rahe hain"}
-    ];
-  }
-
-  showScreen('quizScreen');
-  showQuestion();
-}
-
-function showQuestion(){
-  if(currentQ >= quizData.length){
-    alert('Day ' + currentDay + ' Complete! +10 XP');
-    state.xp += 10;
-    if(!state.done.includes(currentDay)) state.done.push(currentDay);
-    updateStats();
-    saveState();
-    loadDays();
-    showScreen('homeScreen');
-    return;
-  }
-
+function loadQuestion(){
   let q = quizData[currentQ];
   document.getElementById('questionText').textContent = q.q;
-  document.getElementById('hindiText').textContent = q.h;
-  document.getElementById('progressBar').style.width = ((currentQ+1)/quizData.length*100) + '%';
-  document.getElementById('progressText').textContent = `Question ${currentQ+1}/${quizData.length}`;
-
+  document.getElementById('hindiText').textContent = q.hindi;
   let optBox = document.getElementById('optionsBox');
   optBox.innerHTML = '';
-  q.opt.forEach((option, i) => {
+  q.opt.forEach((op, i) => {
     let btn = document.createElement('button');
     btn.className = 'btn btn-opt';
-    btn.textContent = option;
+    btn.textContent = op;
     btn.onclick = () => checkAnswer(i);
     optBox.appendChild(btn);
   });
-
+  document.getElementById('progressBar').style.width = `${(currentQ+1)/quizData.length*100}%`;
+  document.getElementById('progressText').textContent = `Question ${currentQ+1}/${quizData.length}`;
   document.getElementById('feedback').textContent = '';
-  document.getElementById('grammarBox').classList.add('hidden');
   document.getElementById('nextBtn').classList.add('hidden');
+  document.getElementById('grammarBox').classList.add('hidden');
 }
 
-function checkAnswer(selected){
+function checkAnswer(i){
   let q = quizData[currentQ];
-  let btns = document.querySelectorAll('#optionsBox.btn-opt');
-
-  btns.forEach((b, i) => {
-    b.disabled = true;
-    if(i === q.ans) b.classList.add('correct');
-    else if(i === selected) b.classList.add('wrong');
+  let correct = i === q.ans;
+  document.querySelectorAll('.btn-opt').forEach((btn, idx) => {
+    btn.disabled = true;
+    if(idx === q.ans) btn.classList.add('correct');
+    else if(idx === i) btn.classList.add('wrong');
   });
 
-  if(selected === q.ans){
-  document.getElementById('feedback').textContent = '✅ Sahi!';
-  state.xp += 2;
-  playSound('correct');  // add this
-}else{
-  document.getElementById('feedback').textContent = '❌ Galat!';
-  state.hearts = Math.max(0, state.hearts - 1); // don't go below 0
-  state.wrong.push({q: q.q, correct: q.opt[q.ans]});
-  playSound('wrong');  // add this
+  if(correct){
+    document.getElementById('feedback').textContent = 'Sahi! 🎉';
+    document.getElementById('feedback').style.color = 'var(--green)';
+    state.xp += 10;
+  } else {
+    document.getElementById('feedback').textContent = 'Galat 😅';
+    document.getElementById('feedback').style.color = 'var(--red)';
+    state.hearts = Math.max(0, state.hearts - 1);
+  }
+
+  document.getElementById('grammarBox').innerHTML = q.grammar;
+  document.getElementById('grammarBox').classList.remove('hidden');
+  document.getElementById('nextBtn').classList.remove('hidden');
+  saveState();
+  updateStats();
 }
 
 function nextQuestion(){
   currentQ++;
-  showQuestion();
-}
-
-// App Start
-window.onload = function(){
-  loadState();
-  loadDays();
-  showScreen('homeScreen');
+  if(currentQ >= quizData.length){
+    if(!state.done.includes(currentDay)) state.done.push(currentDay);
+    state.streak++;
+    saveState();
+    loadDays();
+    showScreen('homeScreen');
+    alert('Day Complete! 🎉');
+  } else {
+    loadQuestion();
+  }
 }
