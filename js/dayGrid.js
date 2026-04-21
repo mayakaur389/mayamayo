@@ -6,7 +6,7 @@ function loadDays(){
   LESSONS.forEach(day => {
     let btn = document.createElement('button');
     let isDone = state.done.includes(day.day);
-    let isActive = day.day === 4; // Day 4 active dikhane ke liye
+    let isActive = day.day === 4;
     btn.className = `day-btn ${isDone? 'done' : ''} ${isActive? 'active' : ''}`;
     btn.onclick = () => openDay(day.day);
     
@@ -20,6 +20,7 @@ function loadDays(){
 }
 
 function openDay(day){
+  if(!checkHearts()) return;
   currentDay = day;
   currentQ = 0;
   quizData = getQuizForDay(day);
