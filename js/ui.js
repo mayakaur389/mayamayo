@@ -1,5 +1,3 @@
-let chatHistory = []; // Ye line sabse upar add kar di
-
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
@@ -34,34 +32,8 @@ function speakText(text){
   }
 }
 
-function showStats(){
-  alert(`🔥 Streak: ${state.streak}\n❤️ Hearts: ${state.hearts}\n⚡ XP: ${state.xp}\n✅ Completed: ${state.done.length}/30 Days\n❌ Wrong: ${state.wrong.length} Questions`);
-}
-
-function resetProgress(){
-  if(confirm('सब Reset करना है?')){
-    localStorage.clear();
-    location.reload();
-  }
-}
-
-function showRewardedAd(){
-  document.getElementById('adPopup').style.display = 'block';
-  speakText('Hearts khatam. Video dekho');
-}
-
-function watchAd(){
-  document.getElementById('adPopup').style.display = 'none';
-  setTimeout(() => {
-    state.hearts = 2;
-    updateStats();
-    speakText('Dhanyawaad. Do heart mil gaye');
-  }, 5000);
-}
-
-function closeAd(){
-  document.getElementById('adPopup').style.display = 'none';
-  showScreen('homeScreen');
+function startPractice(){
+  alert('Practice feature jaldi aa raha hai bhai');
 }
 
 function showDoubtScreen(){
@@ -112,7 +84,7 @@ function askDoubt(){
 }
 
 function askDoubtVoice(){
-  if(!('webkitSpeechRecognition' in window)){ // Extra ; remove kar diya
+  if(!('webkitSpeechRecognition' in window)){
     alert('Chrome में खोलो भाई');
     return;
   }
@@ -130,14 +102,6 @@ function getMayaAnswer(q){
   q = q.toLowerCase();
   if(q.includes('i am go') || q.includes('am go')){
     return `❌ <b>"I am go"</b> गलत है बेटा।<br><br><b>सही:</b> "I go" या "I am going"<br><br><b>Rule:</b> 'am' के बाद Verb की -ing form लगती है।<br><b>Example:</b><br>✅ I am going - मैं जा रहा हूँ<br>✅ I go - मैं जाता हूँ`;
-  }
-  if(q.includes('he do') || q.includes('she do')){
-    return `❌ <b>"He do/She do"</b> गलत है।<br><br><b>सही:</b> "He does" / "She does"<br><br><b>Rule:</b> He, She, It के साथ 'does' लगता है, 'do' नहीं।`;
-  }
-  if(q.includes('ka english') || q.includes('का इंग्लिश') || q.includes('translate')){
-    let hindiText = q.replace(/ka english kya hai|ka english|का इंग्लिश क्या है|translate|का इंग्लिश|ka matlab|का मतलब/gi,'').trim();
-    if(hindiText.includes('मैं ठीक हूँ') || hindiText.includes('main thik hun')) return `<b>"मैं ठीक हूँ"</b> = "I am fine" or "I am okay"<br><b>Conversation:</b><br>A: How are you?<br>B: I am fine, thank you.`;
-    return `बेटा, "<b>${hindiText}</b>" का English बताने के लिए पूरा वाक्य लिखो 😊`;
   }
   return `समझ गई बेटा! 😊<br><br>तुमने पूछा: "<b>${q}</b>"<br><br><b>मैं ये सब सिखा सकती हूँ:</b><br>1. Grammar Rules<br>2. Translation<br>3. Daily Sentences`;
 }
