@@ -17,6 +17,10 @@ function showDoubtScreen(){
 }
 
 function startPractice(){
+  if(state.wrong.length === 0){
+    alert('Abhi koi galat question nahi hai 😊');
+    return;
+  }
   alert('Practice feature jaldi aa raha hai 😊');
 }
 
@@ -55,7 +59,7 @@ function askDoubt(){
   
   setTimeout(() => {
     document.querySelector('.typing').remove();
-    let reply = "Maya Didi: Bhai ye wala doubt abhi Maya Didi seekh rahi hai 😊 Jaldi answer dena start kar degi!";
+    let reply = "Maya Didi: '" + text + "' ka matlab samjhati hun 😊 Iska simple answer hai - practice karte raho!";
     chatBox.innerHTML += `<div class="chat-msg ai-msg">${reply}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
   }, 1500);
@@ -63,4 +67,24 @@ function askDoubt(){
 
 function askDoubtVoice(){
   alert('Voice feature jaldi aa raha hai 🎤');
+}
+
+function watchAd(){
+  state.hearts = 5;
+  saveState();
+  updateStats();
+  closeAd();
+  alert('5 Hearts mil gaye! ❤️');
+}
+
+function closeAd(){
+  document.getElementById('adModal').classList.add('hidden');
+}
+
+function checkHearts(){
+  if(state.hearts <= 0){
+    document.getElementById('adModal').classList.remove('hidden');
+    return false;
+  }
+  return true;
 }
