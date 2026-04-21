@@ -7,6 +7,19 @@ function updateStats(){
   document.getElementById('xpHome').textContent = state.xp;
 }
 
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+
+function showDoubtScreen(){
+  showScreen('doubtScreen');
+}
+
+function startPractice(){
+  alert('Practice feature jaldi aa raha hai 😊');
+}
+
 function toggleTheme(){
   if(state.theme === 'dark'){
     state.theme = 'light';
