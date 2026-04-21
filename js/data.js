@@ -1,11 +1,16 @@
-let state = {
-  streak: 0,
-  hearts: 5,  // default 5
-  xp: 0,
-  done: [],
-  wrong: [],
-  theme: 'dark'  // add this line
+let currentDay = 1;
+let currentQ = 0;
+let quizData = [];
+
+let state = { 
+  streak: 0, 
+  hearts: 5, 
+  xp: 0, 
+  done: [], 
+  wrong: [], 
+  theme: 'dark'
 };
+
 const LESSONS = [
   { day: 1, title: "I am", color: "#3b82f6" },
   { day: 2, title: "You are", color: "#3b82f6" },
