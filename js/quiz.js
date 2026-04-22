@@ -18,6 +18,16 @@ function loadQuestion(){
   document.getElementById('grammarBox').classList.add('hidden');
 }
 
+function speak(text){
+  if('speechSynthesis' in window){
+    let msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'en-US';
+    msg.rate = 0.9;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(msg);
+  }
+}
+
 function checkAnswer(i){
   let q = quizData[currentQ];
   let correct = i === q.ans;
@@ -31,12 +41,15 @@ function checkAnswer(i){
     document.getElementById('feedback').textContent = 'Sahi! 🎉';
     document.getElementById('feedback').style.color = 'var(--green)';
     state.xp += 10;
-    playSound('correctSound');
+    speak('Correct!');
   } else {
     document.getElementById('feedback').textContent = 'Galat 😅';
     document.getElementById('feedback').style.color = 'var(--red)';
     state.hearts = Math.max(0, state.hearts - 1);
-    playSound('wrongSound');
+    // Galat question ko wrong array me daal do
+    let wrongQ = {day: currentDay,...q};
+    if(!state.wrong.find(w => w.q === q.q)) state.wrong.push(wrongQ);
+    speak('Wrong!');
     if(state.hearts <= 0){
       setTimeout(() => checkHearts(), 1000);
     }
