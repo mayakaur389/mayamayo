@@ -7,6 +7,55 @@ function updateStats(){
   document.getElementById('xpHome').textContent = state.xp;
 }
 
+// ... previous code
+
+function updateStats(){
+  document.getElementById('streak').textContent = state.streak;
+  document.getElementById('hearts').textContent = state.hearts;
+  document.getElementById('xp').textContent = state.xp;
+  document.getElementById('streakHome').textContent = state.streak;
+  document.getElementById('heartsHome').textContent = state.hearts;
+  document.getElementById('xpHome').textContent = state.xp;
+}
+
+// Paste here
+function loadDays(){
+  let grid = document.getElementById('daysGrid');
+  grid.innerHTML = '';
+
+  LESSONS.forEach((lesson, index) => {
+    let btn = document.createElement('button');
+    let dayNum = lesson.day;
+
+    // Check karo: kya ye day complete hai ya unlock hai?
+    let isDone = state.done.includes(dayNum);
+    let isUnlocked = dayNum === 1 || state.done.includes(dayNum - 1);
+
+    btn.className = 'btn-day';
+    btn.innerHTML = `
+      <div style="font-size:20px;font-weight:700">${dayNum}</div>
+      <div style="font-size:11px;opacity:.7">${lesson.title}</div>
+    `;
+
+    if(isDone){
+      btn.classList.add('done');
+      btn.innerHTML += `<div style="position:absolute;top:4px;right:4px">✅</div>`;
+      btn.onclick = () => startQuiz(dayNum); // Complete bhi dobara khel sakte
+    } 
+    else if(isUnlocked){
+      btn.onclick = () => startQuiz(dayNum);
+    } 
+    else {
+      btn.classList.add('locked');
+      btn.innerHTML += `<div style="position:absolute;top:4px;right:4px">🔒</div>`;
+      btn.onclick = () => alert('Pehle Day ' + (dayNum-1) + ' complete karo 😊');
+    }
+
+    grid.appendChild(btn);
+  });
+}
+
+// ... rest of the code
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
