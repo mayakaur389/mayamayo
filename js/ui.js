@@ -70,3 +70,9 @@ function openDay(){ }
 function saveState(){ 
   localStorage.setItem('mayaDidi', JSON.stringify(state));
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadDays();
+  updateStats();
+  applyTheme();
+});
