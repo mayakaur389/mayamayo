@@ -91,3 +91,14 @@ body{background:var(--bg);color:var(--text);min-height:100vh}
 input[type="text"]{width:100%;padding:14px;border:2px solid var(--opt);border-radius:12px;font-size:16px;background:var(--card);color:var(--text);margin-bottom:12px}
 input[type="text"]:focus{outline:none;border-color:var(--main)}
 .btn-main{background:var(--main);color:#fff}
+.btn-day.locked {
+  background: #374151 !important;
+  cursor: not-allowed !important;
+}
+.btn-day.unlocked {
+  background: #1e40af !important;
+  cursor: pointer !important;
+}
+.btn-day.done {
+  background: #059669 !important;
+}
