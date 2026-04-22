@@ -34,13 +34,7 @@ function loadState(){
   updateStats();
 }
 
-function playSound(id){
-  let audio = document.getElementById(id);
-  if(audio) {
-    audio.currentTime = 0;
-    audio.play().catch(e=>{});
-  }
-}
+
 
 function getQuizForDay(day){
   const QUIZZES = {
