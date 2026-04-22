@@ -18,10 +18,14 @@ function showDoubtScreen(){
 
 function startPractice(){
   if(state.wrong.length === 0){
-    alert('Abhi koi galat question nahi hai 😊');
+    alert('Abhi koi galat question nahi hai 😊 Pehle quiz karo!');
     return;
   }
-  alert('Practice feature jaldi aa raha hai 😊');
+  currentDay = 0; // 0 = practice mode
+  currentQ = 0;
+  quizData = state.wrong.slice(0, 5); // 5 galat question max
+  showScreen('quizScreen');
+  loadQuestion();
 }
 
 function toggleTheme(){
@@ -54,19 +58,43 @@ function askDoubt(){
   let chatBox = document.getElementById('chatBox');
   chatBox.innerHTML += `<div class="chat-msg user-msg">${text}</div>`;
   input.value = '';
-  
   chatBox.innerHTML += `<div class="typing"><span></span><span></span></div>`;
   
+  // AI Teacher ka simple logic
   setTimeout(() => {
     document.querySelector('.typing').remove();
-    let reply = "Maya Didi: '" + text + "' ka matlab samjhati hun 😊 Iska simple answer hai - practice karte raho!";
-    chatBox.innerHTML += `<div class="chat-msg ai-msg">${reply}</div>`;
+    let reply = getAIReply(text);
+    chatBox.innerHTML += `<div class="chat-msg ai-msg">Maya Didi: ${reply}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
+    speak(reply);
   }, 1500);
 }
 
+function getAIReply(doubt){
+  doubt = doubt.toLowerCase();
+  if(doubt.includes('am') || doubt.includes('is') || doubt.includes('are')){
+    return "am = I ke saath, is = He/She/It ke saath, are = You/We/They ke saath use hota hai 😊";
+  } else if(doubt.includes('he') || doubt.includes('she')){
+    return "He/She ke saath hamesha 'is' lagta hai. Jaise: He is happy, She is smart";
+  } else if(doubt.includes('you')){
+    return "You ke saath hamesha 'are' lagta hai. Jaise: You are my friend";
+  } else {
+    return "Ye English ka basic rule hai. Aap Day 1 se start karo, sab samajh aa jayega. Koi specific word batao to aur achhe se samjhaungi 😊";
+  }
+}
+
 function askDoubtVoice(){
-  alert('Voice feature jaldi aa raha hai 🎤');
+  if(!('webkitSpeechRecognition' in window)){
+    alert('Tere browser me voice support nahi hai 😅 Type karke pucho');
+    return;
+  }
+  let rec = new webkitSpeechRecognition();
+  rec.lang = 'hi-IN';
+  rec.start();
+  rec.onresult = (e) => {
+    document.getElementById('doubtInput').value = e.results[0][0].transcript;
+    askDoubt();
+  }
 }
 
 function watchAd(){
