@@ -1,40 +1,32 @@
 function loadDays(){
   let grid = document.getElementById('daysGrid');
+  if(!grid) return;
   grid.innerHTML = '';
 
-  LESSONS.forEach((lesson) => {
+  for(let i=1; i<=30; i++){
     let btn = document.createElement('button');
-    let dayNum = lesson.day;
-
-    let isDone = state.done.includes(dayNum);
-    let isUnlocked = dayNum === 1 || state.done.includes(dayNum - 1);
-
     btn.className = 'btn-day';
-    btn.style.position = 'relative';
     
-    btn.innerHTML = `
-      <div style="font-size:18px;font-weight:700">${dayNum}</div>
-      <div style="font-size:10px;opacity:.7">Day</div>
-    `;
-
+    let isDone = state.done.includes(i);
+    let isUnlocked = i === 1 || state.done.includes(i-1);
+    
+    btn.innerHTML = i;
+    
     if(isDone){
-      btn.classList.add('done');
-      btn.innerHTML += `<div style="position:absolute;top:2px;right:2px;font-size:12px">✅</div>`;
-      btn.onclick = () => startQuiz(dayNum);
+      btn.style.background = '#059669';
+      btn.onclick = () => startQuiz(i);
     }
     else if(isUnlocked){
-      btn.classList.add('unlocked');
-      btn.onclick = () => startQuiz(dayNum);
+      btn.style.background = '#1e40af';
+      btn.onclick = () => startQuiz(i);
     }
     else {
-      btn.classList.add('locked');
+      btn.style.background = '#374151';
       btn.style.opacity = '0.4';
-      btn.innerHTML += `<div style="position:absolute;top:2px;right:2px;font-size:12px">🔒</div>`;
-      btn.onclick = () => {
-        alert('Pehle Day ' + (dayNum-1) + ' complete karo 😊');
-      };
+      btn.innerHTML = i + ' 🔒';
+      btn.onclick = () => alert('Pehle Day ' + (i-1) + ' karo');
     }
-
+    
     grid.appendChild(btn);
-  });
+  }
 }
