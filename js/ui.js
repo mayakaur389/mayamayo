@@ -55,9 +55,7 @@ function showScreen(id){
 }
 
 function startQuiz(day){
-  console.log('Starting Day', day);
-  showScreen('quizScreen');
-  // Quiz ka logic baad me add karenge
+  alert('Day ' + day + ' ka quiz abhi banayenge');
 }
 
 function showDoubtScreen(){ console.log('Doubt'); }
@@ -65,8 +63,8 @@ function startPractice(){ console.log('Practice'); }
 function toggleTheme(){ 
   state.theme = state.theme === 'dark' ? 'light' : 'dark';
   applyTheme();
+  saveState();
 }
-
 function checkHearts(){ }
 function openDay(){ }
 function saveState(){ 
