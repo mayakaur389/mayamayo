@@ -1,78 +1,35 @@
-function loadDays(){
-  let grid = document.getElementById('daysGrid');
+import { state } from './state.js';
+
+export function updateStats() {
+  document.getElementById('streak').textContent = state.streak;
+  document.getElementById('hearts').textContent = state.hearts;
+  document.getElementById('xp').textContent = state.xp;
+}
+
+export function renderDays(startQuizFn) {
+  const grid = document.getElementById('daysGrid');
   if(!grid) return;
   grid.innerHTML = '';
-
-  for(let i = 1; i <= 30; i++){
-    let btn = document.createElement('button');
-    btn.className = 'btn-day';
+  
+  for(let i = 1; i <= 30; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'day';
+    const unlocked = i === 1 || state.done.includes(i-1);
+    const done = state.done.includes(i);
     
-    let isDone = state.done.includes(i);
-    let isUnlocked = i === 1 || state.done.includes(i - 1);
-    
-    btn.innerHTML = i;
-    
-    if(isDone){
+    if(done) {
       btn.classList.add('done');
-      btn.onclick = () => startQuiz(i);
+      btn.innerHTML = `${i}<br>✓`;
+      btn.onclick = () => startQuizFn(i);
+    } else if(unlocked) {
+      btn.classList.add('active');
+      btn.innerHTML = `${i}<br>Start`;
+      btn.onclick = () => startQuizFn(i);
+    } else {
+      btn.innerHTML = `${i}<br>🔒`;
+      btn.disabled = true;
+      btn.onclick = () => alert(`Pehle Day ${i-1} complete karo 😊`);
     }
-    else if(isUnlocked){
-      btn.classList.add('unlocked');
-      btn.onclick = () => startQuiz(i);
-    }
-    else {
-      btn.classList.add('locked');
-      btn.innerHTML = i + ' 🔒';
-      btn.onclick = () => alert('Pehle Day ' + (i-1) + ' complete karo 😊');
-    }
-    
     grid.appendChild(btn);
   }
 }
-
-function updateStats(){
-  let xp = document.getElementById('xp');
-  let hearts = document.getElementById('hearts');
-  let streak = document.getElementById('streak');
-  
-  if(xp) xp.innerText = state.xp;
-  if(hearts) hearts.innerText = state.hearts;
-  if(streak) streak.innerText = state.streak;
-}
-
-function applyTheme(){
-  if(state.theme === 'dark'){
-    document.body.classList.add('dark');
-  } else {
-    document.body.classList.remove('dark');
-  }
-}
-
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  let screen = document.getElementById(id);
-  if(screen) screen.classList.add('active');
-}
-
-function startQuiz(day){
-  alert('Day ' + day + ' ka quiz abhi banayenge');
-}
-
-function showDoubtScreen(){ console.log('Doubt'); }
-function startPractice(){ console.log('Practice'); }
-function toggleTheme(){ 
-  state.theme = state.theme === 'dark' ? 'light' : 'dark';
-  applyTheme();
-  saveState();
-}
-function checkHearts(){ }
-function openDay(){ }
-function saveState(){ 
-  localStorage.setItem('mayaDidi', JSON.stringify(state));
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  loadDays();
-  updateStats();
-  applyTheme();
-});
