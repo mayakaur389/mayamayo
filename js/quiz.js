@@ -65,12 +65,15 @@ function checkAnswer(i){
 function nextQuestion(){
   currentQ++;
   if(currentQ >= quizData.length){
-    if(!state.done.includes(currentDay)) state.done.push(currentDay);
-    state.streak++;
+    if(currentDay === 0){ // Practice mode
+      alert('Practice Complete! 🎉');
+    } else {
+      if(!state.done.includes(currentDay)) state.done.push(currentDay);
+      state.streak++;
+    }
     saveState();
     loadDays();
     showScreen('homeScreen');
-    alert('Day Complete! 🎉');
   } else {
     loadQuestion();
   }
