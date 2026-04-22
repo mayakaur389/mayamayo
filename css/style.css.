@@ -95,10 +95,4 @@ input[type="text"]:focus{outline:none;border-color:var(--main)}
   background: #374151 !important;
   cursor: not-allowed !important;
 }
-.btn-day.unlocked {
-  background: #1e40af !important;
-  cursor: pointer !important;
-}
-.btn-day.done {
-  background: #059669 !important;
-}
+
