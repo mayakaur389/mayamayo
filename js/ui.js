@@ -59,3 +59,16 @@ function startQuiz(day){
   showScreen('quizScreen');
   // Quiz ka logic baad me add karenge
 }
+
+function showDoubtScreen(){ console.log('Doubt'); }
+function startPractice(){ console.log('Practice'); }
+function toggleTheme(){ 
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  applyTheme();
+}
+
+function checkHearts(){ }
+function openDay(){ }
+function saveState(){ 
+  localStorage.setItem('mayaDidi', JSON.stringify(state));
+}
