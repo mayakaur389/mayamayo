@@ -15,7 +15,6 @@ function loadDays(){
     let btn = document.createElement('button');
     let dayNum = lesson.day;
 
-    // Check karo: kya ye day complete hai ya unlock hai?
     let isDone = state.done.includes(dayNum);
     let isUnlocked = dayNum === 1 || state.done.includes(dayNum - 1);
 
@@ -28,7 +27,7 @@ function loadDays(){
     if(isDone){
       btn.classList.add('done');
       btn.innerHTML += `<div style="position:absolute;top:4px;right:4px">✅</div>`;
-      btn.onclick = () => startQuiz(dayNum); // Complete bhi dobara khel sakte
+      btn.onclick = () => startQuiz(dayNum);
     }
     else if(isUnlocked){
       btn.onclick = () => startQuiz(dayNum);
@@ -48,6 +47,16 @@ function showScreen(id){
   document.getElementById(id).style.display = 'block';
 }
 
+// YE WALA FUNCTION MISSING THA - AB ADD KAR
+function startQuiz(day){
+  if(!checkHearts()) return;
+  currentDay = day;
+  currentQ = 0;
+  quizData = getQuizForDay(day);
+  showScreen('quizScreen');
+  loadQuestion();
+}
+
 function showDoubtScreen(){
   showScreen('doubtScreen');
 }
@@ -57,6 +66,7 @@ function startPractice(){
     alert('Abhi koi galat question nahi hai 😊 Pehle quiz karo!');
     return;
   }
+  if(!checkHearts()) return;
   currentDay = 0; // 0 = practice mode
   currentQ = 0;
   quizData = state.wrong.slice(0, 5); // 5 galat question max
@@ -94,7 +104,6 @@ function askDoubt(){
   chatBox.innerHTML += `<div class="chat-msg user-msg">${text}</div>`;
   input.value = '';
   chatBox.innerHTML += `<div class="typing"><span></span><span></span></div>`;
-  // AI Teacher ka simple logic
   setTimeout(() => {
     document.querySelector('.typing').remove();
     let reply = getAIReply(text);
