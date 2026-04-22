@@ -1,80 +1,26 @@
-function loadQuestion(){
-  let q = quizData[currentQ];
-  document.getElementById('questionText').textContent = q.q;
-  document.getElementById('hindiText').textContent = q.hindi;
-  let optBox = document.getElementById('optionsBox');
-  optBox.innerHTML = '';
-  q.opt.forEach((op, i) => {
-    let btn = document.createElement('button');
-    btn.className = 'btn btn-opt';
-    btn.textContent = op;
-    btn.onclick = () => checkAnswer(i);
-    optBox.appendChild(btn);
-  });
-  document.getElementById('progressBar').style.width = `${(currentQ+1)/quizData.length*100}%`;
-  document.getElementById('progressText').textContent = `Question ${currentQ+1}/${quizData.length}`;
-  document.getElementById('feedback').textContent = '';
-  document.getElementById('nextBtn').classList.add('hidden');
-  document.getElementById('grammarBox').classList.add('hidden');
-}
+// quiz.js - Sirf quiz ka logic
+import { state, saveState } from './state.js';
+import { updateStats, renderDays } from './ui.js';
 
-function speak(text){
-  if('speechSynthesis' in window){
-    let msg = new SpeechSynthesisUtterance(text);
-    msg.lang = 'en-US';
-    msg.rate = 0.9;
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(msg);
-  }
-}
-
-function checkAnswer(i){
-  let q = quizData[currentQ];
-  let correct = i === q.ans;
-  document.querySelectorAll('.btn-opt').forEach((btn, idx) => {
-    btn.disabled = true;
-    if(idx === q.ans) btn.classList.add('correct');
-    else if(idx === i) btn.classList.add('wrong');
-  });
-
-  if(correct){
-    document.getElementById('feedback').textContent = 'Sahi! 🎉';
-    document.getElementById('feedback').style.color = 'var(--green)';
+export function startQuiz(day) {
+  // Abhi ke liye simple alert
+  alert(`Day ${day} ka quiz start hua 🔥`);
+  
+  // Test ke liye Day complete mark kar dete hain
+  if(!state.done.includes(day)) {
+    state.done.push(day);
     state.xp += 10;
-    speak('Correct!');
-  } else {
-    document.getElementById('feedback').textContent = 'Galat 😅';
-    document.getElementById('feedback').style.color = 'var(--red)';
-    state.hearts = Math.max(0, state.hearts - 1);
-    // Galat question ko wrong array me daal do
-    let wrongQ = {day: currentDay,...q};
-    if(!state.wrong.find(w => w.q === q.q)) state.wrong.push(wrongQ);
-    speak('Wrong!');
-    if(state.hearts <= 0){
-      setTimeout(() => checkHearts(), 1000);
+    
+    // Streak update
+    if(state.done.length > state.streak) {
+      state.streak = state.done.length;
     }
+    
+    saveState(); // state.js me save
+    renderDays(startQuiz); // ui.js se screen refresh
+    updateStats(); // ui.js se XP update
   }
-
-  document.getElementById('grammarBox').innerHTML = q.grammar;
-  document.getElementById('grammarBox').classList.remove('hidden');
-  document.getElementById('nextBtn').classList.remove('hidden');
-  saveState();
-  updateStats();
-}
-
-function nextQuestion(){
-  currentQ++;
-  if(currentQ >= quizData.length){
-    if(currentDay === 0){ // Practice mode
-      alert('Practice Complete! 🎉');
-    } else {
-      if(!state.done.includes(currentDay)) state.done.push(currentDay);
-      state.streak++;
-    }
-    saveState();
-    loadDays();
-    showScreen('homeScreen');
-  } else {
-    loadQuestion();
-  }
+  
+  // Yaha baad me asli quiz ka code aayega
+  // Abhi ke liye itna hi kaafi hai testing ke liye
 }
