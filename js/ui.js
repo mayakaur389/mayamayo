@@ -7,18 +7,6 @@ function updateStats(){
   document.getElementById('xpHome').textContent = state.xp;
 }
 
-// ... previous code
-
-function updateStats(){
-  document.getElementById('streak').textContent = state.streak;
-  document.getElementById('hearts').textContent = state.hearts;
-  document.getElementById('xp').textContent = state.xp;
-  document.getElementById('streakHome').textContent = state.streak;
-  document.getElementById('heartsHome').textContent = state.hearts;
-  document.getElementById('xpHome').textContent = state.xp;
-}
-
-// Paste here
 function loadDays(){
   let grid = document.getElementById('daysGrid');
   grid.innerHTML = '';
@@ -41,10 +29,10 @@ function loadDays(){
       btn.classList.add('done');
       btn.innerHTML += `<div style="position:absolute;top:4px;right:4px">✅</div>`;
       btn.onclick = () => startQuiz(dayNum); // Complete bhi dobara khel sakte
-    } 
+    }
     else if(isUnlocked){
       btn.onclick = () => startQuiz(dayNum);
-    } 
+    }
     else {
       btn.classList.add('locked');
       btn.innerHTML += `<div style="position:absolute;top:4px;right:4px">🔒</div>`;
@@ -55,7 +43,6 @@ function loadDays(){
   });
 }
 
-// ... rest of the code
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById(id).style.display = 'block';
@@ -103,12 +90,10 @@ function askDoubt(){
   let input = document.getElementById('doubtInput');
   let text = input.value.trim();
   if(!text) return;
-  
   let chatBox = document.getElementById('chatBox');
   chatBox.innerHTML += `<div class="chat-msg user-msg">${text}</div>`;
   input.value = '';
   chatBox.innerHTML += `<div class="typing"><span></span><span></span></div>`;
-  
   // AI Teacher ka simple logic
   setTimeout(() => {
     document.querySelector('.typing').remove();
