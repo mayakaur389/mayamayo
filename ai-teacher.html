@@ -1,110 +1,275 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Teacher - Maya Didi</title>
+    <title>Maya Didi - AI Teacher</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-        body{background:#f0f4f8;display:flex;flex-direction:column;height:100vh}
-       .header{background:#8b5cf6;color:white;padding:12px 16px;display:flex;align-items:center;gap:12px}
-       .header button{background:white;color:#8b5cf6;border:none;padding:8px 12px;border-radius:8px;font-weight:600}
-       .chat-box{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
-       .msg{padding:12px 16px;border-radius:16px;max-width:80%;line-height:1.5}
-       .msg-ai{background:white;align-self:flex-start;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
-       .msg-user{background:#8b5cf6;color:white;align-self:flex-end}
-       .msg-hindi{font-size:14px;color:#6b7280;margin-top:4px;border-top:1px dashed #e5e7eb;padding-top:4px}
-       .input-area{display:flex;padding:12px;background:white;border-top:1px solid #e5e7eb}
-       .input-area input{flex:1;padding:12px;border:2px solid #d1d5db;border-radius:20px 0 0 20px;font-size:16px}
-       .input-area button{border-radius:0 20px 20px 0;background:#8b5cf6;color:white;border:none;padding:0 20px;font-weight:600}
-       .suggest{display:flex;gap:8px;padding:0 12px 12px;overflow-x:auto}
-       .suggest button{background:#e5e7eb;border:none;padding:8px 12px;border-radius:20px;font-size:13px;white-space:nowrap}
+       .chat-header {
+            background: var(--blue);
+            padding: 16px;
+            margin: -16px -16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+        }
+       .back-btn {
+            background: rgba(0,0,0,0.3);
+            border: none;
+            color: white;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+       .chat-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+       .chat-container {
+            padding: 16px;
+            height: calc(100vh - 180px);
+            overflow-y: auto;
+        }
+       .msg {
+            margin: 12px 0;
+            display: flex;
+            gap: 8px;
+        }
+       .msg.ai { justify-content: flex-start; }
+       .msg.user { justify-content: flex-end; }
+       .msg-bubble {
+            background: var(--card);
+            padding: 12px 16px;
+            border-radius: 16px;
+            max-width: 80%;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+       .msg.user.msg-bubble {
+            background: var(--blue);
+            color: white;
+        }
+       .light-mode.msg-bubble {
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #111;
+        }
+       .light-mode.msg.user.msg-bubble {
+            background: var(--blue);
+            color: white;
+        }
+       .typing {
+            opacity: 0.7;
+            font-style: italic;
+        }
+       .chat-input {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 16px;
+            background: var(--bg);
+            display: flex;
+            gap: 8px;
+        }
+       .light-mode.chat-input { background: #f5f5f5; }
+       .chat-input input {
+            flex: 1;
+            background: var(--card);
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 16px;
+        }
+       .light-mode.chat-input input {
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #111;
+        }
+       .send-btn,.mic-btn {
+            background: var(--blue);
+            border: none;
+            color: white;
+            padding: 0 16px;
+            border-radius: 12px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+       .quick-btns {
+            display: flex;
+            gap: 8px;
+            padding: 0 16px 8px;
+            overflow-x: auto;
+        }
+       .quick-btn {
+            background: var(--card);
+            border: 1px solid var(--lock);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+       .light-mode.quick-btn {
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #111;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <button onclick="location.href='index.html'">← वापस</button>
-        <h2>🤖 AI Teacher Maya Didi</h2>
-    </div>
-
-    <div class="suggest">
-        <button onclick="ask('Verb क्या है?')">Verb क्या है?</button>
-        <button onclick="ask('How are you का मतलब')">How are you?</button>
-        <button onclick="ask('Present tense समझाओ')">Present Tense</button>
-        <button onclick="ask('Thank you कब बोलते हैं')">Thank you कब?</button>
-    </div>
-
-    <div class="chat-box" id="chatBox">
-        <div class="msg msg-ai">
-            Hi! I am Maya Didi AI 👩‍🏫<div class="msg-hindi">नमस्ते! मैं Maya Didi AI हूँ। English का कोई भी Doubt पूछो। मैं Hindi और English दोनों में समझाऊँगी।</div>
+    <div class="chat-header">
+        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+        <div class="chat-title">💬 Maya Didi</div>
+        <div class="stats">
+            <button id="theme-toggle" class="theme-btn">🌙</button>
         </div>
     </div>
 
-    <div class="input-area">
-        <input type="text" id="chatInput" placeholder="यहाँ अपना सवाल लिखो...">
-        <button onclick="sendMsg()">भेजो</button>
+    <div class="chat-container" id="chatBox">
+        <div class="msg ai">
+            <div class="msg-bubble">
+Hey! Main Maya Didi hoon 😊 Teri personal AI teacher.
+
+Mujhse puch sakte ho:
+1. Koi doubt samjha do
+2. Topic explain kar do
+3. Practice questions banao
+4. Motivation chahiye
+
+Bolo kya help karu?
+            </div>
+        </div>
     </div>
 
-<script>
-const aiDB = {
-    'verb': {en:'Verb is an action word. It shows what someone does.', hi:'Verb = काम बताने वाला शब्द। जैसे: run भागना, eat खाना, sleep सोना।'},
-    'noun': {en:'Noun is a naming word for person, place, or thing.', hi:'Noun = नाम वाले शब्द। जैसे: Ram राम, Delhi दिल्ली, Book किताब।'},
-    'how are you': {en:'"How are you?" is used to ask about someone\'s wellbeing.', hi:'"How are you?" = आप कैसे हैं? किसी का हाल-चाल पूछते हैं। जवाब: "I am fine" = मैं ठीक हूँ।'},
-    'thank you': {en:'"Thank you" is used to show gratitude when someone helps you.', hi:'"Thank you" = धन्यवाद। जब कोई मदद करे तो बोलते हैं।'},
-    'present tense': {en:'Present Tense = for actions happening now. Structure: Subject + Verb. Ex: I eat.', hi:'Present Tense = अभी हो रहे काम के लिए। जैसे: I eat = मैं खाता हूँ।'},
-    'past tense': {en:'Past Tense = for completed actions. Use 2nd form of verb. Ex: I ate.', hi:'Past Tense = जो हो चुका। Verb की 2nd form। जैसे: I ate = मैंने खाया।'},
-    'future': {en:'Future Tense = for actions that will happen. Use will/shall. Ex: I will eat.', hi:'Future Tense = जो होगा। Will/Shall लगाओ। जैसे: I will eat = मैं खाऊँगा।'},
-    'hello': {en:'"Hello" is a greeting used when you meet someone.', hi:'Hello = नमस्ते। मिलने पर बोलते हैं 👋'},
-    'sorry': {en:'"Sorry" is used to apologize for a mistake.', hi:'Sorry = माफ़ करें। गलती होने पर बोलते हैं।'},
-    'please': {en:'"Please" is used to make a polite request.', hi:'Please = कृपया। Request करने के लिए। जैसे: Please help me = कृपया मेरी मदद करें।'}
-};
+    <div class="quick-btns">
+        <button class="quick-btn" onclick="quickAsk('Present Tense samjhao')">Tense samjhao</button>
+        <button class="quick-btn" onclick="quickAsk('Noun ke 5 questions do')">Quiz banao</button>
+        <button class="quick-btn" onclick="quickAsk('Padhai me mann nahi lagta')">Motivate karo</button>
+    </div>
 
-const synth = window.speechSynthesis;
-function speak(text){
-    if(!synth) return;
-    synth.cancel();
-    const ut = new SpeechSynthesisUtterance(text);
-    ut.lang = 'en-US'; ut.rate = 0.9;
-    synth.speak(ut);
-}
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="Message likho ya doubt pucho...">
+        <button class="mic-btn" onclick="startVoice()">🎤</button>
+        <button class="send-btn" onclick="sendMessage()">➤</button>
+    </div>
 
-function aiReply(msg){
-    msg = msg.toLowerCase();
-    for(let key in aiDB){
-        if(msg.includes(key)) return aiDB[key];
-    }
-    return {
-        en:'I did not understand. Please ask in simple words. Ex: "What is verb?"',
-        hi:'मैं समझी नहीं 🤔 आसान शब्दों में पूछो। जैसे: "Verb क्या है?" या "How are you का मतलब?"'
-    };
-}
+    <script>
+        // Theme Toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            document.getElementById('theme-toggle').textContent =
+                document.body.classList.contains('light-mode')? '☀️' : '🌙';
+        });
 
-function addMsg(text, isUser){
-    const box = document.getElementById('chatBox');
-    if(isUser){
-        box.innerHTML += `<div class="msg msg-user">${text}</div>`;
-    } else {
-        box.innerHTML += `<div class="msg msg-ai">${text.en}<div class="msg-hindi">${text.hi}</div></div>`;
-        speak(text.en);
-    }
-    box.scrollTop = box.scrollHeight;
-}
+        // GEMINI API KEY YAHI DALNA - Google AI Studio se le aao
+        const GEMINI_API_KEY = 'PASTE_YOUR_GEMINI_API_KEY_HERE';
 
-function sendMsg(){
-    const input = document.getElementById('chatInput');
-    const txt = input.value.trim();
-    if(!txt) return;
-    addMsg(txt, true);
-    input.value = '';
-    setTimeout(() => addMsg(aiReply(txt), false), 600);
-}
+        // Maya Didi ka character
+        const SYSTEM_PROMPT = `Tum Maya Didi ho. Ek dostana, funny, helpful AI teacher ho jo class 6-10 ke bacchon ko English aur Maths padhati hai.
 
-function ask(q){
-    document.getElementById('chatInput').value = q;
-    sendMsg();
-}
+        Rules:
+        1. Hamesha Hinglish me baat karo. Hindi + English mix.
+        2. Chote bacche ki tarah simple explain karo. Bade words mat use karo.
+        3. Example bahut do. Real life se jod ke samjhao.
+        4. Motivating raho. Bacche ko darana nahi hai.
+        5. Har answer ke end me 1 chota sa sawal pucho ya practice do.
+        6. Agar galat bole to pyar se correct karo, daanto mat.
+        7. Emojis use karo taki chat mazedaar lage 😊`;
 
-document.getElementById('chatInput').onkeypress = e => e.key === 'Enter' && sendMsg();
-</script>
+        let chatHistory = [];
+
+        function quickAsk(text) {
+            document.getElementById('userInput').value = text;
+            sendMessage();
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('userInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            addMessage(msg, 'user');
+            input.value = '';
+
+            // Typing indicator
+            const typingId = addMessage('Maya Didi soch rahi hai...', 'ai typing');
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [
+                            {
+                                role: "user",
+                                parts: [{ text: SYSTEM_PROMPT + "\n\nUser ka sawal: " + msg }]
+                            }
+                        ],
+                        generationConfig: {
+                            temperature: 0.9,
+                            maxOutputTokens: 300
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                document.getElementById(typingId).remove();
+
+                if(data.candidates && data.candidates[0]) {
+                    const reply = data.candidates[0].content.parts[0].text;
+                    addMessage(reply, 'ai');
+                    chatHistory.push({role: "user", content: msg});
+                    chatHistory.push({role: "assistant", content: reply});
+                } else {
+                    addMessage('Sorry yaar, abhi Maya Didi busy hai 😅 1 min baad try karo', 'ai');
+                }
+            } catch (e) {
+                document.getElementById(typingId).remove();
+                addMessage('Net slow hai ya API key galat hai. Google AI Studio se key check karo 💔', 'ai');
+            }
+        }
+
+        function addMessage(text, sender) {
+            const chatBox = document.getElementById('chatBox');
+            const msgDiv = document.createElement('div');
+            const id = 'msg-' + Date.now();
+            msgDiv.id = id;
+            msgDiv.className = `msg ${sender}`;
+            msgDiv.innerHTML = `<div class="msg-bubble">${text}</div>`;
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            return id;
+        }
+
+        // Enter se send
+        document.getElementById('userInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Voice Input
+        function startVoice() {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert('Tera browser voice support nahi karta 😢 Chrome me khol');
+                return;
+            }
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'hi-IN';
+            recognition.onresult = (e) => {
+                document.getElementById('userInput').value = e.results[0][0].transcript;
+            };
+            recognition.start();
+        }
+    </script>
 </body>
 </html>
