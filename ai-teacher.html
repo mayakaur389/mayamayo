@@ -5,326 +5,156 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maya Didi - AI Teacher</title>
     <style>
-        :root {
-            --bg: #0f0f0f;
-            --card: #1e1e1e;
-            --text: #e0e0e0;
-            --blue: #1a73e8;
-            --green: #28a745;
-            --red: #dc3545;
-        }
-
-       .light-mode {
-            --bg: #f5f5f5;
-            --card: #ffffff;
-            --text: #111111;
-        }
-
+        /* Tera pura CSS yaha wahi rahega */
+        :root { --bg: #0f0f0f; --card: #1e1e1e; --text: #e0e0e0; --blue: #1a73e8; --green: #28a745; --red: #dc3545; }
+       .light-mode { --bg: #f5f5f5; --card: #ffffff; --text: #111111; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-       .chat-header {
-            background: var(--card);
-            padding: 12px 16px;
-            border-bottom: 1px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; }
+       .chat-header { background: var(--card); padding: 12px 16px; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; }
        .light-mode.chat-header { border-bottom: 1px solid #ddd; }
-
        .header-left { display: flex; align-items: center; gap: 10px; }
        .back-btn { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
        .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 20px; }
        .header-info h3 { font-size: 16px; }
        .header-info p { font-size: 12px; opacity: 0.7; }
        .theme-toggle { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
-
-       .chat-body {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
+       .chat-body { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
        .light-mode.chat-body { background: #f5f5f5; }
-
-       .user-msg {
-            background: var(--blue);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 16px;
-            max-width: 80%;
-            line-height: 1.5;
-            white-space: pre-wrap;
-            align-self: flex-end;
-            margin-left: auto;
-        }
-
-       .ai-msg {
-            background: var(--card);
-            color: var(--text);
-            padding: 12px 16px;
-            border-radius: 16px;
-            max-width: 80%;
-            line-height: 1.5;
-            white-space: pre-wrap;
-            align-self: flex-start;
-            margin-right: auto;
-        }
-
-       .light-mode.ai-msg {
-            background: #ffffff;
-            color: #111111;
-            border: 1px solid #dddddd;
-        }
-
-       .light-mode.user-msg {
-            background: #1a73e8;
-            color: #ffffff;
-        }
-
-       .quick-btns {
-            display: flex;
-            gap: 8px;
-            padding: 0 16px 8px;
-            overflow-x: auto;
-        }
-
-       .quick-btns button {
-            background: var(--card);
-            border: 1px solid #333;
-            color: var(--text);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-
-       .light-mode.quick-btns button {
-            background: #ffffff;
-            border: 1px solid #dddddd;
-            color: #111111;
-        }
-
-       .chat-input {
-            display: flex;
-            gap: 8px;
-            padding: 12px 16px;
-            background: var(--card);
-            border-top: 1px solid #333;
-        }
-
-       .light-mode.chat-input {
-            background: #f5f5f5;
-            border-top: 1px solid #dddddd;
-        }
-
-       .chat-input input {
-            flex: 1;
-            background: var(--bg);
-            border: 1px solid #333;
-            padding: 10px 12px;
-            border-radius: 20px;
-            color: var(--text);
-            font-size: 14px;
-            min-width: 0;
-            width: 50%;
-        }
-
-       .light-mode.chat-input input {
-            background: #ffffff;
-            border: 1px solid #dddddd;
-            color: #111111;
-        }
-
-       .send-btn,.mic-btn {
-            background: var(--blue);
-            border: none;
-            color: white;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            font-size: 16px;
-            cursor: pointer;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-       .mic-btn.listening { background: var(--red); animation: pulse 1s infinite; }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-       .typing {
-            display: flex;
-            gap: 4px;
-            padding: 12px 16px;
-        }
-       .typing span {
-            width: 8px;
-            height: 8px;
-            background: #666;
-            border-radius: 50%;
-            animation: blink 1.4s infinite;
-        }
-       .typing span:nth-child(2) { animation-delay: 0.2s; }
-       .typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes blink {
-            0%, 60%, 100% { opacity: 0.3; }
-            30% { opacity: 1; }
-        }
+       .user-msg { background: var(--blue); color: white; padding: 12px 16px; border-radius: 16px; max-width: 80%; line-height: 1.5; white-space: pre-wrap; align-self: flex-end; margin-left: auto; }
+       .ai-msg { background: var(--card); color: var(--text); padding: 12px 16px; border-radius: 16px; max-width: 80%; line-height: 1.5; white-space: pre-wrap; align-self: flex-start; margin-right: auto; }
+       .light-mode.ai-msg { background: #ffffff; color: #111111; border: 1px solid #dddddd; }
+       .light-mode.user-msg { background: #1a73e8; color: #ffffff; }
+       .quick-btns { display: flex; gap: 8px; padding: 0 16px 8px; overflow-x: auto; }
+       .quick-btns button { background: var(--card); border: 1px solid #333; color: var(--text); padding: 6px 12px; border-radius: 20px; font-size: 12px; }
+       .chat-input { display: flex; padding: 12px 16px; gap: 8px; background: var(--card); border-top: 1px solid #333; }
+       .light-mode.chat-input { border-top: 1px solid #ddd; }
+        #message-input { flex: 1; padding: 10px 14px; border-radius: 20px; border: 1px solid #333; background: var(--bg); color: var(--text); }
+       .light-mode #message-input { border: 1px solid #ddd; background: #fff; }
+        #send-btn { background: var(--blue); border: none; color: white; padding: 10px 16px; border-radius: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
     <div class="chat-header">
         <div class="header-left">
-            <button class="back-btn" onclick="history.back()">←</button>
+            <button class="back-btn">←</button>
             <div class="avatar">👩‍🏫</div>
             <div class="header-info">
                 <h3>Maya Didi</h3>
-                <p>Online • AI Teacher</p>
+                <p>Online</p>
             </div>
         </div>
-        <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+        <button class="theme-toggle" id="theme-toggle">☀️</button>
     </div>
 
-    <div class="chat-body" id="chatBody">
-        <div class="ai-msg">Namaste beta! Main Maya Didi hoon 🙏 English sikhne me main tumhari help karungi. Kya sikhna chahte ho?</div>
-    </div>
+    <div class="chat-body"></div>
 
-    <div class="quick-btns">
-        <button onclick="sendQuick('Tense sikhao')">Tense</button>
-        <button onclick="sendQuick('Grammar check karo')">Grammar</button>
-        <button onclick="sendQuick('Vocabulary badhao')">Vocabulary</button>
-        <button onclick="sendQuick('Speaking practice')">Speaking</button>
-    </div>
+    <div class="quick-btns"></div>
 
     <div class="chat-input">
-        <input type="text" id="userInput" placeholder="Message likho..." onkeypress="if(event.key==='Enter') sendMessage()">
-        <button class="mic-btn" id="micBtn" onclick="toggleMic()">🎙️</button>
-        <button class="send-btn" onclick="sendMessage()">➤</button>
+        <input type="text" id="message-input" placeholder="Message Maya Didi...">
+        <button id="send-btn">Send</button>
     </div>
 
-    <script>
-        const GEMINI_API_KEY = prompt('API Key daalo:'); // ← Yaha apni key daalna
-        const chatBody = document.getElementById('chatBody');
-        const userInput = document.getElementById('userInput');
-        const micBtn = document.getElementById('micBtn');
-        let recognition;
-        let isListening = false;
+<script>
+// Maya Didi - Groq API Version
+let API_KEY = localStorage.getItem('groq_api_key');
 
-        // Theme Toggle
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            document.querySelector('.theme-toggle').textContent =
-                document.body.classList.contains('light-mode')? '🌙' : '☀️';
-        }
+if (!API_KEY) {
+    API_KEY = prompt("Groq API Key daalo bhai 🔑\n\nhttps://console.groq.com/keys se free me banao");
+    if (API_KEY) {
+        localStorage.setItem('groq_api_key', API_KEY.trim());
+    }
+}
 
-        // Send Message
-        async function sendMessage() {
-            const msg = userInput.value.trim();
-            if (!msg) return;
+const API_URL = "https://api.groq.com/openai/v1/chat/completions";
+const SYSTEM_PROMPT = `You are Maya Didi, a friendly Hindi-English teacher for Indian students.
+You help with English grammar, tense, vocabulary, speaking.
+Reply in Hinglish, friendly tone. Use examples. Keep it short and helpful.`;
 
-            addMessage(msg, 'user');
-            userInput.value = '';
+async function sendMessage(userMessage) {
+    if (!API_KEY) {
+        return "Sorry yaar, abhi Maya Didi busy hai 😅 Thodi der baad try karna.";
+    }
+    try {
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                "model": "llama-3.1-8b-instant",
+                "messages": [
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": userMessage}
+                ],
+                "temperature": 0.7,
+                "max_tokens": 500
+            })
+        });
+        if (!response.ok) throw new Error("API Error");
+        const data = await response.json();
+        return data.choices[0].message.content;
+    } catch (error) {
+        return "Sorry yaar, abhi Maya Didi busy hai 😅 Thodi der baad try karna.";
+    }
+}
 
-            const typing = document.createElement('div');
-            typing.className = 'ai-msg typing';
-            typing.innerHTML = '<span></span><span></span><span></span>';
-            chatBody.appendChild(typing);
-            chatBody.scrollTop = chatBody.scrollHeight;
+const chatBody = document.querySelector('.chat-body');
+const inputField = document.querySelector('#message-input');
+const sendBtn = document.querySelector('#send-btn');
+const quickBtns = document.querySelector('.quick-btns');
+const themeToggle = document.querySelector('#theme-toggle');
 
-            try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: `You are Maya Didi, a friendly Hindi-English teacher for Indian students. Reply in Hinglish. User said: ${msg}`
-                            }]
-                        }]
-                    })
-                });
+const quickQuestions = ["English grammar rules", "Tense explain karo", "Vocabulary words", "Conversation practice"];
+quickQuestions.forEach(q => {
+    const btn = document.createElement('button');
+    btn.textContent = q;
+    btn.onclick = () => {
+        sendMessageToUI(q);
+        sendMessage(q).then(response => sendMessageToUI(response, 'ai'));
+    };
+    quickBtns.appendChild(btn);
+});
 
-                const data = await res.json();
-                typing.remove();
+let isLightMode = localStorage.getItem('lightMode') === 'true';
+if (isLightMode) {
+    document.body.classList.add('light-mode');
+    themeToggle.textContent = '🌙';
+}
 
-                if (data.candidates && data.candidates[0].content) {
-                    addMessage(data.candidates[0].content.parts[0].text, 'ai');
-                } else {
-                    addMessage('Sorry yaar, abhi Maya Didi busy hai 😅 Thodi der baad try karna.', 'ai');
-                }
-            } catch (e) {
-                typing.remove();
-                addMessage('Sorry yaar, abhi Maya Didi busy hai 😅 Network check karo.', 'ai');
-            }
-        }
+themeToggle.onclick = () => {
+    isLightMode =!isLightMode;
+    document.body.classList.toggle('light-mode');
+    themeToggle.textContent = isLightMode? '🌙' : '☀️';
+    localStorage.setItem('lightMode', isLightMode);
+};
 
-        function sendQuick(text) {
-            userInput.value = text;
-            sendMessage();
-        }
+function sendMessageToUI(message, type = 'user') {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = type === 'user'? 'user-msg' : 'ai-msg';
+    msgDiv.textContent = message;
+    chatBody.appendChild(msgDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
 
-        function addMessage(text, sender) {
-            const div = document.createElement('div');
-            div.className = sender === 'user'? 'user-msg' : 'ai-msg';
-            div.textContent = text;
-            chatBody.appendChild(div);
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }
+sendBtn.onclick = () => {
+    const message = inputField.value.trim();
+    if (!message) return;
+    sendMessageToUI(message);
+    inputField.value = '';
+    sendMessage(message).then(response => sendMessageToUI(response, 'ai'));
+};
 
-        // Mic Feature
-        function toggleMic() {
-            if (!('webkitSpeechRecognition' in window)) {
-                alert('Voice not supported in this browser');
-                return;
-            }
+// Enter key se bhi send ho
+inputField.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendBtn.click();
+});
 
-            if (isListening) {
-                recognition.stop();
-                return;
-            }
-
-            recognition = new webkitSpeechRecognition();
-            recognition.lang = 'en-IN';
-            recognition.continuous = false;
-
-            recognition.onstart = () => {
-                isListening = true;
-                micBtn.classList.add('listening');
-            };
-
-            recognition.onresult = (e) => {
-                userInput.value = e.results[0][0].transcript;
-            };
-
-            recognition.onend = () => {
-                isListening = false;
-                micBtn.classList.remove('listening');
-                if (userInput.value) sendMessage();
-            };
-
-            recognition.start();
-        }
-    </script>
+// Initial message
+setTimeout(() => {
+    sendMessage('Hii').then(response => sendMessageToUI(response, 'ai'));
+}, 500);
+</script>
 </body>
 </html>
