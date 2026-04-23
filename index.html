@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maya Didi</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya Didi</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="header">
-    <div class="logo">Maya<br>Didi</div>
-    <div class="stats">
-      <div class="stat">☀️</div>
-      <div class="stat">🔥<span id="streak">11</span></div>
-      <div class="stat">❤️<span id="hearts">1</span></div>
-      <div class="stat">⚡<span id="xp">260</span></div>
+    <div class="header">
+        <div class="logo">Maya<br>Didi</div>
+        <div class="stats">
+            <div class="stat">☀️</div>
+            <div class="stat">🔥<span id="streak">11</span></div>
+            <div class="stat">❤️<span id="hearts">1</span></div>
+            <div class="stat">⚡<span id="xp">260</span></div>
+            <button id="theme-toggle" class="theme-btn">🌙</button>
+        </div>
     </div>
-  </div>
-  
-  <button class="ai-btn">Maya didi se puchho</button>
-  
-  <div class="unit">
-    <h2>UNIT 1: BASICS - 30 DAYS</h2>
-    <p>Day चुनो और सीखना शुरू करो</p>
-    <div class="days" id="daysGrid"></div>
-  </div>
-  
-  <script type="module" src="js/app.js"></script>
+    <button class="ai-btn">💬 Maya didi se puchho</button>
+    <button id="main-practice-btn" class="practice-btn-yellow">📝 Practice Shuru Karo</button>
+    <div class="unit">
+        <h2>UNIT 1: BASICS - 30 DAYS</h2>
+        <p>Day चुनो और सीखना शुरू करो</p>
+        <div class="days" id="daysGrid"></div>
+    </div>
+
+    <!-- Modal for Day Click -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="modal-close" class="close">&times;</span>
+            <h3 id="modal-title"></h3>
+            <div id="modal-body"></div>
+            <button class="modal-btn modal-practice">📝 Practice Karo</button>
+            <button class="modal-btn modal-ads">📺 Ad Dekho +10 Coins</button>
+        </div>
+    </div>
+
+    <script type="module" src="js/app.js"></script>
 </body>
 </html>
