@@ -21,11 +21,29 @@
     <button class="ai-btn" onclick="window.location.href='ai-teacher.html'">💬 Maya didi se puchho</button>
     <button id="main-practice-btn" class="practice-btn-yellow">📝 Practice Shuru Karo</button>
 
-    <div class="unit">
-        <h2>UNIT 1: BASICS - 30 DAYS</h2>
-        <p>Day चुनो और सीखना शुरू करो</p>
-        <div class="days" id="daysGrid"></div>
-    </div>
+    <!-- Box 1: Maya Didi Grammar Section -->
+<div id="maya-lesson-box" style="background:#fff;padding:20px;border-radius:12px;margin:20px 0;">
+  <h3 style="color:#1a237e;">Maya Didi ke Saath Grammar Seekho 📚</h3>
+  <p>Roz 1 naya topic + Quiz</p>
+  <button onclick="startMayaLesson(1)" style="background:#2196F3;color:white;padding:10px;border:none;border-radius:8px;margin:5px;">Lesson 1: Present Tense</button>
+  <button onclick="startMayaLesson(2)" style="background:#2196F3;color:white;padding:10px;border:none;border-radius:8px;margin:5px;">Lesson 2: Past Tense</button>
+  <div id="chat-messages" style="background:#1e88e5;color:white;padding:15px;border-radius:8px;margin:15px 0;min-height:100px;"></div>
+  <input type="text" id="userInput" placeholder="Answer likho..." style="padding:10px;width:70%;border:1px solid #ccc;border-radius:5px;">
+  <button onclick="submitAnswer()" style="background:#4CAF50;color:white;padding:10px;border:none;border-radius:5px;">Bhejo</button>
+</div>
+
+<!-- Box 2: 30 Day Practice Section -->
+<div id="practice-box" style="background:#1e1e1e;padding:20px;border-radius:12px;margin:20px 0;">
+  <h3 style="color:#fff;">30 Day Practice Challenge 🎯</h3>
+  <p style="color:#ccc;">Roz 10 questions, score banao</p>
+  <div id="day-buttons">
+    <button onclick="startDayQuiz(1)" style="background:#FF9800;color:white;padding:8px;margin:4px;border:none;border-radius:5px;">Day 1</button>
+    <button onclick="startDayQuiz(2)" style="background:#FF9800;color:white;padding:8px;margin:4px;border:none;border-radius:5px;">Day 2</button>
+    <button onclick="startDayQuiz(3)" style="background:#FF9800;color:white;padding:8px;margin:4px;border:none;border-radius:5px;">Day 3</button>
+    <!-- Day 4 se 30 tak baad me add kar dena -->
+  </div>
+  <div id="practice-questions" style="margin-top:15px;"></div>
+</div>
     </div>  <!-- Ye line 28 wali hai -->
 
     <!-- MAYA DIDI LESSON UI START - YAHAN PASTE KAR -->
