@@ -106,4 +106,68 @@ function submitAnswer() {
 window.startMayaLesson = startMayaLesson;
 window.submitAnswer = submitAnswer;
 window.checkMayaAnswer = checkMayaAnswer;
+ // ===== 30 DAY PRACTICE SYSTEM =====
+const DAILY_QUIZ = {
+  day1: [
+    {q: "I ___ a student", options: ["am", "is", "are"], ans: "am"},
+    {q: "She ___ my sister", options: ["am", "is", "are"], ans: "is"},
+    {q: "They ___ happy", options: ["am", "is", "are"], ans: "are"},
+    //...10 questions
+  ],
+  day2: [
+    {q: "He ___ to school", options: ["go", "goes", "going"], ans: "goes"},
+    {q: "We ___ football", options: ["play", "plays", "playing"], ans: "play"},
+    //...10 questions
+  ]
+  // day3 se day30 tak...
+};
+
+let currentDayQuiz = null;
+let currentDayIndex = 0;
+let dayScore = 0;
+
+function startDayQuiz(dayNum) {
+  currentDayQuiz = DAILY_QUIZ['day' + dayNum];
+  currentDayIndex = 0;
+  dayScore = 0;
+  document.getElementById('practice-questions').innerHTML = `<h4 style="color:#fff;">Day ${dayNum} Practice</h4>`;
+  showDayQuestion();
+}
+
+function showDayQuestion() {
+  if(currentDayIndex >= currentDayQuiz.length) {
+    let box = document.getElementById('practice-questions');
+    box.innerHTML += `<div style="color:#4CAF50;margin-top:15px;">Complete! Score: ${dayScore}/${currentDayQuiz.length} ⭐</div>`;
+    localStorage.setItem('day' + currentDayIndex + '_score', dayScore);
+    return;
+  }
+
+  let q = currentDayQuiz[currentDayIndex];
+  let optionsHTML = q.options.map(opt =>
+    `<button onclick="checkDayAnswer('${opt}')" style="background:#2196F3;color:white;padding:8px 12px;margin:5px;border:none;border-radius:5px;">${opt}</button>`
+  ).join('');
+
+  let box = document.getElementById('practice-questions');
+  box.innerHTML = `
+    <div style="color:#fff;margin:10px 0;">Q${currentDayIndex + 1}: ${q.q}</div>
+    <div>${optionsHTML}</div>
+    <div style="color:#ccc;margin-top:10px;">Score: ${dayScore}/${currentDayQuiz.length}</div>
+  `;
+}
+
+function checkDayAnswer(selected) {
+  let q = currentDayQuiz[currentDayIndex];
+  if(selected === q.ans) {
+    dayScore++;
+    alert("Sahi! ✅");
+  } else {
+    alert(`Galat 😅 Sahi answer: ${q.ans}`);
+  }
+  currentDayIndex++;
+  showDayQuestion();
+}
+
+// Global banane ke liye
+window.startDayQuiz = startDayQuiz;
+window.checkDayAnswer = checkDayAnswer; 
 })(); // ← IIFE end
