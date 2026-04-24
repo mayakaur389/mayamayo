@@ -5,34 +5,117 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maya Didi - AI Teacher</title>
     <style>
-        :root { --bg: #0f0f0f; --card: #1e1e1e; --text: #e0e0e0; --blue: #1a73e8; --green: #28a745; --red: #dc3545; --tick: #4fc3f7; }
-     .light-mode { --bg: #f5f5f5; --card: #ffffff; --text: #111111; }
+        :root {
+            --bg: #0f0f0f;
+            --card: #1e1e1e;
+            --text: #e0e0e0;
+            --blue: #1a73e8;
+            --green: #28a745;
+            --red: #dc3545;
+            --tick: #4fc3f7;
+        }
+       .light-mode {
+            --bg: #f5f5f5;
+            --card: #ffffff;
+            --text: #111111;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; }
-     .chat-header { background: var(--card); padding: 12px 16px; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: space-between; }
-     .light-mode.chat-header { border-bottom: 1px solid #ddd; }
-     .header-left { display: flex; align-items: center; gap: 10px; }
-     .back-btn { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
-     .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 20px; }
-     .header-info h3 { font-size: 16px; }
-     .header-info p { font-size: 12px; opacity: 0.7; }
-     .theme-toggle { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
-     .chat-body { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
-     .light-mode.chat-body { background: #f5f5f5; }
-     .user-msg { background: var(--blue); color: white; padding: 12px 16px; border-radius: 16px; max-width: 80%; line-height: 1.5; white-space: pre-wrap; align-self: flex-end; margin-left: auto; position: relative; padding-right: 32px; }
-     .ai-msg { background: var(--card); color: var(--text); padding: 12px 16px; border-radius: 16px; max-width: 80%; line-height: 1.5; white-space: pre-wrap; align-self: flex-start; margin-right: auto; }
-     .light-mode.ai-msg { background: #ffffff; color: #111111; border: 1px solid #dddddd; }
-     .light-mode.user-msg { background: #1a73e8; color: #ffffff; }
-     .tick { position: absolute; bottom: 4px; right: 8px; font-size: 14px; color: var(--tick); }
-     .quick-btns { display: flex; gap: 8px; padding: 8px 16px; overflow-x: auto; background: var(--bg); }
-     .quick-btns button { background: var(--card); border: 1px solid #333; color: var(--text); padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; white-space: nowrap; }
-     .light-mode.quick-btns button { border: 1px solid #ddd; }
-     .chat-input { display: flex; padding: 12px 16px; gap: 8px; background: var(--card); border-top: 1px solid #333; align-items: center; }
-     .light-mode.chat-input { border-top: 1px solid #ddd; }
-        #message-input { flex: 1; padding: 10px 14px; border-radius: 20px; border: 1px solid #333; background: var(--bg); color: var(--text); }
-     .light-mode #message-input { border: 1px solid #ddd; background: #fff; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+       .chat-header {
+            background: var(--card);
+            padding: 12px 16px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+       .light-mode.chat-header { border-bottom: 1px solid #ddd; }
+       .header-left { display: flex; align-items: center; gap: 10px; }
+       .back-btn { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
+       .avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+       .header-info h3 { font-size: 16px; }
+       .header-info p { font-size: 12px; opacity: 0.7; }
+       .theme-toggle { background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; }
+       .chat-body { flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+       .light-mode.chat-body { background: #f5f5f5; }
+       .user-msg {
+            background: var(--blue);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 16px;
+            max-width: 80%;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            align-self: flex-end;
+            margin-left: auto;
+            position: relative;
+            padding-right: 32px;
+        }
+       .ai-msg {
+            background: var(--card);
+            color: var(--text);
+            padding: 12px 16px;
+            border-radius: 16px;
+            max-width: 80%;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            align-self: flex-start;
+            margin-right: auto;
+        }
+       .light-mode.ai-msg { background: #ffffff; color: #111111; border: 1px solid #dddddd; }
+       .tick { position: absolute; bottom: 4px; right: 8px; font-size: 14px; color: var(--tick); }
+       .quick-btns { display: flex; gap: 8px; padding: 8px 16px; overflow-x: auto; background: var(--bg); }
+       .quick-btns button {
+            background: var(--card);
+            border: 1px solid #333;
+            color: var(--text);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+       .light-mode.quick-btns button { border: 1px solid #ddd; }
+       .chat-input {
+            display: flex;
+            padding: 12px 16px;
+            gap: 8px;
+            background: var(--card);
+            border-top: 1px solid #333;
+            align-items: center;
+        }
+       .light-mode.chat-input { border-top: 1px solid #ddd; }
+        #message-input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            background: var(--bg);
+            color: var(--text);
+        }
+       .light-mode #message-input { border: 1px solid #ddd; background: #fff; }
         #send-btn { background: var(--blue); border: none; color: white; padding: 10px 16px; border-radius: 20px; cursor: pointer; }
-        #mic-btn { background: var(--green); border: none; color: white; padding: 10px; border-radius: 50%; cursor: pointer; font-size: 18px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        #mic-btn {
+            background: var(--green);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
