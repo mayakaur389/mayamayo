@@ -1,4 +1,6 @@
 // ===== MAYA DIDI LESSON SYSTEM =====
+(function(){  // ← IIFE wrap add kiya
+
 const MAYA_LESSONS = {
   lesson1: {
     id: 1,
@@ -24,10 +26,15 @@ let currentQuizIndex = 0;
 let userScore = 0;
 
 function startMayaLesson(lessonNum) {
+  // Double message fix
+  const chatBox = document.getElementById('chat-messages');
+  if(chatBox) {
+    chatBox.innerHTML = ''; // Purana clear kar de
+  }
+
   currentLesson = MAYA_LESSONS['lesson' + lessonNum];
   currentQuizIndex = 0;
   userScore = 0;
-  document.getElementById('chat-messages').innerHTML = '';
   mayaSpeak(currentLesson.intro);
   setTimeout(() => { teachExamples(0); }, 2000);
 }
@@ -94,3 +101,9 @@ function submitAnswer() {
     input.value = '';
   }
 }
+
+// Global assignments
+window.startMayaLesson = startMayaLesson;
+window.submitAnswer = submitAnswer;
+window.checkMayaAnswer = checkMayaAnswer;
+})(); // ← IIFE end
