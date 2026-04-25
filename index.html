@@ -3,51 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maya Didi - AI Teacher</title>
+    <title>Maya Didi</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="header">
         <div class="header-title">Maya Didi</div>
         <div class="stats">
-            <span>🔥<span id="streak">11</span></span>
-            <span>❤️<span id="hearts">1</span></span>
-            <span>⚡<span id="xp">260</span></span>
+            <span>☀️</span><span>🔥11</span><span>❤️1</span><span>⚡260</span><span>🌙</span>
         </div>
     </div>
 
     <div class="container">
-        <!-- 1. Maya Didi se Baate Karo -->
-        <div class="section">
-            <button class="btn" onclick="goToChat()">💬 Maya Didi se Baate Karo</button>
-        </div>
+        <button class="btn-purple" onclick="location.href='ai-teacher.html'">💬 Maya didi se puchho</button>
+        <button class="btn-yellow" onclick="alert('Practice Day 1 jaldi aayega')">📝 Practice Shuru Karo</button>
 
-        <!-- 2. Practice -->
-        <div class="section">
-            <h3>📝 Practice Karo</h3>
-            <div id="practice-list"></div>
-        </div>
-
-        <!-- 3. Maya Didi ke sath Grammar Sikho -->
-        <div class="section">
-            <h3>📚 Maya Didi ke sath Grammar Sikho</h3>
-            <button class="btn btn-green" onclick="alert('Tenses jaldi add hoga')">Tenses</button>
-            <button class="btn btn-green" onclick="alert('Verbs jaldi add hoga')">Verbs</button>
+        <div class="card">
+            <h3>Maya Didi ke Saath Grammar Seekho 📚</h3>
+            <p>Roz 1 naya topic + Quiz</p>
+            <div id="lesson-list"></div>
+            
+            <div style="margin-top:16px;">
+                <div id="question-text" style="border:2px solid #1a73e8;padding:16px;border-radius:8px;min-height:60px;margin-bottom:8px;">Lesson select karo</div>
+                <input type="text" class="input-box" id="answer-input" placeholder="Answer likho">
+                <button class="btn-green" onclick="checkAnswer()">Bhejo</button>
+            </div>
         </div>
     </div>
 
     <script src="lessons.js"></script>
     <script>
-        function goToChat() {
-            window.location.href = 'ai-teacher.html';
-        }
-
-        // Day 1, Day 2 ke button lessons.js se bharo
+        let currentLesson = '';
         window.onload = function() {
-            const list = document.getElementById('practice-list');
+            const list = document.getElementById('lesson-list');
             lessons.forEach((lesson, i) => {
-                list.innerHTML += `<div class="day-btn" onclick="alert('${lesson.title} Start!')">Day ${i+1}: ${lesson.title}</div>`;
+                list.innerHTML += `<button class="btn-blue" onclick="selectLesson(${i})">Lesson ${i+1}: ${lesson.title}</button>`;
             });
+        }
+        function selectLesson(i) {
+            currentLesson = lessons[i];
+            document.getElementById('question-text').innerText = currentLesson.questions[0].q;
+        }
+        function checkAnswer() {
+            if(!currentLesson) return alert('Pehle lesson select karo');
+            const ans = document.getElementById('answer-input').value.trim().toLowerCase();
+            if(ans === currentLesson.questions[0].answer.toLowerCase()) {
+                alert('Sahi Jawab! +10 XP 🔥');
+                document.getElementById('answer-input').value = '';
+            } else {
+                alert('Galat. Try again!');
+            }
         }
     </script>
 </body>
