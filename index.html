@@ -1,154 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maya Didi</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: #1a1a1a; font-family: Arial, sans-serif; }
-        .header { background: #2196F3; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 20px; font-weight: bold; line-height: 1.2; }
-        .stats { display: flex; gap: 15px; align-items: center; font-size: 16px; }
-        .theme-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
-        .container { padding: 15px; max-width: 500px; margin: 0 auto; }
-        
-        /* Purple Button - Box 1 */
-        .maya-chat-btn { 
-            background: #9C27B0; color: white; border: none; 
-            padding: 15px; border-radius: 12px; width: 100%; 
-            font-size: 16px; margin: 10px 0; cursor: pointer;
-        }
-        
-        /* Yellow Button - Box 3 */
-        .practice-btn { 
-            background: #FFC107; color: #000; border: none; 
-            padding: 15px; border-radius: 12px; width: 100%; 
-            font-size: 16px; margin: 10px 0; cursor: pointer; font-weight: bold;
-        }
-        
-        /* Box 2: Grammar */
-        .grammar-box { 
-            background: white; padding: 20px; border-radius: 12px; 
-            margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-        .grammar-box h3 { color: #1976D2; font-size: 18px; margin-bottom: 5px; }
-        .grammar-box p { color: #666; font-size: 14px; margin-bottom: 15px; }
-        .lesson-btn { 
-            background: #2196F3; color: white; border: none; 
-            padding: 10px 15px; border-radius: 8px; margin: 5px 5px 5px 0; 
-            cursor: pointer; display: block; width: 100%; text-align: left;
-        }
-        #chat-messages { 
-            border: 2px solid #2196F3; min-height: 120px; 
-            border-radius: 8px; padding: 10px; margin: 15px 0; background: #f9f9f9;
-        }
-        .input-row { display: flex; gap: 10px; }
-        #userInput { 
-            flex: 1; padding: 10px; border: 1px solid #ccc; 
-            border-radius: 8px; font-size: 14px;
-        }
-        .send-btn { 
-            background: #4CAF50; color: white; border: none; 
-            padding: 10px 20px; border-radius: 8px; cursor: pointer;
-        }
-        
-        /* 30 Day Challenge - Gol Buttons */
-        .challenge-box {
-            background: #2d2d2d; padding: 20px; border-radius: 12px; 
-            margin: 15px 0; border: 1px solid #444;
-        }
-        .challenge-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px; color: white;
-        }
-        .challenge-title { font-size: 18px; }
-        .challenge-stats { font-size: 14px; }
-        .day-buttons {
-            display: grid; grid-template-columns: repeat(6, 1fr); 
-            gap: 10px; margin: 15px 0;
-        }
-        .day-btn {
-            width: 45px; height: 45px; border-radius: 50%; border: none;
-            font-weight: bold; cursor: pointer; font-size: 14px;
-        }
-        .day-unlocked { background: #4CAF50; color: white; }
-        .day-locked { background: #555; color: #888; cursor: not-allowed; }
-        .day-current { background: #FFC107; color: #000; border: 2px solid #fff; }
-        
-        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
-        .modal-content { background: #2d2d2d; color: white; margin: 20% auto; padding: 20px; width: 80%; border-radius: 12px; text-align: center; }
-        .close { float: right; font-size: 28px; cursor: pointer; }
-        .modal-btn { padding: 12px 20px; margin: 10px 5px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; }
-        .modal-practice { background: #4CAF50; color: white; }
-        .modal-ads { background: #FF9800; color: white; }
-        .hidden { display: none; }
-    </style>
+    <title>Maya Didi - AI Teacher</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header -->
     <div class="header">
-        <div class="logo">Maya<br>Didi</div>
+        <div class="header-title">Maya Didi</div>
         <div class="stats">
-            <span>☀️</span>
             <span>🔥<span id="streak">11</span></span>
             <span>❤️<span id="hearts">1</span></span>
             <span>⚡<span id="xp">260</span></span>
-            <button class="theme-btn">🌙</button>
         </div>
     </div>
 
     <div class="container">
-        <!-- Box 1: Purple Button - Maya Didi se Puchho -->
-        <button class="maya-chat-btn" onclick="openChatPopup()">
-            💬 Maya didi se puchho
-        </button>
-
-        <!-- Box 3: Yellow Button - Practice Shuru Karo -->
-        <button class="practice-btn" onclick="scrollToChallenge()">
-            📝 Practice Shuru Karo
-        </button>
-
-        <!-- Box 2: Grammar Section -->
-        <div class="grammar-box">
-            <h3>Maya Didi ke Saath Grammar Seekho 📚</h3>
-            <p>Roz 1 naya topic + Quiz</p>
-            
-            <button class="lesson-btn" onclick="startLesson(1)">Lesson 1: Present Tense</button>
-            <button class="lesson-btn" onclick="startLesson(2)">Lesson 2: Past Tense</button>
-            
-            <div id="chat-messages"></div>
-            
-            <div class="input-row">
-                <input type="text" id="userInput" placeholder="Answer likho...">
-                <button class="send-btn" onclick="submitAnswer()">Bhejo</button>
-            </div>
+        <!-- 1. Maya Didi se Baate Karo -->
+        <div class="section">
+            <button class="btn" onclick="goToChat()">💬 Maya Didi se Baate Karo</button>
         </div>
 
-        <!-- 30 Day Challenge - Gol Gol Button -->
-        <div class="challenge-box" id="challenge-section">
-            <div class="challenge-header">
-                <div class="challenge-title">🎯 30 Day Practice Challenge</div>
-                <div class="challenge-stats">
-                    ❤️ <span id="user-hearts">3</span> &nbsp;&nbsp; 🔥 <span id="user-streak">11</span>
-                </div>
-            </div>
-            <div class="day-buttons" id="day-buttons"></div>
-            <div id="practice-questions"></div>
+        <!-- 2. Practice -->
+        <div class="section">
+            <h3>📝 Practice Karo</h3>
+            <div id="practice-list"></div>
         </div>
-    </div>
 
-    <!-- Modal for Day Click -->
-    <div id="modal" class="modal hidden">
-        <div class="modal-content">
-            <span id="modal-close" class="close">&times;</span>
-            <h3 id="modal-title">Day 1</h3>
-            <div id="modal-body">Kya karna chahte ho?</div>
-            <button class="modal-btn modal-practice">📝 Practice Karo</button>
-            <button class="modal-btn modal-ads">📺 Ad Dekho +10 Coins</button>
+        <!-- 3. Maya Didi ke sath Grammar Sikho -->
+        <div class="section">
+            <h3>📚 Maya Didi ke sath Grammar Sikho</h3>
+            <button class="btn btn-green" onclick="alert('Tenses jaldi add hoga')">Tenses</button>
+            <button class="btn btn-green" onclick="alert('Verbs jaldi add hoga')">Verbs</button>
         </div>
     </div>
 
     <script src="lessons.js"></script>
+    <script>
+        function goToChat() {
+            window.location.href = 'ai-teacher.html';
+        }
+
+        // Day 1, Day 2 ke button lessons.js se bharo
+        window.onload = function() {
+            const list = document.getElementById('practice-list');
+            lessons.forEach((lesson, i) => {
+                list.innerHTML += `<div class="day-btn" onclick="alert('${lesson.title} Start!')">Day ${i+1}: ${lesson.title}</div>`;
+            });
+        }
+    </script>
 </body>
 </html>
