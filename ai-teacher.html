@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="chat-page">
-        <div class="chat-header">Maya Didi 👩‍🏫 <span style="float:right;cursor:pointer;" onclick="goHome()">🏠</span></div>
+        <div class="chat-header">Maya Didi 👩‍🏫 <span style="float:right;cursor:pointer;" onclick="location.href='index.html'">🏠</span></div>
         <div class="chat-box" id="chat-box">
             <div class="msg ai-msg">Namaste! Main Maya Didi hun. English sikhe? 🙋‍♀️</div>
         </div>
@@ -18,13 +18,11 @@
         </div>
     </div>
 
-    <!-- API Key Popup -->
     <div id="api-modal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeApiModal()">&times;</span>
             <h3>🔑 Groq API Key Daalo</h3>
             <input type="text" id="api-key-input" placeholder="gsk_xxxxx..." style="width:100%;padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff;margin:10px 0;">
-            <button class="modal-btn" onclick="saveApiKey()">Save & Chat Karo</button>
+            <button onclick="saveApiKey()" style="background:#4CAF50;color:white;padding:12px;border:none;border-radius:8px;width:100%;">Save & Chat Karo</button>
         </div>
     </div>
 
@@ -34,28 +32,23 @@
                 document.getElementById('api-modal').style.display = 'block';
             }
         }
-        function closeApiModal() { document.getElementById('api-modal').style.display = 'none'; }
         function saveApiKey() {
             const key = document.getElementById('api-key-input').value.trim();
             if (key) {
                 localStorage.setItem('groq_api_key', key);
-                closeApiModal();
+                document.getElementById('api-modal').style.display = 'none';
             }
         }
-        function goHome() { window.location.href = 'index.html'; }
         async function sendMsg() {
             const input = document.getElementById('user-input');
             const msg = input.value.trim();
             if (!msg) return;
+            const apiKey = localStorage.getItem('groq_api_key');
+            if(!apiKey) return document.getElementById('api-modal').style.display = 'block';
             const chatBox = document.getElementById('chat-box');
             chatBox.innerHTML += `<div class="msg user-msg">${msg}</div>`;
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
-            const apiKey = localStorage.getItem('groq_api_key');
-            if(!apiKey) {
-                document.getElementById('api-modal').style.display = 'block';
-                return;
-            }
             try {
                 const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                     method: 'POST',
@@ -63,7 +56,7 @@
                     body: JSON.stringify({
                         model: 'llama-3.1-8b-instant',
                         messages: [
-                            {role: 'system', content: 'You are Maya Didi, a friendly Indian English teacher. Reply in Hindi + English mix.'},
+                            {role: 'system', content: 'You are Maya Didi, a friendly Indian English teacher. Reply in Hindi + English mix. Short answers.'},
                             {role: 'user', content: msg}
                         ]
                     })
