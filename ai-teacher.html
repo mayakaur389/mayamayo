@@ -96,6 +96,30 @@
         const SYSTEM_PROMPT = `You are Maya Didi, a friendly Hindi-English teacher for Indian students. You help with English grammar, tense, vocabulary, speaking. Reply in Hinglish, friendly tone. Use examples. Keep it short and helpful.`;
 
         // ... (rest of the code same)
+                // API Key Modal Functions - Line 99 pe paste kar
+        window.openChatPopup = function() {
+            let API_KEY = localStorage.getItem('groq_api_key');
+            if (!API_KEY) {
+                document.getElementById('api-modal').style.display = 'block';
+            } else {
+                window.location.href = 'chat.html';
+            }
+        }
+
+        window.closeApiModal = function() {
+            document.getElementById('api-modal').style.display = 'none';
+        }
+
+        window.saveApiKey = function() {
+            const key = document.getElementById('api-key-input').value.trim();
+            if (key) {
+                localStorage.setItem('groq_api_key', key);
+                closeApiModal();
+                window.location.href = 'chat.html';
+            } else {
+                alert('API Key daalo bhai');
+            }
+        }
     </script>
 </body>
 </html>
