@@ -1,5 +1,14 @@
 const lessons = [
-    { title: "Basic Greetings", questions: [] },
-    { title: "Self Introduction", questions: [] },
-    { title: "Daily Routine", questions: [] }
+    { 
+        title: "Present Tense", 
+        questions: [
+            { q: "I ___ to school daily. (go/goes)", answer: "go" }
+        ]
+    },
+    { 
+        title: "Past Tense", 
+        questions: [
+            { q: "I ___ to school yesterday. (go/went)", answer: "went" }
+        ]
+    }
 ];
