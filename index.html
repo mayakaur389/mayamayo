@@ -4,124 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maya Didi</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #1a1a1a; font-family: Arial, sans-serif; }
+        .header { background: #2196F3; color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 20px; font-weight: bold; line-height: 1.2; }
+        .stats { display: flex; gap: 15px; align-items: center; font-size: 16px; }
+        .theme-btn { background: none; border: none; font-size: 20px; cursor: pointer; }
+        .container { padding: 15px; max-width: 500px; margin: 0 auto; }
+        
+        /* Purple Button - Box 1 */
+        .maya-chat-btn { 
+            background: #9C27B0; color: white; border: none; 
+            padding: 15px; border-radius: 12px; width: 100%; 
+            font-size: 16px; margin: 10px 0; cursor: pointer;
+        }
+        
+        /* Yellow Button - Box 3 */
+        .practice-btn { 
+            background: #FFC107; color: #000; border: none; 
+            padding: 15px; border-radius: 12px; width: 100%; 
+            font-size: 16px; margin: 10px 0; cursor: pointer; font-weight: bold;
+        }
+        
+        /* Box 2: Grammar */
+        .grammar-box { 
+            background: white; padding: 20px; border-radius: 12px; 
+            margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .grammar-box h3 { color: #1976D2; font-size: 18px; margin-bottom: 5px; }
+        .grammar-box p { color: #666; font-size: 14px; margin-bottom: 15px; }
+        .lesson-btn { 
+            background: #2196F3; color: white; border: none; 
+            padding: 10px 15px; border-radius: 8px; margin: 5px 5px 5px 0; 
+            cursor: pointer; display: block; width: 100%; text-align: left;
+        }
+        #chat-messages { 
+            border: 2px solid #2196F3; min-height: 120px; 
+            border-radius: 8px; padding: 10px; margin: 15px 0; background: #f9f9f9;
+        }
+        .input-row { display: flex; gap: 10px; }
+        #userInput { 
+            flex: 1; padding: 10px; border: 1px solid #ccc; 
+            border-radius: 8px; font-size: 14px;
+        }
+        .send-btn { 
+            background: #4CAF50; color: white; border: none; 
+            padding: 10px 20px; border-radius: 8px; cursor: pointer;
+        }
+        
+        /* 30 Day Challenge - Gol Buttons */
+        .challenge-box {
+            background: #2d2d2d; padding: 20px; border-radius: 12px; 
+            margin: 15px 0; border: 1px solid #444;
+        }
+        .challenge-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; color: white;
+        }
+        .challenge-title { font-size: 18px; }
+        .challenge-stats { font-size: 14px; }
+        .day-buttons {
+            display: grid; grid-template-columns: repeat(6, 1fr); 
+            gap: 10px; margin: 15px 0;
+        }
+        .day-btn {
+            width: 45px; height: 45px; border-radius: 50%; border: none;
+            font-weight: bold; cursor: pointer; font-size: 14px;
+        }
+        .day-unlocked { background: #4CAF50; color: white; }
+        .day-locked { background: #555; color: #888; cursor: not-allowed; }
+        .day-current { background: #FFC107; color: #000; border: 2px solid #fff; }
+        
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
+        .modal-content { background: #2d2d2d; color: white; margin: 20% auto; padding: 20px; width: 80%; border-radius: 12px; text-align: center; }
+        .close { float: right; font-size: 28px; cursor: pointer; }
+        .modal-btn { padding: 12px 20px; margin: 10px 5px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; }
+        .modal-practice { background: #4CAF50; color: white; }
+        .modal-ads { background: #FF9800; color: white; }
+        .hidden { display: none; }
+    </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
         <div class="logo">Maya<br>Didi</div>
         <div class="stats">
-            <div class="stat">☀️</div>
-            <div class="stat">🔥<span id="streak">11</span></div>
-            <div class="stat">❤️<span id="hearts">1</span></div>
-            <div class="stat">⚡<span id="xp">260</span></div>
-            <button id="theme-toggle" class="theme-btn">🌙</button>
+            <span>☀️</span>
+            <span>🔥<span id="streak">11</span></span>
+            <span>❤️<span id="hearts">1</span></span>
+            <span>⚡<span id="xp">260</span></span>
+            <button class="theme-btn">🌙</button>
         </div>
     </div>
 
+    <div class="container">
+        <!-- Box 1: Purple Button - Maya Didi se Puchho -->
+        <button class="maya-chat-btn" onclick="openChatPopup()">
+            💬 Maya didi se puchho
+        </button>
 
-    <!-- Box 1: Maya Didi Grammar Section -->
-<div id="maya-lesson-box" style="background:#fff;padding:20px;border-radius:12px;margin:20px 0;">
-  <h3 style="color:#1a237e;">Maya Didi ke Saath Grammar Seekho 📚</h3>
-  <p>Roz 1 naya topic + Quiz</p>
-  <button onclick="startMayaLesson(1)" style="background:#2196F3;color:white;padding:10px;border:none;border-radius:8px;margin:5px;">Lesson 1: Present Tense</button>
-  <button onclick="startMayaLesson(2)" style="background:#2196F3;color:white;padding:10px;border:none;border-radius:8px;margin:5px;">Lesson 2: Past Tense</button>
-  <div id="chat-messages" style="background:#1e88e5;color:white;padding:15px;border-radius:8px;margin:15px 0;min-height:100px;"></div>
-  <input type="text" id="userInput" placeholder="Answer likho..." style="padding:10px;width:70%;border:1px solid #ccc;border-radius:5px;">
-  <button onclick="submitAnswer()" style="background:#4CAF50;color:white;padding:10px;border:none;border-radius:5px;">Bhejo</button>
-</div>
-<!-- 30 Day Practice Box -->
-<div id="practice-box" style="background:#1a1a1a;padding:20px;border-radius:12px;margin:20px 0;border:1px solid #333;">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-    <h3 style="color:#fff;margin:0;font-size:18px;">30 Day Practice Challenge 🎯</h3>
-    <div style="color:#fff;font-size:14px;">
-      <span style="margin-right:15px;">❤️ <span id="user-hearts">3</span></span>
-      <span>🔥 11</span>
-    </div>
-  </div>
+        <!-- Box 3: Yellow Button - Practice Shuru Karo -->
+        <button class="practice-btn" onclick="scrollToChallenge()">
+            📝 Practice Shuru Karo
+        </button>
 
-  <div id="day-buttons" style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:15px 0;"></div>
-  <div id="practice-questions"></div>
-</div>
+        <!-- Box 2: Grammar Section -->
+        <div class="grammar-box">
+            <h3>Maya Didi ke Saath Grammar Seekho 📚</h3>
+            <p>Roz 1 naya topic + Quiz</p>
+            
+            <button class="lesson-btn" onclick="startLesson(1)">Lesson 1: Present Tense</button>
+            <button class="lesson-btn" onclick="startLesson(2)">Lesson 2: Past Tense</button>
+            
+            <div id="chat-messages"></div>
+            
+            <div class="input-row">
+                <input type="text" id="userInput" placeholder="Answer likho...">
+                <button class="send-btn" onclick="submitAnswer()">Bhejo</button>
+            </div>
+        </div>
 
-<!-- Ads Box -->
-<div style="background:#2d2d2d;color:#888;padding:30px;border-radius:8px;margin:20px 0;text-align:center;border:2px dashed #555;">
-  📢 Advertisement Space<br>
-  <span style="font-size:12px;">Google Ads / Banner Here</span>
-</div>
-<!-- Box 2: 30 Day Practice Section -->
-<div id="practice-box" style="background:#1e1e1e;padding:20px;border-radius:12px;margin:20px 0;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-  <h3 style="color:#fff;margin:0;font-size:18px;">30 Day Practice Challenge 🎯</h3>
-  <div style="color:#fff;font-size:14px;">
-    <span style="margin-right:15px;">❤️ <span id="user-hearts">3</span></span>
-    <span>🔥 11</span>
-  </div>
-</div>
-  <p style="color:#ccc;">Roz 10 questions, score banao</p>
-  <div id="day-buttons">
-      
-  </div>
-  <div id="practice-questions" style="margin-top:15px;"></div>
-</div>
-
-    <!-- MAYA DIDI LESSON UI START - YAHAN PASTE KAR -->
-    <div id="maya-lesson-box" style="padding: 20px; max-width: 600px; margin: 20px auto; background: white; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-      <h3>Maya Didi ke Saath Padho 📚</h3>
-      
-      <div id="chat-messages" style="background:#f5f5f5; height:300px; overflow-y:scroll; padding:15px; border-radius:10px; margin:10px 0; border:1px solid #ddd;"></div>
-
-      <button onclick="startMayaLesson(1)" style="background:#2196F3; color:white; border:none; padding:12px 20px; border-radius:8px; cursor:pointer; font-size:16px;">
-        📚 Lesson 1 Shuru Karo
-      </button>
-      <br><br>
-
-      <input type="text" id="userInput" placeholder="Apna answer yahan likho" style="padding:10px; width:60%; border-radius:8px; border:1px solid #ccc;">
-      <button onclick="submitAnswer()" style="background:#4CAF50; color:white; border:none; padding:10px 15px; border-radius:8px; cursor:pointer;">Bhejo</button>
+        <!-- 30 Day Challenge - Gol Gol Button -->
+        <div class="challenge-box" id="challenge-section">
+            <div class="challenge-header">
+                <div class="challenge-title">🎯 30 Day Practice Challenge</div>
+                <div class="challenge-stats">
+                    ❤️ <span id="user-hearts">3</span> &nbsp;&nbsp; 🔥 <span id="user-streak">11</span>
+                </div>
+            </div>
+            <div class="day-buttons" id="day-buttons"></div>
+            <div id="practice-questions"></div>
+        </div>
     </div>
 
-    <style>
-/* Maya Didi Box Fix */
-#maya-lesson-box {
-  background: #ffffff !important;
-  color: #000000 !important;
-  position: relative;
-  z-index: 999;
-}
-
-#maya-lesson-box h3 {
-  color: #1976d2 !important;
-  font-weight: bold;
-}
-
-#chat-messages {
-  background: #ffffff !important;
-  border: 2px solid #2196F3 !important;
-}
-
-.maya-msg {
-  background: #1976d2 !important;
-  color: #ffffff !important;
-  padding: 12px;
-  border-radius: 10px;
-  margin: 8px 0;
-  font-size: 15px;
-  line-height: 1.6;
-  font-weight: 500;
-}
-
-.maya-msg b {
-  color: #ffeb3b !important;
-}
-
-#userInput {
-  color: #000 !important;
-  background: #fff !important;
-}
-</style>
-    <!-- MAYA DIDI LESSON UI END -->
-
-    <!-- Modal for Day Click -->  <!-- Ye line 30 wali hai -->
-    <div id="modal" class="modal hidden">
     <!-- Modal for Day Click -->
     <div id="modal" class="modal hidden">
         <div class="modal-content">
