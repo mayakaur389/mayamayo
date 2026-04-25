@@ -5,40 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maya Didi - AI Teacher</title>
     <style>
-        :root { --bg: #0f0f0f; --card: #1e1e1e; --text: #e0e0e0; --blue: #1a73e8; --green: #28a745; }
-        .light-mode { --bg: #f5f5f5; --card: #ffffff; --text: #111111; }
+        :root { --bg: #0f0f0f; --card: #1e1e1e; --text: #e0e0e0; --blue: #1a73e8; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); height: 100vh; }
         .container { max-width: 500px; margin: 0 auto; padding: 16px; height: 100%; display: flex; flex-direction: column; justify-content: center; }
         .title { font-size: 28px; font-weight: 600; margin-bottom: 16px; text-align: center; }
-        .subtitle { font-size: 16px; color: var(--text); margin-bottom: 32px; text-align: center; opacity: 0.8; }
         .btn { padding: 14px 24px; background: var(--blue); color: white; border: none; border-radius: 12px; font-size: 16px; cursor: pointer; margin: 8px 0; font-weight: 600; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
         .modal-content { background: #2d2d2d; color: white; margin: 30% auto; padding: 20px; width: 85%; border-radius: 12px; text-align: center; position: relative; }
         .close { position: absolute; top: 10px; right: 15px; font-size: 28px; cursor: pointer; }
-        .modal-btn { padding: 12px 20px; margin: 10px 5px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; width: 100%; }
-        .modal-practice { background: #4CAF50; color: white; }
+        .modal-btn { padding: 12px 20px; margin: 10px 5px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; width: 100%; background: #4CAF50; color: white; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="title">Maya Didi 👩‍🏫</h1>
-        <p class="subtitle">AI English Teacher for Indians</p>
         <button class="btn" onclick="openChatPopup()">Maya Didi se Puchho</button>
-        <button class="btn" style="background: var(--green);" onclick="alert('Coming soon')">📺 Video Lessons</button>
     </div>
-
-    <!-- API Key Popup -->
     <div id="api-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeApiModal()">&times;</span>
             <h3>🔑 Groq API Key Daalo</h3>
-            <p style="font-size:14px;margin:10px 0;color:#ccc;">https://console.groq.com/keys se free me banao</p>
             <input type="text" id="api-key-input" placeholder="gsk_xxxxx..." style="width:100%;padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff;margin:10px 0;">
-            <button class="modal-btn modal-practice" onclick="saveApiKey()">Save & Chat Karo</button>
+            <button class="modal-btn" onclick="saveApiKey()">Save & Chat Karo</button>
         </div>
     </div>
-
     <script>
         function openChatPopup() {
             let API_KEY = localStorage.getItem('groq_api_key');
@@ -48,11 +39,9 @@
                 window.location.href = 'mayamayo.html';
             }
         }
-
         function closeApiModal() {
             document.getElementById('api-modal').style.display = 'none';
         }
-
         function saveApiKey() {
             const key = document.getElementById('api-key-input').value.trim();
             if (key) {
