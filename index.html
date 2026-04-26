@@ -6,143 +6,81 @@
     <title>Maya Didi Grammar</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: #000; 
-            color: #fff; 
+        body {
+            background: #000; color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             padding-bottom: 20px;
         }
-        
-        /* Header */
-        .header { 
-            background: #1a73e8; 
-            padding: 12px 16px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
+
+     .header {
+            background: #1a73e8; padding: 12px 16px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .header-title { font-size: 20px; font-weight: 600; }
-        .stats { display: flex; gap: 12px; font-size: 16px; }
-        .stats span { cursor: pointer; }
-        
-        /* Top Buttons */
-        .top-buttons { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-        .btn-purple {
-            background: #8B5CF6;
-            color: white;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+     .header-title { font-size: 20px; font-weight: 600; }
+     .stats { display: flex; gap: 12px; font-size: 16px; }
+     .stats span { cursor: pointer; }
+
+     .top-buttons { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+     .btn-purple {
+            background: #8B5CF6; color: white; border: none; padding: 16px;
+            border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-yellow {
-            background: #FBBF24;
-            color: #000;
-            border: none;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+     .btn-yellow {
+            background: #FBBF24; color: #000; border: none; padding: 16px;
+            border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        
-        /* Main Card */
-        .card {
-            background: #fff;
-            color: #000;
-            margin: 0 16px;
-            padding: 20px;
-            border-radius: 16px;
+
+     .card {
+            background: #fff; color: #000; margin: 0 16px;
+            padding: 20px; border-radius: 16px;
         }
-        .card h2 {
-            color: #1a73e8;
-            font-size: 20px;
-            margin-bottom: 4px;
+     .card h2 { color: #1a73e8; font-size: 20px; margin-bottom: 4px; }
+     .card p { color: #666; font-size: 14px; margin-bottom: 16px; }
+
+     .btn-blue {
+            background: #1a73e8; color: white; border: none; width: 100%;
+            padding: 14px; border-radius: 10px; font-size: 15px;
+            font-weight: 600; margin: 8px 0; cursor: pointer;
         }
-        .card p { color: #666; font-size: 14px; margin-bottom: 16px; }
-        
-        /* Lesson Buttons */
-        .btn-blue {
-            background: #1a73e8;
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            margin: 8px 0;
-            cursor: pointer;
+
+     .input-box {
+            width: 100%; padding: 14px; border: 2px solid #1a73e8;
+            border-radius: 10px; font-size: 15px; margin: 8px 0; outline: none;
         }
-        
-        /* Input Fields */
-        .input-box {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #1a73e8;
-            border-radius: 10px;
-            font-size: 15px;
-            margin: 8px 0;
-            outline: none;
+
+     .btn-green {
+            background: #10B981; color: white; border: none; padding: 12px 28px;
+            border-radius: 10px; font-size: 15px; font-weight: 600;
+            cursor: pointer; float: right; margin-top: 8px;
         }
-        .input-box::placeholder { color: #999; }
-        
-        /* Send Button */
-        .btn-green {
-            background: #10B981;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            float: right;
-            margin-top: 8px;
+
+        #progress-text { text-align: center; color: #666; margin: 12px 0; font-weight: 600; }
+     .completed-msg {
+            background: #10B981; color: white; padding: 12px;
+            border-radius: 10px; text-align: center; margin: 12px 0; font-weight: 600;
         }
-        
+
         /* Chat Box */
         #chat-container {
-            display: none;
-            background: #f5f5f5;
-            border-radius: 10px;
-            padding: 12px;
-            margin: 12px 0;
-            max-height: 250px;
-            overflow-y: auto;
+            display: none; background: #f5f5f5; border-radius: 10px;
+            padding: 12px; margin: 12px 0; max-height: 250px; overflow-y: auto;
         }
-        .bot-msg { 
-            background: #1a73e8; 
-            color: white; 
-            padding: 10px; 
-            border-radius: 8px; 
-            margin: 6px 0; 
-            max-width: 85%;
+     .bot-msg {
+            background: #1a73e8; color: white; padding: 10px;
+            border-radius: 8px; margin: 6px 0; max-width: 85%;
         }
-        .user-msg { 
-            background: #e0e0e0; 
-            color: #000; 
-            padding: 10px; 
-            border-radius: 8px; 
-            margin: 6px 0; 
-            max-width: 85%;
-            margin-left: auto;
-            text-align: right;
+     .user-msg {
+            background: #e0e0e0; color: #000; padding: 10px;
+            border-radius: 8px; margin: 6px 0; max-width: 85%;
+            margin-left: auto; text-align: right;
         }
-        
+
         /* Light Mode */
         body.light-mode { background: #f5f5f5; }
-        body.light-mode .card { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.light-mode.card { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.light-mode #chat-container { background: #fff; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
@@ -157,29 +95,32 @@
         </div>
     </div>
 
-    <!-- Top Buttons -->
     <div class="top-buttons">
         <button class="btn-purple" onclick="openChat()">
             💬 Maya didi se puchho
         </button>
-        <button class="btn-yellow" onclick="startPractice()">
+        <button class="btn-yellow" onclick="startPracticeMode()">
             📝 Practice Shuru Karo
         </button>
     </div>
 
-    <!-- Main Card -->
     <div class="card">
         <h2>Maya Didi ke Saath Grammar Seekho 📚</h2>
         <p>Roz 1 naya topic + Quiz</p>
-        
-        <div id="lesson-list"></div>
-        
-        <input type="text" id="question-text" class="input-box" placeholder="Lesson select karo" readonly>
-        <input type="text" id="answer-input" class="input-box" placeholder="Answer likho">
-        <button class="btn-green" onclick="checkAnswer()">Bhejo</button>
-        <div style="clear:both"></div>
-        
-        <!-- Chat Container -->
+
+        <div id="progress-text"></div>
+        <div id="lesson-container"></div>
+
+        <div id="question-section" style="display:none;">
+            <input type="text" id="question-text" class="input-box" readonly>
+            <input type="text" id="answer-input" class="input-box" placeholder="Answer likho">
+            <button class="btn-green" onclick="checkAnswer()">Bhejo</button>
+            <div style="clear:both"></div>
+        </div>
+
+        <div id="completed-section"></div>
+
+        <!-- Maya Didi Chat - Ye Pakka Hai -->
         <div id="chat-container">
             <div id="chat-box"></div>
             <input type="text" id="chat-input" class="input-box" placeholder="Maya Didi se pucho..." style="margin-top:10px;">
@@ -189,90 +130,146 @@
 
     <script src="lessons.js"></script>
     <script>
-        let currentLesson = '';
+        let currentLessonIndex = 0;
+        let currentQuestionIndex = 0;
+        let wrongAnswers = [];
+        let practiceMode = false;
         let chatOpen = false;
 
         window.onload = function() {
-            const list = document.getElementById('lesson-list');
-            
             if(typeof lessons === 'undefined') {
                 alert('Error: lessons.js load nahi hua');
                 return;
             }
-
-            lessons.forEach((lesson, i) => {
-                list.innerHTML += `<button class="btn-blue" onclick="selectLesson(${i})">Lesson ${i+1}: ${lesson.title}</button>`;
-            });
+            showCurrentLesson();
 
             document.getElementById('chat-input').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') sendChat();
             });
+            document.getElementById('answer-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') checkAnswer();
+            });
         }
 
-        function startPractice() {
-            selectLesson(0);
-            document.querySelector('.card').scrollIntoView({behavior: 'smooth'});
-        }
+        // 1. Sirf ek lesson dikhao
+        function showCurrentLesson() {
+            const container = document.getElementById('lesson-container');
+            const progressText = document.getElementById('progress-text');
 
-        function openChat() {
-            chatOpen = !chatOpen;
-            const container = document.getElementById('chat-container');
-            const chatBox = document.getElementById('chat-box');
-            container.style.display = chatOpen ? 'block' : 'none';
-            
-            if(chatOpen && chatBox.innerHTML === '') {
-                chatBox.innerHTML = `<div class="bot-msg"><b>Maya Didi:</b> Namaste! Main Maya Didi hun. Kuch bhi Grammar pucho 😊</div>`;
+            if(currentLessonIndex >= lessons.length) {
+                container.innerHTML = `<div class="completed-msg">🎉 Sab Lessons Complete! Great Job!</div>`;
+                document.getElementById('question-section').style.display = 'none';
+                progressText.innerText = '';
+                return;
             }
-            container.scrollIntoView({behavior: 'smooth'});
+
+            const lesson = lessons[currentLessonIndex];
+            progressText.innerText = `Lesson ${lesson.day} of ${lessons.length}`;
+
+            container.innerHTML = `
+                <button class="btn-blue" onclick="startLesson()">
+                    Lesson ${lesson.day}: ${lesson.title}
+                </button>
+            `;
         }
 
-        function selectLesson(i) {
-            currentLesson = lessons[i];
-            document.getElementById('question-text').value = currentLesson.questions[0].q;
+        function startLesson() {
+            practiceMode = false;
+            currentQuestionIndex = 0;
+            const lesson = lessons[currentLessonIndex];
+            document.getElementById('question-section').style.display = 'block';
+            document.getElementById('question-text').value = lesson.questions[0].q;
             document.getElementById('answer-input').value = '';
             document.getElementById('answer-input').focus();
         }
 
+        // 2. Answer check + Next lesson logic
         function checkAnswer() {
-            if(!currentLesson) return alert('Pehle lesson select karo');
             const ans = document.getElementById('answer-input').value.trim().toLowerCase();
             if(ans === '') return alert('Answer likho');
-            
-            if(ans === currentLesson.questions[0].answer.toLowerCase()) {
+
+            const lesson = practiceMode? wrongAnswers[0].lesson : lessons[currentLessonIndex];
+            const question = practiceMode? wrongAnswers[0].question : lesson.questions[currentQuestionIndex];
+
+            if(ans === question.answer.toLowerCase()) {
                 alert('Sahi Jawab! +10 XP 🔥');
                 let xp = document.getElementById('xp');
                 xp.innerText = parseInt(xp.innerText) + 10;
+
+                if(practiceMode) {
+                    wrongAnswers.shift();
+                    if(wrongAnswers.length === 0) {
+                        alert('Practice Complete! 🎉');
+                        document.getElementById('question-section').style.display = 'none';
+                        return;
+                    }
+                    document.getElementById('question-text').value = wrongAnswers[0].question.q;
+                } else {
+                    currentQuestionIndex++;
+                    if(currentQuestionIndex >= lesson.questions.length) {
+                        // Lesson complete - Agla lesson dikhao
+                        document.getElementById('completed-section').innerHTML =
+                            `<div class="completed-msg">✅ Lesson ${lesson.day} Complete!</div>`;
+
+                        setTimeout(() => {
+                            currentLessonIndex++;
+                            currentQuestionIndex = 0;
+                            document.getElementById('question-section').style.display = 'none';
+                            document.getElementById('completed-section').innerHTML = '';
+                            showCurrentLesson(); // Agla lesson aa jayega
+                        }, 1500);
+                    } else {
+                        document.getElementById('question-text').value = lesson.questions[currentQuestionIndex].q;
+                    }
+                }
                 document.getElementById('answer-input').value = '';
-                document.getElementById('question-text').value = 'Lesson select karo';
-                currentLesson = '';
             } else {
                 alert('Galat. Try again!');
+                if(!practiceMode) {
+                    wrongAnswers.push({ lesson: lesson, question: question });
+                }
             }
         }
 
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const icon = document.getElementById('theme-toggle');
-            icon.innerText = document.body.classList.contains('light-mode') ? '🌙' : '☀️';
+        // 3. Practice Mode - Sirf galat questions
+        function startPracticeMode() {
+            if(wrongAnswers.length === 0) {
+                alert('Abhi tak koi galti nahi hui. Pehle lessons complete karo!');
+                return;
+            }
+            practiceMode = true;
+            document.getElementById('question-section').style.display = 'block';
+            document.getElementById('question-text').value = wrongAnswers[0].question.q;
+            document.getElementById('answer-input').value = '';
+            document.getElementById('answer-input').focus();
+            document.getElementById('progress-text').innerText = `Practice Mode: ${wrongAnswers.length} Questions`;
         }
 
-        function addHeart() {
-            let hearts = document.getElementById('hearts');
-            hearts.innerText = parseInt(hearts.innerText) + 1;
+        // 4. Maya Didi Chat - Ye Pakka Kaam Karega
+        function openChat() {
+            chatOpen =!chatOpen;
+            const container = document.getElementById('chat-container');
+            const chatBox = document.getElementById('chat-box');
+            container.style.display = chatOpen? 'block' : 'none';
+
+            if(chatOpen && chatBox.innerHTML === '') {
+                chatBox.innerHTML = `<div class="bot-msg"><b>Maya Didi:</b> Namaste! Main Maya Didi hun. Kuch bhi Grammar pucho 😊</div>`;
+            }
+            if(chatOpen) container.scrollIntoView({behavior: 'smooth'});
         }
 
         function sendChat() {
             const input = document.getElementById('chat-input');
             const chatBox = document.getElementById('chat-box');
             const msg = input.value.trim();
-            
+
             if(msg === '') return;
-            
+
             chatBox.innerHTML += `<div class="user-msg"><b>Aap:</b> ${msg}</div>`;
-            
+
             let reply = "Maaf karo, main samjhi nahi. Grammar se related pucho.";
             const lowerMsg = msg.toLowerCase();
-            
+
             if(lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('namaste')) {
                 reply = "Namaste! Kaise ho? Grammar me kya help chahiye?";
             } else if(lowerMsg.includes('noun')) {
@@ -285,17 +282,35 @@
                 reply = "Pronoun, noun ki jagah use hota hai. Jaise: He, She, It, They";
             } else if(lowerMsg.includes('adjective')) {
                 reply = "Adjective, noun ki quality batata hai. Jaise: Good boy, Big house";
+            } else if(lowerMsg.includes('preposition')) {
+                reply = "Preposition, noun/pronoun ka relation batata hai. Jaise: in, on, at, under";
+            } else if(lowerMsg.includes('article')) {
+                reply = "Article 3 hote hain: A, An, The. An vowels ke pehle lagta hai";
+            } else if(lowerMsg.includes('conjunction')) {
+                reply = "Conjunction 2 words/sentences ko jodta hai. Jaise: and, but, or";
             } else if(lowerMsg.includes('thank')) {
                 reply = "Welcome! Aur kuch puchna hai? 😊";
             }
-            
+
             setTimeout(() => {
                 chatBox.innerHTML += `<div class="bot-msg"><b>Maya Didi:</b> ${reply}</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
             }, 500);
-            
+
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // 5. Theme + Heart
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const icon = document.getElementById('theme-toggle');
+            icon.innerText = document.body.classList.contains('light-mode')? '🌙' : '☀️';
+        }
+
+        function addHeart() {
+            let hearts = document.getElementById('hearts');
+            hearts.innerText = parseInt(hearts.innerText) + 1;
         }
     </script>
 </body>
