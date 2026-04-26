@@ -39,28 +39,58 @@
     </div>
 
     <script src="lessons.js"></script>
-    <script>
-        let currentLesson = '';
-        window.onload = function() {
-            const list = document.getElementById('lesson-list');
-            lessons.forEach((lesson, i) => {
-                list.innerHTML += `<button class="btn-blue" onclick="selectLesson(${i})">Lesson ${i+1}: ${lesson.title}</button>`;
-            });
+<script>
+    let currentLesson = '';
+
+    window.onload = function() {
+        const list = document.getElementById('lesson-list');
+        const dayContainer = document.getElementById('day-buttons');
+
+        lessons.forEach((lesson, i) => {
+            // Grammar List
+            list.innerHTML += `<button class="btn-blue" onclick="selectLesson(${i})">Lesson ${i+1}: ${lesson.title}</button>`;
+
+            // Gol Day Button
+            dayContainer.innerHTML += `<div class="day-circle" onclick="startDay(${i})">Day ${lesson.day}</div>`;
+        });
+    }
+
+    function startDay(index) {
+        selectLesson(index);
+        document.getElementById('question-text').scrollIntoView({behavior: 'smooth'});
+    }
+
+    function selectLesson(i) {
+        currentLesson = lessons[i];
+        document.getElementById('question-text').innerText = currentLesson.questions[0].q;
+    }
+
+    function checkAnswer() {
+        if(!currentLesson) return alert('Pehle lesson select karo');
+        const ans = document.getElementById('answer-input').value.trim().toLowerCase();
+        if(ans === currentLesson.questions[0].answer.toLowerCase()) {
+            alert('Sahi Jawab! +10 XP 🔥');
+            let xp = document.getElementById('xp');
+            xp.innerText = parseInt(xp.innerText) + 10;
+            document.getElementById('answer-input').value = '';
+        } else {
+            alert('Galat. Try again!');
         }
-        function selectLesson(i) {
-            currentLesson = lessons[i];
-            document.getElementById('question-text').innerText = currentLesson.questions[0].q;
-        }
-        function checkAnswer() {
-            if(!currentLesson) return alert('Pehle lesson select karo');
-            const ans = document.getElementById('answer-input').value.trim().toLowerCase();
-            if(ans === currentLesson.questions[0].answer.toLowerCase()) {
-                alert('Sahi Jawab! +10 XP 🔥');
-                document.getElementById('answer-input').value = '';
-            } else {
-                alert('Galat. Try again!');
-            }
-        }
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+        document.getElementById('theme-toggle').innerText =
+            document.body.classList.contains('light-mode')? '☀️' : '🌙';
+    }
+
+    function addHeart() {
+        let hearts = document.getElementById('hearts');
+        hearts.innerText = parseInt(hearts.innerText) + 1;
+    }
+</script>
+</body>
+</html>
             <script src="lessons.js"></script>
     <script>
         let currentLesson = '';
