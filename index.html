@@ -31,6 +31,16 @@
         <button onclick="checkAnswer()">Check</button>
     </div>
 
+    <!-- Maya Didi Chat Box -->
+    <div class="card">
+        <h2>💬 Maya Didi Se Baate Karo</h2>
+        <div id="chat-box" style="height:200px;overflow-y:auto;background:#000;padding:10px;border-radius:8px;margin-bottom:10px;">
+            <div class="bot-msg">Namaste! Main Maya Didi hun. Kuch bhi Grammar pucho 😊</div>
+        </div>
+        <input type="text" id="chat-input" placeholder="Maya Didi se kuch pucho...">
+        <button onclick="sendChat()">Bhejo</button>
+    </div>
+
     <!-- Lesson List -->
     <div class="section">
         <h3>Grammar Lessons</h3>
@@ -53,6 +63,10 @@
             lessons.forEach((lesson, i) => {
                 list.innerHTML += `<button class="btn-blue" onclick="selectLesson(${i})">Lesson ${i+1}: ${lesson.title}</button>`;
                 dayContainer.innerHTML += `<div class="day-circle" onclick="startDay(${i})">Day ${lesson.day}</div>`;
+            });
+
+            document.getElementById('chat-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendChat();
             });
         }
 
@@ -88,6 +102,43 @@
         function addHeart() {
             let hearts = document.getElementById('hearts');
             hearts.innerText = parseInt(hearts.innerText) + 1;
+        }
+
+        function sendChat() {
+            const input = document.getElementById('chat-input');
+            const chatBox = document.getElementById('chat-box');
+            const msg = input.value.trim();
+            
+            if(msg === '') return;
+            
+            chatBox.innerHTML += `<div class="user-msg"><b>Aap:</b> ${msg}</div>`;
+            
+            let reply = "Maaf karo, main samjhi nahi. Grammar se related pucho.";
+            const lowerMsg = msg.toLowerCase();
+            
+            if(lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('namaste')) {
+                reply = "Namaste! Kaise ho? Grammar me kya help chahiye?";
+            } else if(lowerMsg.includes('noun')) {
+                reply = "Noun kisi person, place, animal ya thing ka naam hota hai. Jaise: Ram, Delhi, Dog, Book";
+            } else if(lowerMsg.includes('verb')) {
+                reply = "Verb action ya state batata hai. Jaise: run, eat, is, are";
+            } else if(lowerMsg.includes('tense')) {
+                reply = "Tense 3 tarah ke hote hain: Present, Past, Future. Kaunsa sikhna hai?";
+            } else if(lowerMsg.includes('pronoun')) {
+                reply = "Pronoun, noun ki jagah use hota hai. Jaise: He, She, It, They";
+            } else if(lowerMsg.includes('adjective')) {
+                reply = "Adjective, noun ki quality batata hai. Jaise: Good boy, Big house";
+            } else if(lowerMsg.includes('thank')) {
+                reply = "Welcome! Aur kuch puchna hai? 😊";
+            }
+            
+            setTimeout(() => {
+                chatBox.innerHTML += `<div class="bot-msg"><b>Maya Didi:</b> ${reply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+            
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
     </script>
 </body>
