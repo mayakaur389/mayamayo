@@ -12,52 +12,79 @@
             padding-bottom: 20px;
         }
 
-   .header {
+  .header {
             background: #1a73e8; padding: 12px 16px;
             display: flex; justify-content: space-between; align-items: center;
         }
-   .header-title { font-size: 20px; font-weight: 600; }
-   .stats { display: flex; gap: 12px; font-size: 16px; }
-   .stats span { cursor: pointer; }
+  .header-title { font-size: 20px; font-weight: 600; }
+  .stats { display: flex; gap: 12px; font-size: 16px; }
+  .stats span { cursor: pointer; }
 
-   .top-buttons { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-   .btn-purple {
+  .top-buttons { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+  .btn-purple {
             background: #8B5CF6; color: white; border: none; padding: 16px;
             border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-   .btn-yellow {
+  .btn-yellow {
             background: #FBBF24; color: #000; border: none; padding: 16px;
             border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
 
-   .card {
+  .card {
             background: #fff; color: #000; margin: 0 16px;
             padding: 20px; border-radius: 16px;
         }
-   .card h2 { color: #1a73e8; font-size: 20px; margin-bottom: 4px; }
-   .card p { color: #666; font-size: 14px; margin-bottom: 16px; }
+  .card h2 { color: #1a73e8; font-size: 20px; margin-bottom: 4px; }
+  .card p { color: #666; font-size: 14px; margin-bottom: 16px; }
 
-   .btn-blue {
+        /* Day Grid Container */
+  .day-section {
+            background: #1e293b; margin: 0 16px 16px 16px;
+            padding: 20px; border-radius: 16px;
+        }
+  .day-section h3 { color: #fff; font-size: 18px; margin-bottom: 4px; }
+  .day-section p { color: #94a3b8; font-size: 14px; margin-bottom: 16px; }
+
+  .day-grid {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            gap: 12px; margin-top: 16px;
+        }
+
+  .day-btn {
+            aspect-ratio: 1; border-radius: 50%; border: none;
+            font-size: 14px; font-weight: 700; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; transition: transform 0.2s;
+        }
+  .day-btn:active { transform: scale(0.9); }
+
+  .day-completed { background: #10B981; color: white; }
+  .day-current { background: #3B82F6; color: white; box-shadow: 0 0 0 3px rgba(59,130,246,0.3); }
+  .day-locked { background: #334155; color: #64748b; cursor: not-allowed; }
+  .day-icon { font-size: 16px; line-height: 1; }
+  .day-text { font-size: 10px; margin-top: 2px; }
+
+  .btn-blue {
             background: #1a73e8; color: white; border: none; width: 100%;
             padding: 14px; border-radius: 10px; font-size: 15px;
             font-weight: 600; margin: 8px 0; cursor: pointer;
         }
 
-   .input-box {
+  .input-box {
             width: 100%; padding: 14px; border: 2px solid #1a73e8;
             border-radius: 10px; font-size: 15px; margin: 8px 0; outline: none;
         }
 
-   .btn-green {
+  .btn-green {
             background: #10B981; color: white; border: none; padding: 12px 28px;
             border-radius: 10px; font-size: 15px; font-weight: 600;
             cursor: pointer; float: right; margin-top: 8px;
         }
 
         #progress-text { text-align: center; color: #666; margin: 12px 0; font-weight: 600; }
-   .completed-msg {
+  .completed-msg {
             background: #10B981; color: white; padding: 12px;
             border-radius: 10px; text-align: center; margin: 12px 0; font-weight: 600;
         }
@@ -66,11 +93,11 @@
             display: none; background: #f5f5f5; border-radius: 10px;
             padding: 12px; margin: 12px 0; max-height: 300px; overflow-y: auto;
         }
-   .bot-msg {
+  .bot-msg {
             background: #1a73e8; color: white; padding: 10px;
             border-radius: 8px; margin: 6px 0; max-width: 85%;
         }
-   .user-msg {
+  .user-msg {
             background: #e0e0e0; color: #000; padding: 10px;
             border-radius: 8px; margin: 6px 0; max-width: 85%;
             margin-left: auto; text-align: right;
@@ -78,6 +105,9 @@
 
         body.light-mode { background: #f5f5f5; }
         body.light-mode.card { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.light-mode.day-section { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        body.light-mode.day-section h3 { color: #000; }
+        body.light-mode.day-section p { color: #666; }
         body.light-mode #chat-container { background: #fff; border: 1px solid #ddd; }
     </style>
 </head>
@@ -100,6 +130,13 @@
         <button class="btn-yellow" onclick="startPracticeMode()">
             📝 Practice Shuru Karo
         </button>
+    </div>
+
+    <!-- Day Grid Section - Image Jaisa -->
+    <div class="day-section">
+        <h3>UNIT 1: BASICS - 30 DAYS</h3>
+        <p>Day chuno aur seekhna shuru karo</p>
+        <div class="day-grid" id="day-grid"></div>
     </div>
 
     <div class="card">
@@ -133,12 +170,14 @@
         let wrongAnswers = [];
         let practiceMode = false;
         let chatOpen = false;
+        let completedDays = []; // Complete hue days ka array
 
         window.onload = function() {
             if(typeof lessons === 'undefined') {
                 alert('Error: lessons.js load nahi hua');
                 return;
             }
+            renderDayGrid();
             showCurrentLesson();
 
             document.getElementById('chat-input').addEventListener('keypress', function(e) {
@@ -147,6 +186,49 @@
             document.getElementById('answer-input').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') checkAnswer();
             });
+        }
+
+        // Day Grid Render Karo - Image Jaisa
+        function renderDayGrid() {
+            const grid = document.getElementById('day-grid');
+            grid.innerHTML = '';
+
+            for(let i = 0; i < 30; i++) {
+                const dayNum = i + 1;
+                const btn = document.createElement('button');
+                btn.className = 'day-btn';
+
+                if(completedDays.includes(dayNum)) {
+                    // Complete Day - Green + Tick
+                    btn.className += ' day-completed';
+                    btn.innerHTML = `<div class="day-icon">${dayNum}</div><div class="day-text">✓</div>`;
+                    btn.onclick = () => alert('Ye day complete ho chuka hai! 🎉');
+                } else if(dayNum === currentLessonIndex + 1) {
+                    // Current Day - Blue + Start
+                    btn.className += ' day-current';
+                    btn.innerHTML = `<div class="day-icon">${dayNum}</div><div class="day-text">Start</div>`;
+                    btn.onclick = () => startLessonFromDay(dayNum - 1);
+                } else if(dayNum <= lessons.length) {
+                    // Unlocked but not started - Grey + Lock
+                    btn.className += ' day-locked';
+                    btn.innerHTML = `<div class="day-icon">${dayNum}</div><div class="day-text">🔒</div>`;
+                    btn.onclick = () => alert('Pehle Day ' + (currentLessonIndex + 1) + ' complete karo yaar! 😎');
+                } else {
+                    // Not available - Locked
+                    btn.className += ' day-locked';
+                    btn.innerHTML = `<div class="day-icon">${dayNum}</div><div class="day-text">🔒</div>`;
+                    btn.onclick = () => alert('Ye day abhi available nahi hai!');
+                }
+                grid.appendChild(btn);
+            }
+        }
+
+        function startLessonFromDay(index) {
+            if(index!== currentLessonIndex) {
+                alert('Pehle current day complete karo!');
+                return;
+            }
+            startLesson();
         }
 
         function showCurrentLesson() {
@@ -162,12 +244,7 @@
 
             const lesson = lessons[currentLessonIndex];
             progressText.innerText = `Lesson ${lesson.day} of ${lessons.length}`;
-
-            container.innerHTML = `
-                <button class="btn-blue" onclick="startLesson()">
-                    Lesson ${lesson.day}: ${lesson.title} 👉
-                </button>
-            `;
+            container.innerHTML = '';
         }
 
         function startLesson() {
@@ -178,6 +255,7 @@
             document.getElementById('question-text').value = lesson.questions[0].q;
             document.getElementById('answer-input').value = '';
             document.getElementById('answer-input').focus();
+            document.getElementById('question-section').scrollIntoView({behavior: 'smooth'});
         }
 
         function checkAnswer() {
@@ -203,14 +281,17 @@
                 } else {
                     currentQuestionIndex++;
                     if(currentQuestionIndex >= lesson.questions.length) {
+                        // Day Complete
+                        completedDays.push(lesson.day);
                         document.getElementById('completed-section').innerHTML =
-                            `<div class="completed-msg">✅ Lesson ${lesson.day} Done! Aag laga di bhai 🔥</div>`;
+                            `<div class="completed-msg">✅ Day ${lesson.day} Done! Aag laga di bhai 🔥</div>`;
 
                         setTimeout(() => {
                             currentLessonIndex++;
                             currentQuestionIndex = 0;
                             document.getElementById('question-section').style.display = 'none';
                             document.getElementById('completed-section').innerHTML = '';
+                            renderDayGrid(); // Grid update karo
                             showCurrentLesson();
                         }, 1500);
                     } else {
@@ -237,9 +318,9 @@
             document.getElementById('answer-input').value = '';
             document.getElementById('answer-input').focus();
             document.getElementById('progress-text').innerText = `Practice Mode: ${wrongAnswers.length} Questions bache hain`;
+            document.getElementById('question-section').scrollIntoView({behavior: 'smooth'});
         }
 
-        // Friendly Maya Didi - Best Friend Wali Vibe
         function openChat() {
             chatOpen =!chatOpen;
             const container = document.getElementById('chat-container');
@@ -247,7 +328,7 @@
             container.style.display = chatOpen? 'block' : 'none';
 
             if(chatOpen && chatBox.innerHTML === '') {
-                chatBox.innerHTML = `<div class="bot-msg"><b>Maya:</b> Heyy! Kya haal hai? 😄 Main Maya hun - teri Grammar wali dost! Padhai karni hai ya bas timepass? Kuch bhi puch le grammar ka, example ke saath mazaak me samjha dungi 🤪</div>`;
+                chatBox.innerHTML = `<div class="bot-msg"><b>Maya:</b> Heyy! Kya haal hai? 😄 Main Maya hun - teri Grammar wali dost! Padhai karni hai ya bas timepass? Kuch bhi puch le grammar ka 🤪</div>`;
             }
             if(chatOpen) container.scrollIntoView({behavior: 'smooth'});
         }
@@ -272,33 +353,21 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Maya Ka Dimaag - Friendly + Funny + Grammar
         function getFriendlyMayaReply(msg) {
             const lowerMsg = msg.toLowerCase();
 
-            // Casual Greetings
             if(lowerMsg.match(/^(hi|hello|hey|hii|heyy)$/)) {
                 return "Heyyy! Kya scene hai? 😎 Padhai ka mood hai ya bas bakchodi karni hai? Grammar me help chahiye toh bol de!";
             }
             if(lowerMsg.includes('kaise ho') || lowerMsg.includes('kya haal') || lowerMsg.includes('how are you')) {
                 return "Main toh badiya hun yaar! Tu suna? Padhai wadhai ho rahi hai ya mobile me hi ghusa hai? 😂 Chal grammar ka koi doubt hai toh puch!";
             }
-            if(lowerMsg.includes('kya kar') || lowerMsg.includes('what are you doing')) {
-                return "Bas tere jaise topper students ko grammar sikhane ka wait kar rahi thi 😏 Tu bata kya kar raha hai?";
-            }
-
-            // Funny / Bakchodi Replies
             if(lowerMsg.includes('bore') || lowerMsg.includes('boring')) {
                 return "Bore ho raha hai? 😂 Chal ek grammar joke sun: Noun bola Verb se - 'Tu action me rehta hai, main toh bas naam ka hun!' Samjha? Nahi samjha toh Noun-Verb padh le phir 😜";
-            }
-            if(lowerMsg.includes('maza') || lowerMsg.includes('fun')) {
-                return "Maza aayega tab jab grammar seekh lega! Chal ek game khelte hain - Main sentence bolungi, tu bataoge Noun kaun sa hai. Ready? 'Ram is eating mango' - bata Noun kaun sa hai? 😎";
             }
             if(lowerMsg.includes('love') || lowerMsg.includes('pyar') || lowerMsg.includes('gf') || lowerMsg.includes('bf')) {
                 return "Arre pyar-vyaar chhod 😂 Pehle grammar se pyar kar le! Exam me kaam aayega. Chal bata - 'Love' kaun sa part of speech hai? Noun bhi hai aur Verb bhi! Dekha, grammar bhi romantic hai 🤣";
             }
-
-            // Grammar Topics - Friendly Style
             if(lowerMsg.includes('noun')) {
                 return "Noun yaani 'Naam' 😎 Person, Place, Animal, Thing ka naam. Jaise: Salman Khan - Proper Noun, Hero - Common Noun. Example: 'Mumbai me Salman Khan rehta hai' - yahan Mumbai aur Salman Khan dono Noun hain. Samjha kya? Ya momo kha raha hai dhyan nahi de raha 😂";
             }
@@ -308,28 +377,10 @@
             if(lowerMsg.includes('tense')) {
                 return "Tense yaani 'Time' ⏰ 3 types: 1) Present - Abhi: I eat momo 2) Past - Pehle: I ate momo 3) Future - Baad me: I will eat momo. Tu momo kab khayega? 😂 Bata kaunsa tense samjhaun detail me?";
             }
-            if(lowerMsg.includes('pronoun')) {
-                return "Pronoun - Noun ki jagah kaam karne wala duplicate banda 😂 He, She, It, They. Jaise: 'Ram smart hai. He padhta hai' - yahan 'He' ne Ram ki jagah le li. Samjha? Ya phir se samjhaun? 😜";
-            }
-            if(lowerMsg.includes('adjective')) {
-                return "Adjective = Noun ki tareef karne wala 🏆 Jaise: Smart boy, Cute girl, Tasty momo. 'Tu smart hai' - yahan smart adjective hai jo teri tareef kar raha hai. Waise tu smart hai bhi ya main jhooth bol rahi? 😂";
-            }
-            if(lowerMsg.includes('preposition')) {
-                return "Preposition = Relation banane wala rishtedaar 😂 in, on, at, under. 'Mobile table ke upar hai' - 'ke upar' = on. 'Tu mere dil me hai' - 'me' = in. Samjha? Ab tu bata tu kiske dil me hai? 🤪 Just kidding! Grammar pe focus kar.";
-            }
-            if(lowerMsg.includes('active') || lowerMsg.includes('passive')) {
-                return "Active: 'Ram ne momo khaya' - Ram ne kaam kiya 💪 Passive: 'Momo Ram se khaya gaya' - Momo bechara khaya gaya 😂 Formula: Object + is/am/are/was/were + V3 + by + Subject. Ab tu bata - 'Maya ne tujhe samjhaya' ka passive kya hoga?";
-            }
-
-            // Motivational
-            if(lowerMsg.includes('nahi aata') || lowerMsg.includes('difficult') || lowerMsg.includes('hard')) {
-                return "Arre yaar mushkil kuch nahi hota! 😎 Tu PUBG khelna seekh gaya, ye grammar kya cheez hai? Main hun na, ekdum step by step samjhaungi. Bas tu haar mat maanna. Chal bata kya samajh nahi aa raha?";
-            }
-            if(lowerMsg.includes('thank') || lowerMsg.includes('thanks')) {
+            if(lowerMsg.includes('thank')) {
                 return "Arre thanks-wanks rehne de yaar! 😄 Tu seekh gaya na, wahi mere liye party hai 🎉 Aur doubt ho toh bindass puch lena. Main yahin hun!";
             }
 
-            // Default - Friendly + Grammar Push
             const funnyReplies = [
                 `Haha tu '${msg}' bol raha hai? 😂 Chal chhod ye sab, grammar pe aate hain. Kya doubt hai bata?`,
                 `Oye hoye! '${msg}' 😏 Itna dimag grammar me laga deta toh topper ban jaata! Chal puch kya puchna hai?`,
