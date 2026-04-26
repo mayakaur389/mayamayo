@@ -7,12 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="header">
-        <div class="header-title">Maya Didi</div>
-        <div class="stats">
-            <span>☀️</span><span>🔥11</span><span>❤️1</span><span>⚡260</span><span>🌙</span>
-        </div>
+   <div class="header">
+    <div class="header-title">Maya Didi</div>
+    <div class="stats">
+        <span id="theme-toggle" onclick="toggleTheme()">🌙</span>
+        <span>🔥<span id="streak">11</span></span>
+        <span onclick="addHeart()">❤️<span id="hearts">1</span></span>
+        <span>⚡<span id="xp">260</span></span>
     </div>
+</div> 
 
     <div class="container">
         <button class="btn-purple" onclick="location.href='ai-teacher.html'">💬 Maya didi se puchho</button>
