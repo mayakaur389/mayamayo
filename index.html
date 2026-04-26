@@ -12,72 +12,70 @@
             padding-bottom: 20px;
         }
 
-     .header {
+   .header {
             background: #1a73e8; padding: 12px 16px;
             display: flex; justify-content: space-between; align-items: center;
         }
-     .header-title { font-size: 20px; font-weight: 600; }
-     .stats { display: flex; gap: 12px; font-size: 16px; }
-     .stats span { cursor: pointer; }
+   .header-title { font-size: 20px; font-weight: 600; }
+   .stats { display: flex; gap: 12px; font-size: 16px; }
+   .stats span { cursor: pointer; }
 
-     .top-buttons { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
-     .btn-purple {
+   .top-buttons { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+   .btn-purple {
             background: #8B5CF6; color: white; border: none; padding: 16px;
             border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-     .btn-yellow {
+   .btn-yellow {
             background: #FBBF24; color: #000; border: none; padding: 16px;
             border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
 
-     .card {
+   .card {
             background: #fff; color: #000; margin: 0 16px;
             padding: 20px; border-radius: 16px;
         }
-     .card h2 { color: #1a73e8; font-size: 20px; margin-bottom: 4px; }
-     .card p { color: #666; font-size: 14px; margin-bottom: 16px; }
+   .card h2 { color: #1a73e8; font-size: 20px; margin-bottom: 4px; }
+   .card p { color: #666; font-size: 14px; margin-bottom: 16px; }
 
-     .btn-blue {
+   .btn-blue {
             background: #1a73e8; color: white; border: none; width: 100%;
             padding: 14px; border-radius: 10px; font-size: 15px;
             font-weight: 600; margin: 8px 0; cursor: pointer;
         }
 
-     .input-box {
+   .input-box {
             width: 100%; padding: 14px; border: 2px solid #1a73e8;
             border-radius: 10px; font-size: 15px; margin: 8px 0; outline: none;
         }
 
-     .btn-green {
+   .btn-green {
             background: #10B981; color: white; border: none; padding: 12px 28px;
             border-radius: 10px; font-size: 15px; font-weight: 600;
             cursor: pointer; float: right; margin-top: 8px;
         }
 
         #progress-text { text-align: center; color: #666; margin: 12px 0; font-weight: 600; }
-     .completed-msg {
+   .completed-msg {
             background: #10B981; color: white; padding: 12px;
             border-radius: 10px; text-align: center; margin: 12px 0; font-weight: 600;
         }
 
-        /* Chat Box */
         #chat-container {
             display: none; background: #f5f5f5; border-radius: 10px;
-            padding: 12px; margin: 12px 0; max-height: 250px; overflow-y: auto;
+            padding: 12px; margin: 12px 0; max-height: 300px; overflow-y: auto;
         }
-     .bot-msg {
+   .bot-msg {
             background: #1a73e8; color: white; padding: 10px;
             border-radius: 8px; margin: 6px 0; max-width: 85%;
         }
-     .user-msg {
+   .user-msg {
             background: #e0e0e0; color: #000; padding: 10px;
             border-radius: 8px; margin: 6px 0; max-width: 85%;
             margin-left: auto; text-align: right;
         }
 
-        /* Light Mode */
         body.light-mode { background: #f5f5f5; }
         body.light-mode.card { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         body.light-mode #chat-container { background: #fff; border: 1px solid #ddd; }
@@ -97,7 +95,7 @@
 
     <div class="top-buttons">
         <button class="btn-purple" onclick="openChat()">
-            💬 Maya didi se puchho
+            💬 Maya se Gupshup Karo
         </button>
         <button class="btn-yellow" onclick="startPracticeMode()">
             📝 Practice Shuru Karo
@@ -106,24 +104,24 @@
 
     <div class="card">
         <h2>Maya Didi ke Saath Grammar Seekho 📚</h2>
-        <p>Roz 1 naya topic + Quiz</p>
+        <p>Roz 1 naya topic + Quiz + Masti</p>
 
         <div id="progress-text"></div>
         <div id="lesson-container"></div>
 
         <div id="question-section" style="display:none;">
             <input type="text" id="question-text" class="input-box" readonly>
-            <input type="text" id="answer-input" class="input-box" placeholder="Answer likho">
+            <input type="text" id="answer-input" class="input-box" placeholder="Answer likho yaar">
             <button class="btn-green" onclick="checkAnswer()">Bhejo</button>
             <div style="clear:both"></div>
         </div>
 
         <div id="completed-section"></div>
 
-        <!-- Maya Didi Chat - Ye Pakka Hai -->
+        <!-- Friendly Maya Didi Chat -->
         <div id="chat-container">
             <div id="chat-box"></div>
-            <input type="text" id="chat-input" class="input-box" placeholder="Maya Didi se pucho..." style="margin-top:10px;">
+            <input type="text" id="chat-input" class="input-box" placeholder="Maya se kuch bhi pucho yaar..." style="margin-top:10px;">
             <button class="btn-green" onclick="sendChat()" style="float:none;margin-top:8px;">Bhejo</button>
         </div>
     </div>
@@ -151,13 +149,12 @@
             });
         }
 
-        // 1. Sirf ek lesson dikhao
         function showCurrentLesson() {
             const container = document.getElementById('lesson-container');
             const progressText = document.getElementById('progress-text');
 
             if(currentLessonIndex >= lessons.length) {
-                container.innerHTML = `<div class="completed-msg">🎉 Sab Lessons Complete! Great Job!</div>`;
+                container.innerHTML = `<div class="completed-msg">🎉 Arre waah! Sab Lessons khatam! Tu toh topper nikla re 😎</div>`;
                 document.getElementById('question-section').style.display = 'none';
                 progressText.innerText = '';
                 return;
@@ -168,7 +165,7 @@
 
             container.innerHTML = `
                 <button class="btn-blue" onclick="startLesson()">
-                    Lesson ${lesson.day}: ${lesson.title}
+                    Lesson ${lesson.day}: ${lesson.title} 👉
                 </button>
             `;
         }
@@ -183,23 +180,22 @@
             document.getElementById('answer-input').focus();
         }
 
-        // 2. Answer check + Next lesson logic
         function checkAnswer() {
             const ans = document.getElementById('answer-input').value.trim().toLowerCase();
-            if(ans === '') return alert('Answer likho');
+            if(ans === '') return alert('Arre likh toh sahi pehle 😂');
 
             const lesson = practiceMode? wrongAnswers[0].lesson : lessons[currentLessonIndex];
             const question = practiceMode? wrongAnswers[0].question : lesson.questions[currentQuestionIndex];
 
             if(ans === question.answer.toLowerCase()) {
-                alert('Sahi Jawab! +10 XP 🔥');
+                alert('Shi baat! Ekdum correct 🔥 +10 XP milega tujhe');
                 let xp = document.getElementById('xp');
                 xp.innerText = parseInt(xp.innerText) + 10;
 
                 if(practiceMode) {
                     wrongAnswers.shift();
                     if(wrongAnswers.length === 0) {
-                        alert('Practice Complete! 🎉');
+                        alert('Bas ho gaya practice! Tu toh master nikla 🎉');
                         document.getElementById('question-section').style.display = 'none';
                         return;
                     }
@@ -207,16 +203,15 @@
                 } else {
                     currentQuestionIndex++;
                     if(currentQuestionIndex >= lesson.questions.length) {
-                        // Lesson complete - Agla lesson dikhao
                         document.getElementById('completed-section').innerHTML =
-                            `<div class="completed-msg">✅ Lesson ${lesson.day} Complete!</div>`;
+                            `<div class="completed-msg">✅ Lesson ${lesson.day} Done! Aag laga di bhai 🔥</div>`;
 
                         setTimeout(() => {
                             currentLessonIndex++;
                             currentQuestionIndex = 0;
                             document.getElementById('question-section').style.display = 'none';
                             document.getElementById('completed-section').innerHTML = '';
-                            showCurrentLesson(); // Agla lesson aa jayega
+                            showCurrentLesson();
                         }, 1500);
                     } else {
                         document.getElementById('question-text').value = lesson.questions[currentQuestionIndex].q;
@@ -224,17 +219,16 @@
                 }
                 document.getElementById('answer-input').value = '';
             } else {
-                alert('Galat. Try again!');
+                alert('Galat ho gaya yaar 😅 Koi na, fir se try kar!');
                 if(!practiceMode) {
                     wrongAnswers.push({ lesson: lesson, question: question });
                 }
             }
         }
 
-        // 3. Practice Mode - Sirf galat questions
         function startPracticeMode() {
             if(wrongAnswers.length === 0) {
-                alert('Abhi tak koi galti nahi hui. Pehle lessons complete karo!');
+                alert('Abhi tak ek bhi galti nahi? Kya baat hai! Pehle lesson kar le phir aana 😎');
                 return;
             }
             practiceMode = true;
@@ -242,10 +236,10 @@
             document.getElementById('question-text').value = wrongAnswers[0].question.q;
             document.getElementById('answer-input').value = '';
             document.getElementById('answer-input').focus();
-            document.getElementById('progress-text').innerText = `Practice Mode: ${wrongAnswers.length} Questions`;
+            document.getElementById('progress-text').innerText = `Practice Mode: ${wrongAnswers.length} Questions bache hain`;
         }
 
-        // 4. Maya Didi Chat - Ye Pakka Kaam Karega
+        // Friendly Maya Didi - Best Friend Wali Vibe
         function openChat() {
             chatOpen =!chatOpen;
             const container = document.getElementById('chat-container');
@@ -253,7 +247,7 @@
             container.style.display = chatOpen? 'block' : 'none';
 
             if(chatOpen && chatBox.innerHTML === '') {
-                chatBox.innerHTML = `<div class="bot-msg"><b>Maya Didi:</b> Namaste! Main Maya Didi hun. Kuch bhi Grammar pucho 😊</div>`;
+                chatBox.innerHTML = `<div class="bot-msg"><b>Maya:</b> Heyy! Kya haal hai? 😄 Main Maya hun - teri Grammar wali dost! Padhai karni hai ya bas timepass? Kuch bhi puch le grammar ka, example ke saath mazaak me samjha dungi 🤪</div>`;
             }
             if(chatOpen) container.scrollIntoView({behavior: 'smooth'});
         }
@@ -265,43 +259,86 @@
 
             if(msg === '') return;
 
-            chatBox.innerHTML += `<div class="user-msg"><b>Aap:</b> ${msg}</div>`;
+            chatBox.innerHTML += `<div class="user-msg"><b>Tu:</b> ${msg}</div>`;
 
-            let reply = "Maaf karo, main samjhi nahi. Grammar se related pucho.";
-            const lowerMsg = msg.toLowerCase();
-
-            if(lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('namaste')) {
-                reply = "Namaste! Kaise ho? Grammar me kya help chahiye?";
-            } else if(lowerMsg.includes('noun')) {
-                reply = "Noun kisi person, place, animal ya thing ka naam hota hai. Jaise: Ram, Delhi, Dog, Book";
-            } else if(lowerMsg.includes('verb')) {
-                reply = "Verb action ya state batata hai. Jaise: run, eat, is, are";
-            } else if(lowerMsg.includes('tense')) {
-                reply = "Tense 3 tarah ke hote hain: Present, Past, Future. Kaunsa sikhna hai?";
-            } else if(lowerMsg.includes('pronoun')) {
-                reply = "Pronoun, noun ki jagah use hota hai. Jaise: He, She, It, They";
-            } else if(lowerMsg.includes('adjective')) {
-                reply = "Adjective, noun ki quality batata hai. Jaise: Good boy, Big house";
-            } else if(lowerMsg.includes('preposition')) {
-                reply = "Preposition, noun/pronoun ka relation batata hai. Jaise: in, on, at, under";
-            } else if(lowerMsg.includes('article')) {
-                reply = "Article 3 hote hain: A, An, The. An vowels ke pehle lagta hai";
-            } else if(lowerMsg.includes('conjunction')) {
-                reply = "Conjunction 2 words/sentences ko jodta hai. Jaise: and, but, or";
-            } else if(lowerMsg.includes('thank')) {
-                reply = "Welcome! Aur kuch puchna hai? 😊";
-            }
+            let reply = getFriendlyMayaReply(msg);
 
             setTimeout(() => {
-                chatBox.innerHTML += `<div class="bot-msg"><b>Maya Didi:</b> ${reply}</div>`;
+                chatBox.innerHTML += `<div class="bot-msg"><b>Maya:</b> ${reply}</div>`;
                 chatBox.scrollTop = chatBox.scrollHeight;
-            }, 500);
+            }, 600);
 
             input.value = '';
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // 5. Theme + Heart
+        // Maya Ka Dimaag - Friendly + Funny + Grammar
+        function getFriendlyMayaReply(msg) {
+            const lowerMsg = msg.toLowerCase();
+
+            // Casual Greetings
+            if(lowerMsg.match(/^(hi|hello|hey|hii|heyy)$/)) {
+                return "Heyyy! Kya scene hai? 😎 Padhai ka mood hai ya bas bakchodi karni hai? Grammar me help chahiye toh bol de!";
+            }
+            if(lowerMsg.includes('kaise ho') || lowerMsg.includes('kya haal') || lowerMsg.includes('how are you')) {
+                return "Main toh badiya hun yaar! Tu suna? Padhai wadhai ho rahi hai ya mobile me hi ghusa hai? 😂 Chal grammar ka koi doubt hai toh puch!";
+            }
+            if(lowerMsg.includes('kya kar') || lowerMsg.includes('what are you doing')) {
+                return "Bas tere jaise topper students ko grammar sikhane ka wait kar rahi thi 😏 Tu bata kya kar raha hai?";
+            }
+
+            // Funny / Bakchodi Replies
+            if(lowerMsg.includes('bore') || lowerMsg.includes('boring')) {
+                return "Bore ho raha hai? 😂 Chal ek grammar joke sun: Noun bola Verb se - 'Tu action me rehta hai, main toh bas naam ka hun!' Samjha? Nahi samjha toh Noun-Verb padh le phir 😜";
+            }
+            if(lowerMsg.includes('maza') || lowerMsg.includes('fun')) {
+                return "Maza aayega tab jab grammar seekh lega! Chal ek game khelte hain - Main sentence bolungi, tu bataoge Noun kaun sa hai. Ready? 'Ram is eating mango' - bata Noun kaun sa hai? 😎";
+            }
+            if(lowerMsg.includes('love') || lowerMsg.includes('pyar') || lowerMsg.includes('gf') || lowerMsg.includes('bf')) {
+                return "Arre pyar-vyaar chhod 😂 Pehle grammar se pyar kar le! Exam me kaam aayega. Chal bata - 'Love' kaun sa part of speech hai? Noun bhi hai aur Verb bhi! Dekha, grammar bhi romantic hai 🤣";
+            }
+
+            // Grammar Topics - Friendly Style
+            if(lowerMsg.includes('noun')) {
+                return "Noun yaani 'Naam' 😎 Person, Place, Animal, Thing ka naam. Jaise: Salman Khan - Proper Noun, Hero - Common Noun. Example: 'Mumbai me Salman Khan rehta hai' - yahan Mumbai aur Salman Khan dono Noun hain. Samjha kya? Ya momo kha raha hai dhyan nahi de raha 😂";
+            }
+            if(lowerMsg.includes('verb')) {
+                return "Verb matlab 'Kaam' 💪 Jo action ho raha hai. Jaise: khana, peena, sona, padhna. 'Main PUBG khelta hun' - yahan 'khelta hun' verb hai. Tu kya khelta hai? Bata jaldi 😏";
+            }
+            if(lowerMsg.includes('tense')) {
+                return "Tense yaani 'Time' ⏰ 3 types: 1) Present - Abhi: I eat momo 2) Past - Pehle: I ate momo 3) Future - Baad me: I will eat momo. Tu momo kab khayega? 😂 Bata kaunsa tense samjhaun detail me?";
+            }
+            if(lowerMsg.includes('pronoun')) {
+                return "Pronoun - Noun ki jagah kaam karne wala duplicate banda 😂 He, She, It, They. Jaise: 'Ram smart hai. He padhta hai' - yahan 'He' ne Ram ki jagah le li. Samjha? Ya phir se samjhaun? 😜";
+            }
+            if(lowerMsg.includes('adjective')) {
+                return "Adjective = Noun ki tareef karne wala 🏆 Jaise: Smart boy, Cute girl, Tasty momo. 'Tu smart hai' - yahan smart adjective hai jo teri tareef kar raha hai. Waise tu smart hai bhi ya main jhooth bol rahi? 😂";
+            }
+            if(lowerMsg.includes('preposition')) {
+                return "Preposition = Relation banane wala rishtedaar 😂 in, on, at, under. 'Mobile table ke upar hai' - 'ke upar' = on. 'Tu mere dil me hai' - 'me' = in. Samjha? Ab tu bata tu kiske dil me hai? 🤪 Just kidding! Grammar pe focus kar.";
+            }
+            if(lowerMsg.includes('active') || lowerMsg.includes('passive')) {
+                return "Active: 'Ram ne momo khaya' - Ram ne kaam kiya 💪 Passive: 'Momo Ram se khaya gaya' - Momo bechara khaya gaya 😂 Formula: Object + is/am/are/was/were + V3 + by + Subject. Ab tu bata - 'Maya ne tujhe samjhaya' ka passive kya hoga?";
+            }
+
+            // Motivational
+            if(lowerMsg.includes('nahi aata') || lowerMsg.includes('difficult') || lowerMsg.includes('hard')) {
+                return "Arre yaar mushkil kuch nahi hota! 😎 Tu PUBG khelna seekh gaya, ye grammar kya cheez hai? Main hun na, ekdum step by step samjhaungi. Bas tu haar mat maanna. Chal bata kya samajh nahi aa raha?";
+            }
+            if(lowerMsg.includes('thank') || lowerMsg.includes('thanks')) {
+                return "Arre thanks-wanks rehne de yaar! 😄 Tu seekh gaya na, wahi mere liye party hai 🎉 Aur doubt ho toh bindass puch lena. Main yahin hun!";
+            }
+
+            // Default - Friendly + Grammar Push
+            const funnyReplies = [
+                `Haha tu '${msg}' bol raha hai? 😂 Chal chhod ye sab, grammar pe aate hain. Kya doubt hai bata?`,
+                `Oye hoye! '${msg}' 😏 Itna dimag grammar me laga deta toh topper ban jaata! Chal puch kya puchna hai?`,
+                `Samjhi nahi properly par koi na 😄 Tu grammar se related kuch puch le - Noun, Verb, Tense kuch bhi. Main example deke samjha dungi with mazaak!`,
+                `Arre yaar tu toh bada curious hai! 😂 Par main Grammar wali Maya hun, toh grammar ka hi puch. Chal bata Tense aata hai ya main samjhaun?`
+            ];
+            return funnyReplies[Math.floor(Math.random() * funnyReplies.length)];
+        }
+
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const icon = document.getElementById('theme-toggle');
