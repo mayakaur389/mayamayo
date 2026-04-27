@@ -144,11 +144,15 @@
         <div id="lesson-container"></div>
 
         <div id="question-section" style="display:none;">
-            <input type="text" id="question-text" class="input-box" readonly>
-            <input type="text" id="answer-input" class="input-box" placeholder="Answer likho yaar">
-            <button class="btn-green" onclick="checkAnswer()">Bhejo</button>
-            <div style="clear:both"></div>
-        </div>
+    <input type="text" id="question-text" class="input-box" readonly>
+    <div style="display:flex; gap:8px; margin:8px 0;">
+        <input type="text" id="answer-input" class="input-box" placeholder="Answer likho yaar" style="margin:0; flex:1;">
+        <button id="mic-btn" class="mic-btn" onclick="startQuizListening()" title="Bol ke answer do">🎙️</button>
+    </div>
+    <button class="btn-green" onclick="checkAnswer()">Bhejo</button>
+    <div id="mic-status" style="text-align:center; color:#10B981; font-size:12px; margin-top:8px; display:none;">🎤 Sun raha hun... Bolo</div>
+    <div style="clear:both"></div>
+</div>
 
         <div id="completed-section"></div>
 
