@@ -457,6 +457,72 @@
             hearts.innerText = parseInt(hearts.innerText) + 1;
             saveProgress(); // <-- YAHAN CHANGE KIYA: Heart save karo
         }
+            // <-- YAHAN NAYA: Mic Feature for Quiz
+    let recognition;
+    let isListening = false;
+
+    function startQuizListening() {
+        // Check browser support
+        if (!('webkitSpeechRecognition' in window) &&!('SpeechRecognition' in window)) {
+            alert('Arre yaar! Tera browser mic support nahi karta 😅 Chrome use kar');
+            return;
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = 'en-US'; // English sunega
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        const micBtn = document.getElementById('mic-btn');
+        const micStatus = document.getElementById('mic-status');
+        const answerInput = document.getElementById('answer-input');
+
+        if (isListening) {
+            recognition.stop();
+            return;
+        }
+
+        // Start listening
+        recognition.start();
+        isListening = true;
+        micBtn.classList.add('listening');
+        micBtn.innerText = '⏹️';
+        micStatus.style.display = 'block';
+        answerInput.placeholder = 'Bol rahe ho...';
+
+        recognition.onresult = function(event) {
+            const speechResult = event.results[0][0].transcript;
+            answerInput.value = speechResult.trim();
+            answerInput.placeholder = 'Answer likho yaar';
+            stopListening();
+        };
+
+        recognition.onerror = function(event) {
+            console.log('Mic Error:', event.error);
+            if(event.error === 'no-speech') {
+                alert('Kuch bola nahi tune 😅 Phir se try kar');
+            } else if(event.error === 'not-allowed') {
+                alert('Mic permission de bhai! Browser me allow kar');
+            }
+            stopListening();
+        };
+
+        recognition.onend = function() {
+            stopListening();
+        };
+    }
+
+    function stopListening() {
+        isListening = false;
+        const micBtn = document.getElementById('mic-btn');
+        const micStatus = document.getElementById('mic-status');
+        micBtn.classList.remove('listening');
+        micBtn.innerText = '🎙️';
+        micStatus.style.display = 'none';
+        document.getElementById('answer-input').placeholder = 'Answer likho yaar';
+        if(recognition) recognition.stop();
+    }
     </script>
 </body>
 </html>
