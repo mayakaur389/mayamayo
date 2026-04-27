@@ -353,42 +353,105 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        function getFriendlyMayaReply(msg) {
-            const lowerMsg = msg.toLowerCase();
+       // Maya Didi Advanced - Hindi + English Reply
+function getFriendlyMayaReply(msg) {
+    const lowerMsg = msg.toLowerCase();
 
-            if(lowerMsg.match(/^(hi|hello|hey|hii|heyy)$/)) {
-                return "Heyyy! Kya scene hai? 😎 Padhai ka mood hai ya bas bakchodi karni hai? Grammar me help chahiye toh bol de!";
-            }
-            if(lowerMsg.includes('kaise ho') || lowerMsg.includes('kya haal') || lowerMsg.includes('how are you')) {
-                return "Main toh badiya hun yaar! Tu suna? Padhai wadhai ho rahi hai ya mobile me hi ghusa hai? 😂 Chal grammar ka koi doubt hai toh puch!";
-            }
-            if(lowerMsg.includes('bore') || lowerMsg.includes('boring')) {
-                return "Bore ho raha hai? 😂 Chal ek grammar joke sun: Noun bola Verb se - 'Tu action me rehta hai, main toh bas naam ka hun!' Samjha? Nahi samjha toh Noun-Verb padh le phir 😜";
-            }
-            if(lowerMsg.includes('love') || lowerMsg.includes('pyar') || lowerMsg.includes('gf') || lowerMsg.includes('bf')) {
-                return "Arre pyar-vyaar chhod 😂 Pehle grammar se pyar kar le! Exam me kaam aayega. Chal bata - 'Love' kaun sa part of speech hai? Noun bhi hai aur Verb bhi! Dekha, grammar bhi romantic hai 🤣";
-            }
-            if(lowerMsg.includes('noun')) {
-                return "Noun yaani 'Naam' 😎 Person, Place, Animal, Thing ka naam. Jaise: Salman Khan - Proper Noun, Hero - Common Noun. Example: 'Mumbai me Salman Khan rehta hai' - yahan Mumbai aur Salman Khan dono Noun hain. Samjha kya? Ya momo kha raha hai dhyan nahi de raha 😂";
-            }
-            if(lowerMsg.includes('verb')) {
-                return "Verb matlab 'Kaam' 💪 Jo action ho raha hai. Jaise: khana, peena, sona, padhna. 'Main PUBG khelta hun' - yahan 'khelta hun' verb hai. Tu kya khelta hai? Bata jaldi 😏";
-            }
-            if(lowerMsg.includes('tense')) {
-                return "Tense yaani 'Time' ⏰ 3 types: 1) Present - Abhi: I eat momo 2) Past - Pehle: I ate momo 3) Future - Baad me: I will eat momo. Tu momo kab khayega? 😂 Bata kaunsa tense samjhaun detail me?";
-            }
-            if(lowerMsg.includes('thank')) {
-                return "Arre thanks-wanks rehne de yaar! 😄 Tu seekh gaya na, wahi mere liye party hai 🎉 Aur doubt ho toh bindass puch lena. Main yahin hun!";
-            }
+    // Casual Greetings
+    if(lowerMsg.match(/^(hi|hello|hey|hii|heyy)$/)) {
+        return "Heyyy! Kya haal hai? 😎\nHeyyy! How are you? Main Maya hun - teri English wali dost. Padhai karni hai ya bas timepass? Ask me anything about English!";
+    }
+    if(lowerMsg.includes('kaise ho') || lowerMsg.includes('kya haal') || lowerMsg.includes('how are you')) {
+        return "Main toh ekdum badiya hun yaar! Tu suna? 😄\nI'm doing great yaar! What about you? Padhai ho rahi hai ya phone me hi ghusa hai? 😂 Chal English ka koi doubt hai toh puch!";
+    }
+    if(lowerMsg.includes('kya kar') || lowerMsg.includes('what are you doing')) {
+        return "Bas tere jaise smart students ka wait kar rahi thi 😏\nJust waiting for smart students like you. Tu bata kya kar raha hai? Grammar, Vocab, ya Spoken English practice?";
+    }
 
-            const funnyReplies = [
-                `Haha tu '${msg}' bol raha hai? 😂 Chal chhod ye sab, grammar pe aate hain. Kya doubt hai bata?`,
-                `Oye hoye! '${msg}' 😏 Itna dimag grammar me laga deta toh topper ban jaata! Chal puch kya puchna hai?`,
-                `Samjhi nahi properly par koi na 😄 Tu grammar se related kuch puch le - Noun, Verb, Tense kuch bhi. Main example deke samjha dungi with mazaak!`,
-                `Arre yaar tu toh bada curious hai! 😂 Par main Grammar wali Maya hun, toh grammar ka hi puch. Chal bata Tense aata hai ya main samjhaun?`
-            ];
-            return funnyReplies[Math.floor(Math.random() * funnyReplies.length)];
-        }
+    // Bored / Fun
+    if(lowerMsg.includes('bore') || lowerMsg.includes('boring')) {
+        return "Bore ho raha hai? Chal ek game khelte hain 😂\nGetting bored? Let's play a game. Main ek word bolungi, tu uska opposite bata. Ready? Word: 'Happy'. Bata opposite!";
+    }
+
+    // Grammar Topics - Bilingual
+    if(lowerMsg.includes('noun')) {
+        return "Noun yaani 'Naam' 😎 Person, Place, Animal, Thing ka naam. Jaise: Virat Kohli, Mumbai, Tiger, Mobile.\nNoun means 'Name' - name of person, place, animal or thing. Ex: 'Virat plays in Mumbai' - Virat & Mumbai are nouns. Samjha? Want more examples?";
+    }
+    if(lowerMsg.includes('verb')) {
+        return "Verb matlab 'Kaam/Action' 💪 Jo ho raha hai. Jaise: khana, sona, padhna, khelna.\nVerb means 'Action'. Ex: 'I am eating' - 'eating' is verb. Tu abhi kya kar raha hai? Tell me in English!";
+    }
+    if(lowerMsg.includes('tense')) {
+        return "Tense = Time ⏰ 3 main types: 1) Present - Abhi: I eat 2) Past - Pehle: I ate 3) Future - Baad me: I will eat.\nTense tells time of action. Present = now, Past = before, Future = later. Kaunsa tense detail me chahiye? Present, Past ya Future?";
+    }
+    if(lowerMsg.includes('pronoun')) {
+        return "Pronoun = Noun ka duplicate 😂 He, She, It, They. 'Ram is smart. He studies' - yahan 'He' ne Ram ki jagah le li.\nPronoun replaces noun to avoid repetition. Ex: Instead of 'Ram Ram', we say 'Ram...he'. Clear? Aur example du?";
+    }
+    if(lowerMsg.includes('adjective')) {
+        return "Adjective = Noun ki tareef 🏆 Good boy, Beautiful girl, Tasty food.\nAdjective describes noun. 'Smart boy' - smart is adjective. Ab tu apni tareef kar 3 adjectives se! 😏";
+    }
+    if(lowerMsg.includes('adverb')) {
+        return "Adverb = Verb/Adjective ki tareef 😎 He runs fast, Very beautiful. Mostly 'ly' se end: quickly, slowly.\nAdverb tells how/when/where action happens. 'She sings beautifully' - beautifully is adverb. Got it?";
+    }
+    if(lowerMsg.includes('preposition')) {
+        return "Preposition = Relation banane wala rishtedaar 😂 in, on, at, under. 'Book table pe hai' = Book is on the table.\nPreposition shows relation between words. 'I am in school' - 'in' shows place. Easy na?";
+    }
+    if(lowerMsg.includes('article')) {
+        return "Article = 3 hi hain: A, An, The. 'A' consonant se pehle - a book. 'An' vowel se pehle - an apple. 'The' specific ke liye - the moon.\nArticles are A, An, The. Use 'an' before vowel sound. Ex: an hour (h silent hai). Samjha?";
+    }
+    if(lowerMsg.includes('active') || lowerMsg.includes('passive')) {
+        return "Active: 'Ram ne momo khaya' - Ram ne action kiya 💪 Passive: 'Momo Ram se khaya gaya' - Momo bechara 😂\nActive: Subject does action. Passive: Subject receives action. Formula: Object + is/was + V3 + by + Subject. Try karo: 'Maya ne tujhe samjhaya' ka passive?";
+    }
+    if(lowerMsg.includes('direct') || lowerMsg.includes('indirect')) {
+        return "Direct: He said, 'I am happy'. Indirect: He said that he was happy. Present→Past, I→he.\nDirect = exact words. Indirect = reported words. Rules: am→was, today→that day. Aur example chahiye?";
+    }
+
+    // New Features - Vocabulary
+    if(lowerMsg.includes('vocab') || lowerMsg.includes('word') || lowerMsg.includes('meaning')) {
+        return "Vocab seekhna hai? Great! 😎 Roz 5 new words sikho. Aaj ka word: 'Brilliant' = Bahut smart/tezz. Use: 'You are brilliant!'\nWant to learn vocabulary? Great! Today's word: 'Brilliant' means very smart. Make a sentence with 'Brilliant' and send me!";
+    }
+
+    // Translation
+    if(lowerMsg.includes('translate') || lowerMsg.includes('hindi to english') || lowerMsg.includes('english to hindi')) {
+        return "Translation chahiye? Bhej de sentence! 😄\nNeed translation? Send me the sentence! Example: 'Main school jata hun' = 'I go to school'. Ab tu bhej!";
+    }
+
+    // Sentence Making
+    if(lowerMsg.includes('sentence') || lowerMsg.includes('ban') || lowerMsg.includes('make')) {
+        return "Sentence banana hai? Easy! 😎 Structure: Subject + Verb + Object. Ex: 'Ram eats mango'.\nWant to make sentences? Use: Subject + Verb + Object. Try making one with 'play' and send me!";
+    }
+
+    // Essay / Paragraph
+    if(lowerMsg.includes('essay') || lowerMsg.includes('paragraph') || lowerMsg.includes('write')) {
+        return "Essay likhna hai? Topic bata! 😄 Main points de dungi, tu likh lena.\nWant to write essay? Tell me topic! I'll give you main points. Ex: 'My School' - 1) Name 2) Teachers 3) Friends. Topic kya hai?";
+    }
+
+    // Spoken English
+    if(lowerMsg.includes('spoken') || lowerMsg.includes('speak') || lowerMsg.includes('bolna')) {
+        return "Spoken English practice? Best idea! 😎 Roz 5 sentences bol. Start karo: 'My name is ___'.\nWant to speak English? Practice 5 sentences daily. Start with: 'I am learning English with Maya'. Bol ke dikhao!";
+    }
+
+    // Motivation
+    if(lowerMsg.includes('nahi aata') || lowerMsg.includes('difficult') || lowerMsg.includes('hard') || lowerMsg.includes('mushkil')) {
+        return "Arre mushkil kuch nahi hota yaar! 😎 Tu Reels scroll karna seekh gaya, ye English kya cheez hai? Main hun na!\nNothing is difficult yaar! If you learned to use phone, you can learn English too. I'm here! Bas practice karta reh. Kya samajh nahi aa raha?";
+    }
+    if(lowerMsg.includes('thank') || lowerMsg.includes('thanks')) {
+        return "Arre thanks rehne de yaar! 😄 Tu seekh gaya na, wahi party hai mere liye 🎉\nNo thanks needed yaar! If you learned something, that's my party 🎉 Ask more if you have doubts!";
+    }
+
+    // Love/GF/BF - Friendly boundary
+    if(lowerMsg.includes('love') || lowerMsg.includes('pyar') || lowerMsg.includes('gf') || lowerMsg.includes('bf')) {
+        return "Arre pyar-vyaar chhod 😂 Pehle English se pyar kar le! Exam me top karega tab asli maza aayega.\nForget love for now 😂 First fall in love with English! You'll top in exams then. Chal ab bata 'Love' kaun sa part of speech hai? Noun bhi, Verb bhi!";
+    }
+
+    // Default Smart Reply - Bilingual
+    const defaultReplies = [
+        `Haha tu '${msg}' bol raha hai? 😂 Chal chhod ye sab, English pe aate hain. Kya doubt hai bata?\nHaha you're saying '${msg}'? 😂 Leave that, let's focus on English. What's your doubt?`,
+        `Oye hoye! '${msg}' 😏 Itna dimag English me laga deta toh topper ban jaata! Chal puch kya puchna hai?\nOye hoye! '${msg}' 😏 If you used this much brain in English you'd be topper! Ask me anything about English.`,
+        `Samjhi nahi properly par koi na 😄 Tu Grammar, Vocab, Translation, Spoken kuch bhi puch le. Main example deke samjha dungi!\nDidn't understand properly but no problem 😄 Ask me Grammar, Vocab, Translation or Spoken English. I'll explain with examples!`,
+        `Arre yaar tu toh bada curious hai! 😂 Main English wali Maya hun - Grammar, Words, Sentences, Essay sab me help karungi. Bas topic bata!\nArre yaar you're very curious! 😂 I'm English Maya - I help with Grammar, Words, Sentences, Essays. Just tell me the topic!`
+    ];
+    return defaultReplies[Math.floor(Math.random() * defaultReplies.length)];
+}
 
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
