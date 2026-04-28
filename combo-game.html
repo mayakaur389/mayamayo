@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya Didi - Sun Ke Jodo 🎧🎙️</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; padding: 20px; text-align: center; }
+       .game-box { background: white; padding: 20px; border-radius: 16px; max-width: 400px; margin: auto; }
+        h2 { color: #ff9600; }
+        #speak-btn { background: #1cb0f6; color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 16px; margin: 12px 0; }
+        #mic-btn {
+            background: #ff4b4b; color: white; border: none; width: 80px; height: 80px;
+            border-radius: 50%; font-size: 30px; margin: 16px 0; cursor: pointer;
+        }
+        #mic-btn.listening { animation: pulse 1s infinite; background: #58cc02; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+       .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+       .option { background: #e5e5e5; padding: 16px; border-radius: 12px; cursor: pointer; border: 2px solid transparent; }
+       .option.selected { border: 2px solid #1cb0f6; background: #ddf4ff; }
+       .option.correct { background: #d7ffb8; border: 2px solid #58cc02; }
+       .option.wrong { background: #ffdfe0; border: 2px solid #ff4b4b; }
+        #result { font-size: 16px; margin: 12px; min-height: 40px; }
+        #score { font-size: 20px; font-weight: bold; }
+       .btn-green { background: #58cc02; color: white; border: none; padding: 12px 24px; border-radius: 12px; font-size: 16px; margin-top: 16px; }
+    </style>
+</head>
+<body>
+    <div class="game-box">
+        <h2>🎧🎙️ Sun Ke Jodo</h2>
+        <p>Maya bolegi, tum pehchano + bolo</p>
+        <button id="speak-btn" onclick="speakWord()">🔊 Suno</button>
+        <div id="options" class="options"></div>
+        <button id="mic-btn" onclick="startListening()">🎤</button>
+        <div id="result">Pehle suno, phir option chuno, phir bolo</div>
+        <div id="score">Score: 0/5 | Hearts: 3 ❤️</div>
+        <button class="btn-green" onclick="window.location.href='index.html'">🏠 Wapas Jao</button>
+    </div>
+
+<script>
+    const gameData = [
+        {english: "Hello", hindi: "Namaste", options: ["Namaste", "Alvida", "Dhanyawad", "Kripya"]},
+        {english: "Thank You", hindi: "Dhanyawad", options: ["Maaf Kijiye", "Dhanyawad", "Namaste", "Shubh Ratri"]},
+        {english: "Goodbye", hindi: "Alvida", options: ["Namaste", "Alvida", "Kripya", "Shubh Prabhat"]},
+        {english: "Please", hindi: "Kripya", options: ["Dhanyawad", "Maaf Kijiye", "Kripya", "Alvida"]},
+        {english: "Sorry", hindi: "Maaf Kijiye", options: ["Maaf Kijiye", "Shubh Ratri", "Namaste", "Dhanyawad"]}
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let hearts = 3;
+    let selectedAnswer = null;
+    let hasSpoken = false;
+    let recognition;
+
+    function shuffle(array) {
+        return array.sort(() => Math.random() - 0.5);
+    }
+
+    function loadQuestion() {
+        const q = gameData[currentIndex];
+        document.getElementById('result').innerText = "Step 1: 🔊 Suno button dabao";
+        selectedAnswer = null;
+        hasSpoken = false;
+
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+        shuffle([...q.options]).forEach(opt => {
+            optionsDiv.innerHTML += `<div class="option" onclick="selectOption(this, '${opt}')">${opt}</div>`;
+        });
+        updateScore();
+    }
+
+    function speakWord() {
+        const q = gameData[currentIndex];
+        const utterance = new SpeechSynthesisUtterance(q.english);
+        utterance.lang = 'en-US';
+        speechSynthesis.speak(utterance);
+        document.getElementById('result').innerText = "Step 2: Sahi Hindi option chuno 👇";
+    }
+
+    function selectOption(element, answer) {
+        document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+        element.classList.add('selected');
+        selectedAnswer = answer;
+        document.getElementById('result').innerText = "Step 3: 🎤 Mic daba ke English bolo";
+    }
+
+    function startListening() {
+        if(!selectedAnswer) {
+            alert('Pehle option chuno bhai!');
+            return;
+        }
+        if (!('webkitSpeechRecognition' in window)) {
+            alert('Chrome browser use kar. Mic support nahi hai.');
+            return;
+        }
+
+        recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en-US';
+        recognition.continuous = false;
+
+        const micBtn = document.getElementById('mic-btn');
+        micBtn.classList.add('listening');
+        document.getElementById('result').innerText = "Sun rahi hu... Bolo";
+
+        recognition.onresult = function(event) {
+            let spoken = event.results[0][0].transcript.toLowerCase().trim();
+            let target = gameData[currentIndex].english.toLowerCase();
+            let correctHindi = gameData[currentIndex].hindi;
+            micBtn.classList.remove('listening');
+            hasSpoken = true;
+
+            // Check both: Voice + Option
+            if((spoken === target || spoken.includes(target)) && selectedAnswer === correctHindi) {
+                document.getElementById('result').innerText = `✅ Perfect! Sahi bola + Sahi chuna`;
+                document.querySelector('.option.selected').classList.add('correct');
+                score++;
+                nextQuestion();
+            } else {
+                hearts--;
+                document.getElementById('result').innerText = `❌ Galat. Sahi: ${correctHindi} | Tum bole: "${spoken}"`;
+                if(selectedAnswer!== correctHindi) {
+                    document.querySelector('.option.selected').classList.add('wrong');
+                }
+                if(hearts <= 0) {
+                    setTimeout(() => {
+                        alert('Hearts khatam! 😅 Game Over');
+                        window.location.href='index.html';
+                    }, 1000);
+                } else {
+                    setTimeout(nextQuestion, 2000);
+                }
+            }
+            updateScore();
+        };
+
+        recognition.onerror = function() {
+            micBtn.classList.remove('listening');
+            document.getElementById('result').innerText = "Mic error. Phir se try karo";
+        };
+
+        recognition.start();
+    }
+
+    function nextQuestion() {
+        setTimeout(() => {
+            currentIndex++;
+            if(currentIndex < gameData.length && hearts > 0) {
+                loadQuestion();
+            } else {
+                alert(`Game Khatam! 🎉 Score: ${score}/5 | +${score * 20} XP`);
+                let currentXP = parseInt(localStorage.getItem('maya_xp') || 0);
+                localStorage.setItem('maya_xp', currentXP + (score * 20));
+                window.location.href='index.html';
+            }
+        }, 1500);
+    }
+
+    function updateScore() {
+        document.getElementById('score').innerText = `Score: ${score}/5 | Hearts: ${hearts} ❤️`;
+    }
+
+    loadQuestion();
+</script>
+</body>
+</html>
