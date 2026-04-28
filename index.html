@@ -157,10 +157,14 @@
         <div id="completed-section"></div>
 
         <div id="chat-container">
-            <div id="chat-box"></div>
-            <input type="text" id="chat-input" class="input-box" placeholder="Maya se kuch bhi pucho yaar..." style="margin-top:10px;">
-            <button class="btn-green" onclick="sendChat()" style="float:none;margin-top:8px;">Bhejo</button>
-        </div>
+    <div id="chat-box"></div>
+    <div style="display:flex; gap:8px; margin-top:12px;">
+        <input type="text" id="chat-input" class="input-box" placeholder="Maya se pucho..." style="margin:0; flex:1;">
+        <button id="mic-btn-chat" class="mic-btn" onclick="startMayaListening()">🎙️</button>
+    </div>
+    <button class="btn-green" onclick="sendChat()" style="margin-top:8px; width:100%;">Bhejo</button>
+    <div id="mic-status-chat" style="text-align:center; color:#10B981; font-size:12px; margin-top:8px; display:none;">🎤 Sun raha hun... Bolo</div>
+</div>
     </div>
 
     <script src="lessons.js"></script>
