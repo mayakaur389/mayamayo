@@ -319,13 +319,23 @@
                 }
                 document.getElementById('answer-input').value = '';
             } else {
-                alert('Galat ho gaya yaar 😅 Koi na, fir se try kar!');
-                if(!practiceMode) {
-                    wrongAnswers.push({ lesson: lesson, question: question });
-                    saveProgress(); // <-- YAHAN CHANGE KIYA: Galat answer save karo
-                }
-            }
+    alert('Galat ho gaya yaar 😅 Koi na, fir se try kar!');
+    if(!practiceMode) {
+        wrongAnswers.push({ lesson: lesson, question: question });
+        
+        let hearts = document.getElementById('hearts');
+        let currentHearts = parseInt(hearts.innerText);
+        if(currentHearts > 0) {
+            hearts.innerText = currentHearts - 1;
         }
+        
+        if(currentHearts - 1 <= 0) {
+            showAdPopup();
+        }
+        
+        saveProgress();
+    }
+}
 
         function startPracticeMode() {
             if(wrongAnswers.length === 0) {
@@ -558,7 +568,40 @@
             micStatus.style.display = 'none';
             micBtn.innerText = '🎙️';
         };
-    } 
+        } // startMayaListening ka closing bracket
+
+    function showAdPopup() {
+        let modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'block';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2>😅 Oops! Hearts Khatam</h2>
+                <p>Galat answer se sare heart khatam ho gaye yaar!</p>
+                <p style="margin: 16px 0;">Ad dekho aur 3 heart wapas pao 👇</p>
+                <button class="btn-green" onclick="watchAd()" style="float:none; width:100%; margin:8px 0;">📺 Ad Dekho +3 Hearts</button>
+                <button class="btn-blue" onclick="closeModal()" style="width:100%;">Rehne Do</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    function watchAd() {
+        alert('Ad chal raha hai... 📺');
+        setTimeout(() => {
+            let hearts = document.getElementById('hearts');
+            hearts.innerText = parseInt(hearts.innerText) + 3;
+            saveProgress();
+            closeModal();
+            alert('Maza aa gaya! +3 Hearts mil gaye ❤️❤️❤️');
+        }, 2000);
+    }
+
+    function closeModal() {
+        const modal = document.querySelector('.modal');
+        if(modal) modal.remove();
+    }
+
     </script>
 </body>
 </html>
