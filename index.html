@@ -527,6 +527,38 @@
         document.getElementById('answer-input').placeholder = 'Answer likho yaar';
         if(recognition) recognition.stop();
     }
+           // <-- YAHAN NAYA: Mic Feature for Maya Chat
+    function startMayaListening() {
+        if (!('webkitSpeechRecognition' in window) &&!('SpeechRecognition' in window)) {
+            alert('Browser mic support nahi karta 😅 Chrome use kar');
+            return;
+        }
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = new SpeechRecognition();
+        recognition.lang = 'en-US';
+
+        const micBtn = document.getElementById('mic-btn-chat');
+        const micStatus = document.getElementById('mic-status-chat');
+        const userInput = document.getElementById('chat-input');
+
+        recognition.start();
+        micBtn.classList.add('listening');
+        micBtn.innerText = '⏹️';
+        micStatus.style.display = 'block';
+
+        recognition.onresult = function(event) {
+            userInput.value = event.results[0][0].transcript;
+            micBtn.classList.remove('listening');
+            micStatus.style.display = 'none';
+            micBtn.innerText = '🎙️';
+        };
+
+        recognition.onerror = function() {
+            micBtn.classList.remove('listening');
+            micStatus.style.display = 'none';
+            micBtn.innerText = '🎙️';
+        };
+    } 
     </script>
 </body>
 </html>
