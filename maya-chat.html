@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maya Didi AI Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial; background: #f0f0f0; padding: 10px; }
+        #chat-box { height: 70vh; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background: white; margin-bottom: 10px; }
+     .user { text-align: right; color: blue; margin: 5px; }
+     .maya { text-align: left; color: green; margin: 5px; }
+        #input-box { width: 75%; padding: 10px; }
+        #send-btn { width: 20%; padding: 10px; background: orange; border: none; }
+    </style>
+</head>
+<body>
+    <h2>🤖 Maya Didi se Gupshup</h2>
+    <div id="chat-box">
+        <div class="maya">Namaste! Main Maya Didi. English ka kuch bhi pucho 👩‍🏫</div>
+    </div>
+    <input id="input-box" type="text" placeholder="Yaha type karo...">
+    <button id="send-btn" onclick="askMaya()">Bhejo</button>
+
+    <script>
+        async function askMaya() {
+            const input = document.getElementById('input-box');
+            const chatBox = document.getElementById('chat-box');
+            const question = input.value;
+            if (!question) return;
+
+            chatBox.innerHTML += `<div class="user">You: ${question}</div>`;
+            input.value = '';
+            chatBox.innerHTML += `<div class="maya">Maya Didi soch rahi hai...</div>`;
+
+            const response = await fetch('/api/ask', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question })
+            });
+
+            const data = await response.json();
+            chatBox.lastChild.innerHTML = `Maya Didi: ${data.answer}`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    </script>
+</body>
+</html>
