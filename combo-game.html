@@ -37,26 +37,197 @@
     </div>
 
 <script>
-  const gameData = [
-  {english: "Hello", hindi: "Namaste", options: ["नमस्ते", "अलविदा", "धन्यवाद", "कृपया"]},
-  {english: "Thank You", hindi: "Dhanyawad", options: ["धन्यवाद", "नमस्ते", "अलविदा", "कृपया"]},
-  {english: "Goodbye", hindi: "Alvida", options: ["अलविदा", "नमस्ते", "धन्यवाद", "कृपया"]},
-  {english: "Please", hindi: "Kripya", options: ["कृपया", "धन्यवाद", "नमस्ते", "अलविदा"]},
-  {english: "Sorry", hindi: "Maaf Kijiye", options: ["माफ कीजिए", "शुभ रात्रि", "नमस्ते", "धन्यवाद"]},
-  {english: "Sunday", hindi: "Ravivaar", options: ["रविवार", "सोमवार", "मंगलवार", "बुधवार"]},
-  {english: "Monday", hindi: "Somvaar", options: ["रविवार", "सोमवार", "मंगलवार", "शुक्रवार"]},
-  {english: "Tuesday", hindi: "Mangalvaar", options: ["मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार"]},
-  {english: "Wednesday", hindi: "Budhvaar", options: ["बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"]},
-  {english: "Thursday", hindi: "Guruvaar", options: ["रविवार", "गुरुवार", "शुक्रवार", "सोमवार"]},
-  {english: "Friday", hindi: "Shukravaar", options: ["शुक्रवार", "शनिवार", "रविवार", "मंगलवार"]},
-  {english: "Saturday", hindi: "Shanivaar", options: ["शनिवार", "रविवार", "सोमवार", "गुरुवार"]},
-  {english: "Red", hindi: "Lal", options: ["लाल", "नीला", "हरा", "पीला"]},
-  {english: "Blue", hindi: "Nila", options: ["लाल", "नीला", "हरा", "पीला"]},
-  {english: "Green", hindi: "Hara", options: ["लाल", "नीला", "हरा", "पीला"]},
-  {english: "Yellow", hindi: "Pila", options: ["लाल", "नीला", "हरा", "पीला"]},
-  {english: "Orange", hindi: "Narangi", options: ["नारंगी", "बैंगनी", "गुलाबी", "लाल"]},
-  {english: "Purple", hindi: "Baingani", options: ["नारंगी", "बैंगनी", "गुलाबी", "नीला"]},
-  {english: "Pink", hindi: "Gulaabi", options: ["गुलाबी", "बैंगनी", "नारंगी", "हरा"]}
+ const gameData = [
+  {
+    english: "Hello",
+    hindi: "Namaste",
+    options: [
+      {hindi: "नमस्ते", english: "hello"},
+      {hindi: "अलविदा", english: "goodbye"},
+      {hindi: "धन्यवाद", english: "thank you"},
+      {hindi: "कृपया", english: "please"}
+    ]
+  },
+  {
+    english: "Thank You",
+    hindi: "Dhanyawad",
+    options: [
+      {hindi: "धन्यवाद", english: "thank you"},
+      {hindi: "नमस्ते", english: "hello"},
+      {hindi: "अलविदा", english: "goodbye"},
+      {hindi: "कृपया", english: "please"}
+    ]
+  },
+  {
+    english: "Goodbye",
+    hindi: "Alvida",
+    options: [
+      {hindi: "अलविदा", english: "goodbye"},
+      {hindi: "नमस्ते", english: "hello"},
+      {hindi: "धन्यवाद", english: "thank you"},
+      {hindi: "कृपया", english: "please"}
+    ]
+  },
+  {
+    english: "Please",
+    hindi: "Kripya",
+    options: [
+      {hindi: "कृपया", english: "please"},
+      {hindi: "धन्यवाद", english: "thank you"},
+      {hindi: "नमस्ते", english: "hello"},
+      {hindi: "अलविदा", english: "goodbye"}
+    ]
+  },
+  {
+    english: "Sorry",
+    hindi: "Maaf Kijiye",
+    options: [
+      {hindi: "माफ कीजिए", english: "sorry"},
+      {hindi: "शुभ रात्रि", english: "good night"},
+      {hindi: "नमस्ते", english: "hello"},
+      {hindi: "धन्यवाद", english: "thank you"}
+    ]
+  },
+  {
+    english: "Sunday",
+    hindi: "Ravivaar",
+    options: [
+      {hindi: "रविवार", english: "sunday"},
+      {hindi: "सोमवार", english: "monday"},
+      {hindi: "मंगलवार", english: "tuesday"},
+      {hindi: "बुधवार", english: "wednesday"}
+    ]
+  },
+  {
+    english: "Monday",
+    hindi: "Somvaar",
+    options: [
+      {hindi: "रविवार", english: "sunday"},
+      {hindi: "सोमवार", english: "monday"},
+      {hindi: "मंगलवार", english: "tuesday"},
+      {hindi: "शुक्रवार", english: "friday"}
+    ]
+  },
+  {
+    english: "Tuesday",
+    hindi: "Mangalvaar",
+    options: [
+      {hindi: "मंगलवार", english: "tuesday"},
+      {hindi: "बुधवार", english: "wednesday"},
+      {hindi: "गुरुवार", english: "thursday"},
+      {hindi: "शुक्रवार", english: "friday"}
+    ]
+  },
+  {
+    english: "Wednesday",
+    hindi: "Budhvaar",
+    options: [
+      {hindi: "बुधवार", english: "wednesday"},
+      {hindi: "गुरुवार", english: "thursday"},
+      {hindi: "शुक्रवार", english: "friday"},
+      {hindi: "शनिवार", english: "saturday"}
+    ]
+  },
+  {
+    english: "Thursday",
+    hindi: "Guruvaar",
+    options: [
+      {hindi: "रविवार", english: "sunday"},
+      {hindi: "गुरुवार", english: "thursday"},
+      {hindi: "शुक्रवार", english: "friday"},
+      {hindi: "सोमवार", english: "monday"}
+    ]
+  },
+  {
+    english: "Friday",
+    hindi: "Shukravaar",
+    options: [
+      {hindi: "शुक्रवार", english: "friday"},
+      {hindi: "शनिवार", english: "saturday"},
+      {hindi: "रविवार", english: "sunday"},
+      {hindi: "मंगलवार", english: "tuesday"}
+    ]
+  },
+  {
+    english: "Saturday",
+    hindi: "Shanivaar",
+    options: [
+      {hindi: "शनिवार", english: "saturday"},
+      {hindi: "रविवार", english: "sunday"},
+      {hindi: "सोमवार", english: "monday"},
+      {hindi: "गुरुवार", english: "thursday"}
+    ]
+  },
+  {
+    english: "Red",
+    hindi: "Lal",
+    options: [
+      {hindi: "लाल", english: "red"},
+      {hindi: "नीला", english: "blue"},
+      {hindi: "हरा", english: "green"},
+      {hindi: "पीला", english: "yellow"}
+    ]
+  },
+  {
+    english: "Blue",
+    hindi: "Nila",
+    options: [
+      {hindi: "लाल", english: "red"},
+      {hindi: "नीला", english: "blue"},
+      {hindi: "हरा", english: "green"},
+      {hindi: "पीला", english: "yellow"}
+    ]
+  },
+  {
+    english: "Green",
+    hindi: "Hara",
+    options: [
+      {hindi: "लाल", english: "red"},
+      {hindi: "नीला", english: "blue"},
+      {hindi: "हरा", english: "green"},
+      {hindi: "पीला", english: "yellow"}
+    ]
+  },
+  {
+    english: "Yellow",
+    hindi: "Pila",
+    options: [
+      {hindi: "लाल", english: "red"},
+      {hindi: "नीला", english: "blue"},
+      {hindi: "हरा", english: "green"},
+      {hindi: "पीला", english yeasw"}
+    ]
+  },
+  {
+    english: "Orange",
+    hindi: "Narangi",
+    options: [
+      {hindi: "नारंगी", english: "orange"},
+      {hindi: "बैंगनी", english: "purple"},
+      {hindi: "गुलाबी", english: "pink"},
+      {hindi: "लाल", english: "red"}
+    ]
+  },
+  {
+    english: "Purple",
+    hindi: "Baingani",
+    options: [
+      {hindi: "नारंगी", english: "orange"},
+      {hindi: "बैंगनी", english: "purple"},
+      {hindi: "गुलाबी", english: "pink"},
+      {hindi: "नीला", english: "blue"}
+    ]
+  },
+  {
+    english: "Pink",
+    hindi: "Gulaabi",
+    options: [
+      {hindi: "गुलाबी", english: "pink"},
+      {hindi: "बैंगनी", english: "purple"},
+      {hindi: "नारंगी", english: "orange"},
+      {hindi: "हरा", english: "green"}
+    ]
+  }
 ];
     let currentIndex = 0;
     let score = 0;
