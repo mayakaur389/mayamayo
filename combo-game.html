@@ -123,7 +123,7 @@
  let correctHindi = gameData[currentIndex].hindi.toLowerCase();
 micBtn.classList.remove('listening');
  hasSpoken = true;
- }
+ 
 
             // Check both: Voice + Option
             if((spoken === target || spoken.includes(target)) && selectedAnswer === correctHindi) {
@@ -145,7 +145,7 @@ micBtn.classList.remove('listening');
                 } else {
                     setTimeout(nextQuestion, 2000);
                 }
-            }
+            
             updateScore();
         };
 
