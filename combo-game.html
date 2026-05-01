@@ -37,31 +37,31 @@
     </div>
 
 <script>
-    const gameData = [
-        {english: "Hello", hindi: "Namaste", options: ["Namaste", "Alvida", "Dhanyawad", "Kripya"]},
-        {english: "Thank You", hindi: "Dhanyawad", options: ["Maaf Kijiye", "Dhanyawad", "Namaste", "Shubh Ratri"]},
-        {english: "Goodbye", hindi: "Alvida", options: ["Namaste", "Alvida", "Kripya", "Shubh Prabhat"]},
-        {english: "Please", hindi: "Kripya", options: ["Dhanyawad", "Maaf Kijiye", "Kripya", "Alvida"]},
-        
-{english: "Sorry", hindi: "Maaf Kijiye", options: ["Maaf Kijiye", "Shubh Ratri", "Namaste", "Dhanyawad"]},
+   const gameData = [
+  // Lesson 1: Greetings
+  {english: "Hello", hindi: "Namaste", options: ["नमस्ते", "अलविदा", "धन्यवाद", "कृपया"]},
+  {english: "Thank You", hindi: "Dhanyawad", options: ["धन्यवाद", "नमस्ते", "अलविदा", "कृपया"]},
+  {english: "Goodbye", hindi: "Alvida", options: ["अलविदा", "नमस्ते", "धन्यवाद", "कृपया"]},
+  {english: "Please", hindi: "Kripya", options: ["कृपया", "धन्यवाद", "नमस्ते", "अलविदा"]},
+  {english: "Sorry", hindi: "Maaf Kijiye", options: ["माफ कीजिए", "शुभ रात्रि", "नमस्ते", "धन्यवाद"]},
 
-// Lesson 2: Days
-{english: "Sunday", hindi: "Ravivaar", options: ["Ravivaar", "Somvaar", "Mangalvaar", "Budhvaar"]},
-{english: "Monday", hindi: "Somvaar", options: ["Ravivaar", "Somvaar", "Mangalvaar", "Shukravaar"]},
-{english: "Tuesday", hindi: "Mangalvaar", options: ["Mangalvaar", "Budhvaar", "Guruvaar", "Shukravaar"]},
-{english: "Wednesday", hindi: "Budhvaar", options: ["Budhvaar", "Guruvaar", "Shukravaar", "Shanivaar"]},
-{english: "Thursday", hindi: "Guruvaar", options: ["Ravivaar", "Guruvaar", "Shukravaar", "Somvaar"]},
-{english: "Friday", hindi: "Shukravaar", options: ["Shukravaar", "Shanivaar", "Ravivaar", "Mangalvaar"]},
-{english: "Saturday", hindi: "Shanivaar", options: ["Shanivaar", "Ravivaar", "Somvaar", "Guruvaar"]},
+  // Lesson 2: Days
+  {english: "Sunday", hindi: "Ravivaar", options: ["रविवार", "सोमवार", "मंगलवार", "बुधवार"]},
+  {english: "Monday", hindi: "Somvaar", options: ["रविवार", "सोमवार", "मंगलवार", "शुक्रवार"]},
+  {english: "Tuesday", hindi: "Mangalvaar", options: ["मंगलवार", "बुधवार", "गुरुवार", "शुक्रवार"]},
+  {english: "Wednesday", hindi: "Budhvaar", options: ["बुधवार", "गुरुवार", "शुक्रवार", "शनिवार"]},
+  {english: "Thursday", hindi: "Guruvaar", options: ["रविवार", "गुरुवार", "शुक्रवार", "सोमवार"]},
+  {english: "Friday", hindi: "Shukravaar", options: ["शुक्रवार", "शनिवार", "रविवार", "मंगलवार"]},
+  {english: "Saturday", hindi: "Shanivaar", options: ["शनिवार", "रविवार", "सोमवार", "गुरुवार"]},
 
-// Lesson 3: Colors - 7 colors
-{english: "Red", hindi: "Lal", options: ["Lal", "Nila", "Hara", "Pila"]},
-{english: "Blue", hindi: "Nila", options: ["Lal", "Nila", "Hara", "Pila"]},
-{english: "Green", hindi: "Hara", options: ["Lal", "Nila", "Hara", "Pila"]},
-{english: "Yellow", hindi: "Pila", options: ["Lal", "Nila", "Hara", "Pila"]},
-{english: "Orange", hindi: "Narangi", options: ["Narangi", "Baingani", "Gulaabi", "Lal"]},
-{english: "Purple", hindi: "Baingani", options: ["Narangi", "Baingani", "Gulaabi", "Nila"]},
-{english: "Pink", hindi: "Gulaabi", options: ["Gulaabi", "Baingani", "Narangi", "Hara"]}
+  // Lesson 3: Colors
+  {english: "Red", hindi: "Lal", options: ["लाल", "नीला", "हरा", "पीला"]},
+  {english: "Blue", hindi: "Nila", options: ["लाल", "नीला", "हरा", "पीला"]},
+  {english: "Green", hindi: "Hara", options: ["लाल", "नीला", "हरा", "पीला"]},
+  {english: "Yellow", hindi: "Pila", options: ["लाल", "नीला", "हरा", "पीला"]},
+  {english: "Orange", hindi: "Narangi", options: ["नारंगी", "बैंगनी", "गुलाबी", "लाल"]},
+  {english: "Purple", hindi: "Baingani", options: ["नारंगी", "बैंगनी", "गुलाबी", "नीला"]},
+  {english: "Pink", hindi: "Gulaabi", options: ["गुलाबी", "बैंगनी", "नारंगी", "हरा"]}
 ];
     let currentIndex = 0;
     let score = 0;
