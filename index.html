@@ -365,25 +365,33 @@
     if(chatOpen) container.scrollIntoView({behavior: 'smooth'});
 }
 
-        function sendChat() {
-            const input = document.getElementById('chat-input');
-            const chatBox = document.getElementById('chat-box');
-            const msg = input.value.trim();
+       async function sendChat() {
+    const input = document.getElementById('chat-input');
+    const chatBox = document.getElementById('chat-box');
+    const msg = input.value.trim();
+    if(msg === '') return;
+    
+    chatBox.innerHTML += `<div class="user-msg"><b>Tu:</b> ${msg}</div>`;
+    chatBox.innerHTML += `<div class="bot-msg"><b>Maya:</b> Soch rahi hun... 🤔</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+    input.value = '';
 
-            if(msg === '') return;
-
-            chatBox.innerHTML += `<div class="user-msg"><b>Tu:</b> ${msg}</div>`;
-
-            let reply = getFriendlyMayaReply(msg);
-
-            setTimeout(() => {
-                chatBox.innerHTML += `<div class="bot-msg"><b>Maya:</b> ${reply}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }, 600);
-
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ msg: msg })
+        });
+        
+        const data = await response.json();
+        const reply = data.candidates[0].content.parts[0].text;
+        chatBox.lastElementChild.innerHTML = `<b>Maya:</b> ${reply}`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+        
+    } catch (error) {
+        chatBox.lastElementChild.innerHTML = `<b>Maya:</b> Arre yaar kuch gadbad ho gayi 😅`;
+    }
+}
 
         function getFriendlyMayaReply(msg) {
             const lowerMsg = msg.toLowerCase();
