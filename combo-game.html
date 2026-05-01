@@ -114,19 +114,21 @@
         }
 
         recognition = new webkitSpeechRecognition();
-        recognition.lang = 'en-US';
-        recognition.continuous = false;
+ recognition.lang = 'en-US';
+ recognition.interimResults = false;
+ recognition.maxAlternatives = 1;
 
-        const micBtn = document.getElementById('mic-btn');
-        micBtn.classList.add('listening');
-        document.getElementById('result').innerText = "Sun rahi hu... Bolo";
+ const micBtn = document.getElementById('mic-btn');
+ micBtn.classList.add('listening');
+ document.getElementById('result').innerText = "Sun rahi hu... Bolo";
 
-        recognition.onresult = function(event) {
-            let spoken = event.results[0][0].transcript.toLowerCase().trim();
-            let target = gameData[currentIndex].english.toLowerCase();
-            let correctHindi = gameData[currentIndex].hindi;
-            micBtn.classList.remove('listening');
-            hasSpoken = true;
+ recognition.onresult = function(event) {
+ let spoken = event.results[0][0].transcript.toLowerCase().trim();
+ let target = gameData[currentIndex].english.toLowerCase();
+ let correctHindi = gameData[currentIndex].hindi.toLowerCase();
+micBtn.classList.remove('listening');
+ hasSpoken = true;
+ };
 
             // Check both: Voice + Option
             if((spoken === target || spoken.includes(target)) && selectedAnswer === correctHindi) {
