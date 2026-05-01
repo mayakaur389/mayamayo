@@ -358,16 +358,12 @@
         }
 
         function openChat() {
-            chatOpen =!chatOpen;
-            const container = document.getElementById('chat-container');
-            const chatBox = document.getElementById('chat-box');
-            container.style.display = chatOpen? 'block' : 'none';
-
-            if(chatOpen && chatBox.innerHTML === '') {
-                chatBox.innerHTML = `<div class="bot-msg"><b>Maya:</b> Heyy! Kya haal hai? 😄 Main Maya hun - teri Grammar wali dost! Padhai karni hai ya bas timepass? Kuch bhi puch le grammar ka 🤪</div>`;
-            }
-            if(chatOpen) container.scrollIntoView({behavior: 'smooth'});
-        }
+    chatOpen = !chatOpen;
+    const container = document.getElementById('chat-container');
+    const chatBox = document.getElementById('chat-box');
+    container.style.display = chatOpen ? 'block' : 'none';
+    if(chatOpen) container.scrollIntoView({behavior: 'smooth'});
+}
 
         function sendChat() {
             const input = document.getElementById('chat-input');
