@@ -241,19 +241,37 @@
     }
 
     function loadQuestion() {
-        const q = gameData[currentIndex];
-        document.getElementById('result').innerText = "Step 1: 🔊 Suno button dabao";
-        selectedAnswer = null;
-        hasSpoken = false;
-
-        const optionsDiv = document.getElementById('options');
-        optionsDiv.innerHTML = '';
-        shuffle([...q.options]).forEach(opt => {
-            optionsDiv.innerHTML += `<div class="option" onclick="selectOption(this, '${opt}')">${opt}</div>`;
-        });
-        updateScore();
-    }
-
+  let q = gameData[currentIndex];
+  
+  // Question dikhao
+  document.getElementById('question').innerText = q.english;
+  
+  // Options clear karo
+  let optionsDiv = document.getElementById('options');
+  optionsDiv.innerHTML = '';
+  selectedAnswer = '';
+  
+  // Naye options banao
+  q.options.forEach(opt => {
+    let btn = document.createElement('button');
+    btn.innerText = opt.hindi; // Screen pe Hindi dikhegi
+    btn.dataset.english = opt.english; // Hidden me English save hogi
+    btn.className = 'option';
+    
+    btn.onclick = function() {
+      // Purane selected hatao
+      document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
+      // Naya select karo
+      btn.classList.add('selected');
+      selectedAnswer = opt.english; // Yahi English se match hoga
+    };
+    
+    optionsDiv.appendChild(btn);
+  });
+  
+  // Result clear
+  document.getElementById('result').innerText = '';
+}
     function speakWord() {
         const q = gameData[currentIndex];
         const utterance = new SpeechSynthesisUtterance(q.english);
