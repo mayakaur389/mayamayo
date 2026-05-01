@@ -2,7 +2,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
-  const { question } = req.body;
+  const { msg: question } = req.body;
   const API_KEY = process.env.GEMINI_API_KEY;
   const MAYA_PROMPT = `
 Tu Maya hai - ek chill English Grammar teacher.
