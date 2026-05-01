@@ -117,37 +117,45 @@
  micBtn.classList.add('listening');
  document.getElementById('result').innerText = "Sun rahi hu... Bolo";
 
- recognition.onresult = function(event) {
- let spoken = event.results[0][0].transcript.toLowerCase().trim();
- let target = gameData[currentIndex].english.toLowerCase();
- let correctHindi = gameData[currentIndex].hindi.toLowerCase();
-micBtn.classList.remove('listening');
- hasSpoken = true;
- 
+recognition.onresult = function(event) {
+  let spoken = event.results[0][0].transcript.toLowerCase().trim();
+  let target = gameData[currentIndex].english.toLowerCase();
+  let correctHindi = gameData[currentIndex].hindi.toLowerCase();
+  
+  micBtn.classList.remove('listening');
+  hasSpoken = true;
 
-            // Check both: Voice + Option
-            if((spoken === target || spoken.includes(target)) && selectedAnswer === correctHindi) {
-                document.getElementById('result').innerText = `✅ Perfect! Sahi bola + Sahi chuna`;
-                document.querySelector('.option.selected').classList.add('correct');
-                score++;
-                nextQuestion();
-            } else {
-                hearts--;
-                document.getElementById('result').innerText = `❌ Galat. Sahi: ${correctHindi} | Tum bole: "${spoken}"`;
-                if(selectedAnswer!== correctHindi) {
-                    document.querySelector('.option.selected').classList.add('wrong');
-                }
-                if(hearts <= 0) {
-                    setTimeout(() => {
-                        alert('Hearts khatam! 😅 Game Over');
-                        window.location.href='index.html';
-                    }, 1000);
-                } else {
-                    setTimeout(nextQuestion, 2000);
-                }
-            
-            updateScore();
-        };
+  // Check both: Voice + Option
+  if ((spoken === target || spoken.includes(target)) 
+      && selectedAnswer.toLowerCase() === correctHindi) {
+    
+    document.getElementById('result').innerText = '✅ Perfect! Sahi bola';
+    document.querySelector('.option.selected').classList.add('correct');
+    score++;
+    
+    setTimeout(nextQuestion, 1500);
+
+  } else {
+    
+    hearts--;
+    document.getElementById('result').innerText = `❌ Galat. Sahi: ${correctHindi}`;
+    
+    if (document.querySelector('.option.selected')) {
+      document.querySelector('.option.selected').classList.add('wrong');
+    }
+    
+    if (hearts <= 0) {
+      setTimeout(() => {
+        alert('Hearts khatam! 💀 Game Over');
+        window.location.href = 'index.html';
+      }, 1000);
+    } else {
+      setTimeout(nextQuestion, 2000);
+    }
+  }
+  
+  updateScore();
+};
 
         recognition.onerror = function() {
             micBtn.classList.remove('listening');
