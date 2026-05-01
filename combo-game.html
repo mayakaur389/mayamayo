@@ -127,7 +127,7 @@ recognition.onresult = function(event) {
 
   // Check both: Voice + Option
   if ((spoken === target || spoken.includes(target)) 
-      && selectedAnswer.toLowerCase() === correctHindi) {
+    && selectedAnswer.toLowerCase() === target) {
     
     document.getElementById('result').innerText = '✅ Perfect! Sahi bola';
     document.querySelector('.option.selected').classList.add('correct');
