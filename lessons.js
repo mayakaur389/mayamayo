@@ -47,7 +47,52 @@ const lessons = [
   }
 ];
 // ====== Niche ye code jod do, upar kuch mat hatana ======
-
+{
+  title: "Past Tense",
+  day: 2,
+  questions: [
+    { 
+      q: "I ___ to school yesterday. (go/went)", 
+      answer: "went",
+      hindi: "Main kal school gaya tha"
+    },
+    { 
+      q: "He ___ a movie last night. (watch/watched)", 
+      answer: "watched",
+      hindi: "Usne kal raat film dekhi"
+    },
+    { 
+      q: "They ___ football last Sunday. (play/played)", 
+      answer: "played",
+      hindi: "Woh log pichle Sunday football khele"
+    },
+    { 
+      q: "She ___ her homework yesterday. (do/did)", 
+      answer: "did",
+      hindi: "Usne kal apna homework kiya"
+    },
+    { 
+      q: "We ___ to the market last week. (go/went)", 
+      answer: "went",
+      hindi: "Hum pichle hafte bazaar gaye the"
+    },
+    { 
+      q: "You ___ very fast yesterday. (run/ran)", 
+      answer: "ran",
+      hindi: "Tum kal bahut tez doude"
+    },
+    { 
+      q: "I ___ a letter last month. (write/wrote)", 
+      answer: "wrote",
+      hindi: "Maine pichle mahine ek chitthi likhi"
+    },
+    { 
+      q: "The baby ___ loudly at night. (cry/cried)", 
+      answer: "cried",
+      hindi: "Baccha raat me zor se roya"
+    }
+  ]
+}
 let gameData = [];
 let currentIndex = 0;
 let selectedAnswer = '';
