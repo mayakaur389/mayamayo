@@ -167,7 +167,7 @@ function checkAnswer() {
 
   let correct = gameData[currentIndex].answer;
 
-  if (selectedAnswer === correct) {
+  if (selectedAnswer.trim().toLowerCase() === correct.trim().toLowerCase()) {
     score++;
     document.getElementById('result').innerText = 'Sahi! ✅';
     document.getElementById('result').style.color = 'green';
