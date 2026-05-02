@@ -44,7 +44,7 @@ const lessons = [
       hindi: "Billiyan doodh pasand karti hain"
     }
   ]
-}
+};
 
 // ====== Niche ye code jod do, upar kuch mat hatana ======
 
