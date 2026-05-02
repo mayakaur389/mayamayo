@@ -46,6 +46,7 @@ const lessons = [
     ]
   }
 ];
+const lessons = [
 {
   title: "Past Tense",
   day: 2,
