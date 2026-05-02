@@ -1,5 +1,5 @@
 const lessons = [
-{
+  {
   title: "Present Tense",
   day: 1,
   questions: [
