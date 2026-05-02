@@ -93,6 +93,7 @@ const lessons = [
     }
   ]
 }
+];
 let gameData = [];
 let currentIndex = 0;
 let selectedAnswer = '';
