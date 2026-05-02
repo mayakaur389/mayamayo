@@ -26,6 +26,48 @@ const lessons = [
       { q: "I ___ a letter last month. (write/wrote)", answer: "wrote", hindi: "Maine pichle mahine ek chitthi likhi" },
       { q: "The baby ___ loudly at night. (cry/cried)", answer: "cried", hindi: "Baccha raat me zor se roya" }
     ]
+  },
+  {
+    title: "Future Tense",
+    day: 3,
+    questions: [
+      { q: "I ___ go to Delhi tomorrow. (will/shall)", answer: "will", hindi: "Main kal Delhi jaunga" },
+      { q: "She ___ come next week. (will/shall)", answer: "will", hindi: "Woh agle hafte aayegi" },
+      { q: "They ___ play tomorrow. (will/would)", answer: "will", hindi: "Woh log kal khelenge" },
+      { q: "We ___ meet you soon. (will/would)", answer: "will", hindi: "Hum jald hi tumse milenge" },
+      { q: "He ___ call you later. (will/shall)", answer: "will", hindi: "Woh tumhe baad me call karega" },
+      { q: "You ___ be happy. (will/would)", answer: "will", hindi: "Tum khush rahoge" },
+      { q: "I ___ finish this work. (will/shall)", answer: "will", hindi: "Main ye kaam khatam karunga" },
+      { q: "The train ___ arrive on time. (will/would)", answer: "will", hindi: "Train samay par aayegi" }
+    ]
+  },
+  {
+    title: "Nouns & Pronouns",
+    day: 4,
+    questions: [
+      { q: "___ is my friend. (He/Him)", answer: "He", hindi: "Woh mera dost hai" },
+      { q: "This is ___ book. (my/me)", answer: "my", hindi: "Ye meri kitab hai" },
+      { q: "___ are playing. (They/Them)", answer: "They", hindi: "Woh log khel rahe hain" },
+      { q: "Give it to ___. (I/me)", answer: "me", hindi: "Ye mujhe do" },
+      { q: "___ is a teacher. (She/Her)", answer: "She", hindi: "Woh ek teacher hai" },
+      { q: "I saw ___ yesterday. (he/him)", answer: "him", hindi: "Maine use kal dekha" },
+      { q: "___ house is big. (Our/Us)", answer: "Our", hindi: "Hamara ghar bada hai" },
+      { q: "This pen is ___. (mine/me)", answer: "mine", hindi: "Ye pen mera hai" }
+    ]
+  },
+  {
+    title: "Verbs",
+    day: 5,
+    questions: [
+      { q: "I ___ eating. (am/is)", answer: "am", hindi: "Main kha raha hoon" },
+      { q: "They ___ playing. (are/is)", answer: "are", hindi: "Woh log khel rahe hain" },
+      { q: "She ___ singing. (is/are)", answer: "is", hindi: "Woh ga rahi hai" },
+      { q: "We ___ going to school. (are/is)", answer: "are", hindi: "Hum school ja rahe hain" },
+      { q: "He ___ reading a book. (is/are)", answer: "is", hindi: "Woh kitab padh raha hai" },
+      { q: "You ___ studying now. (are/is)", answer: "are", hindi: "Tum abhi padh rahe ho" },
+      { q: "The dog ___ barking. (is/are)", answer: "is", hindi: "Kutta bhonk raha hai" },
+      { q: "I ___ writing a letter. (am/is)", answer: "am", hindi: "Main chitthi likh raha hoon" }
+    ]
   }
 ];
 // ====== Niche ye code jod do, upar kuch mat hatana ======
