@@ -1,86 +1,50 @@
 const lessons = [
-  {
-    title: "Present Tense",
-    day: 1,
-    questions: [
-      { q: "I _ to school daily. (go/goes)", answer: "go" },
-      { q: "She _ a book. (read/reads)", answer: "reads" },
-      { q: "They _ football. (play/plays)", answer: "play" }
-    ]
-  },
-  {
-    title: "Past Tense",
-    day: 2,
-    questions: [
-      { q: "I _ to school yesterday. (go/went)", answer: "went" },
-      { q: "He _ a movie last night. (watch/watched)", answer: "watched" }
-    ]
-  },
-  {
-    title: "Future Tense",
-    day: 3,
-    questions: [
-      { q: "I _ go to Delhi tomorrow. (will/shall)", answer: "will" },
-      { q: "She _ come next week. (will/shall)", answer: "will" }
-    ]
-  },
-  {
-    title: "Nouns & Pronouns",
-    day: 4,
-    questions: [
-      { q: "_ is my friend. (He/Him)", answer: "He" },
-      { q: "This is _ book. (my/me)", answer: "my" }
-    ]
-  },
-  {
-    title: "Verbs",
-    day: 5,
-    questions: [
-      { q: "I _ eating. (am/is)", answer: "am" },
-      { q: "They _ playing. (are/is)", answer: "are" }
-    ]
-  },
-  {
-    title: "Adjectives",
-    day: 6,
-    questions: [
-      { q: "She is a _ girl. (beautiful/beauty)", answer: "beautiful" },
-      { q: "This is a _ car. (fast/fastly)", answer: "fast" }
-    ]
-  },
-  {
-    title: "Prepositions",
-    day: 7,
-    questions: [
-      { q: "She is _ the park. (in/at)", answer: "in" },
-      { q: "The book is _ the table. (on/in)", answer: "on" }
-    ]
-  },
-  {
-    title: "Articles",
-    day: 8,
-    questions: [
-      { q: "_ sun rises in the east. (A/The)", answer: "The" },
-      { q: "I want _ apple. (a/an)", answer: "an" }
-    ]
-  },
-  {
-    title: "Conjunctions",
-    day: 9,
-    questions: [
-      { q: "I like tea _ coffee. (and/or)", answer: "and" },
-      { q: "He is poor _ happy. (but/and)", answer: "but" }
-    ]
-  },
-  {
-    title: "Question Words",
-    day: 10,
-    questions: [
-      { q: "_ is your name? (What/Where)", answer: "What" },
-      { q: "_ are you going? (Where/When)", answer: "Where" }
-    ]
-  }
-];
+ {
+  title: "Present Tense",
+  day: 1,
+  questions: [
+    { 
+      q: "I ___ to school daily. (go/goes)", 
+      answer: "go",
+      hindi: "Main roz school jata hoon"
+    },
+    { 
+      q: "She ___ a book. (read/reads)", 
+      answer: "reads",
+      hindi: "Woh ek kitab padhti hai"
+    },
+    { 
+      q: "They ___ football. (play/plays)", 
+      answer: "play",
+      hindi: "Woh log football khelte hain"
+    },
+    { 
+      q: "We ___ water every morning. (drink/drinks)", 
+      answer: "drink",
+      hindi: "Hum roz subah paani peete hain"
+    },
+    { 
+      q: "He ___ to music. (listen/listens)", 
+      answer: "listens",
+      hindi: "Woh geet sunta hai"
+    },
+    { 
+      q: "You ___ very well. (sing/sings)", 
+      answer: "sing",
+      hindi: "Tum bahut accha gate ho"
+    },
+    { 
+      q: "The sun ___ in the east. (rise/rises)", 
+      answer: "rises",
+      hindi: "Suraj purab me ugta hai"
+    },
+    { 
+      q: "Cats ___ milk. (like/likes)", 
+      answer: "like",
+      hindi: "Billiyan doodh pasand karti hain"
+    }
+  ]
+};
 // ====== Niche ye code jod do, upar kuch mat hatana ======
 
 let gameData = [];
