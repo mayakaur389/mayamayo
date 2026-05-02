@@ -46,7 +46,6 @@ const lessons = [
     ]
   }
 ];
-// ====== Niche ye code jod do, upar kuch mat hatana ======
 {
   title: "Past Tense",
   day: 2,
@@ -94,6 +93,7 @@ const lessons = [
   ]
 }
 ];
+// ====== Niche ye code jod do, upar kuch mat hatana ======
 let gameData = [];
 let currentIndex = 0;
 let selectedAnswer = '';
