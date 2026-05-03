@@ -175,55 +175,28 @@ function loadQuestion() {
   let q = gameData[currentIndex];
   document.getElementById('question-text').value = q.q;
 
-  let correct = q.answer;
-  let wrong = getWrongOption(correct);
-
-  let optionsArray = [correct, wrong].sort(() => Math.random() - 0.5);
-
-  let optionsDiv = document.getElementById('options');
-  optionsDiv.innerHTML = '';
-  selectedAnswer = '';
-
-  optionsArray.forEach(opt => {
-    let btn = document.createElement('button');
-    btn.innerText = opt;
-    btn.className = 'option';
-
-    btn.onclick = function() {
-      document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      selectedAnswer = opt;
-    };
-
-    optionsDiv.appendChild(btn);
-  });
-
+  renderOptions(q); // Options render karo
   document.getElementById('result').innerText = '';
 }
 
-function getWrongOption(correct) {
-  let pairs = {
-    "go": "goes", "goes": "go",
-    "read": "reads", "reads": "read",
-    "play": "plays", "plays": "play",
-    "went": "go", "go": "went",
-    "watch": "watched", "watched": "watch",
-    "will": "shall", "shall": "will",
-    "He": "Him", "Him": "He",
-    "my": "me", "me": "my",
-    "am": "is", "is": "am",
-    "are": "is", "is": "are",
-    "beautiful": "beauty", "beauty": "beautiful",
-    "fast": "fastly", "fastly": "fast",
-    "in": "at", "at": "in",
-    "on": "in", "in": "on",
-    "The": "A", "A": "The",
-    "an": "a", "a": "an",
-    "and": "or", "or": "and",
-    "but": "and", "and": "but",
-    "What": "Where", "Where": "What"
-  };
-  return pairs[correct] || "option";
+function renderOptions(question) {
+  const optionsDiv = document.getElementById('options');
+  optionsDiv.innerHTML = '';
+  selectedAnswer = '';
+
+  if (question.options && question.options.length > 0) {
+    question.options.forEach(opt => {
+      let btn = document.createElement('button');
+      btn.innerText = opt;
+      btn.className = 'option';
+      btn.onclick = function() {
+        document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedAnswer = opt;
+      };
+      optionsDiv.appendChild(btn);
+    });
+  }
 }
 
 function checkAnswer() {
@@ -233,7 +206,6 @@ function checkAnswer() {
   }
 
   let correct = gameData[currentIndex].answer;
-
   if (selectedAnswer.trim().toLowerCase() === correct.trim().toLowerCase()) {
     score++;
     document.getElementById('result').innerText = 'Sahi! ✅';
@@ -248,3 +220,5 @@ function checkAnswer() {
     loadQuestion();
   }, 1500);
 }
+
+// getWrongOption() function delete kar do, tumhe zarurat nahi ab
