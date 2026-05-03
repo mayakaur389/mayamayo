@@ -3,108 +3,28 @@ const lessons = [
     title: "Present Tense",
     day: 1,
     questions: [
-      { 
-        q: "I ___ to school daily.", 
-        options: ["go", "goes", "going"],
-        answer: "go",
-        hindi: "Main roz school jata hoon"
-      },
-      { 
-        q: "She ___ a book.", 
-        options: ["read", "reads", "reading"],
-        answer: "reads",
-        hindi: "Woh ek kitab padhti hai"
-      },
-      { 
-        q: "They ___ football.", 
-        options: ["play", "plays", "playing"],
-        answer: "play",
-        hindi: "Woh log football khelte hain"
-      },
-      { 
-        q: "We ___ water every morning.", 
-        options: ["drink", "drinks", "drinking"],
-        answer: "drink",
-        hindi: "Hum roz subah paani peete hain"
-      },
-      { 
-        q: "He ___ to music.", 
-        options: ["listen", "listens", "listening"],
-        answer: "listens",
-        hindi: "Woh geet sunta hai"
-      },
-      { 
-        q: "You ___ very well.", 
-        options: ["sing", "sings", "singing"],
-        answer: "sing",
-        hindi: "Tum bahut accha gate ho"
-      },
-      { 
-        q: "The sun ___ in the east.", 
-        options: ["rise", "rises", "rising"],
-        answer: "rises",
-        hindi: "Suraj purab me ugta hai"
-      },
-      { 
-        q: "Cats ___ milk.", 
-        options: ["like", "likes", "liking"],
-        answer: "like",
-        hindi: "Billiyan doodh pasand karti hain"
-      }
+      { q: "I ___ to school daily.", options: ["go", "goes", "going"], answer: "go", hindi: "Main roz school jata hoon" },
+      { q: "She ___ a book.", options: ["read", "reads", "reading"], answer: "reads", hindi: "Woh ek kitab padhti hai" },
+      { q: "They ___ football.", options: ["play", "plays", "playing"], answer: "play", hindi: "Woh log football khelte hain" },
+      { q: "We ___ water every morning.", options: ["drink", "drinks", "drinking"], answer: "drink", hindi: "Hum roz subah paani peete hain" },
+      { q: "He ___ to music.", options: ["listen", "listens", "listening"], answer: "listens", hindi: "Woh geet sunta hai" },
+      { q: "You ___ very well.", options: ["sing", "sings", "singing"], answer: "sing", hindi: "Tum bahut accha gate ho" },
+      { q: "The sun ___ in the east.", options: ["rise", "rises", "rising"], answer: "rises", hindi: "Suraj purab me ugta hai" },
+      { q: "Cats ___ milk.", options: ["like", "likes", "liking"], answer: "like", hindi: "Billiyan doodh pasand karti hain" }
     ]
   },
   {
     title: "Past Tense",
     day: 2,
     questions: [
-      { 
-        q: "I ___ to school yesterday.", 
-        options: ["go", "went", "gone"],
-        answer: "went",
-        hindi: "Main kal school gaya tha"
-      },
-      { 
-        q: "He ___ a movie last night.", 
-        options: ["watch", "watched", "watching"],
-        answer: "watched",
-        hindi: "Usne kal raat film dekhi"
-      },
-      { 
-        q: "They ___ football last Sunday.", 
-        options: ["play", "played", "playing"],
-        answer: "played",
-        hindi: "Woh log pichle Sunday football khele"
-      },
-      { 
-        q: "She ___ her homework yesterday.", 
-        options: ["do", "did", "done"],
-        answer: "did",
-        hindi: "Usne kal apna homework kiya"
-      },
-      { 
-        q: "We ___ to the market last week.", 
-        options: ["go", "went", "gone"],
-        answer: "went",
-        hindi: "Hum pichle hafte bazaar gaye the"
-      },
-      { 
-        q: "You ___ very fast yesterday.", 
-        options: ["run", "ran", "running"],
-        answer: "ran",
-        hindi: "Tum kal bahut tez doude"
-      },
-      { 
-        q: "I ___ a letter last month.", 
-        options: ["write", "wrote", "written"],
-        answer: "wrote",
-        hindi: "Maine pichle mahine ek chitthi likhi"
-      },
-      { 
-        q: "The baby ___ loudly at night.", 
-        options: ["cry", "cried", "crying"],
-        answer: "cried",
-        hindi: "Baccha raat me zor se roya"
-      }
+      { q: "I ___ to school yesterday.", options: ["go", "went", "gone"], answer: "went", hindi: "Main kal school gaya tha" },
+      { q: "He ___ a movie last night.", options: ["watch", "watched", "watching"], answer: "watched", hindi: "Usne kal raat film dekhi" },
+      { q: "They ___ football last Sunday.", options: ["play", "played", "playing"], answer: "played", hindi: "Woh log pichle Sunday football khele" },
+      { q: "She ___ her homework yesterday.", options: ["do", "did", "done"], answer: "did", hindi: "Usne kal apna homework kiya" },
+      { q: "We ___ to the market last week.", options: ["go", "went", "gone"], answer: "went", hindi: "Hum pichle hafte bazaar gaye the" },
+      { q: "You ___ very fast yesterday.", options: ["run", "ran", "running"], answer: "ran", hindi: "Tum kal bahut tez doude" },
+      { q: "I ___ a letter last month.", options: ["write", "wrote", "written"], answer: "wrote", hindi: "Maine pichle mahine ek chitthi likhi" },
+      { q: "The baby ___ loudly at night.", options: ["cry", "cried", "crying"], answer: "cried", hindi: "Baccha raat me zor se roya" }
     ]
   },
   {
@@ -150,7 +70,8 @@ const lessons = [
     ]
   }
 ];
-// ====== Niche ye code jod do, upar kuch mat hatana ======
+
+// ===== Quiz Logic =====
 let gameData = [];
 let currentIndex = 0;
 let selectedAnswer = '';
