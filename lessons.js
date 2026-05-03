@@ -1,4 +1,5 @@
-const lessons = [
+let lessons = [];
+const lessonsData = [
   {
     title: "Present Tense",
     day: 1,
@@ -152,3 +153,5 @@ function checkAnswer() {
     loadQuestion();
   }, 1500);
 }
+
+lessons = lessonsData;
