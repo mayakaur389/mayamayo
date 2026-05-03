@@ -176,8 +176,40 @@ function loadQuestion() {
 
   let q = gameData[currentIndex];
   document.getElementById('question-text').value = q.q;
-  renderOptions(q);
+  renderOptions(q); // Yahi buttons banayega
   document.getElementById('result').innerText = '';
+}
+
+function renderOptions(question) {
+  const optionsDiv = document.getElementById('options');
+  const answerInput = document.getElementById('answer-input');
+  
+  optionsDiv.innerHTML = '';
+  selectedAnswer = '';
+  
+  if (question.options && question.options.length > 0) {
+    if(answerInput) answerInput.style.display = 'none';
+    
+    question.options.forEach(opt => {
+      let btn = document.createElement('button');
+      btn.innerText = opt;
+      btn.className = 'option';
+      btn.style.cssText = 'width:100%;padding:12px;margin:6px 0;border:2px solid #4CAF50;border-radius:8px;background:#fff;font-size:16px;cursor:pointer';
+      
+      btn.onclick = function() {
+        document.querySelectorAll('.option').forEach(b => {
+          b.style.background = '#fff';
+          b.style.color = '#000';
+        });
+        btn.style.background = '#4CAF50';
+        btn.style.color = '#fff';
+        selectedAnswer = opt;
+      };
+      optionsDiv.appendChild(btn);
+    });
+  } else {
+    if(answerInput) answerInput.style.display = 'block';
+  }
 }
 
 function renderOptions(question) {
