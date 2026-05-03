@@ -272,8 +272,9 @@
                 return;
             }
 
-            progressText.innerText = `Lesson ${currentLessonIndex + 1} of ${lessons.length}`;
-container.innerHTML = '';
+            const lesson = lessons[currentLessonIndex];
+            progressText.innerText = Lesson ${lesson.day} of ${lessons.length};
+            container.innerHTML = '';
 
         function startLesson() {
             practiceMode = false;
