@@ -157,7 +157,7 @@ let selectedAnswer = '';
 let score = 0;
 
 function startQuizList() {
-  gameData = lessons[0].questions; // Day 1 load hoga
+  gameData = lessons[0].questions;
   currentIndex = 0;
   score = 0;
   document.getElementById('question-section').style.display = 'block';
@@ -169,33 +169,61 @@ function loadQuestion() {
     document.getElementById('result').innerText = `Quiz khatam! Score: ${score}/${gameData.length}`;
     document.getElementById('question-text').value = '';
     document.getElementById('options').innerHTML = '';
+    document.getElementById('answer-input').style.display = 'block';
+    document.getElementById('mic-btn').style.display = 'block';
     return;
   }
 
   let q = gameData[currentIndex];
   document.getElementById('question-text').value = q.q;
-
-  renderOptions(q); // Options render karo
+  
+  renderOptions(q);
   document.getElementById('result').innerText = '';
 }
 
 function renderOptions(question) {
   const optionsDiv = document.getElementById('options');
+  const answerInput = document.getElementById('answer-input');
+  const micBtn = document.getElementById('mic-btn');
+  
   optionsDiv.innerHTML = '';
   selectedAnswer = '';
-
+  
   if (question.options && question.options.length > 0) {
+    // Sirf input hide karo, mic rehne do 🎙️
+    if(answerInput) answerInput.style.display = 'none';
+    // micBtn ko mat chhedna
+
     question.options.forEach(opt => {
       let btn = document.createElement('button');
       btn.innerText = opt;
       btn.className = 'option';
+      btn.style.width = '100%';
+      btn.style.padding = '12px';
+      btn.style.margin = '6px 0';
+      btn.style.border = '2px solid #4CAF50';
+      btn.style.borderRadius = '8px';
+      btn.style.background = '#fff';
+      btn.style.fontSize = '16px';
+      btn.style.cursor = 'pointer';
+      
       btn.onclick = function() {
-        document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('.option').forEach(b => {
+          b.classList.remove('selected');
+          b.style.background = '#fff';
+          b.style.color = '#000';
+        });
         btn.classList.add('selected');
+        btn.style.background = '#4CAF50';
+        btn.style.color = '#fff';
         selectedAnswer = opt;
       };
       optionsDiv.appendChild(btn);
     });
+  } else {
+    // Normal mode me dono wapas dikhao
+    if(answerInput) answerInput.style.display = 'block';
+    if(micBtn) micBtn.style.display = 'block';
   }
 }
 
@@ -220,5 +248,3 @@ function checkAnswer() {
     loadQuestion();
   }, 1500);
 }
-
-// getWrongOption() function delete kar do, tumhe zarurat nahi ab
