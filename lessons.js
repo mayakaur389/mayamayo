@@ -157,7 +157,7 @@ let selectedAnswer = '';
 let score = 0;
 
 function startQuizList() {
-  gameData = lessons[0].questions; // Day 1 load hoga
+  gameData = lessons[0].questions;
   currentIndex = 0;
   score = 0;
   document.getElementById('question-section').style.display = 'block';
@@ -176,36 +176,26 @@ function loadQuestion() {
 
   let q = gameData[currentIndex];
   document.getElementById('question-text').value = q.q;
-  
-  renderOptions(q); // Yahi line buttons banayegi
+  renderOptions(q);
   document.getElementById('result').innerText = '';
 }
 
 function renderOptions(question) {
   const optionsDiv = document.getElementById('options');
   const answerInput = document.getElementById('answer-input');
-  const micBtn = document.getElementById('mic-btn');
-  
+
   optionsDiv.innerHTML = '';
   selectedAnswer = '';
-  
+
   if (question.options && question.options.length > 0) {
-    // Input hide, mic rehne do
     if(answerInput) answerInput.style.display = 'none';
-    
+
     question.options.forEach(opt => {
       let btn = document.createElement('button');
       btn.innerText = opt;
       btn.className = 'option';
-      btn.style.width = '100%';
-      btn.style.padding = '12px';
-      btn.style.margin = '6px 0';
-      btn.style.border = '2px solid #4CAF50';
-      btn.style.borderRadius = '8px';
-      btn.style.background = '#fff';
-      btn.style.fontSize = '16px';
-      btn.style.cursor = 'pointer';
-      
+      btn.style.cssText = 'width:100%;padding:12px;margin:6px 0;border:2px solid #4CAF50;border-radius:8px;background:#fff;font-size:16px;cursor:pointer';
+
       btn.onclick = function() {
         document.querySelectorAll('.option').forEach(b => {
           b.style.background = '#fff';
@@ -219,7 +209,6 @@ function renderOptions(question) {
     });
   } else {
     if(answerInput) answerInput.style.display = 'block';
-    if(micBtn) micBtn.style.display = 'block';
   }
 }
 
@@ -228,7 +217,6 @@ function checkAnswer() {
     alert('Pehle option select karo');
     return;
   }
-
   let correct = gameData[currentIndex].answer;
   if (selectedAnswer.trim().toLowerCase() === correct.trim().toLowerCase()) {
     score++;
@@ -238,11 +226,8 @@ function checkAnswer() {
     document.getElementById('result').innerText = `Galat! Sahi answer: ${correct}`;
     document.getElementById('result').style.color = 'red';
   }
-
   setTimeout(() => {
     currentIndex++;
     loadQuestion();
   }, 1500);
 }
-
-// Purana getWrongOption() function poora delete kar do
