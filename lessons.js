@@ -157,7 +157,7 @@ let selectedAnswer = '';
 let score = 0;
 
 function startQuizList() {
-  gameData = lessons[0].questions;
+  gameData = lessons[0].questions; // Day 1 load hoga
   currentIndex = 0;
   score = 0;
   document.getElementById('question-section').style.display = 'block';
@@ -177,7 +177,7 @@ function loadQuestion() {
   let q = gameData[currentIndex];
   document.getElementById('question-text').value = q.q;
   
-  renderOptions(q);
+  renderOptions(q); // Yahi line buttons banayegi
   document.getElementById('result').innerText = '';
 }
 
@@ -190,10 +190,9 @@ function renderOptions(question) {
   selectedAnswer = '';
   
   if (question.options && question.options.length > 0) {
-    // Sirf input hide karo, mic rehne do 🎙️
+    // Input hide, mic rehne do
     if(answerInput) answerInput.style.display = 'none';
-    // micBtn ko mat chhedna
-
+    
     question.options.forEach(opt => {
       let btn = document.createElement('button');
       btn.innerText = opt;
@@ -209,11 +208,9 @@ function renderOptions(question) {
       
       btn.onclick = function() {
         document.querySelectorAll('.option').forEach(b => {
-          b.classList.remove('selected');
           b.style.background = '#fff';
           b.style.color = '#000';
         });
-        btn.classList.add('selected');
         btn.style.background = '#4CAF50';
         btn.style.color = '#fff';
         selectedAnswer = opt;
@@ -221,7 +218,6 @@ function renderOptions(question) {
       optionsDiv.appendChild(btn);
     });
   } else {
-    // Normal mode me dono wapas dikhao
     if(answerInput) answerInput.style.display = 'block';
     if(micBtn) micBtn.style.display = 'block';
   }
@@ -248,3 +244,5 @@ function checkAnswer() {
     loadQuestion();
   }, 1500);
 }
+
+// Purana getWrongOption() function poora delete kar do
