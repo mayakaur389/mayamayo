@@ -292,8 +292,8 @@
             const ans = document.getElementById('answer-input').value.trim().toLowerCase();
             if(ans === '') return alert('Arre likh toh sahi pehle 😂');
 
-            const lesson = practiceMode? wrongAnswers[0].lesson : lessons[currentLessonIndex];
-            const question = practiceMode? wrongAnswers[0].question : lesson.questions[currentQuestionIndex];
+            const currentLesson = practiceMode ? wrongAnswers[0].lesson : lessons[currentLessonIndex];
+const question = practiceMode ? wrongAnswers[0].question : currentLesson.questions[currentQuestionIndex];
 
             if(ans === question.answer.toLowerCase()) {
                 alert('Shi baat! Ekdum correct 🔥 +10 XP milega tujhe');
