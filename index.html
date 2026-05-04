@@ -261,21 +261,21 @@
             startLesson();
         }
 
-        function showCurrentLesson() {
-            const container = document.getElementById('lesson-container');
-            const progressText = document.getElementById('progress-text');
+       function showCurrentLesson() {
+  const container = document.getElementById('lesson-container');
+  const progressText = document.getElementById('progress-text');
 
-            if(currentLessonIndex >= lessons.length) {
-                container.innerHTML = `<div class="completed-msg">🎉 Arre waah! Sab Lessons khatam! Tu toh topper nikla re 😎</div>`;
-                document.getElementById('question-section').style.display = 'none';
-                progressText.innerText = '';
-                return;
-            }
+  if(currentLessonIndex >= lessons.length) {
+    container.innerHTML = `<div class="completed-msg">🎉 Arre waah! Sab Lessons khatam! Tu toh topper nikla re 😎</div>`;
+    document.getElementById('question-section').style.display = 'none';
+    progressText.innerText = '';
+    return;
+  }
 
-            const lesson = lessons[currentLessonIndex];
-            document.getElementById('question-text').innerText = currentLesson.questions[currentQuestionIndex].question;
-            container.innerHTML = '';
-        }
+  const currentLesson = lessons[currentLessonIndex]; // 👈 change lesson -> currentLesson
+  document.getElementById('question-text').innerText = currentLesson.questions[currentQuestionIndex].question;
+  container.innerHTML = '';
+}
 
         function startLesson() {
             practiceMode = false;
