@@ -274,7 +274,7 @@
 
   const currentLesson = lessons[currentLessonIndex]; // 👈 change lesson -> currentLesson
   document.getElementById('question-text').innerText = currentLesson.questions[currentQuestionIndex].question;
-  container.innerHTML = '';
+  document.getElementById('question-section').style.display = 'block';
 }
 
         function startLesson() {
