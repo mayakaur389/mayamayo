@@ -261,20 +261,22 @@
             startLesson();
         }
 
-       function showCurrentLesson() {
+      function showCurrentLesson() {
   const container = document.getElementById('lesson-container');
   const progressText = document.getElementById('progress-text');
+  const questionSection = document.getElementById('question-section');
 
   if(currentLessonIndex >= lessons.length) {
     container.innerHTML = `<div class="completed-msg">🎉 Arre waah! Sab Lessons khatam! Tu toh topper nikla re 😎</div>`;
-    document.getElementById('question-section').style.display = 'none';
+    questionSection.style.display = 'none';
     progressText.innerText = '';
     return;
   }
 
-  const currentLesson = lessons[currentLessonIndex]; // 👈 change lesson -> currentLesson
+  const currentLesson = lessons[currentLessonIndex];
   document.getElementById('question-text').innerText = currentLesson.questions[currentQuestionIndex].question;
-  document.getElementById('question-section').style.display = 'block';
+  questionSection.style.display = 'block';
+  progressText.innerText = `Lesson ${currentLesson.day} of ${lessons.length}`;
 }
 
         function startLesson() {
