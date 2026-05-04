@@ -273,7 +273,7 @@
             }
 
             const lesson = lessons[currentLessonIndex];
-            progressText.innerText = Lesson ${lesson.day} of ${lessons.length};
+            document.getElementById('question-text').innerText = currentLesson.questions[currentQuestionIndex].question;
             container.innerHTML = '';
         }
 
