@@ -274,7 +274,7 @@
   }
 
   const currentLesson = lessons[currentLessonIndex];
-  document.getElementById('question-text').innerText = currentLesson.questions[currentQuestionIndex].question;
+ // document.getElementById('question-text').innerText = currentLesson.questions[currentQuestionIndex].question;
   questionSection.style.display = 'block';
   progressText.innerText = `Lesson ${currentLesson.day} of ${lessons.length}`;
 }
@@ -292,7 +292,7 @@
         }
 
         function checkAnswer() {
-            const ans = document.getElementById('answer-input').value.trim().toLowerCase();
+           // const ans = document.getElementById('answer-input').value.trim().toLowerCase();
             if(ans === '') return alert('Arre likh toh sahi pehle 😂');
 
             const currentLesson = practiceMode ? wrongAnswers[0].lesson : lessons[currentLessonIndex];
