@@ -150,37 +150,37 @@
         <div id="lesson-container"></div>
 
         <div id="question-section" style="display:none;">
-            
-    <input type="text" id="question-text" class="input-box" readonly>
-    <div id="options"></div> 
-<div id="result"></div>        
-    <div style="display:flex; gap:8px; margin:8px 0;">
-        <input type="text" id="answer-input" class="input-box" placeholder="Answer likho yaar" style="margin:0; flex:1;">
-        <button id="mic-btn" class="mic-btn" onclick="startQuizListening()" title="Bol ke answer do">🎙️</button>
-    </div>
-    <button class="btn-green" onclick="checkAnswer()">Bhejo</button>
-    <div id="mic-status" style="text-align:center; color:#10B981; font-size:12px; margin-top:8px; display:none;">🎤 Sun raha hun... Bolo</div>
-    <div style="clear:both"></div>
+  <div class="q-header">सही अनुवाद करिए ।</div>
+
+  <div class="q-content">
+    <img src="boy.png" class="q-img" alt="">
+    <button class="audio-btn" onclick="playAudio()">🔊 <span id="hindi-text"></span></button>
+  </div>
+
+  <div id="answer-box" class="answer-box"></div>
+
+  <div id="word-bank" class="word-bank"></div>
+
+  <div id="feedback" class="feedback" style="display:none;"></div>
+
+  <button id="check-btn" class="btn-check" onclick="checkAnswer()">Check</button>
+  <button id="next-btn" class="btn-next" style="display:none;" onclick="nextQuestion()">अगला</button>
+
+  <div class="ref-translation">
+    <small id="english-ref"></small>
+  </div>
 </div>
 
-  
-  <div id="mic-status" style="text-align:center; color:#10B981; font-size:12px; margin-top:8px; display:none;">🎤 Sun raha hun... Bolo</div>
-  <div style="clear:both"></div>
+<div id="completed-section"></div>
+<div id="chat-container">
+  <div id="chat-box"></div>
+  <div style="display:flex; gap:8px; margin-top:12px;">
+    <input type="text" id="chat-input" class="input-box" placeholder="Maya se pucho..." style="margin:0; flex:1;">
+    <button id="mic-btn-chat" class="mic-btn" onclick="startMayaListening()">🎙️</button>
+  </div>
+  <button class="btn-green" onclick="sendChat()" style="margin-top:8px; width:100%;">Bhejo</button>
+  <div id="mic-status-chat" style="text-align:center; color:#10B981; font-size:12px; margin-top:8px; display:none;">🎤 Sun raha hun... Bolo</div>
 </div>
-
-        <div id="completed-section"></div>
-
-        <div id="chat-container">
-    <div id="chat-box"></div>
-    <div style="display:flex; gap:8px; margin-top:12px;">
-        <input type="text" id="chat-input" class="input-box" placeholder="Maya se pucho..." style="margin:0; flex:1;">
-        <button id="mic-btn-chat" class="mic-btn" onclick="startMayaListening()">🎙️</button>
-    </div>
-    <button class="btn-green" onclick="sendChat()" style="margin-top:8px; width:100%;">Bhejo</button>
-    <div id="mic-status-chat" style="text-align:center; color:#10B981; font-size:12px; margin-top:8px; display:none;">🎤 Sun raha hun... Bolo</div>
-</div>
-    </div>
-
     <script src="lessons.js"></script>
     <script>
         // <-- YAHAN CHANGE KIYA: localStorage se data load karo
