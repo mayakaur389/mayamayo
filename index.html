@@ -284,9 +284,9 @@
             currentQuestionIndex = 0;
             const lesson = lessons[currentLessonIndex];
             document.getElementById('question-section').style.display = 'block';
-            document.getElementById('question-text').value = lesson.questions[0].q;
-            document.getElementById('answer-input').value = '';
-            document.getElementById('answer-input').focus();
+            //document.getElementById('question-text').value = lesson.questions[0].q;
+            //document.getElementById('answer-input').value = '';
+            //document.getElementById('answer-input').focus();
             document.getElementById('question-section').scrollIntoView({behavior: 'smooth'});
             loadQuestion(lesson.questions[0]);
         }
