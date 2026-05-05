@@ -57,3 +57,35 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-
     50% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
 }
 /* ===== MIC BUTTON CSS END ===== */
+/* Tap-to-build UI styles */
+.q-header { text-align: center; font-size: 18px; font-weight: 600; margin: 15px 0; color: #e0e0e0; }
+.q-content { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+.q-img { width: 60px; height: 60px; }
+.audio-btn { 
+  border: 1px solid #555; padding: 10px 15px; border-radius: 20px; 
+  background: #1e1e1e; cursor: pointer; font-size: 16px; color: #e0e0e0;
+}
+
+.word-bank, .answer-box { 
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0; min-height: 50px; 
+}
+.word-bank button, .answer-box button {
+  padding: 8px 14px; border: 1px solid #555; border-radius: 8px; 
+  background: #333; font-size: 15px; cursor: pointer; color: #e0e0e0;
+}
+.answer-box { border: 2px dashed #555; padding: 10px; border-radius: 10px; }
+
+.feedback { 
+  padding: 12px; border-radius: 10px; margin: 15px 0; font-size: 16px; 
+}
+.feedback.correct { background: #10B981; color: white; }
+.feedback.wrong { background: #EF4444; color: white; }
+
+.btn-check, .btn-next {
+  width: 100%; padding: 14px; border: none; border-radius: 10px; 
+  font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px;
+}
+.btn-check { background: #3b82f6; color: white; }
+.btn-next { background: #22c55e; color: white; }
+
+.ref-translation { margin-top: 15px; text-align: center; color: #999; }
