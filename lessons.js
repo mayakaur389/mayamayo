@@ -288,31 +288,29 @@ function startQuizList() {
 let selectedWords = [];
 
 function loadQuestion(qData) {
-  // Safety check
   if (!qData) return;
 
-  // Hindi sentence aur English reference set karo
-  document.getElementById('hindi-text').innerText = qData.hindi || "";
-  document.getElementById('english-ref').innerText = qData.english || "";
-
-  // English words ko shuffle karke word bank banao
-  let words = (qData.english || "")
-    .split(" ")
-    .filter(w => w.trim() !== "")
-    .sort(() => Math.random() - 0.5);
-
-  document.getElementById('word-bank').innerHTML = words
-    .map(w => `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`)
-    .join('');
-
-  // Answer box aur feedback reset karo
-  document.getElementById('answer-box').innerHTML = '';
+  // Hindi aur English set karo
+  document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
+  document.getElementById('english-ref').innerText = qData.english || qData.q || "";
+  
+  // Words/options nikal ke shuffle karo
+  let words = qData.words || qData.options || [];
+  words = words.sort(() => Math.random() - 0.5);
+  
+  // Word bank banao
+  const wordBank = document.getElementById('word-bank');
+  wordBank.innerHTML = words
+   .map(w => `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`)
+   .join('');
+  
+  // Answer box aur buttons reset karo
+  document.getElementById('answer-box').innerText = '';
   selectedWords = [];
   document.getElementById('feedback').style.display = 'none';
   document.getElementById('check-btn').style.display = 'inline-block';
   document.getElementById('next-btn').style.display = 'none';
 }
-
 function addWord(word, btn) {
   selectedWords.push(word);
   document.getElementById('answer-box').innerHTML += `<button>${word}</button>`;
