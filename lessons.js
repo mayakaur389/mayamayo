@@ -390,4 +390,12 @@ function checkAnswer() {
     feedback.className = "feedback wrong";
     feedback.style.display = 'block';
   }
+});
+}
+function playAudio() {
+  const text = document.getElementById('hindi-text').innerText;
+  if (!text) return;
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'hi-IN';
+  speechSynthesis.speak(utterance);
 }
