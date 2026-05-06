@@ -372,11 +372,14 @@ function renderOptions(question) {
 }
 
 function checkAnswer() {
-  const correctAnswer = currentQ.answer || currentQ.english;
-  const userAnswer = selectedWords.join(' ').trim();
+  if (!currentQ) return;
+  const correctAnswer = (currentQ.answer || currentQ.english || '').trim().toLowerCase();
+  const userAnswer = selectedWords.join(' ').trim().toLowerCase();
   const feedback = document.getElementById('feedback');
+  
+  if (!feedback) return;
 
-  if (userAnswer === correctAnswer.trim()) {
+  if (userAnswer === correctAnswer) {
     feedback.innerText = "Sahi jawab! 🎉";
     feedback.className = "feedback correct";
     feedback.style.display = 'block';
