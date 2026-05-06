@@ -201,28 +201,36 @@
             localStorage.setItem('hearts', document.getElementById('hearts').innerText);
         }
 
-        window.onload = function() {
-            if(typeof lessons === 'undefined') {
-                alert('Error: lessons.js load nahi hua');
-                return;
-            }
+      window.onload = function() {
+  if(typeof lessons === 'undefined') {
+    alert('Error: lessons.js load nahi hua');
+    return;
+  }
 
-            // <-- YAHAN CHANGE KIYA: Saved XP, Streak, Hearts load karo
-            document.getElementById('xp').innerText = localStorage.getItem('xp') || '260';
-            document.getElementById('streak').innerText = localStorage.getItem('streak') || '11';
-            document.getElementById('hearts').innerText = localStorage.getItem('hearts') || '1';
+  // XP, Streak, Hearts load karo
+  document.getElementById('xp').innerText = localStorage.getItem('xp') || '260';
+  document.getElementById('streak').innerText = localStorage.getItem('streak') || '11';
+  document.getElementById('hearts').innerText = localStorage.getItem('hearts') || '1';
 
-            renderDayGrid();
-            showCurrentLesson();
+  renderDayGrid();
+  showCurrentLesson();
 
-            document.getElementById('chat-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') sendChat();
-            });
-            document.getElementById('answer-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') checkAnswer();
-            });
-        }
+  // Safely add event listeners
+  const chatInput = document.getElementById('chat-input');
+  if (chatInput) {
+    chatInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') sendChat();
+    });
+  }
 
+  // answer-input comment kar do, naya UI me nahi hai
+  // const answerInput = document.getElementById('answer-input');
+  // if (answerInput) {
+  //   answerInput.addEventListener('keypress', function(e) {
+  //     if (e.key === 'Enter') checkAnswer();
+  //   });
+  // }
+} 
         function renderDayGrid() {
             const grid = document.getElementById('day-grid');
             grid.innerHTML = '';
