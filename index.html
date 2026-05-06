@@ -274,9 +274,23 @@
   }
 
   const currentLesson = lessons[currentLessonIndex];
-  document.getElementById('question-text').innerText = currentLesson.questions[currentQuestionIndex].question;
+  const currentQ = currentLesson.questions[currentQuestionIndex];
+
+  const hindiEl = document.getElementById('hindi-text');
+  const engEl = document.getElementById('english-ref');
+
+  if (!hindiEl || !questionSection) {
+    console.error("hindi-text or question-section missing");
+    return;
+  }
+
+  hindiEl.innerText = currentQ.hindi || "";
+  if (engEl) engEl.innerText = currentQ.english || "";
+
   questionSection.style.display = 'block';
-  progressText.innerText = `Lesson ${currentLesson.day} of ${lessons.length}`;
+  progressText.innerText = `Lesson ${currentLesson.day} of ${lessons.length} | Q ${currentQuestionIndex+1}/${currentLesson.questions.length}`;
+
+  loadQuestion(currentQ);
 }
 
         function startLesson() {
