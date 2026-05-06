@@ -290,11 +290,13 @@ let selectedWords = [];
 function loadQuestion(qData) {
   if (!qData) return;
 
-  // Hindi aur English set karo
+  // Hindi text
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
+  
+  // English question upar Hindi ke niche dikhane ke liye
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
   
-  // Words/options nikal ke shuffle karo - options ko words ki tarah use karega
+  // Options shuffle karo
   let words = qData.words || qData.options || [];
   words = words.sort(() => Math.random() - 0.5);
   
@@ -304,9 +306,11 @@ function loadQuestion(qData) {
    .map(w => `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`)
    .join('');
   
-  // Answer box aur buttons reset karo
-  document.getElementById('answer-box').innerText = '';
+  // Answer box empty
+  document.getElementById('answer-box').innerHTML = '';
   selectedWords = [];
+  
+  // Reset
   document.getElementById('feedback').style.display = 'none';
   document.getElementById('check-btn').style.display = 'inline-block';
   document.getElementById('next-btn').style.display = 'none';
