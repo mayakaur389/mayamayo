@@ -315,10 +315,34 @@ function loadQuestion(qData) {
   document.getElementById('check-btn').style.display = 'inline-block';
   document.getElementById('next-btn').style.display = 'none';
 }
+let selectedWords = [];
+
 function addWord(word, btn) {
   selectedWords.push(word);
-  document.getElementById('answer-box').innerHTML += `<button>${word}</button>`;
+  updateAnswerBox();
+  
+  // Button ko hide karo word-bank se
   btn.style.display = 'none';
+}
+
+function removeWord(word, index, btn) {
+  selectedWords.splice(index, 1);
+  updateAnswerBox();
+  
+  // Wapas word-bank me show karo
+  const wordBankBtns = document.querySelectorAll('#word-bank button');
+  wordBankBtns.forEach(b => {
+    if (b.innerText === word && b.style.display === 'none') {
+      b.style.display = 'inline-block';
+    }
+  });
+}
+
+function updateAnswerBox() {
+  const answerBox = document.getElementById('answer-box');
+  answerBox.innerHTML = selectedWords
+    .map((w, i) => `<button class="word-btn" onclick="removeWord('${w}', ${i}, this)">${w}</button>`)
+    .join(' ');
 }
 function renderOptions(question) {
   const optionsDiv = document.getElementById('options');
