@@ -143,19 +143,23 @@
     </div>
 
     <div class="card">
-        <h2>Maya ke Saath Grammar + Quiz 📚</h2>
-        <p>Day-wise seekho, Maya se gupshup karo, Practice karo</p>
-
-        <div id="progress-text"></div>
-        <div id="lesson-container"></div>
-
-        <div id="question-section" style="display:none;">
-  <div class="q-header">सही अनुवाद करिए ।</div>
-
-  <div class="q-content">
-    <!-- image hata do agar nahi hai -->
-    <button class="audio-btn" onclick="playAudio()">🔊 <span id="hindi-text"></span></button>
+  <h2>Maya ke Saath Grammar + Quiz 📚</h2>
+  <p>Day-wise seekho, Maya se gupshup karo, Practice karo</p>
+  <div id="progress-text"></div>
+  <div id="lesson-container"></div>
+  <div id="question-section" style="display:none;">
+    <div class="q-header">सही अनुवाद करिए ।</div>
+    <div class="q-content">
+      <button class="audio-btn" onclick="playAudio()">🔊 <span id="hindi-text"></span></button>
+      <div id="english-ref" class="ref-translation"></div>
+    </div>
+    <div id="answer-box" class="answer-box"></div>
+    <div id="word-bank" class="word-bank"></div>
+    <button id="check-btn" class="btn-check" onclick="checkAnswer()">Check</button>
+    <button id="next-btn" class="btn-next" style="display:none;">Next</button>
+    <div id="feedback" class="feedback" style="display:none;"></div>
   </div>
+</div>
 
   <div id="answer-box" class="answer-box"></div>
 
