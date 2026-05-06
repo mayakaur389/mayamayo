@@ -294,7 +294,7 @@ function loadQuestion(qData) {
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
   
-  // Words/options nikal ke shuffle karo
+  // Words/options nikal ke shuffle karo - options ko words ki tarah use karega
   let words = qData.words || qData.options || [];
   words = words.sort(() => Math.random() - 0.5);
   
