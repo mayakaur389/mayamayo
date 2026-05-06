@@ -315,7 +315,6 @@ function loadQuestion(qData) {
   document.getElementById('check-btn').style.display = 'inline-block';
   document.getElementById('next-btn').style.display = 'none';
 }
-let selectedWords = [];
 
 function addWord(word, btn) {
   selectedWords.push(word);
