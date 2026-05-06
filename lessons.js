@@ -372,21 +372,19 @@ function renderOptions(question) {
 }
 
 function checkAnswer() {
-  if (!selectedAnswer) {
-    alert('Pehle option select karo');
-    return;
-  }
-  let correct = gameData[currentIndex].answer;
-  if (selectedAnswer.trim().toLowerCase() === correct.trim().toLowerCase()) {
-    score++;
-    document.getElementById('result').innerText = 'Sahi! ✅';
-    document.getElementById('result').style.color = 'green';
+  const correctAnswer = currentQ.answer || currentQ.english;
+  const userAnswer = selectedWords.join(' ').trim();
+  const feedback = document.getElementById('feedback');
+
+  if (userAnswer === correctAnswer.trim()) {
+    feedback.innerText = "Sahi jawab! 🎉";
+    feedback.className = "feedback correct";
+    feedback.style.display = 'block';
+    document.getElementById('check-btn').style.display = 'none';
+    document.getElementById('next-btn').style.display = 'inline-block';
   } else {
-    document.getElementById('result').innerText = `Galat! Sahi answer: ${correct}`;
-    document.getElementById('result').style.color = 'red';
+    feedback.innerText = "Galat hai, dobara try karo";
+    feedback.className = "feedback wrong";
+    feedback.style.display = 'block';
   }
-  setTimeout(() => {
-    currentIndex++;
-    loadQuestion();
-  }, 1500);
 }
