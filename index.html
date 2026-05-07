@@ -375,19 +375,19 @@ const question = practiceMode ? wrongAnswers[0].question : currentLesson.questio
     }
 }
         }        
-        function startPracticeMode() {
-            if(wrongAnswers.length === 0) {
-                alert('Abhi tak ek bhi galti nahi? Kya baat hai! Pehle lesson kar le phir aana 😎');
-                return;
-            }
-            practiceMode = true;
-            document.getElementById('question-section').style.display = 'block';
-            document.getElementById('question-text').value = wrongAnswers[0].question.q;
-            document.getElementById('answer-input').value = '';
-            document.getElementById('answer-input').focus();
-            document.getElementById('progress-text').innerText = `Practice Mode: ${wrongAnswers.length} Questions bache hain`;
-            document.getElementById('question-section').scrollIntoView({behavior: 'smooth'});
-        }
+       function startPractice() {
+  if(wrongAnswers.length === 0) {
+    alert('Abhi tak ek bhi galti nahi? Kya baat hai! Pehle lesson kar le phir aana 😎');
+    return;
+  }
+  practiceMode = true;
+  document.getElementById('question-section').style.display = 'block';
+  document.getElementById('question-text').value = wrongAnswers[0].question.q;
+  document.getElementById('answer-input').value = '';
+  document.getElementById('answer-input').focus();
+  document.getElementById('progress-text').innerText = `Practice Mode: ${wrongAnswers.length} Questions bache hain`;
+  document.getElementById('question-section').scrollIntoView({behavior: 'smooth'});
+}
 
         function openChat() {
     chatOpen = !chatOpen;
