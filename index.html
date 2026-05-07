@@ -645,7 +645,40 @@ const question = practiceMode ? wrongAnswers[0].question : currentLesson.questio
     </script>
     <script src="lessons.js"></script>
 <script>
+    let currentLessonIndex = 0;
+let currentQuestionIndex = 0;
+function displayQuestion() {
+  const lesson = lessons[currentLessonIndex];
+  const questionObj = lesson.questions[currentQuestionIndex];
+
+  // English question dikhana
+  document.getElementById('question').innerText = questionObj.q;
+
+  // Hindi translation dikhana
+  document.getElementById('hindi-text').innerText = questionObj.hindi;
+
+  // Options banana
+  const optionsDiv = document.getElementById('options');
+  if(optionsDiv){
+    optionsDiv.innerHTML = '';
+    questionObj.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerText = opt;
+      btn.onclick = () => checkAnswer(opt, questionObj.answer);
+      optionsDiv.appendChild(btn);
+    });
+  }
+}
   startQuizList();
+      }
+}
+
+// Page load pe question dikhana
+document.addEventListener('DOMContentLoaded', displayQuestion);
+</script>
+</body>
+</html>
     </script>
 </body>
 </html>
