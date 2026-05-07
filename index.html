@@ -168,7 +168,7 @@
   <div id="feedback" class="feedback" style="display:none;"></div>
 
   <button id="next-btn" class="btn-next" style="display:none;" onclick="nextQuestion()">अगला</button>
-
+ <button class="btn-next"onclick="nextQuestion()">Next</button>
   <div class="ref-translation">
     <small id="english-ref"></small>
   </div>
@@ -184,7 +184,6 @@
   <button class="btn-green" onclick="sendChat()" style="margin-top:8px; width:100%;">Bhejo</button>
   <div id="mic-status-chat" style="text-align:center; color:#10B981; font-size:12px; margin-top:8px; display:none;">🎤 Sun raha hun... Bolo</div>
 </div>
-    <button class="btn-next"onclick="nextQuestion()">Next</button>
     <script>
         // <-- YAHAN CHANGE KIYA: localStorage se data load karo
         let currentLessonIndex = parseInt(localStorage.getItem('currentLessonIndex')) || 0;
