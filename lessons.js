@@ -107,6 +107,30 @@ function playAudio() {
   if (!text) return;
   speechSynthesis.speak(new SpeechSynthesisUtterance(text));
 }
+function displayQuestion() {
+  const lesson = lessons[currentLessonIndex];
+  const questionObj = lesson.questions[currentQuestionIndex];
 
+  // English question dikhana
+  document.getElementById('question').innerText = questionObj.q;
+
+  // Hindi translation dikhana
+  document.getElementById('hindi-text').innerText = questionObj.hindi;
+
+  // Options banana
+  const optionsDiv = document.getElementById('options');
+  if(optionsDiv){
+    optionsDiv.innerHTML = '';
+    questionObj.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'option-btn';
+      btn.innerText = opt;
+      btn.onclick = () => checkAnswer(opt, questionObj.answer);
+      optionsDiv.appendChild(btn);
+    });
+  }
+}
 // Auto start
-document.addEventListener('DOMContentLoaded', startQuizList);
+document.addEventListener('DOMContentLoaded', () => {
+  displayQuestion();
+});
