@@ -134,3 +134,16 @@ function displayQuestion() {
 document.addEventListener('DOMContentLoaded', () => {
   displayQuestion();
 });
+function nextQuestion() {
+  console.log("Next clicked");
+  
+  // Check karo ki saare questions khatam toh nahi hue
+  if (currentQuestionIndex < questions.length - 1) {
+    currentQuestionIndex++;
+    displayQuestion();
+  } else {
+    // Last question tha, result dikhado
+    alert("Lesson khatam!");
+    // Agar result page banana hai toh yahan call karo: showResult();
+  }
+}
