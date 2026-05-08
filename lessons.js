@@ -108,33 +108,30 @@ function playAudio() {
 }
 function displayQuestion() {
   const lesson = lessons[currentLessonIndex];
-  const questionObj = lesson.questions[currentQuestionIndex];
+  currentQ = lesson.questions[currentQuestionIndex]; // currentQ update karo
 
-  document.getElementById('question').innerText = questionObj.q;
-  document.getElementById('hindi-text').innerText = questionObj.hindi;
+  console.log("displayQuestion called for Q:", currentQuestionIndex, currentQ);
+
+  document.getElementById('question').innerText = currentQ.q;
+  document.getElementById('hindi-text').innerText = currentQ.hindi;
 
   const optionsDiv = document.getElementById('options');
-  if(optionsDiv){
-    optionsDiv.innerHTML = '';
-    questionObj.options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'option-btn';
-      btn.innerText = opt;
-      btn.onclick = () => checkAnswer(opt, questionObj.answer);
-      optionsDiv.appendChild(btn);
-    });
-  }
+  optionsDiv.innerHTML = '';
+  selectedWords = []; // purane selection clear karo
 
-  // 🔑 Ye 3 lines add karo
+  currentQ.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerText = opt;
+    btn.onclick = () => checkAnswer(opt, currentQ.answer);
+    optionsDiv.appendChild(btn);
+  });
+
   document.getElementById('check-btn').style.display = 'block';
   document.getElementById('next-btn').style.display = 'none';
   document.getElementById('feedback').style.display = 'none';
 }
 
-// Auto start remove karo, lesson select karne pe chalega
-// document.addEventListener('DOMContentLoaded', () => {
-//   displayQuestion();
-// });
 function nextQuestion() {
   if (!lessons ||!lessons[currentLessonIndex] ||!lessons[currentLessonIndex].questions) {
     alert("Pehle lesson select karo guru!");
@@ -142,9 +139,8 @@ function nextQuestion() {
   }
 
   if (currentQuestionIndex < lessons[currentLessonIndex].questions.length - 1) {
-    currentQuestionIndex++; // Index badhao
-    console.log("Now Q:", currentQuestionIndex, lessons[currentLessonIndex].questions[currentQuestionIndex]);
-    displayQuestion(); // Fir display call karo
+    currentQuestionIndex++;
+    displayQuestion();
   } else {
     alert("Lesson khatam!");
     showResult();
