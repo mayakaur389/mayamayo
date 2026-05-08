@@ -81,25 +81,33 @@ function updateAnswerBox() {
 }
 
 // Check answer
-function checkAnswer() {
-  if (!currentQ) return;
-  const correctAnswer = currentQ.answer.trim().toLowerCase();
-  const userAnswer = selectedWords.join(' ').trim().toLowerCase();
+function checkAnswer(selectedOpt, correctAnswer) {
   const feedback = document.getElementById('feedback');
-
-  if (userAnswer === correctAnswer) {
+  
+  if (selectedOpt.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
     feedback.innerText = "Sahi jawab! 🎉";
     feedback.className = "feedback correct";
-    feedback.style.display = 'block';
-    document.getElementById('check-btn').style.display = 'none';
-    document.getElementById('next-btn').style.display = 'inline-block';
   } else {
-    feedback.innerText = "Galat hai, dobara try karo";
+    feedback.innerText = "Galat hai! Sahi: " + correctAnswer;
     feedback.className = "feedback wrong";
-    feedback.style.display = 'block';
   }
+  
+  feedback.style.display = 'block';
+  document.getElementById('check-btn').style.display = 'none';
+  document.getElementById('next-btn').style.display = 'inline-block';
+  
+  // Options disable kar do taaki dubara na click ho
+  document.querySelectorAll('.option-btn').forEach(btn => {
+    btn.disabled = true;
+    if (btn.innerText.toLowerCase() === correctAnswer.toLowerCase()) {
+      btn.style.background = '#4caf50';
+      btn.style.color = 'white';
+    } else if (btn.innerText === selectedOpt && selectedOpt !== correctAnswer) {
+      btn.style.background = '#f44336';
+      btn.style.color = 'white';
+    }
+  });
 }
-
 // Play audio
 function playAudio() {
   const text = document.getElementById('hindi-text').innerText;
