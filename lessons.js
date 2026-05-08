@@ -25,6 +25,7 @@ function startQuizList() {
       currentLessonIndex = index;
       currentQuestionIndex = 0;
       loadQuestion(lesson.questions[0]);
+      document.getElementById('question-section').style.display = 'block';
     };
     container.appendChild(btn);
   });
@@ -70,7 +71,6 @@ function loadQuestion(qData) {
   const wordBank = document.getElementById('word-bank');
   const answerBox = document.getElementById('answer-box');
   document.getElementById('feedback').style.display = 'none';
-
   wordBank.innerHTML = '';
   answerBox.innerHTML = '';
   selectedWords = [];
@@ -140,3 +140,6 @@ function playAudio() {
   if (!text) return;
   speechSynthesis.speak(new SpeechSynthesisUtterance(text));
 }
+
+// Page load hote hi quiz list show karo
+startQuizList();
