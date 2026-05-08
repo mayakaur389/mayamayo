@@ -136,14 +136,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 function nextQuestion() {
   console.log("Next clicked");
-  
-  // Check karo ki saare questions khatam toh nahi hue
+  console.log("Questions:", questions); // Debug ke liye
+
+  if (!questions || questions.length === 0) {
+    alert("Pehle lesson select karo guru!");
+    return;
+  }
+
   if (currentQuestionIndex < questions.length - 1) {
     currentQuestionIndex++;
     displayQuestion();
   } else {
-    // Last question tha, result dikhado
     alert("Lesson khatam!");
-    // Agar result page banana hai toh yahan call karo: showResult();
+    showResult();
   }
 }
