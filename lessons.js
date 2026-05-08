@@ -1,4 +1,4 @@
-<script>
+
 const lessons = [
  { title: "Present Tense", day: 1, questions: [
    { q: "I ___ to school daily.", options: ["go", "goes", "going"], answer: "go", hindi: "Main roz school jata hoon" },
@@ -187,4 +187,4 @@ function startQuizList() {
 
 // Page load hote hi quiz list show karo
 document.addEventListener('DOMContentLoaded', startQuizList);
-</script>
+
