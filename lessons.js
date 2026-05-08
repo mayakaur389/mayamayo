@@ -134,6 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
   displayQuestion();
 });
 function nextQuestion() {
+  if (!lessons || !lessons[currentLessonIndex] || !lessons[currentLessonIndex].questions) {
+    alert("Pehle lesson select karo guru!");
+    return;
+  }
+
   if (currentQuestionIndex < lessons[currentLessonIndex].questions.length - 1) {
     currentQuestionIndex++;
     displayQuestion();
