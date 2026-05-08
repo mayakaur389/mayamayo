@@ -80,34 +80,35 @@ function updateAnswerBox() {
   });
 }
 
-// Check answer
-function checkAnswer(selectedOpt, correctAnswer) {
+function checkAnswer(userAnswer, correctAnswer) {
   const feedback = document.getElementById('feedback');
-  
-  if (selectedOpt.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
+
+  if (userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
     feedback.innerText = "Sahi jawab! 🎉";
     feedback.className = "feedback correct";
   } else {
     feedback.innerText = "Galat hai! Sahi: " + correctAnswer;
     feedback.className = "feedback wrong";
   }
-  
+
   feedback.style.display = 'block';
   document.getElementById('check-btn').style.display = 'none';
   document.getElementById('next-btn').style.display = 'inline-block';
-  
-  // Options disable kar do taaki dubara na click ho
+
+  // Options disable karo
   document.querySelectorAll('.option-btn').forEach(btn => {
     btn.disabled = true;
     if (btn.innerText.toLowerCase() === correctAnswer.toLowerCase()) {
       btn.style.background = '#4caf50';
       btn.style.color = 'white';
-    } else if (btn.innerText === selectedOpt && selectedOpt !== correctAnswer) {
+    } else if (selectedWords.includes(btn.innerText) && btn.innerText !== correctAnswer) {
       btn.style.background = '#f44336';
       btn.style.color = 'white';
     }
   });
 }
+  
+  
 // Play audio
 function playAudio() {
   const text = document.getElementById('hindi-text').innerText;
@@ -116,7 +117,7 @@ function playAudio() {
 }
 function displayQuestion() {
   const lesson = lessons[currentLessonIndex];
-  currentQ = lesson.questions[currentQuestionIndex]; // currentQ update karo
+  currentQ = lesson.questions[currentQuestionIndex];
 
   console.log("displayQuestion called for Q:", currentQuestionIndex, currentQ);
 
@@ -125,7 +126,7 @@ function displayQuestion() {
 
   const optionsDiv = document.getElementById('options');
   optionsDiv.innerHTML = '';
-  selectedWords = []; // purane selection clear karo
+  selectedWords = [];
 
   currentQ.options.forEach(opt => {
     const btn = document.createElement('button');
@@ -138,6 +139,15 @@ function displayQuestion() {
   document.getElementById('check-btn').style.display = 'block';
   document.getElementById('next-btn').style.display = 'none';
   document.getElementById('feedback').style.display = 'none';
+
+  // Check button ka onclick add karo
+  document.getElementById('check-btn').onclick = () => {
+    if (selectedWords.length > 0) {
+      checkAnswer(selectedWords.join(' '), currentQ.answer);
+    } else {
+      alert("Khaali jo jawaab hai!");
+    }
+  };
 }
 
 function nextQuestion() {
