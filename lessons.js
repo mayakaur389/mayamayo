@@ -136,14 +136,15 @@ function displayQuestion() {
 //   displayQuestion();
 // });
 function nextQuestion() {
-  if (!lessons || !lessons[currentLessonIndex] || !lessons[currentLessonIndex].questions) {
+  if (!lessons ||!lessons[currentLessonIndex] ||!lessons[currentLessonIndex].questions) {
     alert("Pehle lesson select karo guru!");
     return;
   }
 
   if (currentQuestionIndex < lessons[currentLessonIndex].questions.length - 1) {
-    currentQuestionIndex++;
-    displayQuestion();
+    currentQuestionIndex++; // Index badhao
+    console.log("Now Q:", currentQuestionIndex, lessons[currentLessonIndex].questions[currentQuestionIndex]);
+    displayQuestion(); // Fir display call karo
   } else {
     alert("Lesson khatam!");
     showResult();
