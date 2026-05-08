@@ -25,13 +25,17 @@ function startQuizList() {
       currentLessonIndex = index;
       currentQuestionIndex = 0;
       loadQuestion(lesson.questions[0]);
-      document.getElementById('question-section').style.display = 'block';
-    };
-    container.appendChild(btn);
-  });
-}
+     document.getElementById('check-btn').onclick = () => {
+  if (selectedWords.length === 0) {
+    alert("Pehle option select karo!");
+    return;
+  }
+  checkAnswer(selectedWords.join(' '), currentQ.answer);
+};
 
-// Add word
+document.getElementById('next-btn').onclick = () => {
+  nextQuestion();
+};
 function addWord(word, btn) {
   selectedWords.push(word);
   btn.style.display = 'none';
