@@ -96,14 +96,20 @@ function loadQuestion(qData) {
   };
 }
 
-function checkAnswer(userAnswer, correctAnswer) {
+function checkAnswer() {
+  if (selectedWords.length === 0) {
+    alert("Pehle option select karo!");
+    return;
+  }
+
+  const userAnswer = selectedWords.join(' ');
   const feedback = document.getElementById('feedback');
 
-  if (userAnswer.trim().toLowerCase() === correctAnswer.trim().toLowerCase()) {
+  if (userAnswer.trim().toLowerCase() === currentQ.answer.trim().toLowerCase()) {
     feedback.innerText = "Sahi jawab! 🎉";
     feedback.className = "feedback correct";
   } else {
-    feedback.innerText = "Galat hai! Sahi: " + correctAnswer;
+    feedback.innerText = "Galat hai! Sahi: " + currentQ.answer;
     feedback.className = "feedback wrong";
   }
 
@@ -114,17 +120,15 @@ function checkAnswer(userAnswer, correctAnswer) {
   // Word bank ke buttons disable karo
   document.querySelectorAll('#word-bank button').forEach(btn => {
     btn.disabled = true;
-    if (btn.innerText.toLowerCase() === correctAnswer.toLowerCase()) {
+    if (btn.innerText.toLowerCase() === currentQ.answer.toLowerCase()) {
       btn.style.background = '#4caf50';
       btn.style.color = 'white';
-    } else if (selectedWords.includes(btn.innerText) && btn.innerText !== correctAnswer) {
+    } else if (selectedWords.includes(btn.innerText) && btn.innerText !== currentQ.answer) {
       btn.style.background = '#f44336';
       btn.style.color = 'white';
     }
   });
 }
-
-// Next question
 function nextQuestion() {
   if (currentQuestionIndex < lessons[currentLessonIndex].questions.length - 1) {
     currentQuestionIndex++;
