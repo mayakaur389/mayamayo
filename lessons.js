@@ -9,8 +9,6 @@
 // Global variables
 let selectedWords = [];
 let currentQ = null;
-let currentLessonQuestions = []; // <-- Ye add karo
-let currentQuestionIndex = 0; // <-- Ye add karo
 // Start quiz list - ye tumhare "Maya ke Saath Grammar + Quiz" ke andar chalega
 function startQuizList() {
   const container = document.getElementById('quiz-list');
@@ -136,15 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
   displayQuestion();
 });
 function nextQuestion() {
-  console.log("Next clicked");
-  console.log("Questions:", questions); // Debug ke liye
-
-  if (!questions || questions.length === 0) {
-    alert("Pehle lesson select karo guru!");
-    return;
-  }
-
-  if (currentQuestionIndex < questions.length - 1) {
+  if (currentQuestionIndex < lessons[currentLessonIndex].questions.length - 1) {
     currentQuestionIndex++;
     displayQuestion();
   } else {
