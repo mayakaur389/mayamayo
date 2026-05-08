@@ -110,13 +110,9 @@ function displayQuestion() {
   const lesson = lessons[currentLessonIndex];
   const questionObj = lesson.questions[currentQuestionIndex];
 
-  // English question dikhana
   document.getElementById('question').innerText = questionObj.q;
-
-  // Hindi translation dikhana
   document.getElementById('hindi-text').innerText = questionObj.hindi;
 
-  // Options banana
   const optionsDiv = document.getElementById('options');
   if(optionsDiv){
     optionsDiv.innerHTML = '';
@@ -128,11 +124,17 @@ function displayQuestion() {
       optionsDiv.appendChild(btn);
     });
   }
+
+  // 🔑 Ye 3 lines add karo
+  document.getElementById('check-btn').style.display = 'block';
+  document.getElementById('next-btn').style.display = 'none';
+  document.getElementById('feedback').style.display = 'none';
 }
-// Auto start
-document.addEventListener('DOMContentLoaded', () => {
-  displayQuestion();
-});
+
+// Auto start remove karo, lesson select karne pe chalega
+// document.addEventListener('DOMContentLoaded', () => {
+//   displayQuestion();
+// });
 function nextQuestion() {
   if (!lessons || !lessons[currentLessonIndex] || !lessons[currentLessonIndex].questions) {
     alert("Pehle lesson select karo guru!");
