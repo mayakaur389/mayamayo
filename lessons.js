@@ -37,10 +37,9 @@ function loadQuestion(qData) {
   
   // Word bank banao
   const wordBank = document.getElementById('word-bank');
-  wordBank.innerHTML = words
-   .map(w => <button class="word-btn" onclick="addWord('${w}', this)">${w}</button>)
-   .join('');
-  
+wordBank.innerHTML = words
+  .map(w => `<button class="word-btn">${w}</button>`)
+  .join('');
   // Answer box empty
   document.getElementById('answer-box').innerHTML = '';
   selectedWords = [];
