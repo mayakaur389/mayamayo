@@ -9,45 +9,25 @@
 // Global variables
 let selectedWords = [];
 let currentQ = null;
-// Start quiz list - ye tumhare "Maya ke Saath Grammar + Quiz" ke andar chalega
+let currentLessonIndex = 0;
+let currentQuestionIndex = 0;
+
+// Start quiz list
 function startQuizList() {
   const container = document.getElementById('quiz-list');
   if (!container) return;
-
   container.innerHTML = '';
   lessons.forEach((lesson, index) => {
     const btn = document.createElement('button');
     btn.innerText = lesson.title;
     btn.className = 'day-btn';
-    btn.onclick = () => loadQuestion(lesson.questions[0]);
+    btn.onclick = () => {
+      currentLessonIndex = index;
+      currentQuestionIndex = 0;
+      loadQuestion(lesson.questions[0]);
+    };
     container.appendChild(btn);
   });
-}
-
-// Load question
-function loadQuestion(qData) {
-  currentQ = qData;
-  if (!qData) return;
-
-  document.getElementById('hindi-text').innerText = qData.hindi;
-  const wordBank = document.getElementById('word-bank');
-  const answerBox = document.getElementById('answer-box');
-  document.getElementById('feedback').style.display = 'none';
-  
-  wordBank.innerHTML = '';
-  answerBox.innerHTML = '';
-  selectedWords = [];
-
-  const options = [...qData.options].sort(() => Math.random() - 0.5);
-  options.forEach(word => {
-    const btn = document.createElement('button');
-    btn.innerText = word;
-    btn.onclick = () => addWord(word, btn);
-    wordBank.appendChild(btn);
-  });
-
-  document.getElementById('check-btn').style.display = 'inline-block';
-  document.getElementById('next-btn').style.display = 'none';
 }
 
 // Add word
@@ -80,6 +60,42 @@ function updateAnswerBox() {
   });
 }
 
+function loadQuestion(qData) {
+  currentQ = qData;
+  if (!qData) return;
+
+  document.getElementById('question').innerText = qData.q;
+  document.getElementById('hindi-text').innerText = qData.hindi;
+
+  const wordBank = document.getElementById('word-bank');
+  const answerBox = document.getElementById('answer-box');
+  document.getElementById('feedback').style.display = 'none';
+
+  wordBank.innerHTML = '';
+  answerBox.innerHTML = '';
+  selectedWords = [];
+
+  const options = [...qData.options].sort(() => Math.random() - 0.5);
+  options.forEach(word => {
+    const btn = document.createElement('button');
+    btn.innerText = word;
+    btn.onclick = () => addWord(word, btn);
+    wordBank.appendChild(btn);
+  });
+
+  document.getElementById('check-btn').style.display = 'inline-block';
+  document.getElementById('next-btn').style.display = 'none';
+
+  // Check button ka onclick
+  document.getElementById('check-btn').onclick = () => {
+    if (selectedWords.length === 0) {
+      alert("Pehle option select karo guru!");
+      return;
+    }
+    checkAnswer(selectedWords.join(' '), currentQ.answer);
+  };
+}
+
 function checkAnswer(userAnswer, correctAnswer) {
   const feedback = document.getElementById('feedback');
 
@@ -95,8 +111,8 @@ function checkAnswer(userAnswer, correctAnswer) {
   document.getElementById('check-btn').style.display = 'none';
   document.getElementById('next-btn').style.display = 'inline-block';
 
-  // Options disable karo
-  document.querySelectorAll('.option-btn').forEach(btn => {
+  // Word bank ke buttons disable karo
+  document.querySelectorAll('#word-bank button').forEach(btn => {
     btn.disabled = true;
     if (btn.innerText.toLowerCase() === correctAnswer.toLowerCase()) {
       btn.style.background = '#4caf50';
@@ -107,60 +123,20 @@ function checkAnswer(userAnswer, correctAnswer) {
     }
   });
 }
-  
-  
+
+// Next question
+function nextQuestion() {
+  if (currentQuestionIndex < lessons[currentLessonIndex].questions.length - 1) {
+    currentQuestionIndex++;
+    loadQuestion(lessons[currentLessonIndex].questions[currentQuestionIndex]);
+  } else {
+    alert("Lesson khatam!");
+  }
+}
+
 // Play audio
 function playAudio() {
   const text = document.getElementById('hindi-text').innerText;
   if (!text) return;
   speechSynthesis.speak(new SpeechSynthesisUtterance(text));
-}
-function displayQuestion() {
-  const lesson = lessons[currentLessonIndex];
-  currentQ = lesson.questions[currentQuestionIndex];
-
-  console.log("displayQuestion called for Q:", currentQuestionIndex, currentQ);
-
-  document.getElementById('question').innerText = currentQ.q;
-  document.getElementById('hindi-text').innerText = currentQ.hindi;
-
-  const optionsDiv = document.getElementById('options');
-  optionsDiv.innerHTML = '';
-  selectedWords = [];
-
-  currentQ.options.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.innerText = opt;
-    btn.onclick = () => checkAnswer(opt, currentQ.answer);
-    optionsDiv.appendChild(btn);
-  });
-
-  document.getElementById('check-btn').style.display = 'block';
-  document.getElementById('next-btn').style.display = 'none';
-  document.getElementById('feedback').style.display = 'none';
-
-  // Check button ka onclick add karo
-  document.getElementById('check-btn').onclick = () => {
-    if (selectedWords.length > 0) {
-      checkAnswer(selectedWords.join(' '), currentQ.answer);
-    } else {
-      alert("Khaali jo jawaab hai!");
-    }
-  };
-}
-
-function nextQuestion() {
-  if (!lessons ||!lessons[currentLessonIndex] ||!lessons[currentLessonIndex].questions) {
-    alert("Pehle lesson select karo guru!");
-    return;
-  }
-
-  if (currentQuestionIndex < lessons[currentLessonIndex].questions.length - 1) {
-    currentQuestionIndex++;
-    displayQuestion();
-  } else {
-    alert("Lesson khatam!");
-    showResult();
-  }
 }
