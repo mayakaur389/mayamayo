@@ -77,8 +77,7 @@ function removeWord(word, index, btn) {
 function updateAnswerBox() {
   const answerBox = document.getElementById('answer-box');
   answerBox.innerHTML = selectedWords
-    .map((w, i) => <button class="word-btn" onclick="removeWord('${w}', ${i}, this)">${w}</button>)
-    .join(' ');
+    
 }
 function renderOptions(question) {
   const optionsDiv = document.getElementById('options');
