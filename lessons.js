@@ -19,7 +19,10 @@ function startQuizList() {
   document.getElementById('question-section').style.display = 'block';
   loadQuestion();
 }
-
+function displayQuestion() {
+const qData = gameData[currentIndex];
+loadQuestion(qData);
+}
 let selectedWords = [];
 
 function loadQuestion(qData) {
