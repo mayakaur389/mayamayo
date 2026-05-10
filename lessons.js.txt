@@ -30,38 +30,34 @@ function loadQuestion(qData) {
 
   // Hindi text
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
-  
+
   // English question upar Hindi ke niche dikhane ke liye
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
-  
-// Options shuffle karo
-let words = qData.words || qData.options || [];
-words = words.sort(() => Math.random() - 0.5);
 
-// Options ko HTML me daalo
-document.getElementById('options').innerHTML = words.map(opt => 
-  `<button class="option-btn" onclick="selectOption('${opt}')">${opt}</button>`
-).join('');
+  // Options shuffle karo
+  let words = qData.words || qData.options || [];
+  words = words.sort(() => Math.random() - 0.5);
 
-// Word bank banao
-const wordBank = document.getElementById('word-bank');
-wordBank.innerHTML = words.map(w => 
-  `<button class="word-btn">${w}</button>`
-).join('');
+  // Options ko HTML me daalo
+  document.getElementById('options').innerHTML = words.map(opt => 
+    `<button class="option-btn" onclick="selectOption('${opt}')">${opt}</button>`
+  ).join('');
 
-// Answer box empty
-document.getElementById('answer-box').innerHTML = '';
-selectedWords = [];
+  // Word bank banao
+  const wordBank = document.getElementById('word-bank');
+  wordBank.innerHTML = words.map(w => 
+    `<button class="word-btn">${w}</button>`
+  ).join('');
+
   // Answer box empty
   document.getElementById('answer-box').innerHTML = '';
   selectedWords = [];
-  
-  // Reset
+
+  // Reset UI
   document.getElementById('feedback').style.display = 'none';
   document.getElementById('check-btn').style.display = 'inline-block';
   document.getElementById('next-btn').style.display = 'none';
 }
-
 function addWord(word, btn) {
   selectedWords.push(word);
   updateAnswerBox();
