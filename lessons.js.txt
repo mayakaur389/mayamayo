@@ -34,7 +34,7 @@ function loadQuestion(qData) {
   // English question upar Hindi ke niche dikhane ke liye
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
   
- // Options shuffle karo
+// Options shuffle karo
 let words = qData.words || qData.options || [];
 words = words.sort(() => Math.random() - 0.5);
 
@@ -42,11 +42,16 @@ words = words.sort(() => Math.random() - 0.5);
 document.getElementById('options').innerHTML = words.map(opt => 
   `<button class="option-btn" onclick="selectOption('${opt}')">${opt}</button>`
 ).join('');
-  // Word bank banao
-  const wordBank = document.getElementById('word-bank');
-wordBank.innerHTML = words.map(w =>
-   `<button class="word-btn">${w}</button>`
- ).join('');
+
+// Word bank banao
+const wordBank = document.getElementById('word-bank');
+wordBank.innerHTML = words.map(w => 
+  `<button class="word-btn">${w}</button>`
+).join('');
+
+// Answer box empty
+document.getElementById('answer-box').innerHTML = '';
+selectedWords = [];
   // Answer box empty
   document.getElementById('answer-box').innerHTML = '';
   selectedWords = [];
