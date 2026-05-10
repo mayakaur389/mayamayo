@@ -45,6 +45,7 @@ document.getElementById('options').innerHTML = words.map(opt =>
   // Word bank banao
   const wordBank = document.getElementById('word-bank');
 wordBank.innerHTML = words.map
+  wordBank.innerHTML = words
   .map(w => `<button class="word-btn">${w}</button>`)
   .join('');
   // Answer box empty
