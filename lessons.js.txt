@@ -34,10 +34,12 @@ function loadQuestion(qData) {
   // English question upar Hindi ke niche dikhane ke liye
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
   
-  // Options shuffle karo
-  let words = qData.words || qData.options || [];
-  words = words.sort(() => Math.random() - 0.5);
-  document.getElementById('options').innerHTML = q.options.map(opt => 
+ // Options shuffle karo
+let words = qData.words || qData.options || [];
+words = words.sort(() => Math.random() - 0.5);
+
+// Options ko HTML me daalo
+document.getElementById('options').innerHTML = words.map(opt => 
   `<button class="option-btn" onclick="selectOption('${opt}')">${opt}</button>`
 ).join('');
   // Word bank banao
