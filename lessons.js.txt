@@ -44,9 +44,8 @@ document.getElementById('options').innerHTML = words.map(opt =>
 ).join('');
   // Word bank banao
   const wordBank = document.getElementById('word-bank');
-wordBank.innerHTML = words.map
-  wordBank.innerHTML = words
-  .map(w => `<button class="word-btn">${w}</button>`)
+wordBank.innerHTML = words.map(W =>
+   `<button class="word-btn">${w}</button>`)
   .join('');
   // Answer box empty
   document.getElementById('answer-box').innerHTML = '';
