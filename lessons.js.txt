@@ -79,9 +79,9 @@ function removeWord(word, index, btn) {
   });
 }
 
-function updateAnswerBox() {
-  document.getElementById('answer-box').innerHTML = selectedWords.join(' ');
-}
+wordBank.innerHTML = words.map(w => 
+  `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`
+).join('');
 function renderOptions(question) {
   const optionsDiv = document.getElementById('options');
   const answerInput = document.getElementById('answer-input');
