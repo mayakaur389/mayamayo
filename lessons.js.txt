@@ -30,30 +30,28 @@ function loadQuestion(qData) {
 
   // Hindi text
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
-
-  // English question upar Hindi ke niche dikhane ke liye
+  
+  // English question
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
-
-  // Options shuffle karo, duplicate hatao
+  
+  // Words lo, duplicate hatao, shuffle karo
   let words = qData.words || qData.options || [];
   words = [...new Set(words)]; // duplicate hatao
   words = words.sort(() => Math.random() - 0.5);
-
-  // Options ko HTML me daalo
-  document.getElementById('options').innerHTML = words.map(opt => 
-    `<button class="option-btn" onclick="selectOption('${opt}')">${opt}</button>`
-  ).join('');
-
-  // Word bank banao
+  
+  // OPTIONS div ko empty kar do - isiliye duplicate aa raha tha
+  document.getElementById('options').innerHTML = '';
+  
+  // Sirf WORD BANK banao
   const wordBank = document.getElementById('word-bank');
   wordBank.innerHTML = words.map(w => 
     `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`
   ).join('');
-
+  
   // Answer box empty
   document.getElementById('answer-box').innerHTML = '';
   selectedWords = [];
-
+  
   // Reset UI
   document.getElementById('feedback').style.display = 'none';
   document.getElementById('check-btn').style.display = 'inline-block';
