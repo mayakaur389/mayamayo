@@ -139,3 +139,17 @@ function playAudio() {
   utterance.lang = 'hi-IN';
   speechSynthesis.speak(utterance);
 }
+let selectedWords = [];
+
+function selectOption(word) {
+  const answerBox = document.getElementById('answer-box');
+  
+  // Word ko selectedWords array me add karo
+  selectedWords.push(word);
+  
+  // Answer box me dikh do
+  answerBox.innerHTML = selectedWords.join(' ');
+  
+  // Word bank se button hide/disable kar do agar chaho
+  event.target.style.display = 'none';
+}
