@@ -80,9 +80,7 @@ function removeWord(word, index, btn) {
 }
 
 function updateAnswerBox() {
-  const answerBox = document.getElementById('answer-box');
-  answerBox.innerHTML = selectedWords
-    
+  document.getElementById('answer-box').innerHTML = selectedWords.join(' ');
 }
 function renderOptions(question) {
   const optionsDiv = document.getElementById('options');
