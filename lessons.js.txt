@@ -79,9 +79,12 @@ function removeWord(word, index, btn) {
   });
 }
 
-wordBank.innerHTML = words.map(w => 
-  `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`
-).join('');
+function updateAnswerBox() {
+  const answerBox = document.getElementById('answer-box');
+  answerBox.innerHTML = selectedWords.map((w, index) => 
+    `<span class="selected-word" onclick="removeWord('${w}', ${index})">${w}</span>`
+  ).join(' ');
+}
 function renderOptions(question) {
   const optionsDiv = document.getElementById('options');
   const answerInput = document.getElementById('answer-input');
