@@ -34,8 +34,9 @@ function loadQuestion(qData) {
   // English question upar Hindi ke niche dikhane ke liye
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
 
-  // Options shuffle karo
+  // Options shuffle karo, duplicate hatao
   let words = qData.words || qData.options || [];
+  words = [...new Set(words)]; // duplicate hatao
   words = words.sort(() => Math.random() - 0.5);
 
   // Options ko HTML me daalo
@@ -46,7 +47,7 @@ function loadQuestion(qData) {
   // Word bank banao
   const wordBank = document.getElementById('word-bank');
   wordBank.innerHTML = words.map(w => 
-    `<button class="word-btn">${w}</button>`
+    `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`
   ).join('');
 
   // Answer box empty
