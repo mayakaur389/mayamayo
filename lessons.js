@@ -96,7 +96,7 @@ function loadQuestion(qData) {
   if (!qData) return;
 currentQ = qData;
 // Progress bar update - yahan daal de
- const progress = ((currentIndex + 1) / gameData.length) * 100;
+  const progress = ((currentQuestion + 1) / gameData[currentDay].questions.length) * 100; // ✅ Fix
   document.getElementById('progressFill').style.width = progress + '%';
    document.getElementById('progress-text').innerText = `Q ${currentIndex + 1}/${gameData.length}`;
   // Hindi text
