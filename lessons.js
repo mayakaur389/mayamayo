@@ -79,82 +79,47 @@ let score = 0;
 let selectedWords = [];
 let currentQ = null;
 
-// ✅ gameData = poora lessons array hona chahiye, lessons[0].questions nahi
+// ✅ FIX 1: gameData ko lessons se lo
 let gameData = lessons;
-
-// Ye track karega kaunsa day tak complete hua
-let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
 
 function startQuizList() {
   const dayGrid = document.querySelector('#day-grid');
-  if(!dayGrid) {
-    console.error('day-grid nahi mila');
-    return;
-  }
   dayGrid.innerHTML = '';
 
-  // 30 Days banao ya jitne gameData me hain
-  let totalDays = gameData.length > 0? gameData.length : 30;
-
-  for(let i = 0; i < totalDays; i++) {
-    const dayNumber = gameData[i]?.day || (i + 1);
-    let dayClass = 'day-circle';
-    let dayContent = '';
-
-    if(i < completedDays) {
-      // ✅ Complete ho gaya - Green tick
-      dayClass += ' completed';
-      dayContent = `${dayNumber} <span class="tick-icon">✓</span>`;
-    }
-    else if(i === completedDays) {
-      // ✅ Current day - Blue Start
-      dayClass += ' current';
-      dayContent = `${dayNumber} <span class="start-text">Start</span>`;
-    }
-    else {
-      // ✅ Locked - Grey lock
-      dayClass += ' locked';
-      dayContent = `${dayNumber} <span class="lock-icon">🔒</span>`;
-    }
-
+  // Day 1 se Day 5 tak buttons banao - ya jitne lessons me hain
+  for(let i = 0; i < gameData.length; i++) {
+    const dayNumber = gameData[i].day || (i + 26);
     dayGrid.innerHTML += `
-      <div class="${dayClass}" onclick="selectDay(${i})">
-        ${dayContent}
+      <div class="day-circle locked" onclick="selectDay(${i})">
+        ${dayNumber} <span class="lock-icon">🔒</span>
       </div>
     `;
   }
 
-  // Pehla question load karo
-  if(gameData[currentDay] && gameData[currentDay].questions && gameData[currentDay].questions.length > 0) {
-    loadQuestion(gameData[currentDay].questions[currentQuestion]);
-  }
-}
-
-function selectDay(dayIndex) {
-  // Locked day pe click nahi hona chahiye
-  if(dayIndex > completedDays) {
-    alert('Pehle pichla day complete karo 🔒');
-    return;
-  }
-
-  currentDay = dayIndex;
-  currentQuestion = 0;
   if(gameData[currentDay] && gameData[currentDay].questions) {
     loadQuestion(gameData[currentDay].questions[currentQuestion]);
   }
 }
 
-function loadQuestion(qData) {
-  if (!qData) {
-    document.getElementById('hindi-text').innerText = "Question nahi mila";
+function selectDay(dayIndex) {
+  // ✅ FIX 2: Locked check
+  const dayButtons = document.querySelectorAll('#day-grid.day-circle');
+  if(dayButtons[dayIndex] && dayButtons[dayIndex].classList.contains('locked')) {
     return;
   }
+
+  currentDay = dayIndex;
+  currentQuestion = 0;
+  loadQuestion(gameData[currentDay].questions[currentQuestion]);
+}
+
+function loadQuestion(qData) {
+  if (!qData) return;
   currentQ = qData;
 
-  const totalQ = gameData[currentDay].questions.length;
-  const progress = ((currentQuestion + 1) / totalQ) * 100;
+  const progress = ((currentQuestion + 1) / gameData[currentDay].questions.length) * 100;
   document.getElementById('progressFill').style.width = progress + '%';
-  document.getElementById('progress-text').innerText = `Lesson ${currentDay + 1} of ${gameData.length} | Q ${currentQuestion + 1}/${totalQ}`;
+  document.getElementById('progress-text').innerText = `Lesson ${currentDay + 1} of ${gameData.length} | Q ${currentQuestion + 1}/${gameData[currentDay].questions.length}`;
 
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
@@ -189,6 +154,7 @@ function removeWord(word, index) {
     if (b.innerText === word && b.style.display === 'none') {
       b.style.display = 'inline-block';
     }
+  });
 }
 
 function updateAnswerBox() {
@@ -220,10 +186,8 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= gameData[currentDay].questions.length) {
-    // Day complete ho gaya
-    completedDays = Math.max(completedDays, currentDay + 1);
-    localStorage.setItem('completedDays', completedDays);
-
+    // ✅ FIX 3: Agla day unlock karo
+    unlockDay(currentDay + 1);
     currentDay++;
     currentQuestion = 0;
 
@@ -232,14 +196,22 @@ function nextQuestion() {
       currentDay = 0;
       currentQuestion = 0;
     }
-
-    // Grid refresh karo taki tick/lock update ho
-    startQuizList();
   }
+  loadQuestion(gameData[currentDay].questions[currentQuestion]);
+}
 
-  if(gameData[currentDay] && gameData[currentDay].questions) {
-    loadQuestion(gameData[currentDay].questions[currentQuestion]);
-  }
+function unlockDay(dayIndex) {
+  // ✅ FIX 4: Sahi selector
+  const dayButtons = document.querySelectorAll('#day-grid.day-circle');
+  if (!dayButtons[dayIndex]) return;
+
+  dayButtons[dayIndex].classList.remove('locked');
+  dayButtons[dayIndex].disabled = false;
+
+  const lockIcon = dayButtons[dayIndex].querySelector('.lock-icon');
+  if (lockIcon) lockIcon.style.display = 'none';
+
+  localStorage.setItem('unlockedDay', dayIndex);
 }
 
 function playAudio() {
@@ -252,4 +224,8 @@ function playAudio() {
 
 window.onload = function() {
   startQuizList();
+  const savedDay = parseInt(localStorage.getItem('unlockedDay')) || 0;
+  for (let i = 0; i <= savedDay; i++) {
+    unlockDay(i);
+  }
 }
