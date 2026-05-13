@@ -79,18 +79,12 @@ let selectedAnswer = '';
 let score = 0;
 
 function startQuizList() {
-  const dayGrid = document.querySelector('#day-grid');
-  dayGrid.innerHTML = ''; // Purana clear karo
-
-  // Day 1 se Day 5 tak buttons banao
-  for(let i = 0; i < gameData.length; i++) {
-    const dayNumber = i + 26; // 26, 27, 28, 29, 30
-    dayGrid.innerHTML += `
-      <div class="day-circle locked" onclick="selectDay(${i})">
-        ${dayNumber}
-        <span class="lock-icon">🔒</span>
-      </div>
-  }
+  gameData = lessons[0].questions;
+  currentIndex = 0;
+  score = 0;
+  document.getElementById('question-section').style.display = 'block';
+  loadQuestion();
+}
 
   loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
