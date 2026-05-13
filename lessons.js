@@ -93,7 +93,10 @@ let selectedWords = [];
 function loadQuestion(qData) {
   if (!qData) return;
 currentQ = qData;
-
+// Progress bar update - yahan daal de
+ const progress = ((currentIndex + 1) / gameData.length) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+   document.getElementById('progress-text').innerText = `Q ${currentIndex + 1}/${gameData.length}`;
   // Hindi text
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
   
