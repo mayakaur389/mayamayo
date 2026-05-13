@@ -98,7 +98,7 @@ currentQ = qData;
 // Progress bar update - yahan daal de
   const progress = ((currentQuestion + 1) / gameData[currentDay].questions.length) * 100; // ✅ Fix
   document.getElementById('progressFill').style.width = progress + '%';
-   document.getElementById('progress-text').innerText = `Q ${currentIndex + 1}/${gameData.length}`;
+  document.getElementById('progress-text').innerText = `Lesson ${currentDay + 1} of ${gameData.length} | Q ${currentQuestion + 1}/${gameData[currentDay].questions.length}`; 
   // Hindi text
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
   
