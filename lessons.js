@@ -72,17 +72,19 @@ const lessons = [
 ];
 
 // ===== Quiz Logic =====
+let currentDay = 0;
+let currentQuestion = 0;
 let gameData = [];
-let currentIndex = 0;
 let selectedAnswer = '';
 let score = 0;
 
 function startQuizList() {
-  gameData = lessons[0].questions;
-  currentIndex = 0;
+  gameData = lessons; // Poora lessons array le, sirf [0] nahi
+  currentDay = 0; // Day 1 se start
+  currentQuestion = 0; // Q1 se start
   score = 0;
   document.getElementById('question-section').style.display = 'block';
-  loadQuestion();
+  loadQuestion(gameData[currentDay].questions[currentQuestion]); // Day 1 ka Q1 load
 }
 function displayQuestion() {
 const qData = gameData[currentIndex];
