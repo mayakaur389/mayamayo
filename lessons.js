@@ -215,12 +215,20 @@ function selectOption(word) {
   window.event.target.style.display = 'none';
 }
 function nextQuestion() {
-  currentIndex++;
+  currentQuestion++;
 
-  if (currentIndex >= gameData.length) {
-    alert("Quiz khatam!");
-    currentIndex = 0;
+  // Agar current day ke saare questions khatam
+  if (currentQuestion >= gameData[currentDay].questions.length) {
+    currentDay++; // Agla day
+    currentQuestion = 0; // Wapas Q1 se
+
+    // Agar saare days khatam ho gaye
+    if (currentDay >= gameData.length) {
+      alert("Sabhi lessons complete! 🎉");
+      currentDay = 0; // Wapas Day 1 pe
+      currentQuestion = 0;
+    }
   }
 
-  loadQuestion(gameData[currentIndex]);
+  loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
