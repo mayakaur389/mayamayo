@@ -150,11 +150,11 @@ function selectOption(word) {
 }
 function nextQuestion() {
   currentIndex++;
-  
-  if (currentIndex >= questions.length) {
-    alert("Quiz khatam! Sab sahi kar liye 🎉");
-    currentIndex = 0; // wapas first question pe
+
+  if (currentIndex >= gameData.length) {
+    alert("Quiz khatam!");
+    currentIndex = 0;
   }
-  
-  loadQuestion(questions[currentIndex]);
+
+  loadQuestion(gameData[currentIndex]);
 }
