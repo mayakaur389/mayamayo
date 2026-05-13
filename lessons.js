@@ -115,26 +115,24 @@ function renderOptions(question) {
 
 function checkAnswer() {
   if (!currentQ) return;
-  
   const correctAnswer = (currentQ.answer || currentQ.english || '').trim().toLowerCase();
   const userAnswer = selectedWords.join(' ').trim().toLowerCase();
   const feedback = document.getElementById('feedback');
-
   if (!feedback) return;
 
   if (userAnswer === correctAnswer) {
     feedback.innerText = "Sahi jawab! 🎉";
-    feedback.className = "feedback correct";
+    feedback.className = "feedback"; // className change kiya
     feedback.style.display = 'block';
-    
     document.getElementById('check-btn').style.display = 'none';
-    document.getElementById('next-btn').style.display = 'inline-block';
+    document.getElementById('next-btn').style.display = 'block'; // block kar do
   } else {
     feedback.innerText = "Galat hai, dobara try karo";
     feedback.className = "feedback wrong";
     feedback.style.display = 'block';
   }
 }
+
 function playAudio() {
   const text = document.getElementById('hindi-text').innerText;
   if (!text) return;
