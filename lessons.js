@@ -235,18 +235,16 @@ function nextQuestion() {
   loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
 function unlockDay(dayIndex) {
-  const dayButtons = document.querySelectorAll('.day-button'); // Class name confirm kar
+  const dayButtons = document.querySelectorAll('.day-button');
 
-  if (dayButtons[dayIndex]) {
-    dayButtons[dayIndex].classList.remove('locked'); // ✅ Locked class hatao
-    dayButtons[dayIndex].disabled = false; // ✅ Clickable banao
+  if (!dayButtons[dayIndex]) return; // Button hi nahi mila to return
 
-    // Sirf lock icon hide karo, poora button nahi
-    const lockIcon = dayButtons[dayIndex].querySelector('.lock-icon');
-    if (lockIcon) {
-      lockIcon.style.display = 'none'; // ✅ Sirf icon gayab
-    }
-  }
+  dayButtons[dayIndex].classList.remove('locked');
+  dayButtons[dayIndex].disabled = false;
+
+  // Icon check karke hide karo
+  const lockIcon = dayButtons[dayIndex].querySelector('.lock-icon');
+  if (lockIcon) lockIcon.style.display = 'none';
 
   localStorage.setItem('unlockedDay', dayIndex);
 }
