@@ -218,3 +218,64 @@ body {
   border-radius: 4px;
   transition: 0.3s;
 }
+/* Progress Line - Green */
+.progress-bar-main {
+  width: calc(100% - 32px); height: 6px; background: #334155;
+  border-radius: 3px; margin: 0 16px 16px 16px;
+}
+.progress-fill-main {
+  height: 100%; background: #10B981; border-radius: 3px; transition: 0.3s;
+}
+
+/* White Quiz Card */
+.quiz-card {
+  background: white; color: #000; padding: 20px; border-radius: 16px; margin: 0 16px;
+}
+.quiz-card h2 { color: #1a73e8; font-size: 20px; margin-bottom: 4px; }
+.quiz-card p { color: #666; font-size: 14px; margin-bottom: 16px; }
+#progress-text { text-align: center; color: #666; margin: 12px 0; font-weight: 600; }
+.q-header { text-align: center; font-size: 16px; font-weight: 600; margin: 15px 0; color: #999; }
+#hindi-text { font-size: 18px; font-weight: 600; text-align: center; margin: 15px 0; color: #000; }
+.q-content { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; justify-content: center; }
+.audio-btn {
+  border: 1px solid #333; padding: 10px; border-radius: 50%;
+  background: #1e1e1e; cursor: pointer; font-size: 16px; color: #fff; width: 40px; height: 40px;
+}
+.ref-translation { font-size: 16px; color: #333; }
+.answer-box {
+  min-height: 50px; border: 2px dashed #D1D1D6; border-radius: 14px;
+  padding: 16px; margin: 20px 0; display: flex; flex-wrap: wrap; gap: 10px;
+  align-items: center; background-color: #F2F2F7;
+}
+#word-bank {
+  display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; justify-content: center;
+}
+.word-btn {
+  padding: 14px 24px; background-color: #2C2C2E; color: #FFFFFF;
+  font-size: 17px; font-weight: 600; border: none; border-radius: 12px;
+  cursor: pointer; min-width: 85px; box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+.selected-word {
+  background-color: #10B981; color: white; padding: 10px 16px;
+  border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: 600;
+}
+.button-container { width: 100%; margin-top: 20px; }
+.btn-check,.btn-next {
+  width: 100%; padding: 16px; border: none; border-radius: 12px;
+  font-size: 18px; font-weight: 600; cursor: pointer;
+}
+.btn-check { background: #10B981; color: white; }
+.btn-next { background: #3B82F6; color: white; }
+.feedback {
+  width: 100%; padding: 16px; background-color: #10B981; color: white;
+  font-size: 18px; font-weight: 600; border-radius: 12px; text-align: center; margin-top: 12px;
+}
+.feedback.wrong { background-color: #EF4444; }
+
+/* Day Circle - 3 State */
+.day-circle.completed { background: #10B981; color: white; }
+.day-circle.current { background: #3B82F6; color: white; box-shadow: 0 0 0 3px rgba(59,130,246,0.3); }
+.day-circle.locked { background: #334155; color: #64748b; cursor: not-allowed; }
+.tick-icon { font-size: 16px; line-height: 1; }
+.start-text { font-size: 10px; margin-top: 2px; }
+.lock-icon { font-size: 12px; margin-top: 2px; }
