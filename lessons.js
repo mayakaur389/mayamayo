@@ -249,9 +249,11 @@ function unlockDay(dayIndex) {
   localStorage.setItem('unlockedDay', dayIndex);
 }
 window.onload = function() {
- // const savedDay = parseInt(localStorage.getItem('unlockedDay')) || 0;
- // for (let i = 0; i <= savedDay; i++) {
-  //  unlockDay(i);
- // }
-  startQuizList();
+  startQuizList(); // ✅ Pehle buttons banao
+  
+  // Uske baad unlock karo
+  const savedDay = parseInt(localStorage.getItem('unlockedDay')) || 0;
+  for (let i = 0; i <= savedDay; i++) {
+    unlockDay(i);
+  }
 }
