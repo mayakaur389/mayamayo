@@ -218,3 +218,15 @@ body {
   border-radius: 4px;
   transition: 0.3s;
 }
+.day-circle.locked {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.day-circle {
+  cursor: pointer;
+  display: inline-block;
+  margin: 5px;
+  padding: 15px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+}
