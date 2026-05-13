@@ -234,3 +234,17 @@ function nextQuestion() {
 
   loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
+// ✅ Ye naya function add kar de
+function unlockDay(dayIndex) {
+  // dayIndex = 0 se start hota hai, par button me 1,2,3... dikhta hai
+  const dayButtons = document.querySelectorAll('.day-button'); // Teri class ka naam daal
+
+  if (dayButtons[dayIndex]) {
+    dayButtons[dayIndex].classList.remove('locked');
+    dayButtons[dayIndex].querySelector('.lock-icon').style.display = 'none';
+    dayButtons[dayIndex].disabled = false;
+  }
+
+  // LocalStorage me save kar de taaki refresh pe bhi unlock rahe
+  localStorage.setItem('unlockedDay', dayIndex);
+}
