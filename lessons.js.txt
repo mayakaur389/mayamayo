@@ -27,6 +27,7 @@ let selectedWords = [];
 
 function loadQuestion(qData) {
   if (!qData) return;
+currentQ = qData;
 
   // Hindi text
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
