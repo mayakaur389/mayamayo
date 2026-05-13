@@ -1,195 +1,150 @@
 const lessons = [
-  { 
-    title: "Present Tense", 
-    day: 1, 
-    questions: [
-      { q: "I _ to school daily.", options: ["go", "goes", "going"], answer: "go", hindi: "मैं रोज स्कूल जाता हूँ" },
-      { q: "She _ a book.", options: ["read", "reads", "reading"], answer: "reads", hindi: "वह एक किताब पढ़ती है" },
-      { q: "They _ football.", options: ["play", "plays", "playing"], answer: "play", hindi: "वे फुटबॉल खेलते हैं" },
-      { q: "We _ water every morning.", options: ["drink", "drinks", "drinking"], answer: "drink", hindi: "हम हर सुबह पानी पीते हैं" },
-      { q: "He _ to music.", options: ["listen", "listens", "listening"], answer: "listens", hindi: "वह संगीत सुनता है" },
-      { q: "You _ very well.", options: ["sing", "sings", "singing"], answer: "sing", hindi: "तुम बहुत अच्छा गाते हो" },
-      { q: "The sun _ in the east.", options: ["rise", "rises", "rising"], answer: "rises", hindi: "सूरज पूर्व में उगता है" },
-      { q: "Cats _ milk.", options: ["like", "likes", "liking"], answer: "like", hindi: "बिल्लियाँ दूध पसंद करती हैं" }
-    ] 
-  },
-  { 
-    title: "Past Tense", 
-    day: 2, 
-    questions: [
-      { q: "I _ to school yesterday.", options: ["go", "went", "gone"], answer: "went", hindi: "मैं कल स्कूल गया था" },
-      { q: "He _ a movie last night.", options: ["watch", "watched", "watching"], answer: "watched", hindi: "उसने कल रात फिल्म देखी" },
-      { q: "They _ football last Sunday.", options: ["play", "played", "playing"], answer: "played", hindi: "वे पिछले रविवार फुटबॉल खेले" },
-      { q: "She _ her homework yesterday.", options: ["do", "did", "done"], answer: "did", hindi: "उसने कल अपना गृहकार्य किया" },
-      { q: "We _ to the market last week.", options: ["go", "went", "gone"], answer: "went", hindi: "हम पिछले हफ्ते बाजार गए थे" },
-      { q: "You _ very fast yesterday.", options: ["run", "ran", "running"], answer: "ran", hindi: "तुम कल बहुत तेज दौड़े" },
-      { q: "I _ a letter last month.", options: ["write", "wrote", "written"], answer: "wrote", hindi: "मैंने पिछले महीने एक पत्र लिखा" },
-      { q: "The baby _ loudly at night.", options: ["cry", "cried", "crying"], answer: "cried", hindi: "बच्चा रात में जोर से रोया" }
-    ] 
-  },
-  { 
-    title: "Future Tense", 
-    day: 3, 
-    questions: [
-      { q: "I _ go to Delhi tomorrow.", options: ["will", "shall", "would"], answer: "will", hindi: "मैं कल दिल्ली जाऊँगा" },
-      { q: "She _ come next week.", options: ["will", "shall", "would"], answer: "will", hindi: "वह अगले हफ्ते आएगी" },
-      { q: "They _ play tomorrow.", options: ["will", "would", "shall"], answer: "will", hindi: "वे कल खेलेंगे" },
-      { q: "We _ meet you soon.", options: ["will", "would", "shall"], answer: "will", hindi: "हम जल्द ही तुमसे मिलेंगे" },
-      { q: "He _ call you later.", options: ["will", "shall", "would"], answer: "will", hindi: "वह तुम्हें बाद में फोन करेगा" },
-      { q: "You _ be happy.", options: ["will", "would", "shall"], answer: "will", hindi: "तुम खुश रहोगे" },
-      { q: "I _ finish this work.", options: ["will", "shall", "would"], answer: "will", hindi: "मैं यह काम समाप्त करूँगा" },
-      { q: "The train _ arrive on time.", options: ["will", "would", "shall"], answer: "will", hindi: "ट्रेन समय पर आएगी" }
-    ] 
-  },
-  { 
-    title: "Nouns & Pronouns", 
-    day: 4, 
-    questions: [
-      { q: "_ is my friend.", options: ["He", "Him", "His"], answer: "He", hindi: "वह मेरा मित्र है" },
-      { q: "This is _ book.", options: ["my", "me", "mine"], answer: "my", hindi: "यह मेरी पुस्तक है" },
-      { q: "_ are playing.", options: ["They", "Them", "Their"], answer: "They", hindi: "वे खेल रहे हैं" },
-      { q: "Give it to _.", options: ["I", "me", "my"], answer: "me", hindi: "यह मुझे दो" },
-      { q: "_ is a teacher.", options: ["She", "Her", "Hers"], answer: "She", hindi: "वह एक शिक्षिका है" },
-      { q: "I saw _ yesterday.", options: ["he", "him", "his"], answer: "him", hindi: "मैंने उसे कल देखा" },
-      { q: "_ house is big.", options: ["Our", "Us", "We"], answer: "Our", hindi: "हमारा घर बड़ा है" },
-      { q: "This pen is _.", options: ["mine", "me", "my"], answer: "mine", hindi: "यह कलम मेरी है" }
-    ] 
-  },
-  { 
-    title: "Verbs", 
-    day: 5, 
-    questions: [
-      { q: "I _ eating.", options: ["am", "is", "are"], answer: "am", hindi: "मैं खा रहा हूँ" },
-      { q: "They _ playing.", options: ["are", "is", "am"], answer: "are", hindi: "वे खेल रहे हैं" },
-      { q: "She _ singing.", options: ["is", "are", "am"], answer: "is", hindi: "वह गा रही है" },
-      { q: "We _ going to school.", options: ["are", "is", "am"], answer: "are", hindi: "हम विद्यालय जा रहे हैं" },
-      { q: "He _ reading a book.", options: ["is", "are", "am"], answer: "is", hindi: "वह पुस्तक पढ़ रहा है" },
-      { q: "You _ studying now.", options: ["are", "is", "am"], answer: "are", hindi: "तुम अभी पढ़ रहे हो" },
-      { q: "The dog _ barking.", options: ["is", "are", "am"], answer: "is", hindi: "कुत्ता भौंक रहा है" },
-      { q: "I _ writing a letter.", options: ["am", "is", "are"], answer: "am", hindi: "मैं पत्र लिख रहा हूँ" }
-    ] 
-  }
+  { title: "Present Tense", day: 1, questions: [
+    { q: "I _ to school daily.", options: ["go", "goes", "going"], answer: "go", hindi: "मैं रोज स्कूल जाता हूँ", english: "I _ to school daily." },
+    { q: "She _ a book.", options: ["read", "reads", "reading"], answer: "reads", hindi: "वह एक किताब पढ़ती है", english: "She _ a book." },
+    { q: "They _ football.", options: ["play", "plays", "playing"], answer: "play", hindi: "वे फुटबॉल खेलते हैं", english: "They _ football." },
+    { q: "We _ water every morning.", options: ["drink", "drinks", "drinking"], answer: "drink", hindi: "हम हर सुबह पानी पीते हैं", english: "We _ water every morning." }
+  ]},
+  { title: "Past Tense", day: 2, questions: [
+    { q: "I _ to school yesterday.", options: ["go", "went", "gone"], answer: "went", hindi: "मैं कल स्कूल गया था", english: "I _ to school yesterday." },
+    { q: "He _ a movie last night.", options: ["watch", "watched", "watching"], answer: "watched", hindi: "उसने कल रात फिल्म देखी", english: "He _ a movie last night." }
+  ]},
+  { title: "Future Tense", day: 3, questions: [
+    { q: "I _ go to Delhi tomorrow.", options: ["will", "shall", "would"], answer: "will", hindi: "मैं कल दिल्ली जाऊँगा", english: "I _ go to Delhi tomorrow." }
+  ]},
+  { title: "Nouns & Pronouns", day: 4, questions: [
+    { q: "_ is my friend.", options: ["He", "Him", "His"], answer: "He", hindi: "वह मेरा मित्र है", english: "_ is my friend." }
+  ]},
+  { title: "Verbs", day: 5, questions: [
+    { q: "I _ eating.", options: ["am", "is", "are"], answer: "am", hindi: "मैं खा रहा हूँ", english: "I _ eating." }
+  ]}
 ];
 
 // ===== Quiz Logic =====
 let currentDay = 0;
 let currentQuestion = 0;
-let selectedAnswer = '';
-let score = 0;
 let selectedWords = [];
 let currentQ = null;
 let gameData = lessons;
-
-// Kitne day complete hue ye localStorage se lo
-let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
 
 function startQuizList() {
   const dayGrid = document.querySelector('#day-grid');
   if(!dayGrid) return;
   dayGrid.innerHTML = '';
 
-  // 30 Days ka grid banao
-  for(let i = 0; i < 30; i++) {
-    const dayNumber = i + 1;
+  let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
+
+  // 30 ka block nikalna - 1-30, 31-60, 61-90...
+  let currentUnit = Math.floor(completedDays / 30);
+  let startDay = currentUnit * 30 + 1;
+  let endDay = startDay + 29;
+
+  // Title update
+  const unitTitle = document.querySelector('.day-section h3');
+  if(unitTitle) unitTitle.innerText = `UNIT ${currentUnit + 1}: BASICS - ${startDay}-${endDay} DAYS`;
+
+  // 30 Days ka grid
+  for(let i = startDay; i <= endDay; i++) {
+    const dayNumber = i;
     let dayClass = 'day-circle';
     let dayContent = '';
 
-    if(i < completedDays) {
-      // ✅ Complete - Green + Tick
+    if(dayNumber <= completedDays) {
       dayClass += ' completed';
       dayContent = `${dayNumber} <span class="tick-icon">✓</span>`;
     }
-    else if(i === completedDays) {
-      // ✅ Current - Blue + Start
+    else if(dayNumber === completedDays + 1) {
       dayClass += ' current';
       dayContent = `${dayNumber} <span class="start-text">Start</span>`;
     }
     else {
-      // ✅ Locked - Grey + Lock
       dayClass += ' locked';
       dayContent = `${dayNumber} <span class="lock-icon">🔒</span>`;
     }
 
-    dayGrid.innerHTML += `
-      <div class="${dayClass}" onclick="selectDay(${i})">
-        ${dayContent}
-      </div>
-    `;
+    dayGrid.innerHTML += `<div class="${dayClass}" onclick="selectDay(${dayNumber - 1})">${dayContent}</div>`;
   }
 
-  // Pehla question load karo
+  // Current day load karo
+  let actualDayIndex = completedDays;
+  if(actualDayIndex >= gameData.length) actualDayIndex = gameData.length - 1;
+  currentDay = actualDayIndex;
+  currentQuestion = 0;
+
   if(gameData[currentDay] && gameData[currentDay].questions) {
-    loadQuestion(gameData[currentDay].questions[currentQuestion]);
+    loadQuestion(gameData[currentDay].questions[0]);
   }
 }
 
 function selectDay(dayIndex) {
-  // Locked pe click nahi hoga
-  if(dayIndex > completedDays) return;
-
+  let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
+  if(dayIndex + 1 > completedDays + 1) return;
+  if(dayIndex >= gameData.length) {
+    alert('Ye day abhi available nahi hai!');
+    return;
+  }
   currentDay = dayIndex;
   currentQuestion = 0;
-  if(gameData[currentDay] && gameData[currentDay].questions) {
-    loadQuestion(gameData[currentDay].questions[currentQuestion]);
-  }
+  loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
 
 function loadQuestion(qData) {
   if (!qData) return;
   currentQ = qData;
 
+  // Progress line update - current day ke questions ka %
   const totalQ = gameData[currentDay].questions.length;
-  const progress = ((currentQuestion + 1) / totalQ) * 100;
-  document.getElementById('progressFill').style.width = progress + '%';
-  document.getElementById('progress-text').innerText = `Lesson ${currentDay + 1} of ${gameData.length} | Q ${currentQuestion + 1}/${totalQ}`;
+  const progress = ((currentQuestion) / totalQ) * 100;
+  document.getElementById('progressFillMain').style.width = progress + '%';
 
-  document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
+  document.getElementById('progress-text').innerText = `Q ${currentQuestion + 1}/${totalQ}`;
+  document.getElementById('hindi-text').innerText = qData.hindi || "";
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
 
-  let words = qData.words || qData.options || [];
-  words = [...new Set(words)];
-  words = words.sort(() => Math.random() - 0.5);
+  let words = qData.options || [];
+  words = [...new Set(words)].sort(() => Math.random() - 0.5);
 
-  document.getElementById('options').innerHTML = '';
-  const wordBank = document.getElementById('word-bank');
-  wordBank.innerHTML = words.map(w => `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`).join('');
+  document.getElementById('word-bank').innerHTML = words.map(w =>
+    `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`
+  ).join('');
 
   document.getElementById('answer-box').innerHTML = '';
   selectedWords = [];
-
   document.getElementById('feedback').style.display = 'none';
-  document.getElementById('check-btn').style.display = 'inline-block';
+  document.getElementById('check-btn').style.display = 'block';
   document.getElementById('next-btn').style.display = 'none';
 }
 
 function addWord(word, btn) {
-  selectedWords.push(word);
+  selectedWords = [word]; // Sirf 1 word select hoga
   updateAnswerBox();
-  btn.style.display = 'none';
+  // Sab button hide karke sirf selected dikhana
+  document.querySelectorAll('.word-btn').forEach(b => {
+    if(b.innerText === word) b.style.display = 'none';
+    else b.style.display = 'inline-block';
+  });
 }
 
 function removeWord(word, index) {
-  selectedWords.splice(index, 1);
+  selectedWords = [];
   updateAnswerBox();
-  const wordBankBtns = document.querySelectorAll('#word-bank button');
-  wordBankBtns.forEach(b => {
-    if (b.innerText === word && b.style.display === 'none') {
-      b.style.display = 'inline-block';
-    }
+  document.querySelectorAll('.word-btn').forEach(b => {
+    b.style.display = 'inline-block';
   });
 }
 
 function updateAnswerBox() {
   const answerBox = document.getElementById('answer-box');
-  answerBox.innerHTML = selectedWords.map((w, index) => `<span class="selected-word" onclick="removeWord('${w}', ${index})">${w}</span>`).join(' ');
+  answerBox.innerHTML = selectedWords.map((w, i) =>
+    `<span class="selected-word" onclick="removeWord('${w}', ${i})">${w}</span>`
+  ).join(' ');
 }
 
 function checkAnswer() {
   if (!currentQ) return;
-  const correctAnswer = (currentQ.answer || currentQ.english || '').trim().toLowerCase();
+  const correctAnswer = currentQ.answer.trim().toLowerCase();
   const userAnswer = selectedWords.join(' ').trim().toLowerCase();
   const feedback = document.getElementById('feedback');
-  if (!feedback) return;
 
   if (userAnswer === correctAnswer) {
     feedback.innerText = "Sahi jawab! 🎉";
@@ -197,6 +152,11 @@ function checkAnswer() {
     feedback.style.display = 'block';
     document.getElementById('check-btn').style.display = 'none';
     document.getElementById('next-btn').style.display = 'block';
+
+    // XP badhao
+    let xp = document.getElementById('xp');
+    xp.innerText = parseInt(xp.innerText) + 10;
+    localStorage.setItem('xp', xp.innerText);
   } else {
     feedback.innerText = "Galat hai, dobara try karo";
     feedback.className = "feedback wrong";
@@ -207,27 +167,23 @@ function checkAnswer() {
 function nextQuestion() {
   currentQuestion++;
 
+  // Progress line update
+  const totalQ = gameData[currentDay].questions.length;
+  const progress = ((currentQuestion) / totalQ) * 100;
+  document.getElementById('progressFillMain').style.width = progress + '%';
+
   if (currentQuestion >= gameData[currentDay].questions.length) {
-    // Day complete - localStorage update karo
+    // Day complete
+    let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
     completedDays = Math.max(completedDays, currentDay + 1);
     localStorage.setItem('completedDays', completedDays);
 
-    currentDay++;
-    currentQuestion = 0;
-
-    if (currentDay >= gameData.length || currentDay >= 30) {
-      alert("Sabhi lessons complete! 🎉");
-      currentDay = 0;
-      currentQuestion = 0;
-    }
-
-    // Grid wapas banao taki color update ho
+    // Next day pe jao ya grid refresh karo
     startQuizList();
+    return;
   }
 
-  if(gameData[currentDay] && gameData[currentDay].questions) {
-    loadQuestion(gameData[currentDay].questions[currentQuestion]);
-  }
+  loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
 
 function playAudio() {
@@ -238,6 +194,20 @@ function playAudio() {
   speechSynthesis.speak(utterance);
 }
 
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+}
+function addHeart() {
+  let hearts = document.getElementById('hearts');
+  hearts.innerText = parseInt(hearts.innerText) + 1;
+}
+function openChat() { alert('Chat feature coming soon'); }
+function startPracticeMode() { alert('Practice mode coming soon'); }
+
+// Start karo
 window.onload = function() {
+  document.getElementById('xp').innerText = localStorage.getItem('xp') || '260';
+  document.getElementById('streak').innerText = localStorage.getItem('streak') || '11';
+  document.getElementById('hearts').innerText = localStorage.getItem('hearts') || '1';
   startQuizList();
 }
