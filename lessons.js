@@ -189,7 +189,6 @@ function removeWord(word, index) {
     if (b.innerText === word && b.style.display === 'none') {
       b.style.display = 'inline-block';
     }
-  });
 }
 
 function updateAnswerBox() {
