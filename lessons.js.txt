@@ -148,3 +148,13 @@ function selectOption(word) {
   answerBox.innerHTML = selectedWords.join(' ');
   window.event.target.style.display = 'none';
 }
+function nextQuestion() {
+  currentIndex++;
+  
+  if (currentIndex >= questions.length) {
+    alert("Quiz khatam! Sab sahi kar liye 🎉");
+    currentIndex = 0; // wapas first question pe
+  }
+  
+  loadQuestion(questions[currentIndex]);
+}
