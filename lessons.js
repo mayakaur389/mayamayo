@@ -74,82 +74,81 @@ const lessons = [
 // ===== Quiz Logic =====
 let currentDay = 0;
 let currentQuestion = 0;
-let gameData = [];
 let selectedAnswer = '';
 let score = 0;
+let selectedWords = [];
+let currentQ = null;
+
+// ✅ gameData bhar de
+let gameData = lessons[0].questions;
 
 function startQuizList() {
-  gameData = lessons[0].questions;
-  currentIndex = 0;
-  score = 0;
-  document.getElementById('question-section').style.display = 'block';
-  loadQuestion();
+  const dayGrid = document.querySelector('#day-grid');
+  if(!dayGrid) return;
+  dayGrid.innerHTML = '';
+
+  for(let i = 0; i < gameData.length; i++) {
+    const dayNumber = i + 26;
+    dayGrid.innerHTML += `
+      <div class="day-circle locked" onclick="selectDay(${i})">
+        ${dayNumber}
+        <span class="lock-icon">🔒</span>
+      </div>
+    `;
+  }
+  if(gameData[currentDay] && gameData[currentDay].questions) {
+    loadQuestion(gameData[currentDay].questions[currentQuestion]);
+  }
 }
 
-  loadQuestion(gameData[currentDay].questions[currentQuestion]);
-}
-
-// Day select karne ka function
 function selectDay(dayIndex) {
+  const dayButtons = document.querySelectorAll('#day-grid .day-circle');
+  if(dayButtons[dayIndex] && dayButtons[dayIndex].classList.contains('locked')) {
+    alert('Pehle pichla day complete karo 🔒');
+    return;
+  }
+
   currentDay = dayIndex;
   currentQuestion = 0;
   loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
-function displayQuestion() {
-const qData = gameData[currentIndex];
-loadQuestion(qData);
-}
-let selectedWords = [];
 
 function loadQuestion(qData) {
   if (!qData) return;
-currentQ = qData;
-// Progress bar update - yahan daal de
-  const progress = ((currentQuestion + 1) / gameData[currentDay].questions.length) * 100; // ✅ Fix
+  currentQ = qData;
+
+  const progress = ((currentQuestion + 1) / gameData[currentDay].questions.length) * 100;
   document.getElementById('progressFill').style.width = progress + '%';
-  document.getElementById('progress-text').innerText = Lesson ${currentDay + 1} of ${gameData.length} | Q ${currentQuestion + 1}/${gameData[currentDay].questions.length}; 
-  // Hindi text
+  document.getElementById('progress-text').innerText = `Lesson ${currentDay + 1} of ${gameData.length} | Q ${currentQuestion + 1}/${gameData[currentDay].questions.length}`;
+
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
-  
-  // English question
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
-  
-  // Words lo, duplicate hatao, shuffle karo
+
   let words = qData.words || qData.options || [];
-  words = [...new Set(words)]; // duplicate hatao
+  words = [...new Set(words)];
   words = words.sort(() => Math.random() - 0.5);
-  
-  // OPTIONS div ko empty kar do - isiliye duplicate aa raha tha
+
   document.getElementById('options').innerHTML = '';
-  
-  // Sirf WORD BANK banao
   const wordBank = document.getElementById('word-bank');
-  wordBank.innerHTML = words.map(w => 
-    <button class="word-btn" onclick="addWord('${w}', this)">${w}</button>
-  ).join('');
-  
-  // Answer box empty
+  wordBank.innerHTML = words.map(w => `<button class="word-btn" onclick="addWord('${w}', this)">${w}</button>`).join('');
+
   document.getElementById('answer-box').innerHTML = '';
   selectedWords = [];
-  
-  // Reset UI
+
   document.getElementById('feedback').style.display = 'none';
   document.getElementById('check-btn').style.display = 'inline-block';
   document.getElementById('next-btn').style.display = 'none';
 }
+
 function addWord(word, btn) {
   selectedWords.push(word);
   updateAnswerBox();
-  
-  // Button ko hide karo word-bank se
   btn.style.display = 'none';
 }
 
-function removeWord(word, index, btn) {
+function removeWord(word, index) {
   selectedWords.splice(index, 1);
   updateAnswerBox();
-  
-  // Wapas word-bank me show karo
   const wordBankBtns = document.querySelectorAll('#word-bank button');
   wordBankBtns.forEach(b => {
     if (b.innerText === word && b.style.display === 'none') {
@@ -160,36 +159,7 @@ function removeWord(word, index, btn) {
 
 function updateAnswerBox() {
   const answerBox = document.getElementById('answer-box');
-  answerBox.innerHTML = selectedWords.map((w, index) => 
-    <span class="selected-word" onclick="removeWord('${w}', ${index})">${w}</span>
-  ).join(' ');
-}
-function renderOptions(question) {
-  const optionsDiv = document.getElementById('options');
-  const answerInput = document.getElementById('answer-input');
-  optionsDiv.innerHTML = '';
-  selectedAnswer = '';
-  if (question.options && question.options.length > 0) {
-    if(answerInput) answerInput.style.display = 'none';
-    question.options.forEach(opt => {
-      let btn = document.createElement('button');
-      btn.innerText = opt;
-      btn.className = 'option';
-      btn.style.cssText = 'width:100%;padding:12px;margin:6px 0;border:2px solid #4CAF50;border-radius:8px;background:#fff;font-size:16px;cursor:pointer';
-      btn.onclick = function() {
-        document.querySelectorAll('.option').forEach(b => {
-          b.style.background = '#fff';
-          b.style.color = '#000';
-        });
-        btn.style.background = '#4CAF50';
-        btn.style.color = '#fff';
-        selectedAnswer = opt;
-      };
-      optionsDiv.appendChild(btn);
-    });
-  } else {
-    if(answerInput) answerInput.style.display = 'block';
-  }
+  answerBox.innerHTML = selectedWords.map((w, index) => `<span class="selected-word" onclick="removeWord('${w}', ${index})">${w}</span>`).join(' ');
 }
 
 function checkAnswer() {
@@ -201,10 +171,10 @@ function checkAnswer() {
 
   if (userAnswer === correctAnswer) {
     feedback.innerText = "Sahi jawab! 🎉";
-    feedback.className = "feedback"; // className change kiya
+    feedback.className = "feedback";
     feedback.style.display = 'block';
     document.getElementById('check-btn').style.display = 'none';
-    document.getElementById('next-btn').style.display = 'block'; // block kar do
+    document.getElementById('next-btn').style.display = 'block';
   } else {
     feedback.innerText = "Galat hai, dobara try karo";
     feedback.className = "feedback wrong";
@@ -212,55 +182,39 @@ function checkAnswer() {
   }
 }
 
-function playAudio() {
-  const text = document.getElementById('hindi-text').innerText;
-  if (!text) return;
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'hi-IN';
-  speechSynthesis.speak(utterance);
-}
-function selectOption(word) {
-  const answerBox = document.getElementById('answer-box');
-  selectedWords.push(word);
-  answerBox.innerHTML = selectedWords.join(' ');
-  window.event.target.style.display = 'none';
-}
 function nextQuestion() {
   currentQuestion++;
 
-  // Agar current day ke saare questions khatam
   if (currentQuestion >= gameData[currentDay].questions.length) {
-    currentDay++; // Agla day
-    currentQuestion = 0; // Wapas Q1 se
+    unlockDay(currentDay + 1);
+    currentDay++;
+    currentQuestion = 0;
 
-    // Agar saare days khatam ho gaye
     if (currentDay >= gameData.length) {
       alert("Sabhi lessons complete! 🎉");
-      currentDay = 0; // Wapas Day 1 pe
+      currentDay = 0;
       currentQuestion = 0;
     }
   }
-
   loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
-function unlockDay(dayIndex) {
-  const dayButtons = document.querySelectorAll('.day-button');
 
-  if (!dayButtons[dayIndex]) return; // Button hi nahi mila to return
+function unlockDay(dayIndex) {
+  const dayButtons = document.querySelectorAll('#day-grid .day-circle');
+  if (!dayButtons[dayIndex]) return;
 
   dayButtons[dayIndex].classList.remove('locked');
-  dayButtons[dayIndex].disabled = false;
+  dayButtons[dayIndex].style.pointerEvents = 'auto';
+  dayButtons[dayIndex].style.opacity = '1';
 
-  // Icon check karke hide karo
   const lockIcon = dayButtons[dayIndex].querySelector('.lock-icon');
   if (lockIcon) lockIcon.style.display = 'none';
 
   localStorage.setItem('unlockedDay', dayIndex);
 }
+
 window.onload = function() {
-  startQuizList(); // ✅ Pehle buttons banao
-  
-  // Uske baad unlock karo
+  startQuizList();
   const savedDay = parseInt(localStorage.getItem('unlockedDay')) || 0;
   for (let i = 0; i <= savedDay; i++) {
     unlockDay(i);
