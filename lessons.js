@@ -78,48 +78,70 @@ let selectedAnswer = '';
 let score = 0;
 let selectedWords = [];
 let currentQ = null;
-
-// ✅ FIX 1: gameData ko lessons se lo
 let gameData = lessons;
+
+// Kitne day complete hue ye localStorage se lo
+let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
 
 function startQuizList() {
   const dayGrid = document.querySelector('#day-grid');
+  if(!dayGrid) return;
   dayGrid.innerHTML = '';
 
-  // Day 1 se Day 5 tak buttons banao - ya jitne lessons me hain
-  for(let i = 0; i < gameData.length; i++) {
-    const dayNumber = gameData[i].day || (i + 26);
+  // 30 Days ka grid banao
+  for(let i = 0; i < 30; i++) {
+    const dayNumber = i + 1;
+    let dayClass = 'day-circle';
+    let dayContent = '';
+
+    if(i < completedDays) {
+      // ✅ Complete - Green + Tick
+      dayClass += ' completed';
+      dayContent = `${dayNumber} <span class="tick-icon">✓</span>`;
+    }
+    else if(i === completedDays) {
+      // ✅ Current - Blue + Start
+      dayClass += ' current';
+      dayContent = `${dayNumber} <span class="start-text">Start</span>`;
+    }
+    else {
+      // ✅ Locked - Grey + Lock
+      dayClass += ' locked';
+      dayContent = `${dayNumber} <span class="lock-icon">🔒</span>`;
+    }
+
     dayGrid.innerHTML += `
-      <div class="day-circle locked" onclick="selectDay(${i})">
-        ${dayNumber} <span class="lock-icon">🔒</span>
+      <div class="${dayClass}" onclick="selectDay(${i})">
+        ${dayContent}
       </div>
     `;
   }
 
+  // Pehla question load karo
   if(gameData[currentDay] && gameData[currentDay].questions) {
     loadQuestion(gameData[currentDay].questions[currentQuestion]);
   }
 }
 
 function selectDay(dayIndex) {
-  // ✅ FIX 2: Locked check
-  const dayButtons = document.querySelectorAll('#day-grid.day-circle');
-  if(dayButtons[dayIndex] && dayButtons[dayIndex].classList.contains('locked')) {
-    return;
-  }
+  // Locked pe click nahi hoga
+  if(dayIndex > completedDays) return;
 
   currentDay = dayIndex;
   currentQuestion = 0;
-  loadQuestion(gameData[currentDay].questions[currentQuestion]);
+  if(gameData[currentDay] && gameData[currentDay].questions) {
+    loadQuestion(gameData[currentDay].questions[currentQuestion]);
+  }
 }
 
 function loadQuestion(qData) {
   if (!qData) return;
   currentQ = qData;
 
-  const progress = ((currentQuestion + 1) / gameData[currentDay].questions.length) * 100;
+  const totalQ = gameData[currentDay].questions.length;
+  const progress = ((currentQuestion + 1) / totalQ) * 100;
   document.getElementById('progressFill').style.width = progress + '%';
-  document.getElementById('progress-text').innerText = `Lesson ${currentDay + 1} of ${gameData.length} | Q ${currentQuestion + 1}/${gameData[currentDay].questions.length}`;
+  document.getElementById('progress-text').innerText = `Lesson ${currentDay + 1} of ${gameData.length} | Q ${currentQuestion + 1}/${totalQ}`;
 
   document.getElementById('hindi-text').innerText = qData.hindi || qData.hind || "";
   document.getElementById('english-ref').innerText = qData.english || qData.q || "";
@@ -186,32 +208,26 @@ function nextQuestion() {
   currentQuestion++;
 
   if (currentQuestion >= gameData[currentDay].questions.length) {
-    // ✅ FIX 3: Agla day unlock karo
-    unlockDay(currentDay + 1);
+    // Day complete - localStorage update karo
+    completedDays = Math.max(completedDays, currentDay + 1);
+    localStorage.setItem('completedDays', completedDays);
+
     currentDay++;
     currentQuestion = 0;
 
-    if (currentDay >= gameData.length) {
+    if (currentDay >= gameData.length || currentDay >= 30) {
       alert("Sabhi lessons complete! 🎉");
       currentDay = 0;
       currentQuestion = 0;
     }
+
+    // Grid wapas banao taki color update ho
+    startQuizList();
   }
-  loadQuestion(gameData[currentDay].questions[currentQuestion]);
-}
 
-function unlockDay(dayIndex) {
-  // ✅ FIX 4: Sahi selector
-  const dayButtons = document.querySelectorAll('#day-grid.day-circle');
-  if (!dayButtons[dayIndex]) return;
-
-  dayButtons[dayIndex].classList.remove('locked');
-  dayButtons[dayIndex].disabled = false;
-
-  const lockIcon = dayButtons[dayIndex].querySelector('.lock-icon');
-  if (lockIcon) lockIcon.style.display = 'none';
-
-  localStorage.setItem('unlockedDay', dayIndex);
+  if(gameData[currentDay] && gameData[currentDay].questions) {
+    loadQuestion(gameData[currentDay].questions[currentQuestion]);
+  }
 }
 
 function playAudio() {
@@ -224,8 +240,4 @@ function playAudio() {
 
 window.onload = function() {
   startQuizList();
-  const savedDay = parseInt(localStorage.getItem('unlockedDay')) || 0;
-  for (let i = 0; i <= savedDay; i++) {
-    unlockDay(i);
-  }
 }
