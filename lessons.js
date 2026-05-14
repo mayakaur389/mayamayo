@@ -211,3 +211,34 @@ window.onload = function() {
   document.getElementById('hearts').innerText = localStorage.getItem('hearts') || '1';
   startQuizList();
 }
+// Day button click - Sirf Maya Quiz kholega, checkAnswer ko haath nahi lagayega
+document.addEventListener('DOMContentLoaded', function() {
+  const dayButtons = document.querySelectorAll('.day-grid button');
+  
+  dayButtons.forEach((btn, index) => {
+    btn.addEventListener('click', function() {
+      const dayNumber = index + 1;
+      
+      // Maya Quiz section dhundho
+      const mayaSection = document.querySelector('.quiz-card');
+      
+      if (mayaSection) {
+        // Sirf show karo, content mat badlo
+        mayaSection.style.display = 'block';
+        mayaSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Agar tera function hai to Day load kar
+        if (typeof loadLesson === 'function') {
+          loadLesson(dayNumber);
+        }
+        if (typeof startDay === 'function') {
+          startDay(dayNumber);
+        }
+        
+        console.log('Day', dayNumber, 'khul gaya');
+      } else {
+        alert('Maya Quiz section nahi mila! class="quiz-card" check karo');
+      }
+    });
+  });
+});
