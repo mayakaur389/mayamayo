@@ -98,6 +98,56 @@ const lessons = [
     { q: "We _ to the park yesterday.", options: ["go", "went", "gone"], answer: "went", hindi: "हम कल पार्क गए थे", english: "We _ to the park yesterday." },
     { q: "She _ the book now.", options: ["reads", "is reading", "read"], answer: "is reading", hindi: "वह अभी किताब पढ़ रही है", english: "She _ the book now." },
     { q: "They _ football tomorrow.", options: ["play", "will play", "played"], answer: "will play", hindi: "वे कल फुटबॉल खेलेंगे", english: "They _ football tomorrow." }
+  ]},
+    { title: "Present Continuous Tense", day: 11, questions: [
+    { q: "I _ now.", options: ["am writing", "write", "wrote"], answer: "am writing", hindi: "मैं अभी लिख रहा हूँ", english: "I _ now." },
+    { q: "She _ a song.", options: ["is singing", "sings", "sang"], answer: "is singing", hindi: "वह गाना गा रही है", english: "She _ a song." },
+    { q: "They _ cricket.", options: ["are playing", "play", "played"], answer: "are playing", hindi: "वे क्रिकेट खेल रहे हैं", english: "They _ cricket." },
+    { q: "He _ TV.", options: ["is watching", "watches", "watched"], answer: "is watching", hindi: "वह टीवी देख रहा है", english: "He _ TV." },
+    { q: "We _ to school.", options: ["are going", "go", "went"], answer: "are going", hindi: "हम स्कूल जा रहे हैं", english: "We _ to school." },
+    { q: "The baby _.", options: ["is sleeping", "sleeps", "slept"], answer: "is sleeping", hindi: "बच्चा सो रहा है", english: "The baby _." },
+    { q: "You _ loudly.", options: ["are talking", "talk", "talked"], answer: "are talking", hindi: "तुम जोर से बात कर रहे हो", english: "You _ loudly." },
+    { q: "I _ my homework.", options: ["am doing", "do", "did"], answer: "am doing", hindi: "मैं अपना होमवर्क कर रहा हूँ", english: "I _ my homework." }
+  ]},
+  { title: "Past Continuous Tense", day: 12, questions: [
+    { q: "I _ when you called.", options: ["was sleeping", "slept", "sleep"], answer: "was sleeping", hindi: "जब तुमने बुलाया मैं सो रहा था", english: "I _ when you called." },
+    { q: "She _ a book yesterday.", options: ["was reading", "read", "reads"], answer: "was reading", hindi: "वह कल किताब पढ़ रही थी", english: "She _ a book yesterday." },
+    { q: "They _ football at 4 PM.", options: ["were playing", "played", "play"], answer: "were playing", hindi: "वे 4 बजे फुटबॉल खेल रहे थे", english: "They _ football at 4 PM." },
+    { q: "He _ when it rained.", options: ["was running", "ran", "runs"], answer: "was running", hindi: "जब बारिश हुई वह दौड़ रहा था", english: "He _ when it rained." },
+    { q: "We _ dinner at 8 PM.", options: ["were eating", "ate", "eat"], answer: "were eating", hindi: "हम 8 बजे खाना खा रहे थे", english: "We _ dinner at 8 PM." },
+    { q: "The children _ in the park.", options: ["were playing", "played", "play"], answer: "were playing", hindi: "बच्चे पार्क में खेल रहे थे", english: "The children _ in the park." },
+    { q: "I _ TV when you came.", options: ["was watching", "watched", "watch"], answer: "was watching", hindi: "जब तुम आए मैं टीवी देख रहा था", english: "I _ TV when you came." },
+    { q: "She _ when I saw her.", options: ["was dancing", "danced", "dances"], answer: "was dancing", hindi: "जब मैंने उसे देखा वह नाच रही थी", english: "She _ when I saw her." }
+  ]},
+  { title: "Future Continuous Tense", day: 13, questions: [
+    { q: "I _ tomorrow at 5 PM.", options: ["will be playing", "play", "played"], answer: "will be playing", hindi: "मैं कल 5 बजे खेल रहा होऊँगा", english: "I _ tomorrow at 5 PM." },
+    { q: "She _ at this time tomorrow.", options: ["will be sleeping", "sleeps", "slept"], answer: "will be sleeping", hindi: "वह कल इस समय सो रही होगी", english: "She _ at this time tomorrow." },
+    { q: "They _ to Delhi next week.", options: ["will be going", "go", "went"], answer: "will be going", hindi: "वे अगले हफ्ते दिल्ली जा रहे होंगे", english: "They _ to Delhi next week." },
+    { q: "He _ the match.", options: ["will be watching", "watches", "watched"], answer: "will be watching", hindi: "वह मैच देख रहा होगा", english: "He _ the match." },
+    { q: "We _ at 10 PM.", options: ["will be studying", "study", "studied"], answer: "will be studying", hindi: "हम 10 बजे पढ़ रहे होंगे", english: "We _ at 10 PM." },
+    { q: "You _ when I arrive.", options: ["will be cooking", "cook", "cooked"], answer: "will be cooking", hindi: "जब मैं आऊँगा तुम खाना बना रहे होगे", english: "You _ when I arrive." },
+    { q: "I _ for my exam.", options: ["will be preparing", "prepare", "prepared"], answer: "will be preparing", hindi: "मैं अपनी परीक्षा की तैयारी कर रहा होऊँगा", english: "I _ for my exam." },
+    { q: "She _ a letter.", options: ["will be writing", "writes", "wrote"], answer: "will be writing", hindi: "वह एक पत्र लिख रही होगी", english: "She _ a letter." }
+  ]},
+  { title: "Present Perfect Tense", day: 14, questions: [
+    { q: "I _ my work.", options: ["have finished", "finished", "finish"], answer: "have finished", hindi: "मैंने अपना काम पूरा कर लिया है", english: "I _ my work." },
+    { q: "She _ just arrived.", options: ["has", "have", "had"], answer: "has", hindi: "वह अभी-अभी आई है", english: "She _ just arrived." },
+    { q: "They _ to Delhi.", options: ["have gone", "went", "go"], answer: "have gone", hindi: "वे दिल्ली जा चुके हैं", english: "They _ to Delhi." },
+    { q: "He _ his keys.", options: ["has lost", "lost", "loses"], answer: "has lost", hindi: "उसने अपनी चाबियाँ खो दी हैं", english: "He _ his keys." },
+    { q: "We _ the movie.", options: ["have seen", "saw", "see"], answer: "have seen", hindi: "हमने फिल्म देख ली है", english: "We _ the movie." },
+    { q: "I _ here for 5 years.", options: ["have lived", "lived", "live"], answer: "have lived", hindi: "मैं यहाँ 5 साल से रह रहा हूँ", english: "I _ here for 5 years." },
+    { q: "She _ her homework.", options: ["has completed", "completed", "completes"], answer: "has completed", hindi: "उसने अपना होमवर्क पूरा कर लिया है", english: "She _ her homework." },
+    { q: "You _ a great job.", options: ["have done", "did", "do"], answer: "have done", hindi: "तुमने बहुत अच्छा काम किया है", english: "You _ a great job." }
+  ]},
+  { title: "Past Perfect Tense", day: 15, questions: [
+    { q: "I _ before he came.", options: ["had eaten", "ate", "eat"], answer: "had eaten", hindi: "उसके आने से पहले मैंने खा लिया था", english: "I _ before he came." },
+    { q: "She _ when I reached.", options: ["had left", "left", "leaves"], answer: "had left", hindi: "जब मैं पहुंचा वह जा चुकी थी", english: "She _ when I reached." },
+    { q: "They _ the work before 5 PM.", options: ["had finished", "finished", "finish"], answer: "had finished", hindi: "उन्होंने 5 बजे से पहले काम पूरा कर लिया था", english: "They _ the work before 5 PM." },
+    { q: "He _ his homework before playing.", options: ["had done", "did", "does"], answer: "had done", hindi: "खेलने से पहले उसने होमवर्क कर लिया था", english: "He _ his homework before playing." },
+    { q: "We _ the movie before it started raining.", options: ["had seen", "saw", "see"], answer: "had seen", hindi: "बारिश शुरू होने से पहले हमने फिल्म देख ली थी", english: "We _ the movie before it started raining." },
+    { q: "I _ him before.", options: ["had met", "met", "meet"], answer: "had met", hindi: "मैं उससे पहले मिल चुका था", english: "I _ him before." },
+    { q: "She _ the letter before I asked.", options: ["had written", "wrote", "writes"], answer: "had written", hindi: "मेरे पूछने से पहले वह पत्र लिख चुकी थी", english: "She _ the letter before I asked." },
+    { q: "They _ when we arrived.", options: ["had gone", "went", "go"], answer: "had gone", hindi: "जब हम पहुंचे वे जा चुके थे", english: "They _ when we arrived." }
   ]}
 ];
 
