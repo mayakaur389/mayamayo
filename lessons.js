@@ -27,41 +27,62 @@ let selectedWords = [];
 let currentQ = null;
 let gameData = lessons;
 
-// ===== DAY SYSTEM: 30 KA BATCH - FINAL =====
+// ===== DAY SYSTEM: 30 KA BATCH - FINAL FIX =====
 let daysPerUnit = 30;
 
-// localStorage se data nikalo
+// localStorage se data nikalo + purana data fix karo
+let savedCompleted = localStorage.getItem('completedDays');
+let completedDaysArray = [];
+
+// Agar purana number hai to array bana do
+if(savedCompleted) {
+  try {
+    let parsed = JSON.parse(savedCompleted);
+    // Agar array hai to use karo, warna number se array banao
+    if(Array.isArray(parsed)) {
+      completedDaysArray = parsed;
+    } else {
+      // Purana: 5 tha → Naya: [1,2,3,4,5]
+      for(let i = 1; i <= parsed; i++) {
+        completedDaysArray.push(i);
+      }
+    }
+  } catch(e) {
+    completedDaysArray = [];
+  }
+}
+
 let userProgress = {
-  completedDays: JSON.parse(localStorage.getItem('completedDays')) || [], // Array: [1,2,3]
+  completedDays: completedDaysArray,
   currentDay: parseInt(localStorage.getItem('currentDay')) || 1
 };
 
-// Current Unit nikalo currentDay se
 function getCurrentUnit() {
   return Math.ceil(userProgress.currentDay / daysPerUnit);
 }
 
-const dayGrid = document.querySelector('.day-grid'); // Class se pakdo
-const unitTitle = document.querySelector('.day-section h3');
-
-// Unit ka start-end day nikalo
 function getDayRange(unit) {
   const start = (unit - 1) * daysPerUnit + 1;
   const end = unit * daysPerUnit;
   return { start, end };
 }
 
-// 30 Day render karo
 function renderDayBatch() {
+  const dayGrid = document.querySelector('.day-grid');
+  const unitTitle = document.querySelector('.day-section h3');
+
+  if(!dayGrid) {
+    console.log('Guru, day-grid div nahi mila HTML me');
+    return;
+  }
+
   const unit = getCurrentUnit();
   const { start, end } = getDayRange(unit);
 
-  // Title update: UNIT 1: DAY 1-30
   if(unitTitle) {
     unitTitle.textContent = `UNIT ${unit}: BASICS - ${start}-${end} DAYS`;
   }
 
-  if(!dayGrid) return;
   dayGrid.innerHTML = '';
 
   for(let day = start; day <= end; day++) {
@@ -72,11 +93,11 @@ function renderDayBatch() {
     if(userProgress.completedDays.includes(day)) {
       circle.classList.add('completed');
       circle.innerHTML = `${day}<span class="tick-icon">✓</span>`;
-    } 
+    }
     else if(day === userProgress.currentDay) {
       circle.classList.add('current');
       circle.innerHTML = `${day}<span class="start-text">Start</span>`;
-    } 
+    }
     else if(day > userProgress.currentDay) {
       circle.classList.add('locked');
       circle.innerHTML = `${day}<span class="lock-icon">🔒</span>`;
@@ -85,7 +106,7 @@ function renderDayBatch() {
       circle.innerHTML = `${day}`;
     }
 
-    circle.onclick = () => selectDay(day - 1); // Tumhara old function
+    circle.onclick = () => selectDay(day - 1);
     dayGrid.appendChild(circle);
   }
 
@@ -99,8 +120,11 @@ function renderDayBatch() {
   }
 }
 
-// Page load pe chalao
-renderDayBatch();
+// DOM ready hone ke baad chalao
+document.addEventListener('DOMContentLoaded', renderDayBatch);
+
+// startQuizList ko hata de - ab renderDayBatch use hoga
+window.startQuizList = renderDayBatch; // Backup: agar kahin call ho raha ho
 function selectDay(dayIndex) {
   // === Ye 3 line add kar - Maya section kholega ===
   const mayaSection = document.getElementById('maya-section');
