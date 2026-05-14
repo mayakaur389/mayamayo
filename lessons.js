@@ -148,6 +148,56 @@ const lessons = [
     { q: "I _ him before.", options: ["had met", "met", "meet"], answer: "had met", hindi: "मैं उससे पहले मिल चुका था", english: "I _ him before." },
     { q: "She _ the letter before I asked.", options: ["had written", "wrote", "writes"], answer: "had written", hindi: "मेरे पूछने से पहले वह पत्र लिख चुकी थी", english: "She _ the letter before I asked." },
     { q: "They _ when we arrived.", options: ["had gone", "went", "go"], answer: "had gone", hindi: "जब हम पहुंचे वे जा चुके थे", english: "They _ when we arrived." }
+  ]},
+    { title: "Future Perfect Tense", day: 16, questions: [
+    { q: "I _ my work by 5 PM.", options: ["will have finished", "finished", "finish"], answer: "will have finished", hindi: "मैं 5 बजे तक अपना काम पूरा कर लूँगा", english: "I _ my work by 5 PM." },
+    { q: "She _ by tomorrow.", options: ["will have arrived", "arrived", "arrives"], answer: "will have arrived", hindi: "वह कल तक पहुंच चुकी होगी", english: "She _ by tomorrow." },
+    { q: "They _ the project by next week.", options: ["will have completed", "completed", "complete"], answer: "will have completed", hindi: "वे अगले हफ्ते तक प्रोजेक्ट पूरा कर लेंगे", english: "They _ the project by next week." },
+    { q: "He _ his exam by June.", options: ["will have passed", "passed", "passes"], answer: "will have passed", hindi: "वह जून तक अपनी परीक्षा पास कर चुका होगा", english: "He _ his exam by June." },
+    { q: "We _ before the guests arrive.", options: ["will have eaten", "ate", "eat"], answer: "will have eaten", hindi: "मेहमानों के आने से पहले हम खा चुके होंगे", english: "We _ before the guests arrive." },
+    { q: "You _ the book by evening.", options: ["will have read", "read", "reads"], answer: "will have read", hindi: "तुम शाम तक किताब पढ़ चुके होगे", english: "You _ the book by evening." },
+    { q: "I _ to Delhi by 8 PM.", options: ["will have gone", "went", "go"], answer: "will have gone", hindi: "मैं 8 बजे तक दिल्ली जा चुका होऊँगा", english: "I _ to Delhi by 8 PM." },
+    { q: "She _ her homework by 7 PM.", options: ["will have done", "did", "does"], answer: "will have done", hindi: "वह 7 बजे तक अपना होमवर्क कर चुकी होगी", english: "She _ her homework by 7 PM." }
+  ]},
+  { title: "Modal Verbs", day: 17, questions: [
+    { q: "You _ respect elders.", options: ["must", "can", "may"], answer: "must", hindi: "तुम्हें बड़ों का आदर करना चाहिए", english: "You _ respect elders." },
+    { q: "_ I come in?", options: ["May", "Can", "Must"], answer: "May", hindi: "क्या मैं अंदर आ सकता हूँ?", english: "_ I come in?" },
+    { q: "She _ speak English.", options: ["can", "must", "may"], answer: "can", hindi: "वह अंग्रेजी बोल सकती है", english: "She _ speak English." },
+    { q: "We _ help the poor.", options: ["should", "can", "may"], answer: "should", hindi: "हमें गरीबों की मदद करनी चाहिए", english: "We _ help the poor." },
+    { q: "He _ be at home now.", options: ["must", "can", "may"], answer: "must", hindi: "वह अब घर पर होगा", english: "He _ be at home now." },
+    { q: "You _ not smoke here.", options: ["must", "can", "may"], answer: "must", hindi: "तुम यहाँ धूम्रपान नहीं कर सकते", english: "You _ not smoke here." },
+    { q: "_ you please help me?", options: ["Could", "Must", "May"], answer: "Could", hindi: "क्या आप मेरी मदद कर सकते हैं?", english: "_ you please help me?" },
+    { q: "I _ swim when I was 5.", options: ["could", "can", "may"], answer: "could", hindi: "जब मैं 5 साल का था तब मैं तैर सकता था", english: "I _ swim when I was 5." }
+  ]},
+  { title: "Active & Passive Voice", day: 18, questions: [
+    { q: "Ram plays cricket. (Passive)", options: ["Cricket is played by Ram", "Cricket was played by Ram", "Cricket played by Ram"], answer: "Cricket is played by Ram", hindi: "राम क्रिकेट खेलता है", english: "Ram plays cricket." },
+    { q: "She wrote a letter. (Passive)", options: ["A letter was written by her", "A letter is written by her", "A letter written by her"], answer: "A letter was written by her", hindi: "उसने एक पत्र लिखा", english: "She wrote a letter." },
+    { q: "They will help me. (Passive)", options: ["I will be helped by them", "I am helped by them", "I was helped by them"], answer: "I will be helped by them", hindi: "वे मेरी मदद करेंगे", english: "They will help me." },
+    { q: "He is reading a book. (Passive)", options: ["A book is being read by him", "A book was read by him", "A book read by him"], answer: "A book is being read by him", hindi: "वह एक किताब पढ़ रहा है", english: "He is reading a book." },
+    { q: "The teacher teaches us. (Passive)", options: ["We are taught by the teacher", "We were taught by the teacher", "We taught by the teacher"], answer: "We are taught by the teacher", hindi: "शिक्षक हमें पढ़ाता है", english: "The teacher teaches us." },
+    { q: "We have finished the work. (Passive)", options: ["The work has been finished by us", "The work was finished by us", "The work is finished by us"], answer: "The work has been finished by us", hindi: "हमने काम पूरा कर लिया है", english: "We have finished the work." },
+    { q: "She was cooking food. (Passive)", options: ["Food was being cooked by her", "Food is cooked by her", "Food cooked by her"], answer: "Food was being cooked by her", hindi: "वह खाना बना रही थी", english: "She was cooking food." },
+    { q: "They had completed the task. (Passive)", options: ["The task had been completed by them", "The task was completed by them", "The task is completed by them"], answer: "The task had been completed by them", hindi: "उन्होंने कार्य पूरा कर लिया था", english: "They had completed the task." }
+  ]},
+  { title: "Direct & Indirect Speech", day: 19, questions: [
+    { q: "He said, 'I am happy.' (Indirect)", options: ["He said that he was happy", "He said that I am happy", "He said he is happy"], answer: "He said that he was happy", hindi: "उसने कहा, 'मैं खुश हूँ'", english: "He said, 'I am happy.'" },
+    { q: "She said, 'I will go.' (Indirect)", options: ["She said that she would go", "She said that I will go", "She said she will go"], answer: "She said that she would go", hindi: "उसने कहा, 'मैं जाऊँगी'", english: "She said, 'I will go.'" },
+    { q: "They said, 'We are playing.' (Indirect)", options: ["They said that they were playing", "They said that we are playing", "They said they are playing"], answer: "They said that they were playing", hindi: "उन्होंने कहा, 'हम खेल रहे हैं'", english: "They said, 'We are playing.'" },
+    { q: "He said to me, 'You are late.' (Indirect)", options: ["He told me that I was late", "He said to me that you are late", "He told me you are late"], answer: "He told me that I was late", hindi: "उसने मुझसे कहा, 'तुम लेट हो'", english: "He said to me, 'You are late.'" },
+    { q: "She said, 'I can swim.' (Indirect)", options: ["She said that she could swim", "She said that I can swim", "She said she can swim"], answer: "She said that she could swim", hindi: "उसने कहा, 'मैं तैर सकती हूँ'", english: "She said, 'I can swim.'" },
+    { q: "He said, 'I have finished.' (Indirect)", options: ["He said that he had finished", "He said that I have finished", "He said he has finished"], answer: "He said that he had finished", hindi: "उसने कहा, 'मैंने पूरा कर लिया है'", english: "He said, 'I have finished.'" },
+    { q: "Teacher said, 'Work hard.' (Indirect)", options: ["Teacher advised to work hard", "Teacher said work hard", "Teacher said to work hard"], answer: "Teacher advised to work hard", hindi: "शिक्षक ने कहा, 'मेहनत करो'", english: "Teacher said, 'Work hard.'" },
+    { q: "He said, 'Where are you going?' (Indirect)", options: ["He asked where I was going", "He said where are you going", "He asked where you are going"], answer: "He asked where I was going", hindi: "उसने कहा, 'तुम कहाँ जा रहे हो?'", english: "He said, 'Where are you going?'" }
+  ]},
+  { title: "Grammar Revision", day: 20, questions: [
+    { q: "This is _ apple.", options: ["an", "a", "the"], answer: "an", hindi: "यह एक सेब है", english: "This is _ apple." },
+    { q: "He _ to school yesterday.", options: ["went", "go", "goes"], answer: "went", hindi: "वह कल स्कूल गया था", english: "He _ to school yesterday." },
+    { q: "She _ singing now.", options: ["is", "was", "are"], answer: "is", hindi: "वह अभी गा रही है", english: "She _ singing now." },
+    { q: "They _ play cricket tomorrow.", options: ["will", "shall", "would"], answer: "will", hindi: "वे कल क्रिकेट खेलेंगे", english: "They _ play cricket tomorrow." },
+    { q: "_ is my pen.", options: ["This", "These", "Those"], answer: "This", hindi: "यह मेरा पेन है", english: "_ is my pen." },
+    { q: "The book is _ the table.", options: ["on", "in", "at"], answer: "on", hindi: "किताब टेबल पर है", english: "The book is _ the table." },
+    { q: "I _ my homework already.", options: ["have done", "did", "do"], answer: "have done", hindi: "मैं पहले ही अपना होमवर्क कर चुका हूँ", english: "I _ my homework already." },
+    { q: "You _ not go there.", options: ["should", "can", "may"], answer: "should", hindi: "तुम्हें वहाँ नहीं जाना चाहिए", english: "You _ not go there." }
   ]}
 ];
 
