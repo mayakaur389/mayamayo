@@ -248,6 +248,56 @@ const lessons = [
     { q: "Antonym of 'Old' is _.", options: ["Young", "New", "Ancient"], answer: "Young", hindi: "'Old' का विलोम _ है", english: "Antonym of 'Old' is _." },
     { q: "Antonym of 'True' is _.", options: ["False", "Right", "Correct"], answer: "False", hindi: "'True' का विलोम _ है", english: "Antonym of 'True' is _." },
     { q: "Antonym of 'Rich' is _.", options: ["Poor", "Wealthy", "Money"], answer: "Poor", hindi: "'Rich' का विलोम _ है", english: "Antonym of 'Rich' is _." }
+  ]},
+    { title: "Phrasal Verbs", day: 26, questions: [
+    { q: "Please _ the light.", options: ["turn on", "turn off", "turn up"], answer: "turn on", hindi: "कृपया लाइट चालू करो", english: "Please _ the light." },
+    { q: "He _ his father.", options: ["looks after", "looks for", "looks at"], answer: "looks after", hindi: "वह अपने पिता की देखभाल करता है", english: "He _ his father." },
+    { q: "Don't _ your time.", options: ["waste", "give up", "get up"], answer: "give up", hindi: "अपना समय बर्बाद मत करो", english: "Don't _ your time." },
+    { q: "I _ my keys.", options: ["looking for", "looking at", "looking after"], answer: "looking for", hindi: "मैं अपनी चाबियाँ ढूंढ रहा हूँ", english: "I _ my keys." },
+    { q: "She _ early in the morning.", options: ["gets up", "gives up", "puts up"], answer: "gets up", hindi: "वह सुबह जल्दी उठती है", english: "She _ early in the morning." },
+    { q: "The plane _ at 6 PM.", options: ["takes off", "puts off", "gets off"], answer: "takes off", hindi: "हवाई जहाज 6 बजे उड़ान भरेगा", english: "The plane _ at 6 PM." },
+    { q: "We should _ the meeting.", options: ["put off", "take off", "get off"], answer: "put off", hindi: "हमें मीटिंग स्थगित कर देनी चाहिए", english: "We should _ the meeting." },
+    { q: "He _ smoking last year.", options: ["gave up", "got up", "put up"], answer: "gave up", hindi: "उसने पिछले साल धूम्रपान छोड़ दिया", english: "He _ smoking last year." }
+  ]},
+  { title: "One Word Substitution", day: 27, questions: [
+    { q: "A person who writes books is a _.", options: ["author", "writer", "poet"], answer: "author", hindi: "किताबें लिखने वाले व्यक्ति को _ कहते हैं", english: "A person who writes books is a _." },
+    { q: "A place where animals are kept is a _.", options: ["zoo", "park", "garden"], answer: "zoo", hindi: "जहाँ जानवर रखे जाते हैं उसे _ कहते हैं", english: "A place where animals are kept is a _." },
+    { q: "A person who cannot read or write is _.", options: ["illiterate", "literate", "educated"], answer: "illiterate", hindi: "जो व्यक्ति पढ़-लिख नहीं सकता उसे _ कहते हैं", english: "A person who cannot read or write is _." },
+    { q: "The study of stars is called _.", options: ["astronomy", "astrology", "geology"], answer: "astronomy", hindi: "तारों के अध्ययन को _ कहते हैं", english: "The study of stars is called _." },
+    { q: "A person who travels on foot is a _.", options: ["pedestrian", "traveler", "driver"], answer: "pedestrian", hindi: "पैदल यात्रा करने वाले को _ कहते हैं", english: "A person who travels on foot is a _." },
+    { q: "A life history written by oneself is _.", options: ["autobiography", "biography", "story"], answer: "autobiography", hindi: "स्वयं द्वारा लिखी जीवन कथा को _ कहते हैं", english: "A life history written by oneself is _." },
+    { q: "One who loves books is a _.", options: ["bibliophile", "philosopher", "scholar"], answer: "bibliophile", hindi: "किताबों से प्रेम करने वाले को _ कहते हैं", english: "One who loves books is a _." },
+    { q: "Government by the people is _.", options: ["democracy", "monarchy", "autocracy"], answer: "democracy", hindi: "लोगों द्वारा शासन को _ कहते हैं", english: "Government by the people is _." }
+  ]},
+  { title: "Idioms & Phrases", day: 28, questions: [
+    { q: "'Break the ice' means _.", options: ["to start conversation", "to break something", "to be cold"], answer: "to start conversation", hindi: "'Break the ice' का मतलब _ है", english: "'Break the ice' means _." },
+    { q: "'Piece of cake' means _.", options: ["very easy", "sweet", "difficult"], answer: "very easy", hindi: "'Piece of cake' का मतलब _ है", english: "'Piece of cake' means _." },
+    { q: "'Once in a blue moon' means _.", options: ["very rarely", "every month", "always"], answer: "very rarely", hindi: "'Once in a blue moon' का मतलब _ है", english: "'Once in a blue moon' means _." },
+    { q: "'Spill the beans' means _.", options: ["to reveal a secret", "to waste food", "to cook"], answer: "to reveal a secret", hindi: "'Spill the beans' का मतलब _ है", english: "'Spill the beans' means _." },
+    { q: "'Let the cat out of the bag' means _.", options: ["to reveal a secret", "to free animals", "to play"], answer: "to reveal a secret", hindi: "'Let the cat out of the bag' का मतलब _ है", english: "'Let the cat out of the bag' means _." },
+    { q: "'Hit the sack' means _.", options: ["to go to sleep", "to fight", "to work hard"], answer: "to go to sleep", hindi: "'Hit the sack' का मतलब _ है", english: "'Hit the sack' means _." },
+    { q: "'Costs an arm and a leg' means _.", options: ["very expensive", "cheap", "free"], answer: "very expensive", hindi: "'Costs an arm and a leg' का मतलब _ है", english: "'Costs an arm and a leg' means _." },
+    { q: "'Under the weather' means _.", options: ["feeling sick", "enjoying rain", "outside"], answer: "feeling sick", hindi: "'Under the weather' का मतलब _ है", english: "'Under the weather' means _." }
+  ]},
+  { title: "Spelling & Confusing Words", day: 29, questions: [
+    { q: "Choose correct spelling:", options: ["receive", "recieve", "receeve"], answer: "receive", hindi: "सही वर्तनी चुनें:", english: "Choose correct spelling:" },
+    { q: "Choose correct spelling:", options: ["environment", "enviroment", "environmant"], answer: "environment", hindi: "सही वर्तनी चुनें:", english: "Choose correct spelling:" },
+    { q: "I _ to school yesterday.", options: ["went", "go", "gone"], answer: "went", hindi: "मैं कल स्कूल _ था", english: "I _ to school yesterday." },
+    { q: "Their/There _ is a book on the table.", options: ["There", "Their", "They're"], answer: "There", hindi: "टेबल पर एक किताब है", english: "Their/There _ is a book on the table." },
+    { q: "Choose correct spelling:", options: ["accommodation", "accomodation", "acommodation"], answer: "accommodation", hindi: "सही वर्तनी चुनें:", english: "Choose correct spelling:" },
+    { q: "He is _ than me.", options: ["taller", "tallest", "tall"], answer: "taller", hindi: "वह मुझसे _ है", english: "He is _ than me." },
+    { q: "Your/You're _ very kind.", options: ["You're", "Your", "Yours"], answer: "You're", hindi: "तुम बहुत दयालु हो", english: "Your/You're _ very kind." },
+    { q: "Choose correct spelling:", options: ["necessary", "neccessary", "neccesary"], answer: "necessary", hindi: "सही वर्तनी चुनें:", english: "Choose correct spelling:" }
+  ]},
+  { title: "Mixed Grammar Test", day: 30, questions: [
+    { q: "She _ a doctor for 10 years.", options: ["has been", "is", "was"], answer: "has been", hindi: "वह 10 साल से डॉक्टर है", english: "She _ a doctor for 10 years." },
+    { q: "If I _ you, I would apologize.", options: ["were", "am", "was"], answer: "were", hindi: "अगर मैं तुम होता, तो माफी मांगता", english: "If I _ you, I would apologize." },
+    { q: "The cake _ by mother.", options: ["was made", "made", "is made"], answer: "was made", hindi: "केक माँ द्वारा बनाया गया था", english: "The cake _ by mother." },
+    { q: "He said, 'I am tired.' → He said that _.", options: ["he was tired", "I was tired", "he is tired"], answer: "he was tired", hindi: "उसने कहा, 'मैं थका हुआ हूँ' → उसने कहा कि _", english: "He said, 'I am tired.' → He said that _." },
+    { q: "You _ not smoke here.", options: ["must", "can", "may"], answer: "must", hindi: "तुम यहाँ धूम्रपान नहीं कर सकते", english: "You _ not smoke here." },
+    { q: "_ sun is very hot today.", options: ["The", "A", "An"], answer: "The", hindi: "आज सूरज बहुत गर्म है", english: "_ sun is very hot today." },
+    { q: "I have _ friends.", options: ["few", "little", "less"], answer: "few", hindi: "मेरे कुछ ही दोस्त हैं", english: "I have _ friends." },
+    { q: "He is _ honest man.", options: ["an", "a", "the"], answer: "an", hindi: "वह एक ईमानदार आदमी है", english: "He is _ honest man." }
   ]}
 ];
 
