@@ -340,10 +340,13 @@ body {
 .tick-icon { font-size: 16px; line-height: 1; }
 .start-text { font-size: 10px; margin-top: 2px; }
 .lock-icon { font-size: 12px; margin-top: 2px; }
-/* ===== DAY GRID: LAPTOP + MOBILE RESPONSIVE ===== */
+/* ===== UNIT 1: DAY CIRCLES + MAYA QUIZ FINAL CSS ===== */
+/* Laptop + Mobile dono me perfect chalega */
+
+/* ----- DAY GRID CONTAINER ----- */
 .day-grid {
   display: grid !important;
-  gap: 10px !important;
+  gap: 8px !important;
   padding: 16px 12px !important;
   justify-content: center !important;
   justify-items: center !important;
@@ -352,59 +355,64 @@ body {
   box-sizing: border-box !important;
   overflow: hidden !important;
   
-  /* Mobile: 5 circle auto-fit */
-  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  /* Mobile: 5 circle per row */
+  grid-template-columns: repeat(5, 1fr) !important;
 }
 
-/* Tablet: 8 circle */
+/* Tablet: 8 circle per row */
 @media (min-width: 600px) {
   .day-grid {
     grid-template-columns: repeat(8, 1fr) !important;
-    gap: 12px !important;
-    max-width: 600px !important;
+    gap: 10px !important;
+    max-width: 650px !important;
     margin: 0 auto !important;
+    padding: 20px 16px !important;
   }
 }
 
-/* Laptop: 10 circle */
+/* Laptop: 10 circle per row */
 @media (min-width: 900px) {
   .day-grid {
     grid-template-columns: repeat(10, 1fr) !important;
-    gap: 14px !important;
-    max-width: 800px !important;
+    gap: 12px !important;
+    max-width: 850px !important;
   }
 }
 
-/* Desktop: 15 circle */
+/* Desktop: 15 circle per row */
 @media (min-width: 1400px) {
   .day-grid {
     grid-template-columns: repeat(15, 1fr) !important;
-    max-width: 1200px !important;
+    max-width: 1250px !important;
   }
 }
 
-/* ===== DAY CIRCLE: PERFECT GOL + CENTER ===== */
+/* ----- DAY CIRCLE STYLE ----- */
 .day-circle {
-  width: 100% !important;
-  aspect-ratio: 1/1 !important; /* Height = Width = Gol */
-  max-width: 55px !important; /* Mobile me jyada bada nahi */
+  width: 90% !important; /* Gap ke liye 10% chhod diya */
+  aspect-ratio: 1/1 !important; /* Hamesha gol rahega */
+  max-width: 52px !important; /* Mobile me jyada bada nahi */
   border-radius: 50% !important;
-  font-size: clamp(12px, 3vw, 16px) !important; /* Screen ke hisaab se font */
+  font-size: clamp(11px, 2.8vw, 16px) !important;
+  font-weight: 600 !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
   padding: 0 !important;
   margin: 0 !important;
-  gap: 2px !important;
+  gap: 1px !important;
   line-height: 1 !important;
   box-sizing: border-box !important;
   border: 2px solid #1E90FF !important;
+  background: #1a2332 !important;
+  color: #8b9bb4 !important;
   cursor: pointer !important;
   transition: all 0.2s ease !important;
+  user-select: none !important;
 }
 
-/* Laptop/Desktop me circle thoda bada */
+/* Laptop/Desktop me circle size */
 @media (min-width: 900px) {
   .day-circle {
     max-width: 50px !important;
@@ -412,38 +420,59 @@ body {
   }
 }
 
-/* Current/Active day highlight */
-.day-circle.current {
-  border-width: 3px !important;
-  transform: scale(1.05) !important;
-  box-shadow: 0 0 12px rgba(30, 144, 255, 0.6) !important;
+/* ----- DAY CIRCLE STATES ----- */
+/* Completed Day - Green */
+.day-circle.completed {
+  background: #22c55e !important;
+  border-color: #22c55e !important;
+  color: #fff !important;
 }
 
-/* Start/Lock/Tick icon responsive */
+/* Current Day - Blue Glow */
+.day-circle.current {
+  background: #1E90FF !important;
+  border-color: #1E90FF !important;
+  color: #fff !important;
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.6) !important;
+  /* Scale hata diya taaki overlap na ho */
+}
+
+/* Locked Day */
+.day-circle.locked {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+/* Start/Lock/Tick icon */
 .day-circle .start-text,
 .day-circle .lock-icon,
 .day-circle .tick-icon {
-  font-size: clamp(6px, 1.8vw, 9px) !important;
+  font-size: clamp(6px, 1.6vw, 9px) !important;
+  font-weight: 400 !important;
   line-height: 1 !important;
+  margin-top: 1px !important;
 }
 
-/* Hover effect laptop me */
-@media (hover: hover) {
-  .day-circle:hover {
-    transform: scale(1.1) !important;
+/* Hover effect sirf laptop me */
+@media (hover: hover) and (min-width: 900px) {
+  .day-circle:not(.locked):hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 0 15px rgba(30, 144, 255, 0.8) !important;
   }
 }
 
-/* ===== MAYA QUIZ CARD: PERFECT CENTER ===== */
+/* ----- MAYA QUIZ CARD ----- */
 #maya-section {
   width: calc(100% - 32px) !important;
   max-width: 480px !important;
-  margin: 20px auto !important; /* Auto = Left-Right Center */
+  margin: 24px auto !important;
   box-sizing: border-box !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
 }
 
 @media (min-width: 900px) {
   #maya-section {
-    max-width: 550px !important;
+    max-width: 580px !important;
   }
 }
