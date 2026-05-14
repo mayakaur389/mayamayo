@@ -77,6 +77,14 @@ function startQuizList() {
 }
 
 function selectDay(dayIndex) {
+  // === Ye 3 line add kar - Maya section kholega ===
+  const mayaSection = document.getElementById('maya-section');
+  if (mayaSection) {
+    mayaSection.style.cssText = 'display:block!important';
+    mayaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  // === Yaha tak add kar ===
+  
   let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
   if(dayIndex + 1 > completedDays + 1) return;
   if(dayIndex >= gameData.length) {
