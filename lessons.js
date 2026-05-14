@@ -48,8 +48,58 @@ const lessons = [
     { q: "I _ happy.", options: ["is", "am", "are"], answer: "am", hindi: "मैं खुश हूँ", english: "I _ happy." },
     { q: "You _ my friend.", options: ["is", "am", "are"], answer: "are", hindi: "तुम मेरे दोस्त हो", english: "You _ my friend." },
     { q: "She _ singing.", options: ["is", "am", "are"], answer: "is", hindi: "वह गा रही है", english: "She _ singing." }
+  ]},
+    { title: "Adjectives", day: 6, questions: [
+    { q: "She is a _ student.", options: ["good", "well", "better"], answer: "good", hindi: "वह एक अच्छी छात्रा है", english: "She is a _ student." },
+    { q: "This is _ than that.", options: ["better", "best", "good"], answer: "better", hindi: "यह उससे बेहतर है", english: "This is _ than that." },
+    { q: "He is the _ boy in class.", options: ["tall", "taller", "tallest"], answer: "tallest", hindi: "वह कक्षा का सबसे लंबा लड़का है", english: "He is the _ boy in class." },
+    { q: "The cake is _.", options: ["delicious", "deliciously", "delight"], answer: "delicious", hindi: "केक स्वादिष्ट है", english: "The cake is _." },
+    { q: "She sings _.", options: ["beautiful", "beautifully", "beauty"], answer: "beautifully", hindi: "वह सुंदर गाती है", english: "She sings _." },
+    { q: "This book is _ than that one.", options: ["interesting", "more interesting", "most interesting"], answer: "more interesting", hindi: "यह किताब उससे ज्यादा रोचक है", english: "This book is _ than that one." },
+    { q: "The weather is _ today.", options: ["cold", "colder", "coldest"], answer: "cold", hindi: "आज मौसम ठंडा है", english: "The weather is _ today." },
+    { q: "He is a _ driver.", options: ["careful", "carefully", "care"], answer: "careful", hindi: "वह एक सावधान ड्राइवर है", english: "He is a _ driver." }
+  ]},
+  { title: "Prepositions", day: 7, questions: [
+    { q: "The book is _ the table.", options: ["on", "in", "at"], answer: "on", hindi: "किताब टेबल पर है", english: "The book is _ the table." },
+    { q: "She arrived _ 5 PM.", options: ["at", "in", "on"], answer: "at", hindi: "वह 5 बजे पहुंची", english: "She arrived _ 5 PM." },
+    { q: "He is good _ maths.", options: ["at", "in", "on"], answer: "at", hindi: "वह गणित में अच्छा है", english: "He is good _ maths." },
+    { q: "We went _ car.", options: ["by", "in", "on"], answer: "by", hindi: "हम कार से गए", english: "We went _ car." },
+    { q: "The cat is _ the chair.", options: ["under", "on", "in"], answer: "under", hindi: "बिल्ली कुर्सी के नीचे है", english: "The cat is _ the chair." },
+    { q: "She is interested _ music.", options: ["in", "at", "on"], answer: "in", hindi: "वह संगीत में रुचि रखती है", english: "She is interested _ music." },
+    { q: "The train is _ the station.", options: ["at", "in", "on"], answer: "at", hindi: "ट्रेन स्टेशन पर है", english: "The train is _ the station." },
+    { q: "He lives _ Delhi.", options: ["in", "at", "on"], answer: "in", hindi: "वह दिल्ली में रहता है", english: "He lives _ Delhi." }
+  ]},
+  { title: "Conjunctions", day: 8, questions: [
+    { q: "I went to bed early _ I was tired.", options: ["because", "but", "and"], answer: "because", hindi: "मैं जल्दी सो गया क्योंकि मैं थका हुआ था", english: "I went to bed early _ I was tired." },
+    { q: "She is smart _ beautiful.", options: ["and", "but", "or"], answer: "and", hindi: "वह स्मार्ट है और सुंदर है", english: "She is smart _ beautiful." },
+    { q: "I wanted to go, _ I was sick.", options: ["but", "and", "or"], answer: "but", hindi: "मैं जाना चाहता था, लेकिन मैं बीमार था", english: "I wanted to go, _ I was sick." },
+    { q: "Do you want tea _ coffee?", options: ["or", "and", "but"], answer: "or", hindi: "क्या तुम चाय या कॉफी चाहते हो?", english: "Do you want tea _ coffee?" },
+    { q: "He is poor _ honest.", options: ["but", "and", "or"], answer: "but", hindi: "वह गरीब है लेकिन ईमानदार है", english: "He is poor _ honest." },
+    { q: "I like reading _ watching movies.", options: ["and", "but", "or"], answer: "and", hindi: "मुझे पढ़ना और फिल्में देखना पसंद है", english: "I like reading _ watching movies." },
+    { q: "She will come _ she calls.", options: ["if", "but", "and"], answer: "if", hindi: "वह आएगी अगर वह बुलाएगी", english: "She will come _ she calls." },
+    { q: "He is lazy, _ he is happy.", options: ["but", "and", "or"], answer: "but", hindi: "वह आलसी है, लेकिन खुश है", english: "He is lazy, _ he is happy." }
+  ]},
+  { title: "Articles", day: 9, questions: [
+    { q: "_ sun rises in the east.", options: ["The", "A", "An"], answer: "The", hindi: "सूरज पूर्व में उगता है", english: "_ sun rises in the east." },
+    { q: "She is _ European.", options: ["a", "an", "the"], answer: "a", hindi: "वह एक यूरोपियन है", english: "She is _ European." },
+    { q: "I read _ book.", options: ["a", "an", "the"], answer: "a", hindi: "मैं एक किताब पढ़ता हूँ", english: "I read _ book." },
+    { q: "_ apple a day keeps doctor away.", options: ["A", "An", "The"], answer: "An", hindi: "एक सेब रोजाना डॉक्टर को दूर रखता है", english: "_ apple a day keeps doctor away." },
+    { q: "He is _ best student.", options: ["a", "an", "the"], answer: "the", hindi: "वह सबसे अच्छा छात्र है", english: "He is _ best student." },
+    { q: "I like _ blue shirt.", options: ["a", "the", "no article"], answer: "the", hindi: "मुझे नीली शर्ट पसंद है", english: "I like _ blue shirt." },
+    { q: "_ Himalayas are in the north.", options: ["The", "A", "An"], answer: "The", hindi: "हिमालय उत्तर में हैं", english: "_ Himalayas are in the north." },
+    { q: "She has _ umbrella.", options: ["a", "an", "the"], answer: "an", hindi: "उसके पास एक छाता है", english: "She has _ umbrella." }
+  ]},
+  { title: "Tenses Revision", day: 10, questions: [
+    { q: "I _ here since 2010.", options: ["work", "have worked", "worked"], answer: "have worked", hindi: "मैं 2010 से यहाँ काम कर रहा हूँ", english: "I _ here since 2010." },
+    { q: "She _ to school every day.", options: ["goes", "go", "went"], answer: "goes", hindi: "वह हर दिन स्कूल जाती है", english: "She _ to school every day." },
+    { q: "They _ dinner when I arrived.", options: ["ate", "were eating", "eat"], answer: "were eating", hindi: "जब मैं पहुंचा, वे खाना खा रहे थे", english: "They _ dinner when I arrived." },
+    { q: "He _ tomorrow.", options: ["comes", "will come", "is coming"], answer: "will come", hindi: "वह कल आएगा", english: "He _ tomorrow." },
+    { q: "I _ my homework.", options: ["finish", "finished", "have finished"], answer: "have finished", hindi: "मैंने अपना होमवर्क पूरा कर लिया है", english: "I _ my homework." },
+    { q: "We _ to the park yesterday.", options: ["go", "went", "gone"], answer: "went", hindi: "हम कल पार्क गए थे", english: "We _ to the park yesterday." },
+    { q: "She _ the book now.", options: ["reads", "is reading", "read"], answer: "is reading", hindi: "वह अभी किताब पढ़ रही है", english: "She _ the book now." },
+    { q: "They _ football tomorrow.", options: ["play", "will play", "played"], answer: "will play", hindi: "वे कल फुटबॉल खेलेंगे", english: "They _ football tomorrow." }
   ]}
-]
+];
 
 // ===== Quiz Logic =====
 let currentDay = 0;
