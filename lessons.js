@@ -1,5 +1,4 @@
 const lessons = [
-[
   { title: "Present Tense", day: 1, questions: [
     { q: "I _ to school daily.", options: ["go", "goes", "going"], answer: "go", hindi: "मैं रोज स्कूल जाता हूँ", english: "I _ to school daily." },
     { q: "She _ a book.", options: ["read", "reads", "reading"], answer: "reads", hindi: "वह एक किताब पढ़ती है", english: "She _ a book." },
