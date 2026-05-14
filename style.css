@@ -340,57 +340,56 @@ body {
 .tick-icon { font-size: 16px; line-height: 1; }
 .start-text { font-size: 10px; margin-top: 2px; }
 .lock-icon { font-size: 12px; margin-top: 2px; }
-/* ===== DAY CIRCLE FIX ===== */
-/* Day grid ke parent ko padding do taaki circle na kate */
+/* ===== DAY CIRCLE FINAL FIX ===== */
 .day-grid {
   display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important; /* 5 circle ek line me */
-  gap: 12px !important;
-  padding: 16px 12px !important; /* Left-right 12px padding - isse nahi katega */
-  justify-items: center !important;
+  grid-template-columns: repeat(5, 42px) !important; /* Fixed 42px width */
+  gap: 8px !important;
+  padding: 16px !important;
+  justify-content: center !important; /* Poora grid center me */
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: visible !important; /* Katne nahi dega */
 }
 
-/* Day circle chota + number bilkul center */
 .day-circle {
-  width: 48px !important;
-  height: 48px !important;
-  font-size: 15px !important;
+  width: 42px !important;  /* Aur chota kar diya */
+  height: 42px !important; /* Perfect gol ke liye same rakhna */
+  min-width: 42px !important;
+  min-height: 42px !important;
+  border-radius: 50% !important; /* 100% gol */
+  font-size: 14px !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
   padding: 0 !important;
-  gap: 2px !important;
+  margin: 0 !important;
+  gap: 1px !important;
   line-height: 1 !important;
-  box-sizing: border-box !important; /* Border andar count hoga */
+  box-sizing: border-box !important;
+  border: 2px solid #1E90FF !important; /* Border fix */
 }
 
-/* "Start" text aur lock icon */
+/* Start/Lock icon chote aur center */
 .day-circle .start-text,
 .day-circle .lock-icon,
 .day-circle .tick-icon {
-  font-size: 8px !important;
+  font-size: 7px !important;
   line-height: 1 !important;
 }
 
-/* ===== MAYA QUIZ CARD FIX ===== */
-/* Card ko left align karo, right mat bhagao */
-#maya-section {
-  width: calc(100% - 24px) !important; /* Dono side 12px gap */
-  max-width: 450px !important;
-  margin: 16px auto !important; /* Upar-neeche 16px, left-right auto = center */
-  box-sizing: border-box !important;
+/* Current day wala thoda bada lage */
+.day-circle.current {
+  width: 46px !important;
+  height: 46px !important;
+  font-size: 15px !important;
 }
 
-/* Mobile pe aur chota screen */
-@media (max-width: 400px) {
-  .day-grid {
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 8px !important;
-    padding: 12px 8px !important;
-  }
-  .day-circle {
-    width: 44px !important;
-    height: 44px !important;
-  }
+/* ===== MAYA QUIZ CENTER FIX ===== */
+#maya-section {
+  width: calc(100% - 32px) !important;
+  max-width: 420px !important;
+  margin: 16px auto !important; /* Auto = perfect center */
+  box-sizing: border-box !important;
 }
