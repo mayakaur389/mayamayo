@@ -340,32 +340,57 @@ body {
 .tick-icon { font-size: 16px; line-height: 1; }
 .start-text { font-size: 10px; margin-top: 2px; }
 .lock-icon { font-size: 12px; margin-top: 2px; }
+/* ===== DAY CIRCLE FIX ===== */
+/* Day grid ke parent ko padding do taaki circle na kate */
+.day-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5, 1fr) !important; /* 5 circle ek line me */
+  gap: 12px !important;
+  padding: 16px 12px !important; /* Left-right 12px padding - isse nahi katega */
+  justify-items: center !important;
+}
+
 /* Day circle chota + number bilkul center */
 .day-circle {
-  width: 48px !important;  /* Pehle ~60px hoga, ab 48px */
+  width: 48px !important;
   height: 48px !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important; /* Vertical center */
-  align-items: center !important;     /* Horizontal center */
+  justify-content: center !important;
+  align-items: center !important;
   padding: 0 !important;
   gap: 2px !important;
   line-height: 1 !important;
+  box-sizing: border-box !important; /* Border andar count hoga */
 }
 
-/* "Start" text aur lock icon ke liye */
+/* "Start" text aur lock icon */
 .day-circle .start-text,
 .day-circle .lock-icon,
 .day-circle .tick-icon {
-  font-size: 9px !important;
+  font-size: 8px !important;
   line-height: 1 !important;
-  margin-top: 1px !important;
 }
 
-/* Grid ka gap kam kar de taaki jyada circle aaye */
-.day-grid {
-  gap: 10px !important;
-  justify-content: center !important;
-  padding: 12px !important;
+/* ===== MAYA QUIZ CARD FIX ===== */
+/* Card ko left align karo, right mat bhagao */
+#maya-section {
+  width: calc(100% - 24px) !important; /* Dono side 12px gap */
+  max-width: 450px !important;
+  margin: 16px auto !important; /* Upar-neeche 16px, left-right auto = center */
+  box-sizing: border-box !important;
+}
+
+/* Mobile pe aur chota screen */
+@media (max-width: 400px) {
+  .day-grid {
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 8px !important;
+    padding: 12px 8px !important;
+  }
+  .day-circle {
+    width: 44px !important;
+    height: 44px !important;
+  }
 }
