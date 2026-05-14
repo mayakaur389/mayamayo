@@ -340,56 +340,110 @@ body {
 .tick-icon { font-size: 16px; line-height: 1; }
 .start-text { font-size: 10px; margin-top: 2px; }
 .lock-icon { font-size: 12px; margin-top: 2px; }
-/* ===== DAY CIRCLE FINAL FIX ===== */
+/* ===== DAY GRID: LAPTOP + MOBILE RESPONSIVE ===== */
 .day-grid {
   display: grid !important;
-  grid-template-columns: repeat(5, 42px) !important; /* Fixed 42px width */
-  gap: 8px !important;
-  padding: 16px !important;
-  justify-content: center !important; /* Poora grid center me */
+  gap: 10px !important;
+  padding: 16px 12px !important;
+  justify-content: center !important;
+  justify-items: center !important;
   width: 100% !important;
+  max-width: 100% !important;
   box-sizing: border-box !important;
-  overflow: visible !important; /* Katne nahi dega */
+  overflow: hidden !important;
+  
+  /* Mobile: 5 circle auto-fit */
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
 }
 
+/* Tablet: 8 circle */
+@media (min-width: 600px) {
+  .day-grid {
+    grid-template-columns: repeat(8, 1fr) !important;
+    gap: 12px !important;
+    max-width: 600px !important;
+    margin: 0 auto !important;
+  }
+}
+
+/* Laptop: 10 circle */
+@media (min-width: 900px) {
+  .day-grid {
+    grid-template-columns: repeat(10, 1fr) !important;
+    gap: 14px !important;
+    max-width: 800px !important;
+  }
+}
+
+/* Desktop: 15 circle */
+@media (min-width: 1400px) {
+  .day-grid {
+    grid-template-columns: repeat(15, 1fr) !important;
+    max-width: 1200px !important;
+  }
+}
+
+/* ===== DAY CIRCLE: PERFECT GOL + CENTER ===== */
 .day-circle {
-  width: 42px !important;  /* Aur chota kar diya */
-  height: 42px !important; /* Perfect gol ke liye same rakhna */
-  min-width: 42px !important;
-  min-height: 42px !important;
-  border-radius: 50% !important; /* 100% gol */
-  font-size: 14px !important;
+  width: 100% !important;
+  aspect-ratio: 1/1 !important; /* Height = Width = Gol */
+  max-width: 55px !important; /* Mobile me jyada bada nahi */
+  border-radius: 50% !important;
+  font-size: clamp(12px, 3vw, 16px) !important; /* Screen ke hisaab se font */
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
   padding: 0 !important;
   margin: 0 !important;
-  gap: 1px !important;
+  gap: 2px !important;
   line-height: 1 !important;
   box-sizing: border-box !important;
-  border: 2px solid #1E90FF !important; /* Border fix */
+  border: 2px solid #1E90FF !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
 }
 
-/* Start/Lock icon chote aur center */
+/* Laptop/Desktop me circle thoda bada */
+@media (min-width: 900px) {
+  .day-circle {
+    max-width: 50px !important;
+    border-width: 3px !important;
+  }
+}
+
+/* Current/Active day highlight */
+.day-circle.current {
+  border-width: 3px !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 12px rgba(30, 144, 255, 0.6) !important;
+}
+
+/* Start/Lock/Tick icon responsive */
 .day-circle .start-text,
 .day-circle .lock-icon,
 .day-circle .tick-icon {
-  font-size: 7px !important;
+  font-size: clamp(6px, 1.8vw, 9px) !important;
   line-height: 1 !important;
 }
 
-/* Current day wala thoda bada lage */
-.day-circle.current {
-  width: 46px !important;
-  height: 46px !important;
-  font-size: 15px !important;
+/* Hover effect laptop me */
+@media (hover: hover) {
+  .day-circle:hover {
+    transform: scale(1.1) !important;
+  }
 }
 
-/* ===== MAYA QUIZ CENTER FIX ===== */
+/* ===== MAYA QUIZ CARD: PERFECT CENTER ===== */
 #maya-section {
   width: calc(100% - 32px) !important;
-  max-width: 420px !important;
-  margin: 16px auto !important; /* Auto = perfect center */
+  max-width: 480px !important;
+  margin: 20px auto !important; /* Auto = Left-Right Center */
   box-sizing: border-box !important;
+}
+
+@media (min-width: 900px) {
+  #maya-section {
+    max-width: 550px !important;
+  }
 }
