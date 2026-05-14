@@ -198,6 +198,56 @@ const lessons = [
     { q: "The book is _ the table.", options: ["on", "in", "at"], answer: "on", hindi: "किताब टेबल पर है", english: "The book is _ the table." },
     { q: "I _ my homework already.", options: ["have done", "did", "do"], answer: "have done", hindi: "मैं पहले ही अपना होमवर्क कर चुका हूँ", english: "I _ my homework already." },
     { q: "You _ not go there.", options: ["should", "can", "may"], answer: "should", hindi: "तुम्हें वहाँ नहीं जाना चाहिए", english: "You _ not go there." }
+  ]},
+    { title: "Question Tags", day: 21, questions: [
+    { q: "You are a student, _?", options: ["aren't you", "are you", "isn't you"], answer: "aren't you", hindi: "तुम एक छात्र हो, है ना?", english: "You are a student, _?" },
+    { q: "She can swim, _?", options: ["can't she", "can she", "doesn't she"], answer: "can't she", hindi: "वह तैर सकती है, है ना?", english: "She can swim, _?" },
+    { q: "He went to Delhi, _?", options: ["didn't he", "went he", "doesn't he"], answer: "didn't he", hindi: "वह दिल्ली गया था, है ना?", english: "He went to Delhi, _?" },
+    { q: "They will come, _?", options: ["won't they", "will they", "don't they"], answer: "won't they", hindi: "वे आएंगे, है ना?", english: "They will come, _?" },
+    { q: "I am late, _?", options: ["aren't I", "am I", "isn't I"], answer: "aren't I", hindi: "मैं लेट हूँ, है ना?", english: "I am late, _?" },
+    { q: "We have finished, _?", options: ["haven't we", "have we", "didn't we"], answer: "haven't we", hindi: "हमने पूरा कर लिया है, है ना?", english: "We have finished, _?" },
+    { q: "She doesn't like tea, _?", options: ["does she", "doesn't she", "is she"], answer: "does she", hindi: "उसे चाय पसंद नहीं है, है ना?", english: "She doesn't like tea, _?" },
+    { q: "Let's go, _?", options: ["shall we", "will we", "do we"], answer: "shall we", hindi: "चलो चलते हैं, है ना?", english: "Let's go, _?" }
+  ]},
+  { title: "Degrees of Comparison", day: 22, questions: [
+    { q: "This is the _ book.", options: ["best", "better", "good"], answer: "best", hindi: "यह सबसे अच्छी किताब है", english: "This is the _ book." },
+    { q: "Ram is _ than Shyam.", options: ["taller", "tallest", "tall"], answer: "taller", hindi: "राम श्याम से लंबा है", english: "Ram is _ than Shyam." },
+    { q: "She is as _ as her sister.", options: ["smart", "smarter", "smartest"], answer: "smart", hindi: "वह अपनी बहन जितनी स्मार्ट है", english: "She is as _ as her sister." },
+    { q: "This is the _ expensive car.", options: ["most", "more", "much"], answer: "most", hindi: "यह सबसे महंगी कार है", english: "This is the _ expensive car." },
+    { q: "He is _ than his brother.", options: ["older", "oldest", "old"], answer: "older", hindi: "वह अपने भाई से बड़ा है", english: "He is _ than his brother." },
+    { q: "Gold is _ than silver.", options: ["more precious", "most precious", "precious"], answer: "more precious", hindi: "सोना चांदी से ज्यादा कीमती है", english: "Gold is _ than silver." },
+    { q: "This is the _ day of my life.", options: ["happiest", "happier", "happy"], answer: "happiest", hindi: "यह मेरे जीवन का सबसे खुशी का दिन है", english: "This is the _ day of my life." },
+    { q: "She runs _ than me.", options: ["faster", "fastest", "fast"], answer: "faster", hindi: "वह मुझसे तेज दौड़ती है", english: "She runs _ than me." }
+  ]},
+  { title: "Conditionals", day: 23, questions: [
+    { q: "If it rains, we _ stay home.", options: ["will", "would", "can"], answer: "will", hindi: "अगर बारिश होगी, हम घर पर रहेंगे", english: "If it rains, we _ stay home." },
+    { q: "If I were you, I _ not do that.", options: ["would", "will", "can"], answer: "would", hindi: "अगर मैं तुम होता, तो मैं ऐसा नहीं करता", english: "If I were you, I _ not do that." },
+    { q: "If you heat ice, it _.", options: ["melts", "will melt", "would melt"], answer: "melts", hindi: "अगर तुम बर्फ गर्म करोगे, तो वह पिघल जाएगी", english: "If you heat ice, it _." },
+    { q: "If he had studied, he _ passed.", options: ["would have", "will have", "has"], answer: "would have", hindi: "अगर उसने पढ़ाई की होती, तो वह पास हो जाता", english: "If he had studied, he _ passed." },
+    { q: "If she calls, _ me.", options: ["tell", "told", "tells"], answer: "tell", hindi: "अगर वह बुलाए, तो मुझे बताना", english: "If she calls, _ me." },
+    { q: "If I _ rich, I would buy a car.", options: ["were", "am", "was"], answer: "were", hindi: "अगर मैं अमीर होता, तो मैं कार खरीदता", english: "If I _ rich, I would buy a car." },
+    { q: "If you _ me, I will help you.", options: ["ask", "asked", "asks"], answer: "ask", hindi: "अगर तुम मुझसे पूछोगे, तो मैं तुम्हारी मदद करूँगा", english: "If you _ me, I will help you." },
+    { q: "If it _ yesterday, we would have played.", options: ["had not rained", "did not rain", "does not rain"], answer: "had not rained", hindi: "अगर कल बारिश नहीं हुई होती, तो हम खेलते", english: "If it _ yesterday, we would have played." }
+  ]},
+  { title: "Vocabulary - Synonyms", day: 24, questions: [
+    { q: "Synonym of 'Happy' is _.", options: ["Joyful", "Sad", "Angry"], answer: "Joyful", hindi: "'Happy' का समानार्थी _ है", english: "Synonym of 'Happy' is _." },
+    { q: "Synonym of 'Big' is _.", options: ["Large", "Small", "Tiny"], answer: "Large", hindi: "'Big' का समानार्थी _ है", english: "Synonym of 'Big' is _." },
+    { q: "Synonym of 'Fast' is _.", options: ["Quick", "Slow", "Late"], answer: "Quick", hindi: "'Fast' का समानार्थी _ है", english: "Synonym of 'Fast' is _." },
+    { q: "Synonym of 'Beautiful' is _.", options: ["Pretty", "Ugly", "Bad"], answer: "Pretty", hindi: "'Beautiful' का समानार्थी _ है", english: "Synonym of 'Beautiful' is _." },
+    { q: "Synonym of 'Start' is _.", options: ["Begin", "Stop", "End"], answer: "Begin", hindi: "'Start' का समानार्थी _ है", english: "Synonym of 'Start' is _." },
+    { q: "Synonym of 'Smart' is _.", options: ["Intelligent", "Dull", "Foolish"], answer: "Intelligent", hindi: "'Smart' का समानार्थी _ है", english: "Synonym of 'Smart' is _." },
+    { q: "Synonym of 'Brave' is _.", options: ["Courageous", "Coward", "Weak"], answer: "Courageous", hindi: "'Brave' का समानार्थी _ है", english: "Synonym of 'Brave' is _." },
+    { q: "Synonym of 'Easy' is _.", options: ["Simple", "Difficult", "Hard"], answer: "Simple", hindi: "'Easy' का समानार्थी _ है", english: "Synonym of 'Easy' is _." }
+  ]},
+  { title: "Vocabulary - Antonyms", day: 25, questions: [
+    { q: "Antonym of 'Hot' is _.", options: ["Cold", "Warm", "Heat"], answer: "Cold", hindi: "'Hot' का विलोम _ है", english: "Antonym of 'Hot' is _." },
+    { q: "Antonym of 'Good' is _.", options: ["Bad", "Best", "Better"], answer: "Bad", hindi: "'Good' का विलोम _ है", english: "Antonym of 'Good' is _." },
+    { q: "Antonym of 'Up' is _.", options: ["Down", "Above", "High"], answer: "Down", hindi: "'Up' का विलोम _ है", english: "Antonym of 'Up' is _." },
+    { q: "Antonym of 'Day' is _.", options: ["Night", "Morning", "Evening"], answer: "Night", hindi: "'Day' का विलोम _ है", english: "Antonym of 'Day' is _." },
+    { q: "Antonym of 'Love' is _.", options: ["Hate", "Like", "Adore"], answer: "Hate", hindi: "'Love' का विलोम _ है", english: "Antonym of 'Love' is _." },
+    { q: "Antonym of 'Old' is _.", options: ["Young", "New", "Ancient"], answer: "Young", hindi: "'Old' का विलोम _ है", english: "Antonym of 'Old' is _." },
+    { q: "Antonym of 'True' is _.", options: ["False", "Right", "Correct"], answer: "False", hindi: "'True' का विलोम _ है", english: "Antonym of 'True' is _." },
+    { q: "Antonym of 'Rich' is _.", options: ["Poor", "Wealthy", "Money"], answer: "Poor", hindi: "'Rich' का विलोम _ है", english: "Antonym of 'Rich' is _." }
   ]}
 ];
 
