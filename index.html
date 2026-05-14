@@ -145,34 +145,33 @@
 <div class="progress-bar-main">
   <div class="progress-fill-main" id="progressFillMain" style="width: 0%"></div>
 </div>
- <div class="progress-bar">
-  <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-</div> 
+<!-- White Quiz Card -->
+<div class="card quiz-card">
+  <h2>Maya ke Saath Grammar + Quiz 📚</h2>
+  <p>Day-wise seekho, Maya se gupshup karo, Practice karo</p>
   <div id="progress-text"></div>
-  <div id="lesson-container"></div>
-  <div id="question-section" style="display:none;">
+
+  <div id="question-section">
     <div class="q-header">सही अनुवाद करिए ।</div>
-      <div id="question"></div>
-<div id="hindi-text"></div>
+    <div id="hindi-text"></div>
     <div class="q-content">
-      <button class="audio-btn" onclick="playAudio()">🔊 
-  <span id="hindi-audio-text"></span>
-</button>
-<div id="english-ref" class="ref-translation"></div>
+      <button class="audio-btn" onclick="playAudio()">🔊</button>
+      <div id="english-ref" class="ref-translation"></div>
     </div>
   </div>
-    <div id="answer-box" class="answer-box"></div>
-<div id="options"></div>
- <div id="word-bank"></div>       
-<div class="button-container">
-    <button id="check-btn" class="btn-primary" onclick="checkAnswer()">Check</button>
-    <button id="next-btn" class="btn-primary" onclick="nextQuestion()" style="display:none;">Next</button>
-</div>
-<div id="question"></div>
-<div id="feedback" class="feedback" style="display:none;"></div>
-  <div class="ref-translation">
-    <small class="english-ref-text"></small>  
+
+  <div id="answer-box" class="answer-box"></div>
+  <div id="word-bank"></div>
+
+  <div class="button-container">
+    <button id="check-btn" class="btn-check" onclick="checkAnswer()">Check</button>
+    <button id="next-btn" class="btn-next" onclick="nextQuestion()" style="display:none;">Next</button>
   </div>
+  <div id="feedback" class="feedback" style="display:none;"></div>
+</div>
+<div id="completed-section"></div>
+<div id="chat-container">
+  <div id="chat-box"></div>
   <div style="display:flex; gap:8px; margin-top:12px;">
     <input type="text" id="chat-input" class="input-box" placeholder="Maya se pucho..." style="margin:0; flex:1;">
     <button id="mic-btn-chat" class="mic-btn" onclick="startMayaListening()">🎙️</button>
