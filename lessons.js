@@ -27,55 +27,80 @@ let selectedWords = [];
 let currentQ = null;
 let gameData = lessons;
 
-function startQuizList() {
-  const dayGrid = document.querySelector('#day-grid');
+// ===== DAY SYSTEM: 30 KA BATCH - FINAL =====
+let daysPerUnit = 30;
+
+// localStorage se data nikalo
+let userProgress = {
+  completedDays: JSON.parse(localStorage.getItem('completedDays')) || [], // Array: [1,2,3]
+  currentDay: parseInt(localStorage.getItem('currentDay')) || 1
+};
+
+// Current Unit nikalo currentDay se
+function getCurrentUnit() {
+  return Math.ceil(userProgress.currentDay / daysPerUnit);
+}
+
+const dayGrid = document.querySelector('.day-grid'); // Class se pakdo
+const unitTitle = document.querySelector('.day-section h3');
+
+// Unit ka start-end day nikalo
+function getDayRange(unit) {
+  const start = (unit - 1) * daysPerUnit + 1;
+  const end = unit * daysPerUnit;
+  return { start, end };
+}
+
+// 30 Day render karo
+function renderDayBatch() {
+  const unit = getCurrentUnit();
+  const { start, end } = getDayRange(unit);
+
+  // Title update: UNIT 1: DAY 1-30
+  if(unitTitle) {
+    unitTitle.textContent = `UNIT ${unit}: BASICS - ${start}-${end} DAYS`;
+  }
+
   if(!dayGrid) return;
   dayGrid.innerHTML = '';
 
-  let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
+  for(let day = start; day <= end; day++) {
+    const circle = document.createElement('div');
+    circle.className = 'day-circle';
+    circle.dataset.day = day;
 
-  // 30 ka block nikalna - 1-30, 31-60, 61-90...
-  let currentUnit = Math.floor(completedDays / 30);
-  let startDay = currentUnit * 30 + 1;
-  let endDay = startDay + 29;
-
-  // Title update
-  const unitTitle = document.querySelector('.day-section h3');
-  if(unitTitle) unitTitle.innerText = `UNIT ${currentUnit + 1}: BASICS - ${startDay}-${endDay} DAYS`;
-
-  // 30 Days ka grid
-  for(let i = startDay; i <= endDay; i++) {
-    const dayNumber = i;
-    let dayClass = 'day-circle';
-    let dayContent = '';
-
-    if(dayNumber <= completedDays) {
-      dayClass += ' completed';
-      dayContent = `${dayNumber} <span class="tick-icon">✓</span>`;
-    }
-    else if(dayNumber === completedDays + 1) {
-      dayClass += ' current';
-      dayContent = `${dayNumber} <span class="start-text">Start</span>`;
+    if(userProgress.completedDays.includes(day)) {
+      circle.classList.add('completed');
+      circle.innerHTML = `${day}<span class="tick-icon">✓</span>`;
+    } 
+    else if(day === userProgress.currentDay) {
+      circle.classList.add('current');
+      circle.innerHTML = `${day}<span class="start-text">Start</span>`;
+    } 
+    else if(day > userProgress.currentDay) {
+      circle.classList.add('locked');
+      circle.innerHTML = `${day}<span class="lock-icon">🔒</span>`;
     }
     else {
-      dayClass += ' locked';
-      dayContent = `${dayNumber} <span class="lock-icon">🔒</span>`;
+      circle.innerHTML = `${day}`;
     }
 
-    dayGrid.innerHTML += `<div class="${dayClass}" onclick="selectDay(${dayNumber - 1})">${dayContent}</div>`;
+    circle.onclick = () => selectDay(day - 1); // Tumhara old function
+    dayGrid.appendChild(circle);
   }
 
   // Current day load karo
-  let actualDayIndex = completedDays;
+  let actualDayIndex = userProgress.currentDay - 1;
   if(actualDayIndex >= gameData.length) actualDayIndex = gameData.length - 1;
   currentDay = actualDayIndex;
   currentQuestion = 0;
-
   if(gameData[currentDay] && gameData[currentDay].questions) {
     loadQuestion(gameData[currentDay].questions[0]);
   }
 }
 
+// Page load pe chalao
+renderDayBatch();
 function selectDay(dayIndex) {
   // === Ye 3 line add kar - Maya section kholega ===
   const mayaSection = document.getElementById('maya-section');
