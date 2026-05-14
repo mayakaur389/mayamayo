@@ -340,60 +340,55 @@ body {
 .tick-icon { font-size: 16px; line-height: 1; }
 .start-text { font-size: 10px; margin-top: 2px; }
 .lock-icon { font-size: 12px; margin-top: 2px; }
-/* ===== UNIT 1: DAY CIRCLES + MAYA QUIZ FINAL CSS ===== */
-/* Laptop + Mobile dono me perfect chalega */
+/* ===== PARENT CARD FIX - SABSE ZARURI ===== */
+.unit-container, 
+.day-section,
+.card {
+  overflow: visible !important; /* Katna band karega */
+  padding: 16px 8px !important; /* Card ke andar space */
+}
 
-/* ----- DAY GRID CONTAINER ----- */
+/* ===== DAY GRID: FINAL VERSION ===== */
 .day-grid {
   display: grid !important;
-  gap: 8px !important;
-  padding: 16px 12px !important;
+  gap: 6px !important; /* Gap aur kam kar diya */
+  padding: 0 4px !important; /* Side se sirf 4px */
   justify-content: center !important;
   justify-items: center !important;
   width: 100% !important;
-  max-width: 100% !important;
   box-sizing: border-box !important;
-  overflow: hidden !important;
   
-  /* Mobile: 5 circle per row */
-  grid-template-columns: repeat(5, 1fr) !important;
+  /* Mobile: 5 circle, par thodi jagah chhod ke */
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
 }
 
-/* Tablet: 8 circle per row */
+/* Tablet: 8 circle */
 @media (min-width: 600px) {
   .day-grid {
     grid-template-columns: repeat(8, 1fr) !important;
-    gap: 10px !important;
-    max-width: 650px !important;
+    gap: 8px !important;
+    max-width: 600px !important;
     margin: 0 auto !important;
-    padding: 20px 16px !important;
+    padding: 0 8px !important;
   }
 }
 
-/* Laptop: 10 circle per row */
+/* Laptop: 10 circle */
 @media (min-width: 900px) {
   .day-grid {
     grid-template-columns: repeat(10, 1fr) !important;
-    gap: 12px !important;
-    max-width: 850px !important;
+    gap: 10px !important;
+    max-width: 800px !important;
   }
 }
 
-/* Desktop: 15 circle per row */
-@media (min-width: 1400px) {
-  .day-grid {
-    grid-template-columns: repeat(15, 1fr) !important;
-    max-width: 1250px !important;
-  }
-}
-
-/* ----- DAY CIRCLE STYLE ----- */
+/* ===== DAY CIRCLE: AUR CHOTA ===== */
 .day-circle {
-  width: 90% !important; /* Gap ke liye 10% chhod diya */
-  aspect-ratio: 1/1 !important; /* Hamesha gol rahega */
-  max-width: 52px !important; /* Mobile me jyada bada nahi */
+  width: 85% !important; /* 90% se 85% kar diya */
+  aspect-ratio: 1/1 !important;
+  max-width: 48px !important; /* 52px se 48px */
   border-radius: 50% !important;
-  font-size: clamp(11px, 2.8vw, 16px) !important;
+  font-size: clamp(10px, 2.5vw, 15px) !important;
   font-weight: 600 !important;
   display: flex !important;
   flex-direction: column !important;
@@ -401,78 +396,49 @@ body {
   align-items: center !important;
   padding: 0 !important;
   margin: 0 !important;
-  gap: 1px !important;
+  gap: 0px !important;
   line-height: 1 !important;
   box-sizing: border-box !important;
   border: 2px solid #1E90FF !important;
   background: #1a2332 !important;
   color: #8b9bb4 !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  user-select: none !important;
 }
 
-/* Laptop/Desktop me circle size */
+/* Laptop me size */
 @media (min-width: 900px) {
   .day-circle {
-    max-width: 50px !important;
-    border-width: 3px !important;
+    max-width: 46px !important;
+    border-width: 2px !important;
   }
 }
 
-/* ----- DAY CIRCLE STATES ----- */
-/* Completed Day - Green */
+/* Current Day - Glow kam kiya */
+.day-circle.current {
+  background: #1E90FF !important;
+  border-color: #1E90FF !important;
+  color: #fff !important;
+  box-shadow: 0 0 6px rgba(30, 144, 255, 0.5) !important; /* 10px se 6px */
+}
+
+/* Completed Day */
 .day-circle.completed {
   background: #22c55e !important;
   border-color: #22c55e !important;
   color: #fff !important;
 }
 
-/* Current Day - Blue Glow */
-.day-circle.current {
-  background: #1E90FF !important;
-  border-color: #1E90FF !important;
-  color: #fff !important;
-  box-shadow: 0 0 10px rgba(30, 144, 255, 0.6) !important;
-  /* Scale hata diya taaki overlap na ho */
-}
-
-/* Locked Day */
-.day-circle.locked {
-  opacity: 0.5 !important;
-  cursor: not-allowed !important;
-}
-
-/* Start/Lock/Tick icon */
+/* Icon text aur chota */
 .day-circle .start-text,
 .day-circle .lock-icon,
 .day-circle .tick-icon {
-  font-size: clamp(6px, 1.6vw, 9px) !important;
-  font-weight: 400 !important;
+  font-size: clamp(5px, 1.5vw, 8px) !important;
   line-height: 1 !important;
-  margin-top: 1px !important;
 }
 
-/* Hover effect sirf laptop me */
-@media (hover: hover) and (min-width: 900px) {
-  .day-circle:not(.locked):hover {
-    transform: scale(1.08) !important;
-    box-shadow: 0 0 15px rgba(30, 144, 255, 0.8) !important;
-  }
-}
-
-/* ----- MAYA QUIZ CARD ----- */
+/* ===== MAYA QUIZ CARD ===== */
 #maya-section {
-  width: calc(100% - 32px) !important;
+  width: calc(100% - 24px) !important;
   max-width: 480px !important;
-  margin: 24px auto !important;
+  margin: 20px auto !important;
   box-sizing: border-box !important;
-  border-radius: 16px !important;
-  overflow: hidden !important;
-}
-
-@media (min-width: 900px) {
-  #maya-section {
-    max-width: 580px !important;
-  }
 }
