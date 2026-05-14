@@ -315,28 +315,68 @@ let daysPerUnit = 30;
 let savedCompleted = localStorage.getItem('completedDays');
 let completedDaysArray = [];
 
-// Agar purana number hai to array bana do
 if(savedCompleted) {
-  try {
-    let parsed = JSON.parse(savedCompleted);
-    // Agar array hai to use karo, warna number se array banao
-    if(Array.isArray(parsed)) {
-      completedDaysArray = parsed;
-    } else {
-      // Purana: 5 tha → Naya: [1,2,3,4,5]
-      for(let i = 1; i <= parsed; i++) {
-        completedDaysArray.push(i);
-      }
+    try {
+        let parsed = JSON.parse(savedCompleted);
+        if(Array.isArray(parsed)) {
+            completedDaysArray = parsed;
+        } else {
+            for(let i = 1; i <= parsed; i++) {
+                completedDaysArray.push(i);
+            }
+        }
+    } catch(e) {
+        completedDaysArray = [];
     }
-  } catch(e) {
-    completedDaysArray = [];
-  }
 }
 
 let userProgress = {
-  completedDays: completedDaysArray,
-  currentDay: parseInt(localStorage.getItem('currentDay')) || 1
+    completedDays: completedDaysArray,
+    currentDay: parseInt(localStorage.getItem('currentDay')) || 1
 };
+
+function completeDay(dayNumber) {
+    if (!userProgress.completedDays.includes(dayNumber)) {
+        userProgress.completedDays.push(dayNumber);
+        localStorage.setItem('completedDays', JSON.stringify(userProgress.completedDays));
+    }
+    userProgress.currentDay = dayNumber + 1;
+    localStorage.setItem('currentDay', userProgress.currentDay);
+    renderDays();
+}
+
+function isDayUnlocked(dayNumber) {
+    if (dayNumber === 1) return true;
+    return userProgress.completedDays.includes(dayNumber - 1);
+}
+
+function renderDays() {
+    for (let i = 1; i <= 30; i++) {
+        const dayElement = document.querySelector(`.day-${i}`);
+        if (!dayElement) continue;
+        
+        const lockIcon = dayElement.querySelector('.lock-icon');
+        
+        if (isDayUnlocked(i)) {
+            dayElement.classList.remove('locked');
+            dayElement.style.pointerEvents = 'auto';
+            dayElement.style.opacity = '1';
+            if(lockIcon) lockIcon.style.display = 'none';
+        } else {
+            dayElement.classList.add('locked');
+            dayElement.style.pointerEvents = 'none';
+            dayElement.style.opacity = '0.5';
+            if(lockIcon) lockIcon.style.display = 'block';
+        }
+        
+        if (userProgress.completedDays.includes(i)) {
+            dayElement.classList.add('completed');
+            dayElement.innerHTML = i + ' ✓';
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', renderDays);
 
 function getCurrentUnit() {
   return Math.ceil(userProgress.currentDay / daysPerUnit);
