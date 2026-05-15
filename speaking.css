@@ -1,17 +1,86 @@
-.modal {
-    position: fixed; z-index: 1000; left: 0; top: 0;
-    width: 100%; height: 100%; background: rgba(0,0,0,0.6);
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
 }
-.modal-content {
-    background: white; margin: 10% auto; padding: 20px;
-    width: 90%; max-width: 400px; border-radius: 15px; text-align: center;
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
 }
-#speakEnglishText { font-size: 24px; margin: 20px 0; font-weight: bold; }
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.header button {
+    padding: 8px 15px;
+    font-size: 18px;
+    border: none;
+    background: white;
+    border-radius: 8px;
+}
+
+.card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+#questionCount {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+#speakEnglishText {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 30px 0;
+    color: #333;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px 0;
+}
+
 #listenBtn, #recordBtn {
-    padding: 15px 25px; margin: 10px; font-size: 18px;
-    border: none; border-radius: 10px; cursor: pointer;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
 }
+
 #listenBtn { background: #58cc02; color: white; }
 #recordBtn { background: #1cb0f6; color: white; }
-#speakHindi { font-size: 20px; color: #ff4b4b; margin-top: 15px; }
-.close { float: right; font-size: 28px; cursor: pointer; }
+#recordBtn.recording { background: #ff4b4b; animation: pulse 1s infinite; }
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+#speakResult {
+    font-size: 18px;
+    margin: 20px 0;
+    min-height: 25px;
+    font-weight: bold;
+}
+
+#speakHindi {
+    font-size: 22px;
+    color: #ff4b4b;
+    margin-top: 15px;
+    display: none;
+}
