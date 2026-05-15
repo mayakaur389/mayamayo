@@ -1,149 +1,141 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
-body {
-    font-family: Arial, sans-serif;
+body { 
+    font-family: Arial, sans-serif; 
     background: #f0f4f8;
+    min-height: 100vh;
 }
 
-.container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
+.container { 
+    max-width: 500px; 
+    margin: 0 auto; 
+    padding: 20px; 
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
+.header { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    margin-bottom: 30px; 
 }
 
-.header button {
-    padding: 8px 15px;
-    font-size: 18px;
-    border: none;
-    background: white;
-    border-radius: 8px;
+.header button { 
+    padding: 10px 18px; 
+    font-size: 20px; 
+    border: none; 
+    background: white; 
+    border-radius: 12px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    font-weight: 600;
 }
 
-.card {
-    background: white;
-    padding: 30px 20px;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+.header button:active {
+    transform: scale(0.95);
 }
 
-#questionCount {
-    color: #777;
-    margin-bottom: 20px;
-}
-
-#speakEnglishText {
-    font-size: 28px;
-    font-weight: bold;
-    margin: 30px 0;
+.header h2 {
+    font-size: 22px;
     color: #333;
 }
 
-.buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 25px 0;
+.card { 
+    background: white; 
+    padding: 35px 25px; 
+    border-radius: 24px; 
+    text-align: center; 
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    min-height: 450px;
 }
 
-#listenBtn, #recordBtn {
-    padding: 15px 30px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: bold;
+#questionCount { 
+    color: #777; 
+    margin-bottom: 25px; 
+    font-size: 16px;
+    font-weight: 600;
 }
 
-#listenBtn {
-    background: #58cc02;
-    color: white;
-}
-
-#recordBtn {
-    background: #1cb0f6;
-    color: white;
-}
-
-#recordBtn.recording {
-    background: #ff4b4b;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-#speakResult {
-    font-size: 18px;
-    margin: 20px 0;
-    min-height: 25px;
-    font-weight: bold;
-}
-
-#speakHindi {
-    font-size: 22px;
-    color: #ff4b4b;
-    margin-top: 15px;
-    display: none;
-}
-
-/* Home Page Buttons */
-.btn-purple,
-.btn-yellow,
-.btn-orange,
-.btn-green {
-    color: white;
-    padding: 22px 20px;
-    border: none;
-    border-radius: 18px;
-    font-size: 18px;
-    font-weight: 700;
-    width: 100%;
-    margin: 14px 0;
-    cursor: pointer;
-    transition: all 0.1s ease;
-    min-height: 72px;
+#speakEnglishText { 
+    font-size: 30px; 
+    font-weight: 700; 
+    margin: 35px 0; 
+    color: #333; 
+    line-height: 1.4;
+    min-height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    font-family: 'Arial', sans-serif;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.btn-purple {
-    background: linear-gradient(135deg, #9c40ff, #6e32c2);
-    box-shadow: 0 8px 0 #52258f;
+.buttons { 
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    margin: 30px 0; 
 }
 
-.btn-yellow {
-    background: linear-gradient(135deg, #ffbd00, #dba100);
-    box-shadow: 0 8px 0 #a07c00;
+#listenBtn, #recordBtn { 
+    padding: 16px 32px; 
+    font-size: 18px; 
+    border: none; 
+    border-radius: 14px; 
+    cursor: pointer; 
+    font-weight: 700;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+    transition: all 0.1s ease;
+    min-width: 120px;
 }
 
-.btn-orange {
-    background: linear-gradient(135deg, #ff9500, #ff7300);
-    box-shadow: 0 8px 0 #c65c00;
+#listenBtn { 
+    background: #58cc02; 
+    color: white; 
 }
 
-.btn-green {
-    background: linear-gradient(135deg, #58cc02, #46a302);
-    box-shadow: 0 8px 0 #2d8500;
+#listenBtn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
 }
 
-.btn-purple:active,
-.btn-yellow:active,
-.btn-orange:active,
-.btn-green:active {
-    transform: translateY(5px);
-    box-shadow: 0 3px 0 #000;
+#recordBtn { 
+    background: #1cb0f6; 
+    color: white; 
+}
+
+#recordBtn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+
+#recordBtn.recording { 
+    background: #ff4b4b; 
+    animation: pulse 1s infinite; 
+}
+
+@keyframes pulse { 
+    0%, 100% { transform: scale(1); } 
+    50% { transform: scale(1.05); } 
+}
+
+#speakResult { 
+    font-size: 20px; 
+    margin: 25px 0; 
+    min-height: 30px; 
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+#speakHindi { 
+    font-size: 24px; 
+    color: #ff4b4b; 
+    margin-top: 20px; 
+    display: none;
+    font-weight: 700;
+    background: #fff5f5;
+    padding: 15px;
+    border-radius: 12px;
+    border: 2px solid #ffe5e5;
 }
