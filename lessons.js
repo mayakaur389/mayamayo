@@ -308,6 +308,34 @@ let selectedWords = [];
 let currentQ = null;
 let gameData = lessons;
 
+// ===== AUTO GENERATE 365 DAYS =====
+const baseData = [...lessons];
+const TOTAL_DAYS = 365;
+
+if(gameData.length < TOTAL_DAYS) {
+    console.log(`Generating days from ${gameData.length + 1} to ${TOTAL_DAYS}...`);
+
+    while(gameData.length < TOTAL_DAYS) {
+        let dayNum = gameData.length + 1;
+        let templateIndex = (dayNum - 1) % baseData.length;
+
+        // Deep copy karo warna sab day same ho jayenge
+        let newDay = JSON.parse(JSON.stringify(baseData[templateIndex]));
+
+        newDay.day = dayNum;
+
+        // Har question me Day number add kar de
+        newDay.questions.forEach((q, idx) => {
+            q.hindi = `Day ${dayNum} - ${q.hindi}`;
+            // Answer aur options same rakhe hain, chahe to change kar sakta hai
+        });
+
+        gameData.push(newDay);
+    }
+}
+
+console.log('✅ Total Days loaded:', gameData.length);
+// ===== AUTO GENERATE END =====
 // ===== DAY SYSTEM: 30 KA BATCH - FINAL FIX =====
 let daysPerUnit = 30;
 
