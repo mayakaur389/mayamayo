@@ -543,25 +543,20 @@ function checkAnswer() {
 }
 
 function nextQuestion() {
-  currentQuestion++;
+    currentQuestion++;
+    // Progress line update
+    const totalQ = gameData[currentDay].questions.length;
+    const progress = ((currentQuestion) / totalQ) * 100;
+    document.getElementById('progressFillMain').style.width = progress + '%';
 
-  // Progress line update
-  const totalQ = gameData[currentDay].questions.length;
-  const progress = ((currentQuestion) / totalQ) * 100;
-  document.getElementById('progressFillMain').style.width = progress + '%';
-
-  if (currentQuestion >= gameData[currentDay].questions.length) {
-    // Day complete
-    let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
-    completedDays = Math.max(completedDays, currentDay + 1);
-    localStorage.setItem('completedDays', completedDays);
-
-    // Next day pe jao ya grid refresh karo
-    startQuizList();
-    return;
-  }
-
-  loadQuestion(gameData[currentDay].questions[currentQuestion]);
+    if (currentQuestion >= gameData[currentDay].questions.length) {
+        // Day complete - NAYA CODE
+        completeDay(currentDay + 1);
+        alert('Day Complete! Next Day Unlocked 🎉');
+        startQuizList();
+        return;
+    }
+    loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
 
 function playAudio() {
