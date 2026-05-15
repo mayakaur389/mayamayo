@@ -84,3 +84,28 @@ body {
     margin-top: 15px;
     display: none;
 }
+.btn-purple { ... }
+.btn-yellow { ... }
+.btn-orange { ... }
+
+/* ← ISKE NEECHE CHIPKA DE */
+.btn-green {
+    background: linear-gradient(135deg, #58cc02, #46a302);
+    color: white;
+    padding: 18px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    margin: 8px 0;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #2d8500;
+    transition: all 0.1s;
+    min-height: 60px;
+}
+
+.btn-green:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #2d8500;
+}
