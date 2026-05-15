@@ -88,24 +88,37 @@ body {
 .btn-yellow { ... }
 .btn-orange { ... }
 
-/* ← ISKE NEECHE CHIPKA DE */
+/* ← YAHAN YE PURA CHIPKA DE */
 .btn-green {
     background: linear-gradient(135deg, #58cc02, #46a302);
     color: white;
-    padding: 18px;
+    padding: 20px;
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 700;
     width: 100%;
-    margin: 8px 0;
+    margin: 12px 0;
     cursor: pointer;
-    box-shadow: 0 4px 0 #2d8500;
-    transition: all 0.1s;
-    min-height: 60px;
+    box-shadow: 0 6px 0 #2d8500;
+    transition: all 0.1s ease;
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.btn-green:hover {
+    background: linear-gradient(135deg, #61d800, #4fb800);
+    transform: translateY(-1px);
+    box-shadow: 0 7px 0 #2d8500;
 }
 
 .btn-green:active {
-    transform: translateY(2px);
+    transform: translateY(4px);
     box-shadow: 0 2px 0 #2d8500;
 }
