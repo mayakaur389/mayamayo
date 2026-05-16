@@ -435,20 +435,22 @@ body {
 }
 .btn-red {
     width: 100%;
-    padding: 16px; /* Ye 22px tha, 16px kar de */
+    padding: 14px; /* 16px tha, 14px kar diya */
     margin: 8px 0;
-    font-size: 16px; /* 18px tha, 16px kar de */
-    font-weight: 900;
-    background: linear-gradient(180deg, #ff4b4b 0%, #e04040 100%);
+    font-size: 16px;
+    font-weight: 700; /* 900 tha, 700 kar diya - patla font */
+    background: #ff4b4b; /* Gradient hata diya, solid color */
     color: white;
-    border: 2px solid #c13232;
-    border-radius: 16px;
-    box-shadow: 0 4px 0 #c13232; /* 6px tha, 4px kar de */
+    border: none; /* Border bhi hata diya */
+    border-radius: 12px; /* 16px tha, 12px kar diya */
     cursor: pointer;
-    transition: all 0.1s ease;
+    transition: background 0.2s ease;
+}
+
+.btn-red:hover {
+    background: #e04040; /* Hover pe thoda dark */
 }
 
 .btn-red:active {
-    transform: translateY(4px); /* 6px tha, 4px kar de */
-    box-shadow: none;
+    background: #c13232; /* Click pe aur dark */
 }
