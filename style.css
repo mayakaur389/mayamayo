@@ -433,3 +433,22 @@ body {
   max-width: 480px !important;
   margin: 20px auto !important;
 }
+.btn-red {
+    width: 100%;
+    padding: 22px;
+    margin: 8px 0;
+    font-size: 18px;
+    font-weight: 900;
+    background: linear-gradient(180deg, #ff4b4b 0%, #e04040 100%);
+    color: white;
+    border: 2px solid #c13232;
+    border-radius: 16px;
+    box-shadow: 0 6px 0 #c13232;
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+.btn-red:active {
+    transform: translateY(6px);
+    box-shadow: none;
+}
