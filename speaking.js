@@ -22,6 +22,9 @@ function goBack() {
 }
 
 function loadSpeakingQuestion() {
+    // Progress bar ke liye - YEH NAYI LINE ADD KI HAI
+    document.querySelector('.card').style.setProperty('--progress', (currentSpeakIndex / speakingData.length) * 100);
+
     // Agar sab complete ho gaya to wapas 0 se start
     if(currentSpeakIndex >= speakingData.length) {
         currentSpeakIndex = 0;
@@ -35,7 +38,6 @@ function loadSpeakingQuestion() {
     document.getElementById('speakResult').innerText = '';
     document.getElementById('questionCount').innerText = `${currentSpeakIndex + 1} / ${speakingData.length}`;
 }
-
 // 🔊 Suno button
 document.getElementById('listenBtn').onclick = () => {
     let text = speakingData[currentSpeakIndex].en;
