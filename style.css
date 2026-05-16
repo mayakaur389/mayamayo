@@ -435,20 +435,20 @@ body {
 }
 .btn-red {
     width: 100%;
-    padding: 22px;
+    padding: 16px; /* Ye 22px tha, 16px kar de */
     margin: 8px 0;
-    font-size: 18px;
+    font-size: 16px; /* 18px tha, 16px kar de */
     font-weight: 900;
     background: linear-gradient(180deg, #ff4b4b 0%, #e04040 100%);
     color: white;
     border: 2px solid #c13232;
     border-radius: 16px;
-    box-shadow: 0 6px 0 #c13232;
+    box-shadow: 0 4px 0 #c13232; /* 6px tha, 4px kar de */
     cursor: pointer;
     transition: all 0.1s ease;
 }
 
 .btn-red:active {
-    transform: translateY(6px);
+    transform: translateY(4px); /* 6px tha, 4px kar de */
     box-shadow: none;
 }
