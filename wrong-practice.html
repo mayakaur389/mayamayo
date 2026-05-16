@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wrong Questions Practice</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #0f172a; color: white; font-family: Arial; padding: 20px; }
+        .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .back-btn { background: #334155; border: none; color: white; padding: 10px 15px; border-radius: 8px; font-size: 18px; cursor: pointer; }
+        .question-card { background: #1e293b; padding: 16px; border-radius: 12px; margin: 12px 0; border-left: 4px solid #ff4b4b; }
+        .tag { font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
+        .tag-day { background: #3b82f6; }
+        .tag-listen { background: #f97316; }
+        .tag-speak { background: #22c55e; }
+        .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
+        .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
+        <h2>❌ Galat Questions</h2>
+    </div>
+
+    <p id="total-count" style="color: #94a3b8; margin-bottom: 20px;"></p>
+    <div id="wrong-list"></div>
+
+    <script src="wrong-practice.js"></script>
+</body>
+</html>
