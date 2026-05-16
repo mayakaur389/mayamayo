@@ -564,9 +564,21 @@ function checkAnswer() {
     xp.innerText = parseInt(xp.innerText) + 10;
     localStorage.setItem('xp', xp.innerText);
   } else {
-    feedback.innerText = "Galat hai, dobara try karo";
+       feedback.innerText = "Galat hai, dobara try karo"; // ← YE LINE MISSING THI
     feedback.className = "feedback wrong";
-    feedback.style.display = 'block';
+         feedback.style.display = 'block';
+       
+        // 👇 GALAT QUESTION SAVE KARO
+        let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
+        wrongQuestions.push({
+            type: 'day_quiz',
+            title: `Day ${currentDay + 1}`,
+            question: currentQuestion,
+            userAnswer: userAnswer,
+             correctAnswer: correctAnswer
+         });
+        localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
+    
   }
 }
 
