@@ -209,3 +209,23 @@ body.dark-mode #speakHindi {
     color: #ffb74d !important;
     border-color: #ffb74d !important;
 }
+/* ======== HEADER FIX - BUTTON RIGHT ME ======== */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    gap: 10px;
+}
+
+.header h2 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
+}
+
+#themeToggle {
+    margin-left: 0 !important;
+    white-space: nowrap;
+}
