@@ -121,32 +121,3 @@ body {
     border-radius: 12px !important;
     border: 2px solid #ffcc80 !important;
 }
-/* ======== CARD KO WHITE KARNE KA FIX ======== */
-
-.card {
-    background: white !important;
-    color: #333 !important;
-}
-
-#questionCount {
-    color: #666 !important;
-}
-
-#speakQuestion {
-    color: #1a1a1a !important;
-}
-
-#speakResult {
-    color: #333 !important;
-}
-
-/* Galat/Sahi ka color alag se */
-#speakResult[style*="rgb(255, 75, 75)"], 
-#speakResult[style*="#ff4b4b"] {
-    color: #ff4b4b !important;
-}
-
-#speakResult[style*="rgb(88, 204, 2)"], 
-#speakResult[style*="#58cc02"] {
-    color: #58cc02 !important;
-}
