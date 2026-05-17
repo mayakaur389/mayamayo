@@ -121,3 +121,31 @@ body {
     border-radius: 12px !important;
     border: 2px solid #ffcc80 !important;
 }
+/* ======== FINAL FIX - CARD WHITE + DARK RED ======== */
+
+.card {
+    background: white !important;
+    color: #1a1a1a !important;
+}
+
+#questionCount {
+    color: #666 !important;
+}
+
+#speakQuestion {
+    color: #1a1a1a !important;
+}
+
+#speakResult {
+    color: #1a1a1a !important;
+}
+
+/* Galat ka color gehra laal */
+#speakResult {
+    color: #d32f2f !important;
+}
+
+/* Sahi ka color gehra hara */
+#speakResult:contains("✅") {
+    color: #2e7d32 !important;
+}
