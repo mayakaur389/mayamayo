@@ -7,7 +7,7 @@ const speakingData = [
     {en: "She is very beautiful", hi: "वह बहुत सुंदर है"},
     {en: "We are playing cricket", hi: "हम क्रिकेट खेल रहे हैं"}
 ];
-
+let currentQuestionText = ""; // ← Ye add kar
 // ===== PROGRESS SAVE/LOAD =====
 let currentSpeakIndex = parseInt(localStorage.getItem('speakingProgress')) || 0;
 let recognition = null;
@@ -32,6 +32,7 @@ function loadSpeakingQuestion() {
     }
 
     let q = speakingData[currentSpeakIndex];
+    currentQuestionText = q.en;
     document.getElementById('speakEnglishText').innerText = q.en;
     document.getElementById('speakHindi').innerText = q.hi;
     document.getElementById('speakHindi').style.display = 'none';
@@ -102,8 +103,17 @@ document.getElementById('recordBtn').onclick = () => {
         } else {
             document.getElementById('speakResult').innerHTML = `❌ Galat<br>Tumne bola: "${spoken}"`;
             document.getElementById('speakResult').style.color = '#ff4b4b';
+        let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
+wrongQuestions.push({
+    type: 'speaking',
+    title: `Speaking ${currentSpeakIndex + 1}`,
+    question: currentQuestionText,
+    userAnswer: spoken,
+    correctAnswer: speakingData[currentSpeakIndex].en
+});
+localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
         }
-        resetRecordBtn();
+            resetRecordBtn();
     };
 
     recognition.onerror = (e) => {
