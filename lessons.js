@@ -303,7 +303,8 @@ const lessons = [
 
 // ===== Quiz Logic =====
 let currentDay = 0;
-let currentQuestion = "";
+let currentQuestion = 0; // ← Isse wapas number bana de
+let currentQuestionText = ""; // ← Ye nayi line add kar, isme text rakhenge
 let selectedWords = [];
 let currentQ = null;
 let gameData = lessons;
@@ -497,7 +498,7 @@ function selectDay(dayIndex) {
 function loadQuestion(qData) {
   if (!qData) return;
   currentQ = qData;
-
+ currentQuestionText = qData.english || qData.q || qData.hindi; // ← YE LINE ADD KAR
   // Progress line update - current day ke questions ka %
   const totalQ = gameData[currentDay].questions.length;
   const progress = ((currentQuestion) / totalQ) * 100;
@@ -573,7 +574,7 @@ function checkAnswer() {
         wrongQuestions.push({
             type: 'day_quiz',
             title: `Day ${currentDay + 1}`,
-            question: currentQuestion,
+            question: currentQuestionText,
             userAnswer: userAnswer,
              correctAnswer: correctAnswer
          });
