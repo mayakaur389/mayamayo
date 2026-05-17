@@ -71,19 +71,16 @@ document.getElementById('recordBtn').onclick = () => {
     recognition.start();
 
    recognition.onresult = (event) => {
-        let spoken = event.results[0][0].transcript.toLowerCase().trim();
-     let spoken = event.results[0][0].transcript.toLowerCase().trim();
-let correct = '';
-
+    let spoken = event.results[0][0].transcript.toLowerCase().trim();
 let questionEl = document.getElementById('speakQuestion');
-if(speakingData && speakingData[currentSpeakIndex] && speakingData[currentSpeakIndex].en) {
-    correct = speakingData[currentSpeakIndex].en.toLowerCase().trim();
-} else if(questionEl) {
-    correct = questionEl.innerText.toLowerCase().trim();
-} else {
-    alert('Error: Question nahi mila. HTML check kar');
+
+if(!questionEl) {
+    alert('HTML me id="speakQuestion" nahi mila');
     return;
 }
+
+let correct = questionEl.innerText.toLowerCase().trim();
+
         spoken = spoken.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
         correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
 
@@ -96,18 +93,18 @@ if(speakingData && speakingData[currentSpeakIndex] && speakingData[currentSpeakI
             }, 2000);
 
             // 4 sec baad next question + SAVE PROGRESS
-            setTimeout(() => {
-                currentSpeakIndex++;
-                saveProgress(); // ← Yahan save ho raha hai
+            //setTimeout(() => {
+                //currentSpeakIndex++;
+               // saveProgress(); // ← Yahan save ho raha hai
 
-                if(currentSpeakIndex < speakingData.length) {
-                    loadSpeakingQuestion();
-                } else {
-                    alert('🎉 Sab complete! Bahut badhiya');
-                    localStorage.setItem('speakingProgress', 0); // Reset kar de
-                    goBack();
-                }
-            }, 4000);
+                //if(currentSpeakIndex < speakingData.length) {
+                   // loadSpeakingQuestion();
+               // } else {
+                   // alert('🎉 Sab complete! Bahut badhiya');
+                   // localStorage.setItem('speakingProgress', 0); // Reset kar de
+                   // goBack();
+               // }
+           // }, 4000);
 
         } else {
          document.getElementById('speakResult').innerHTML = `❌ Galat<br>Tumne bola: "${event.results[0][0].transcript}"`;
