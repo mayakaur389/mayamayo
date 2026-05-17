@@ -71,16 +71,45 @@ document.getElementById('recordBtn').onclick = () => {
     recognition.start();
 
     recognition.onresult = (event) => {
-        let spoken = event.results[0][0].transcript.toLowerCase().trim();
-        let correct = speakingData[currentSpeakIndex].en.toLowerCase().trim();
+    const spokenText = event.results[0][0].transcript;
+    const correctText = document.getElementById('speakQuestion').innerText;
 
-        spoken = spoken.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
-        correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
+    // Punctuation hata ke compare karne ke liye
+    let spokenClean = spokenText.toLowerCase().trim().replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
+    let correctClean = correctText.toLowerCase().trim().replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
 
-        if(spoken === correct) {
-            document.getElementById('speakResult').innerHTML = '✅ Sahi bola!';
-            document.getElementById('speakResult').style.color = '#58cc02';
+    if(spokenClean === correctClean) {
+        document.getElementById('speakResult').innerHTML = `✅ Sahi bola!<br>Tumne bola: "${spokenText}"`;
+        document.getElementById('speakResult').style.color = '#58cc02';
 
+        // 2 sec baad Hindi dikhao - tera purana code
+        setTimeout(() => {
+            document.getElementById('speakHindi').style.display = 'block';
+        }, 2000);
+
+        // 4 sec baad next question + SAVE PROGRESS - tera purana code
+        setTimeout(() => {
+            currentSpeakIndex++;
+            saveProgress(); // ← Yahan save ho raha hai
+            loadSpeakQuestion();
+        }, 4000);
+
+    } else {
+        document.getElementById('speakResult').innerHTML = `❌ Galat<br>Tumne bola: "${spokenText}"`;
+        document.getElementById('speakResult').style.color = '#ff4b4b';
+
+        let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
+        wrongQuestions.push({
+            type: 'speaking',
+            title: `Speaking ${currentSpeakIndex + 1}`,
+            question: correctText,
+            userAnswer: spokenText,
+            correctAnswer: correctText
+        });
+        localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
+    }
+    resetRecordBtn();
+};
             // 2 sec baad Hindi dikhao
             setTimeout(() => {
                 document.getElementById('speakHindi').style.display = 'block';
