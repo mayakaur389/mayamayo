@@ -1,179 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap');
-
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
+#speakQuestion {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+    min-height: 30px;
 }
 
-body { 
-    font-family: 'Nunito', sans-serif; 
-    background: linear-gradient(180deg, #e3f2fd 0%, #f0f4f8 50%, #e8f5e9 100%);
-    min-height: 100vh;
-}
-
-.container { 
-    max-width: 500px; 
-    margin: 0 auto; 
-    padding: 16px; 
-}
-
-.header { 
-    display: flex; 
-    align-items: center; 
-    gap: 12px; 
-    margin-bottom: 20px; 
-}
-
-.header button { 
-    padding: 14px 16px; 
-    font-size: 14px; 
-    border: 2px solid #e5e5e5;
-    background: white; 
-    border-radius: 16px; 
-    cursor: pointer;
-    font-weight: 900;
-    color: #4b4b4b;
-    box-shadow: 0 3px 0 #e5e5e5;
-    transition: all 0.1s ease;
-}
-
-.header button:active {
-    transform: translateY(3px);
-    box-shadow: none;
-}
-
-.header h2 {
+#speakResult {
+    margin: 15px 0;
     font-size: 18px;
-    color: #4b4b4b;
-    font-weight: 900;
+    min-height: 50px;
+    font-weight: bold;
 }
 
-/* Progress Bar */
-.card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 14px;
-    width: calc(var(--progress) * 1%);
-    background: linear-gradient(90deg, #58cc02, #89e219);
-    border-radius: 20px 20px 0 0;
-    transition: width 0.4s ease;
-}
-
-.card { 
-    background: white; 
-    padding: 50px 20px 20px; 
-    border-radius: 24px; 
-    text-align: center; 
-    box-shadow: 0 4px 0 #e5e5e5;
-    border: 2px solid #e5e5e5;
-    min-height: 460px;
-    position: relative;
-    overflow: hidden;
-}
-
-#questionCount { 
-    color: #afafaf; 
-    margin-bottom: 20px; 
-    font-size: 14px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
-
-#speakEnglishText { 
-    font-size: 28px; 
-    font-weight: 900; 
-    margin: 30px 0 25px; 
-    color: #3c3c3c; 
-    line-height: 1.3;
-    min-height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10px;
-}
-
-/* BUTTONS UP-NICHE LAMBA LAMBA */
-.buttons { 
-    display: flex; 
-    flex-direction: column;
-    gap: 12px; 
-    margin: 20px 0 12px; 
-}
-
-#listenBtn, #recordBtn { 
-    padding: 22px 20px; 
-    font-size: 18px; 
-    border: none; 
-    border-radius: 16px; 
-    cursor: pointer; 
-    font-weight: 900;
-    transition: all 0.1s ease;
-    width: 100%;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-#listenBtn { 
-    background: linear-gradient(180deg, #58cc02 0%, #46a302 100%); 
-    color: white; 
-    box-shadow: 0 6px 0 #2d8500;
-}
-
-#listenBtn:active {
-    transform: translateY(6px);
-    box-shadow: none;
-}
-
-#recordBtn { 
-    background: linear-gradient(180deg, #1cb0f6 0%, #1899d6 100%); 
-    color: white; 
-    box-shadow: 0 6px 0 #1479b2;
-}
-
-#recordBtn:active {
-    transform: translateY(6px);
-    box-shadow: none;
-}
-
-#recordBtn.recording { 
-    background: linear-gradient(180deg, #ff4b4b 0%, #e04040 100%); 
-    box-shadow: 0 6px 0 #c13232;
-    animation: pulse 1.2s infinite; 
-}
-
-@keyframes pulse { 
-    0%, 100% { transform: scale(1); } 
-    50% { transform: scale(1.02); } 
-}
-
-#speakResult { 
-    font-size: 18px; 
-    margin: 8px 0; 
-    min-height: 35px; 
-    font-weight: 800;
-    line-height: 1.4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#speakHindi { 
-    font-size: 20px; 
-    color: #777; 
-    margin-top: 5px; 
+#speakHindi {
     display: none;
-    font-weight: 800;
-    background: #fff4e5;
-    padding: 16px;
-    border-radius: 16px;
-    border: 2px solid #ffedd1;
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff9600;
+    padding: 15px;
+    background: #fff3e0;
+    border-radius: 8px;
 }
