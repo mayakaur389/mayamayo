@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bol ke Practice Karo</title>
     <link rel="stylesheet" href="speaking.css">
-    <style>
-        #speakHindi {
-            display: none;
-            margin-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -20,17 +12,22 @@
             <button onclick="goBack()">← Back</button>
             <h2>🎤 Bol ke Practice Karo</h2>
         </div>
+
         <div class="card">
             <div id="questionCount">1 / 5</div>
-            <p id="speakQuestion">I am going to market</p>
+
+            <div id="speakEnglishText">I am going to market</div>
+
             <div class="buttons">
                 <button id="listenBtn">🔊 Suno</button>
                 <button id="recordBtn">🎤 Bolo</button>
             </div>
+
             <div id="speakResult"></div>
-            <div id="speakHindi">मैं बाजार जा रहा हूँ</div>
+            <div id="speakHindi"></div>
         </div>
     </div>
+
     <script src="speaking.js"></script>
 </body>
 </html>
