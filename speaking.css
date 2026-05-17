@@ -149,3 +149,63 @@ body {
 #speakResult:contains("✅") {
     color: #2e7d32 !important;
 }
+/* ======== LIGHT/DARK MODE TOGGLE ======== */
+
+/* Header me button style */
+#themeToggle {
+    margin-left: auto;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+/* DARK MODE STYLES */
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+}
+
+body.dark-mode .card {
+    background: #2d2d44 !important;
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode #speakQuestion {
+    color: #ffffff !important;
+}
+
+body.dark-mode #questionCount {
+    color: #b0b0b0 !important;
+}
+
+body.dark-mode #speakResult {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode #themeToggle {
+    background: #2d2d44;
+    color: white;
+}
+
+/* Dark mode me galat ka color */
+body.dark-mode #speakResult[style*="#d32f2f"] {
+    color: #ff5252 !important;
+    background: #3d1f1f !important;
+    border-left-color: #ff5252 !important;
+}
+
+/* Dark mode me sahi ka color */
+body.dark-mode #speakResult[style*="#2e7d32"] {
+    color: #69f0ae !important;
+    background: #1f3d2a !important;
+    border-left-color: #69f0ae !important;
+}
+
+body.dark-mode #speakHindi {
+    background: #3d331f !important;
+    color: #ffb74d !important;
+    border-color: #ffb74d !important;
+}
