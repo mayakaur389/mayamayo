@@ -303,7 +303,7 @@ const lessons = [
 
 // ===== Quiz Logic =====
 let currentDay = 0;
-let currentQuestion = 0;
+let currentQuestion = "";
 let selectedWords = [];
 let currentQ = null;
 let gameData = lessons;
