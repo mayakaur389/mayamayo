@@ -72,8 +72,12 @@ document.getElementById('recordBtn').onclick = () => {
 
    recognition.onresult = (event) => {
         let spoken = event.results[0][0].transcript.toLowerCase().trim();
-        let correct = document.getElementById('speakQuestion').innerText.toLowerCase().trim();
-
+       let correct = '';
+if(speakingData[currentSpeakIndex] && speakingData[currentSpeakIndex].en) {
+    correct = speakingData[currentSpeakIndex].en.toLowerCase().trim();
+} else {
+    correct = document.getElementById('speakQuestion').innerText.toLowerCase().trim();
+}
         spoken = spoken.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
         correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
 
