@@ -72,11 +72,17 @@ document.getElementById('recordBtn').onclick = () => {
 
    recognition.onresult = (event) => {
         let spoken = event.results[0][0].transcript.toLowerCase().trim();
-       let correct = '';
-if(speakingData[currentSpeakIndex] && speakingData[currentSpeakIndex].en) {
+     let spoken = event.results[0][0].transcript.toLowerCase().trim();
+let correct = '';
+
+let questionEl = document.getElementById('speakQuestion');
+if(speakingData && speakingData[currentSpeakIndex] && speakingData[currentSpeakIndex].en) {
     correct = speakingData[currentSpeakIndex].en.toLowerCase().trim();
+} else if(questionEl) {
+    correct = questionEl.innerText.toLowerCase().trim();
 } else {
-    correct = document.getElementById('speakQuestion').innerText.toLowerCase().trim();
+    alert('Error: Question nahi mila. HTML check kar');
+    return;
 }
         spoken = spoken.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
         correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
