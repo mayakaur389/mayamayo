@@ -305,7 +305,7 @@ if (qText) qText.value = q.english;
 
  const micBtn = document.getElementById('mic-btn');
  micBtn.classList.add('listening');
- document.getElementById('result').innerText = "Sun rahi hu... Bolo";
+ document.getElementById('result').innerText = "english bolo Sun rahi hu... ";
 
 recognition.onresult = function(event) {
   let spoken = event.results[0][0].transcript.toLowerCase().trim();
