@@ -101,14 +101,14 @@ document.getElementById('recordBtn').onclick = () => {
             }, 4000);
 
         } else {
-            document.getElementById('speakResult').innerHTML = `❌ Galat<br>Tumne bola: "${spoken}"`;
+         document.getElementById('speakResult').innerHTML = `❌ Galat<br>Tumne bola: "${event.results[0][0].transcript}"`;
             document.getElementById('speakResult').style.color = '#ff4b4b';
         let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
 wrongQuestions.push({
     type: 'speaking',
     title: `Speaking ${currentSpeakIndex + 1}`,
-    question: currentQuestionText,
-    userAnswer: spoken,
+question: speakingData[currentSpeakIndex].en,
+userAnswer: event.results[0][0].transcript,
     correctAnswer: speakingData[currentSpeakIndex].en
 });
 localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
