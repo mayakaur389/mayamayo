@@ -22,3 +22,102 @@
     background: #fff3e0;
     border-radius: 8px;
 }
+/* ======== NAYA BUTTON STYLE - PURANE KE NICHE PASTE KAR DE ======== */
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    min-height: 100vh;
+}
+
+.card {
+    padding: 35px 25px !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+}
+
+.header h2 {
+    color: white !important;
+}
+
+#questionCount {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}
+
+#speakQuestion {
+    font-size: 28px !important;
+    font-weight: bold !important;
+    margin: 25px 0 !important;
+    min-height: 35px !important;
+    color: #333 !important;
+}
+
+.buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    margin: 25px 0 !important;
+}
+
+/* LAMBE LAMBE BUTTON */
+.buttons button {
+    width: 100% !important;
+    padding: 18px 25px !important;
+    font-size: 20px !important;
+    border: none !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    font-weight: bold !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+}
+
+.buttons button:active {
+    transform: scale(0.98) !important;
+}
+
+#listenBtn {
+    background: linear-gradient(135deg, #58cc02, #45a800) !important;
+    color: white !important;
+}
+
+#listenBtn:hover {
+    background: linear-gradient(135deg, #45a800, #58cc02) !important;
+    box-shadow: 0 6px 20px rgba(88, 204, 2, 0.4) !important;
+}
+
+#recordBtn {
+    background: linear-gradient(135deg, #1cb0f6, #0099e6) !important;
+    color: white !important;
+}
+
+#recordBtn:hover {
+    background: linear-gradient(135deg, #0099e6, #1cb0f6) !important;
+    box-shadow: 0 6px 20px rgba(28, 176, 246, 0.4) !important;
+}
+
+#recordBtn:disabled, #listenBtn:disabled {
+    background: #ccc !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+}
+
+#speakResult {
+    margin: 20px 0 !important;
+    font-size: 18px !important;
+    min-height: 60px !important;
+    font-weight: bold !important;
+    line-height: 1.5 !important;
+}
+
+#speakHindi {
+    display: none;
+    margin-top: 20px !important;
+    font-size: 22px !important;
+    font-weight: bold !important;
+    color: #ff6b00 !important;
+    padding: 20px !important;
+    background: #fff3e0 !important;
+    border-radius: 12px !important;
+    border: 2px solid #ffcc80 !important;
+}
