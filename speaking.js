@@ -5,7 +5,27 @@ const questions = [
     {en: "Where are you going", hi: "तुम कहाँ जा रहे हो"},
     {en: "Good morning", hi: "सुप्रभात"}
 ];
+// ======== DARK MODE TOGGLE ========
+const themeToggle = document.getElementById('themeToggle');
+const body = document.body;
 
+// Page load pe check karo ki pehle dark tha kya
+if(localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark-mode');
+    themeToggle.innerText = '☀️ Light';
+}
+
+themeToggle.onclick = () => {
+    body.classList.toggle('dark-mode');
+    
+    if(body.classList.contains('dark-mode')) {
+        themeToggle.innerText = '☀️ Light';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        themeToggle.innerText = '🌙 Dark';
+        localStorage.setItem('theme', 'light');
+    }
+};
 let currentQ = 0;
 let recognition;
 
