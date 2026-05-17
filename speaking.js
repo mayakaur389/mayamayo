@@ -93,18 +93,18 @@ let correct = questionEl.innerText.toLowerCase().trim();
             }, 2000);
 
             // 4 sec baad next question + SAVE PROGRESS
-            //setTimeout(() => {
-                //currentSpeakIndex++;
-               // saveProgress(); // ← Yahan save ho raha hai
+            setTimeout(() => {
+                currentSpeakIndex++;
+                saveProgress(); // ← Yahan save ho raha hai
 
-                //if(currentSpeakIndex < speakingData.length) {
-                   // loadSpeakingQuestion();
-               // } else {
-                   // alert('🎉 Sab complete! Bahut badhiya');
-                   // localStorage.setItem('speakingProgress', 0); // Reset kar de
-                   // goBack();
-               // }
-           // }, 4000);
+                if(currentSpeakIndex < speakingData.length) {
+                    loadSpeakingQuestion();
+                } else {
+                    alert('🎉 Sab complete! Bahut badhiya');
+                   localStorage.setItem('speakingProgress', 0); // Reset kar de
+                   goBack();
+                }
+            }, 4000);
 
         } else {
          document.getElementById('speakResult').innerHTML = `❌ Galat<br>Tumne bola: "${event.results[0][0].transcript}"`;
