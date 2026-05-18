@@ -6,11 +6,15 @@ const questions = [
     {en: "Good morning", hi: "सुप्रभात"}
 ];
 
-let wrongQuestions = []; // NEW CODE
-let currentQuestions = [...questions]; // NEW CODE - Isse khelenge
-let currentQ = parseInt(localStorage.getItem('speakingCurrentQ')) || 0; // NEW CODE
+let wrongQuestions = [];
+let currentQuestions = [...questions];
+let currentQ = parseInt(localStorage.getItem('speakingCurrentQ')) || 0;
+if(currentQ >= currentQuestions.length) {
+    currentQ = 0;
+    localStorage.removeItem('speakingCurrentQ');
+}
 let recognition;
-let isPracticeMode = false; // NEW CODE
+let isPracticeMode = false;
 
 // ======== DARK MODE TOGGLE ========
 const themeToggle = document.getElementById('themeToggle');
@@ -23,7 +27,6 @@ if(localStorage.getItem('theme') === 'dark') {
 
 themeToggle.onclick = () => {
     body.classList.toggle('dark-mode');
-
     if(body.classList.contains('dark-mode')) {
         themeToggle.innerText = '☀️ Light';
         localStorage.setItem('theme', 'dark');
@@ -46,7 +49,8 @@ recognition.continuous = false;
 recognition.interimResults = false;
 
 document.getElementById('listenBtn').onclick = () => {
-    let speech = new SpeechSynthesisUtterance(currentQuestions[currentQ].en); // FIXED
+    if(!currentQuestions[currentQ]) return;
+    let speech = new SpeechSynthesisUtterance(currentQuestions[currentQ].en);
     speech.lang = 'en-US';
     speech.rate = 0.9;
     speechSynthesis.speak(speech);
@@ -60,8 +64,10 @@ document.getElementById('recordBtn').onclick = () => {
 };
 
 recognition.onresult = (event) => {
+    if(!currentQuestions[currentQ]) return;
+
     let spoken = event.results[0][0].transcript.toLowerCase().trim();
-    let correct = currentQuestions[currentQ].en.toLowerCase().trim(); // FIXED
+    let correct = currentQuestions[currentQ].en.toLowerCase().trim();
     spoken = spoken.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
     correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
 
@@ -70,19 +76,15 @@ recognition.onresult = (event) => {
         document.getElementById('speakResult').style.color = '#58cc02';
 
         setTimeout(() => {
-            document.getElementById('speakHindi').innerHTML = currentQuestions[currentQ].hi; // FIXED
+            document.getElementById('speakHindi').innerHTML = currentQuestions[currentQ].hi;
             document.getElementById('speakHindi').style.display = 'block';
-
-            setTimeout(() => {
-                nextQuestion(); // NEW CODE
-            }, 3000);
+            setTimeout(() => nextQuestion(), 3000);
         }, 2000);
     } else {
-        document.getElementById('speakResult').innerHTML = `❌ Galat bola<br><br>Sahi: "${currentQuestions[currentQ].en}"<br>Tumne bola: "${event.results[0][0].transcript}"`; // FIXED
+        document.getElementById('speakResult').innerHTML = `❌ Galat bola<br><br>Sahi: "${currentQuestions[currentQ].en}"<br>Tumne bola: "${event.results[0][0].transcript}"`;
         document.getElementById('speakResult').style.color = '#ff4b4b';
         document.getElementById('speakHindi').style.display = 'none';
 
-        // NEW CODE - Galat wale save karo
         if(!isPracticeMode &&!wrongQuestions.includes(currentQuestions[currentQ])) {
             wrongQuestions.push(currentQuestions[currentQ]);
         }
@@ -103,8 +105,12 @@ function goBack() {
 }
 
 function loadQuestion() {
+    if(!currentQuestions[currentQ]) {
+        currentQ = 0;
+        localStorage.removeItem('speakingCurrentQ');
+    }
     if(!isPracticeMode) {
-        localStorage.setItem('speakingCurrentQ', currentQ); // NEW CODE
+        localStorage.setItem('speakingCurrentQ', currentQ);
     }
     document.getElementById('questionCount').innerText = `${currentQ + 1} / ${currentQuestions.length}`;
     document.getElementById('speakQuestion').innerText = currentQuestions[currentQ].en;
@@ -112,7 +118,7 @@ function loadQuestion() {
     document.getElementById('speakHindi').style.display = 'none';
 }
 
-function nextQuestion() { // NEW CODE
+function nextQuestion() {
     currentQ++;
     if(currentQ < currentQuestions.length) {
         loadQuestion();
@@ -120,12 +126,12 @@ function nextQuestion() { // NEW CODE
         if(!isPracticeMode) {
             showFinalResult();
         } else {
-            showPracticeComplete(); // NEW CODE
+            showPracticeComplete();
         }
     }
 }
 
-function showFinalResult() { // NEW CODE
+function showFinalResult() {
     document.getElementById('speakQuestion').innerText = '🎉 Sab Complete!';
     document.getElementById('questionCount').innerText = 'Done';
     document.getElementById('recordBtn').disabled = true;
@@ -137,18 +143,17 @@ function showFinalResult() { // NEW CODE
     } else {
         document.getElementById('speakResult').innerHTML = 'Shabash! Sab sahi kiye 👏';
     }
-
     localStorage.removeItem('speakingCurrentQ');
 }
 
-function showPracticeComplete() { // NEW CODE
+function showPracticeComplete() {
     document.getElementById('speakQuestion').innerText = '🎉 Practice Complete!';
     document.getElementById('recordBtn').disabled = true;
     document.getElementById('listenBtn').disabled = true;
     document.getElementById('speakResult').innerHTML = 'Ab sab yaad ho gaya hoga 💪';
 }
 
-document.getElementById('retryWrongBtn').onclick = () => { // NEW CODE
+document.getElementById('retryWrongBtn').onclick = () => {
     isPracticeMode = true;
     currentQuestions = [...wrongQuestions];
     wrongQuestions = [];
