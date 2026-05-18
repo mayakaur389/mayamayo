@@ -5,11 +5,16 @@ const questions = [
     {en: "Where are you going", hi: "तुम कहाँ जा रहे हो"},
     {en: "Good morning", hi: "सुप्रभात"}
 ];
+
+let wrongQuestions = []; // NEW CODE
+let currentQ = parseInt(localStorage.getItem('speakingCurrentQ')) || 0; // NEW CODE
+let recognition;
+let isPracticeMode = false; let wrongQuestions = []; // NEW CODE
+
 // ======== DARK MODE TOGGLE ========
 const themeToggle = document.getElementById('themeToggle');
 const body = document.body;
 
-// Page load pe check karo ki pehle dark tha kya
 if(localStorage.getItem('theme') === 'dark') {
     body.classList.add('dark-mode');
     themeToggle.innerText = '☀️ Light';
@@ -17,7 +22,7 @@ if(localStorage.getItem('theme') === 'dark') {
 
 themeToggle.onclick = () => {
     body.classList.toggle('dark-mode');
-    
+
     if(body.classList.contains('dark-mode')) {
         themeToggle.innerText = '☀️ Light';
         localStorage.setItem('theme', 'dark');
@@ -26,8 +31,6 @@ themeToggle.onclick = () => {
         localStorage.setItem('theme', 'light');
     }
 };
-let currentQ = 0;
-let recognition;
 
 if ('webkitSpeechRecognition' in window) {
     recognition = new webkitSpeechRecognition();
@@ -58,7 +61,6 @@ document.getElementById('recordBtn').onclick = () => {
 recognition.onresult = (event) => {
     let spoken = event.results[0][0].transcript.toLowerCase().trim();
     let correct = questions[currentQ].en.toLowerCase().trim();
-
     spoken = spoken.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
     correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
 
@@ -71,27 +73,26 @@ recognition.onresult = (event) => {
             document.getElementById('speakHindi').style.display = 'block';
 
             setTimeout(() => {
-                currentQ++;
-                if(currentQ < questions.length) {
-                    document.getElementById('speakQuestion').innerText = questions[currentQ].en;
-                    document.getElementById('questionCount').innerText = `${currentQ + 1} / ${questions.length}`;
-                    document.getElementById('speakResult').innerHTML = '';
-                    document.getElementById('speakHindi').style.display = 'none';
+                if(!isPracticeMode) {
+                    currentQ++;
+                    if(currentQ < questions.length) {
+                        loadQuestion();
+                    } else {
+                        showFinalResult();
+                    }
                 } else {
-                    document.getElementById('speakQuestion').innerText = '🎉 Sab Complete!';
-                    document.getElementById('questionCount').innerText = 'Done';
-                    document.getElementById('recordBtn').disabled = true;
-                    document.getElementById('listenBtn').disabled = true;
-                    document.getElementById('speakResult').innerHTML = 'Shabash!';
+                    loadQuestion();
                 }
             }, 3000);
-
         }, 2000);
-
     } else {
         document.getElementById('speakResult').innerHTML = `❌ Galat bola<br><br>Sahi: "${questions[currentQ].en}"<br>Tumne bola: "${event.results[0][0].transcript}"`;
         document.getElementById('speakResult').style.color = '#ff4b4b';
         document.getElementById('speakHindi').style.display = 'none';
+
+        if(!isPracticeMode && !wrongQuestions.includes(questions[currentQ])) {
+            wrongQuestions.push(questions[currentQ]); // NEW CODE
+        }
     }
 };
 
@@ -107,3 +108,40 @@ recognition.onerror = (event) => {
 function goBack() {
     window.history.back();
 }
+
+function loadQuestion() {
+    localStorage.setItem('speakingCurrentQ', currentQ); // NEW CODE
+    document.getElementById('questionCount').innerText = `${currentQ + 1} / ${questions.length}`;
+    document.getElementById('speakQuestion').innerText = questions[currentQ].en;
+    document.getElementById('speakResult').innerText = '';
+    document.getElementById('speakHindi').style.display = 'none';
+}
+
+function showFinalResult() {
+    document.getElementById('speakQuestion').innerText = '🎉 Sab Complete!';
+    document.getElementById('questionCount').innerText = 'Done';
+    document.getElementById('recordBtn').disabled = true;
+    document.getElementById('listenBtn').disabled = true;
+    document.getElementById('speakResult').innerHTML = 'Shabash!';
+
+    if(wrongQuestions.length > 0) { // NEW CODE
+        document.getElementById('retryWrongBtn').style.display = 'block';
+        document.getElementById('speakResult').innerHTML += `<br><br>${wrongQuestions.length} questions galat hui. Practice karo`;
+    }
+
+    localStorage.removeItem('speakingCurrentQ'); // NEW CODE
+}
+
+document.getElementById('retryWrongBtn').onclick = () => { // NEW CODE
+    isPracticeMode = true;
+    questions = [...wrongQuestions];
+    wrongQuestions = [];
+    currentQ = 0;
+    document.getElementById('retryWrongBtn').style.display = 'none';
+    document.getElementById('recordBtn').disabled = false;
+    document.getElementById('listenBtn').disabled = false;
+    loadQuestion();
+};
+
+// Load first question
+loadQuestion(); // NEW CODE
