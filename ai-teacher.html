@@ -1,73 +1,133 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maya Didi Chat</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maya Didi Chat</title>
+  <style>
+    body{margin:0;font-family:sans-serif;background:#1a1a1a;color:#fff;max-width:500px;margin:auto}
+    #chat-page{height:100vh;display:flex;flex-direction:column}
+    .chat-header{background:#333;padding:12px;font-weight:bold;position:relative}
+    .chat-box{flex:1;padding:10px;overflow-y:auto}
+    .input-area{display:flex;padding:10px;background:#333}
+    input{flex:1;padding:10px;border:none;background:#555;color:#fff;border-radius:8px 0 0 8px}
+    button{padding:10px 20px;border:none;background:#4CAF50;color:#fff;cursor:pointer;border-radius:0 8px 8px 0}
+    .msg{margin:8px 0;padding:8px;border-radius:8px;max-width:80%}
+    .user-msg{background:#4CAF50;margin-left:auto;text-align:right}
+    .ai-msg{background:#555}
+    .quick-replies{margin:8px 0}
+    .quick-replies button{margin:4px;padding:6px 12px;background:#555;border:none;color:white;border-radius:16px;cursor:pointer}
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center}
+    .modal-content{background:#222;padding:20px;border-radius:8px;width:300px;text-align:center}
+    .theme-btn{float:right;margin-left:10px;cursor:pointer}
+  </style>
 </head>
 <body>
-    <div id="chat-page">
-        <div class="chat-header">Maya Didi 👩‍🏫 <span style="float:right;cursor:pointer;" onclick="location.href='index.html'">🏠</span></div>
-        <div class="chat-box" id="chat-box">
-            <div class="msg ai-msg">Namaste! Main Maya Didi hun. English sikhe? 🙋‍♀️</div>
-        </div>
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="Yahan likho..." onkeypress="if(event.key==='Enter') sendMsg()">
-            <button onclick="sendMsg()">Send</button>
-        </div>
+  <div id="chat-page">
+    <div class="chat-header">
+      Maya Didi 👩‍🏫
+      <span style="float:right">
+        <span class="theme-btn" onclick="location.href='index.html'">🏠</span>
+        <span class="theme-btn" id="themeToggle">🌙</span>
+      </span>
     </div>
-
-    <div id="api-modal" class="modal">
-        <div class="modal-content">
-            <h3>🔑 Groq API Key Daalo</h3>
-            <input type="text" id="api-key-input" placeholder="gsk_xxxxx..." style="width:100%;padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff;margin:10px 0;">
-            <button onclick="saveApiKey()" style="background:#4CAF50;color:white;padding:12px;border:none;border-radius:8px;width:100%;">Save & Chat Karo</button>
-        </div>
+    <div class="chat-box" id="chat-box">
+      <div class="msg ai-msg">Namaste! Main Maya Didi hun. English sikhe? 🙋‍♀️</div>
     </div>
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Yahan likho..." onkeypress="if(event.key==='Enter') sendMsg()">
+      <button onclick="sendMsg()">Send</button>
+    </div>
+  </div>
 
-    <script>
-        window.onload = function() {
-            if (!localStorage.getItem('groq_api_key')) {
-                document.getElementById('api-modal').style.display = 'block';
-            }
+  <div id="api-modal" class="modal" style="display:flex">
+    <div class="modal-content">
+      <h3>🔑 Groq API Key Daalo</h3>
+      <input type="text" id="api-key-input" placeholder="gsk_xxxxx..." style="width:100%;padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff;margin:10px 0;">
+      <button onclick="saveApiKey()" style="background:#4CAF50;color:white;padding:12px;border:none;border-radius:8px;width:100%;">Save & Chat Karo</button>
+    </div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      if (!localStorage.getItem('groq_api_key')) {
+        document.getElementById('api-modal').style.display = 'flex';
+      }
+      // Dark mode toggle
+      const themeToggle = document.getElementById('themeToggle');
+      if(localStorage.getItem('theme') === 'dark') {
+        document.body.style.background = '#1a1a1a';
+        document.body.style.color = '#fff';
+        themeToggle.innerText = '☀️';
+      }
+      themeToggle.onclick = () => {
+        if(document.body.style.background === 'rgb(26, 26, 26)') {
+          document.body.style.background = '#fff';
+          document.body.style.color = '#000';
+          themeToggle.innerText = '🌙';
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.body.style.background = '#1a1a1a';
+          document.body.style.color = '#fff';
+          themeToggle.innerText = '☀️';
+          localStorage.setItem('theme', 'dark');
         }
-        function saveApiKey() {
-            const key = document.getElementById('api-key-input').value.trim();
-            if (key) {
-                localStorage.setItem('groq_api_key', key);
-                document.getElementById('api-modal').style.display = 'none';
-            }
-        }
-        async function sendMsg() {
-            const input = document.getElementById('user-input');
-            const msg = input.value.trim();
-            if (!msg) return;
-            const apiKey = localStorage.getItem('groq_api_key');
-            if(!apiKey) return document.getElementById('api-modal').style.display = 'block';
-            const chatBox = document.getElementById('chat-box');
-            chatBox.innerHTML += `<div class="msg user-msg">${msg}</div>`;
-            input.value = '';
-            chatBox.scrollTop = chatBox.scrollHeight;
-            try {
-                const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                    method: 'POST',
-                    headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        model: 'llama-3.1-8b-instant',
-                        messages: [
-                            {role: 'system', content: 'You are Maya Didi, a friendly Indian English teacher. Reply in Hindi + English mix. Short answers.'},
-                            {role: 'user', content: msg}
-                        ]
-                    })
-                });
-                const data = await res.json();
-                chatBox.innerHTML += `<div class="msg ai-msg">${data.choices[0].message.content}</div>`;
-                chatBox.scrollTop = chatBox.scrollHeight;
-            } catch(e) {
-                chatBox.innerHTML += `<div class="msg ai-msg">Error: API key galat hai 😅</div>`;
-            }
-        }
-    </script>
+      };
+    }
+
+    function saveApiKey() {
+      const key = document.getElementById('api-key-input').value.trim();
+      if (key) {
+        localStorage.setItem('groq_api_key', key);
+        document.getElementById('api-modal').style.display = 'none';
+      }
+    }
+
+    async function sendMsg() {
+      const input = document.getElementById('user-input');
+      const msg = input.value.trim();
+      if (!msg) return;
+      const apiKey = localStorage.getItem('groq_api_key');
+      if(!apiKey) return document.getElementById('api-modal').style.display = 'flex';
+
+      const chatBox = document.getElementById('chat-box');
+      chatBox.innerHTML += `<div class="msg user-msg">${msg}</div>`;
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      try {
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'llama-3.1-8b-instant',
+            messages: [
+              {role: 'system', content: 'You are Maya Didi, a friendly Indian English teacher. Reply in Hindi + English mix. Short answers.'},
+              {role: 'user', content: msg}
+            ]
+          })
+        });
+        const data = await res.json();
+        chatBox.innerHTML += `<div class="msg ai-msg">${data.choices[0].message.content}</div>`;
+        chatBox.innerHTML += `
+          <div class="quick-replies">
+            <button onclick="quickReply('Haan')">Haan</button>
+            <button onclick="quickReply('Nahi')">Nahi</button>
+          </div>
+        `;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      } catch(e) {
+        chatBox.innerHTML += `<div class="msg ai-msg">Error: API key galat hai 😅</div>`;
+      }
+    }
+
+    function quickReply(text) {
+      document.getElementById('user-input').value = text;
+      sendMsg();
+    }
+  </script>
 </body>
 </html>
