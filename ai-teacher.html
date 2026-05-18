@@ -87,43 +87,48 @@
       const input = document.getElementById('user-input');
       const msg = input.value.trim();
       if (!msg) return;
-      const apiKey = localStorage.getItem('groq_api_key');
-      if(!apiKey) return document.getElementById('api-modal').style.display = 'flex';
-
+     
       const chatBox = document.getElementById('chat-box');
       chatBox.innerHTML += `<div class="msg user-msg">${msg}</div>`;
       input.value = '';
       chatBox.scrollTop = chatBox.scrollHeight;
 
-      try {
-        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            model: 'llama-3.1-8b-instant',
-            messages: [
-              {role: 'system', content: 'You are Maya Didi, a friendly Indian English teacher. Reply in Hindi + English mix. Short answers.'},
-              {role: 'user', content: msg}
-            ]
-          })
+        try {
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                messages: [
+                    {
+                        role: 'system',
+                        content: 'You are Maya Didi, a friendly Indian teacher. Reply in Hinglish and keep answers short.'
+                    },
+                    {
+                        role: 'user',
+                        content: msg
+                    }
+                ]
+            })
         });
-        const data = await res.json();
-        chatBox.innerHTML += `<div class="msg ai-msg">${data.choices[0].message.content}</div>`;
-        chatBox.innerHTML += `
-          <div class="quick-replies">
-            <button onclick="quickReply('Haan')">Haan</button>
-            <button onclick="quickReply('Nahi')">Nahi</button>
-          </div>
-        `;
-        chatBox.scrollTop = chatBox.scrollHeight;
-      } catch(e) {
-        chatBox.innerHTML += `<div class="msg ai-msg">Error: API key galat hai 😅</div>`;
-      }
-    }
 
+        const data = await res.json();
+        const reply = data.choices[0].message.content;
+
+        chatBox.innerHTML += `<div class="msg ai-msg">${reply}</div>`;
+        chatBox.innerHTML += `
+            <div class="quick-replies">
+                <button onclick="quickReply('Haan')">Haan</button>
+                <button onclick="quickReply('Nahi')">Nahi</button>
+            </div>
+        `;
+
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+    } catch(e) {
+        chatBox.innerHTML += `<div class="msg ai-msg">Error: Maya abhi busy hai, baad me try karo</div>`;
+    }
     function quickReply(text) {
       document.getElementById('user-input').value = text;
       sendMsg();
