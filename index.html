@@ -391,13 +391,9 @@ const question = practiceMode ? wrongAnswers[0].question : currentLesson.questio
           
 }
 
-        function openChat() {
-    chatOpen = !chatOpen;
-    const container = document.getElementById('chat-container');
-    const chatBox = document.getElementById('chat-box');
-    container.style.display = chatOpen ? 'block' : 'none';
-    if(chatOpen) container.scrollIntoView({behavior: 'smooth'});
-}
+      function openChat() {
+    location.href = 'ai-teacher.html';
+} 
 
        async function sendChat() {
     const input = document.getElementById('chat-input');
