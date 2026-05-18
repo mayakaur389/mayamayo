@@ -229,3 +229,45 @@ body.dark-mode #speakHindi {
     margin-left: 0 !important;
     white-space: nowrap;
 }
+.top-btn {
+    background: #fff;
+    color: #333;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s;
+}
+
+.top-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Dark mode me Back button */
+body.dark-mode .top-btn {
+    background: #333;
+    color: #fff;
+}
+
+/* Theme toggle ko bhi same class de de */
+#themeToggle {
+    background: #fff;
+    color: #333;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s;
+}
+
+body.dark-mode #themeToggle {
+    background: #333;
+    color: #fff;
+}
