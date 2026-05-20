@@ -17,15 +17,15 @@ function sendMessage() {
   const chatBox = document.getElementById('chat-messages');
   chatBox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
 
-  // API call - yaha prompt bhejo kyuki api/chat.js me prompt expect kar raha hai
+  // api/chat.js ko 'prompt' chahiye, aur wo 'reply' dega
   fetch('/api/chat', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt: message })
+    body: JSON.stringify({ prompt: message })  // 👈 messages ki jagah prompt
   })
   .then(res => res.json())
   .then(data => {
-    const reply = data.reply || "Maya se reply nahi aaya 😅";
+    const reply = data.reply || "Maya chup hai 😅";  // 👈 data.reply use karo
     chatBox.innerHTML += `<div><strong>Maya:</strong> ${reply}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight;
   })
