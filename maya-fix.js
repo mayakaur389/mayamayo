@@ -30,13 +30,29 @@ function sendMessage() {
         },
         body: JSON.stringify({ prompt: message })
     })
-    .then(res => res.json())
-    .then(data => {
-        const reply = data.reply || "Maya chup hai 😅";
-        if (mayaBox) {
-            mayaBox.innerText = `Maya: ${reply}`;
-        }
-    })
+  fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt: message })
+})
+.then(res => {
+    if (!res.ok) {
+        return res.json().then(err => { throw new Error(err.error || 'API Error: ' + res.status) });
+    }
+    return res.json();
+})
+.then(data => {
+    const reply = data.reply || data.error || "Maya chup hai 😅";
+    if (mayaBox) {
+        mayaBox.innerText = `Maya: ${reply}`;
+    }
+})
+.catch(err => {
+    console.error(err);
+    if (mayaBox) {
+        mayaBox.innerText = `Maya Error: ${err.message}`;
+    }
+});
     .catch(err => {
         if (mayaBox) {
             mayaBox.innerText = `Maya: Error aa gaya`;
