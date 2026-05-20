@@ -16,10 +16,12 @@ function sendMessage() {
     const message = input.value.trim();
     if (!message) return;
 
-    const chatBox = document.getElementById('chat-messages');
-    if (chatBox) {
-        chatBox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
-    }
+    // Tu wala box update kar
+    const userBox = document.querySelector('.Tu') || document.querySelector('div:contains("Tu:")');
+    if (userBox) userBox.innerText = `Tu: ${message}`;
+
+    // Maya wala box
+    const mayaBox = document.querySelector('.Maya') || document.querySelector('div:contains("Maya:")');
 
     fetch('/api/chat', {
         method: 'POST',
@@ -31,14 +33,13 @@ function sendMessage() {
     .then(res => res.json())
     .then(data => {
         const reply = data.reply || "Maya chup hai 😅";
-        if (chatBox) {
-            chatBox.innerHTML += `<div><strong>Maya:</strong> ${reply}</div>`;
-            chatBox.scrollTop = chatBox.scrollHeight;
+        if (mayaBox) {
+            mayaBox.innerText = `Maya: ${reply}`;
         }
     })
     .catch(err => {
-        if (chatBox) {
-            chatBox.innerHTML += `<div><strong>Error:</strong> ${err.message}</div>`;
+        if (mayaBox) {
+            mayaBox.innerText = `Maya: Error aa gaya`;
         }
     });
 
