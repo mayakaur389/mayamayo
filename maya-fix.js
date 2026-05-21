@@ -17,11 +17,11 @@ function sendMessage() {
     if (!message) return;
 
     // Tu wala box update kar
-    const userBox = document.querySelector('.Tu') || document.querySelector('div:contains("Tu:")');
+    const userBox = document.querySelector('.Tu');
     if (userBox) userBox.innerText = `Tu: ${message}`;
 
     // Maya wala box
-    const mayaBox = document.querySelector('.Maya') || document.querySelector('div:contains("Maya:")');
+    const mayaBox = document.querySelector('.Maya');
 
     fetch('/api/chat', {
         method: 'POST',
