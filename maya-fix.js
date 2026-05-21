@@ -53,11 +53,6 @@ function sendMessage() {
         mayaBox.innerText = `Maya Error: ${err.message}`;
     }
 });
-    .catch(err => {
-        if (mayaBox) {
-            mayaBox.innerText = `Maya: Error aa gaya`;
-        }
-    });
-
+   
     input.value = '';
 }
