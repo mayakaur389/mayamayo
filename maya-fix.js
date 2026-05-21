@@ -23,11 +23,11 @@ function sendMessage() {
     // Maya wala box
     const mayaBox = document.querySelector('.Maya');
 
-    fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+    fetch('https://mayamayo.vercel.app/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({ prompt: message }) // ✅ `prompt` key honi chahiye
+   })
         body: JSON.stringify({ prompt: message })
     })
   fetch('/api/chat', {
