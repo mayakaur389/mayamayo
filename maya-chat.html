@@ -20,27 +20,52 @@
     <input id="input-box" type="text" placeholder="Yaha type karo...">
     <button id="send-btn" onclick="askMaya()">Bhejo</button>
 
-    <script>
-        async function askMaya() {
-            const input = document.getElementById('input-box');
-            const chatBox = document.getElementById('chat-box');
-            const question = input.value;
-            if (!question) return;
+   <script>
+async function askMaya() {
+    const input = document.getElementById('input-box');
+    const chatBox = document.getElementById('chat-box');
+    const question = input.value.trim();
+    
+    if (!question) return; // Khali ho to return
 
-            chatBox.innerHTML += `<div class="user">You: ${question}</div>`;
-            input.value = '';
-            chatBox.innerHTML += `<div class="maya">Maya Didi soch rahi hai...</div>`;
+    // User ka msg dikha
+    chatBox.innerHTML += `<div class="user">You: ${question}</div>`;
+    chatBox.innerHTML += `<div class="maya">Maya Didi: Soch rahi hu...</div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+    input.value = ''; // Input khali kar de
 
-            const response = await fetch('/api/ask', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ question })
-            });
+    try {
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: question })
+        });
 
-            const data = await response.json();
-            chatBox.lastChild.innerHTML = `Maya Didi: ${data.answer}`;
-            chatBox.scrollTop = chatBox.scrollHeight;
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.error || 'API Error: ' + res.status);
         }
-    </script>
+
+        const data = await res.json();
+        const reply = data.reply || data.error || "Maya Didi chup hai 😅";
+        
+        // "Soch rahi hu..." ko reply se replace kar de
+        chatBox.innerHTML = chatBox.innerHTML.replace('Maya Didi: Soch rahi hu...', `Maya Didi: ${reply}`);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+    } catch (err) {
+        console.error(err);
+        chatBox.innerHTML += `<div class="maya">Maya Error: ${err.message}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+}
+
+// Enter dabane se bhi send ho jaye
+document.getElementById('input-box').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        askMaya();
+    }
+});
+</script>
 </body>
 </html>
