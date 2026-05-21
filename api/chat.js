@@ -1,47 +1,41 @@
 export default async function handler(req, res) {
-  // CORS headers sabse upar
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method!== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // OPTIONS request ko turant 200 de
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
+  const { prompt } = req.body;
 
-  // Sirf POST allow karenge, baaki sabko bhagao
-  if (req.method!== 'POST') {
-    return res.status(405).json({ error: 'Method Not Allowed' });
+  if (!prompt) return res.status(400).json({ error: 'Prompt missing' });
+
+  const GROQ_API_KEY = process.env.GROQ_API_KEY; // Vercel me key daalni padegi
+
+  if (!GROQ_API_KEY) {
+    return res.status(500).json({ error: 'API Key missing' });
   }
 
   try {
-    const { prompt } = req.body;
-    const apiKey = process.env.GROQ_API_KEY;
-
-    if (!apiKey) {
-      return res.status(500).json({ error: 'API Key missing' });
-    }
-
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'Authorization': `Bearer ${GROQ_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
-        messages: [{ role: 'user', content: prompt }]
+        model: 'llama3-8b-8192', // Groq ka fast model
+        messages: [
+          { role: 'system', content: 'Tera naam Maya hai. Tu ek pyari dost hai. Short me Hindi me reply kar.' },
+          { role: 'user', content: prompt }
+        ],
+        temperature: 0.8,
+        max_tokens: 200
       })
     });
 
     const data = await response.json();
+    const reply = data.choices[0].message.content;
 
-    if (!response.ok) {
-      return res.status(response.status).json({ error: data.error?.message || 'Groq Error' });
-    }
+    res.status(200).json({ reply });
 
-    res.status(200).json({ reply: data.choices[0].message.content });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: 'Maya so gayi hai' });
   }
 }
