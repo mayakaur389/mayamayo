@@ -9,46 +9,39 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  // Sirf POST allow karenge, baaki sabko bhagao
   if (req.method!== 'POST') {
-    return res.status(405).json({ reply: 'Method Not Allowed' });
+    return res.status(405).json({ error: 'Method Not Allowed' });
   }
-
-  const { prompt } = req.body;
-  const API_KEY = process.env.GROQ_API_KEY;
-
-  if (!API_KEY) {
-    return res.status(500).json({ reply: "Maya Didi: API Key nahi mila 😭" });
-  }
-
-  const url = 'https://api.groq.com/openai/v1/chat/completions';
-  const payload = {
-    model: 'llama-3.3-70b-versatile',
-    messages: [
-      {
-        role: 'user',
-        content: `Tu Maya Didi hai. Hinglish me reply kar. User: ${prompt}`
-      }
-    ]
-  };
 
   try {
-    const response = await fetch(url, {
+    const { prompt } = req.body;
+    const apiKey = process.env.GROQ_API_KEY;
+
+    if (!apiKey) {
+      return res.status(500).json({ error: 'API Key missing' });
+    }
+
+    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({
+        model: 'llama-3.1-8b-instant',
+        messages: [{ role: 'user', content: prompt }]
+      })
     });
 
     const data = await response.json();
-    if (data.error) {
-      return res.status(500).json({ reply: `Groq Error: ${data.error.message}` });
+
+    if (!response.ok) {
+      return res.status(response.status).json({ error: data.error?.message || 'Groq Error' });
     }
 
-    const answer = data?.choices?.[0]?.message?.content || "Maya chup hai";
-    res.status(200).json({ reply: answer });
+    res.status(200).json({ reply: data.choices[0].message.content });
   } catch (error) {
-    res.status(500).json({ reply: 'Server error: ' + error.message });
+    res.status(500).json({ error: error.message });
   }
 }
