@@ -1,14 +1,21 @@
 export default async function handler(req, res) {
-  if (req.method!== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method!== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  console.log("Body aya:", req.body); // 👈 YE LINE ADD KAR
 
   const { prompt } = req.body;
 
-  if (!prompt) return res.status(400).json({ error: 'Prompt missing' });
+  if (!prompt) {
+    return res.status(400).json({ error: 'Prompt missing: ' + JSON.stringify(req.body) }); // 👈 Kya aya wo bata dega
+  }
 
-  const GROQ_API_KEY = process.env.GROQ_API_KEY; // Vercel me key daalni padegi
+  const GROQ_API_KEY = process.env.GROQ_API_KEY;
+  console.log("Key hai?", GROQ_API_KEY? "Haan" : "Nahi"); // 👈 YE LINE ADD KAR
 
   if (!GROQ_API_KEY) {
-    return res.status(500).json({ error: 'API Key missing' });
+    return res.status(500).json({ error: 'Groq API Key Vercel me set nahi hai' });
   }
 
   try {
@@ -19,7 +26,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'llama3-8b-8192', // Groq ka fast model
+        model: 'llama3-8b-8192',
         messages: [
           { role: 'system', content: 'Tera naam Maya hai. Tu ek pyari dost hai. Short me Hindi me reply kar.' },
           { role: 'user', content: prompt }
@@ -29,6 +36,12 @@ export default async function handler(req, res) {
       })
     });
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.log("Groq Error:", errorText); // 👈 YE LINE ADD KAR
+      throw new Error('Groq API failed: ' + errorText);
+    }
+
     const data = await response.json();
     const reply = data.choices[0].message.content;
 
@@ -36,6 +49,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Maya so gayi hai' });
+    res.status(500).json({ error: 'Maya so gayi hai, baad me try kar: ' + error.message });
   }
 }
