@@ -3,6 +3,15 @@ export async function POST(request) {
     const { prompt } = await request.json();
     console.log("Body aya:", { prompt });
 
+    // --- YAHI 2 LINE NEW DAAL DE GURU ---
+    if (!prompt || prompt.trim() === '') {
+      return new Response(JSON.stringify({ error: "Prompt missing hai" }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    // -------------------------------------
+
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
     console.log("Key hai?", GROQ_API_KEY? "Haan" : "Nahi");
 
@@ -17,7 +26,7 @@ export async function POST(request) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile', // <- Tera model jo available hai
+        model: 'llama-3.3-70b-versatile',
         messages: [
           {
             role: 'system',
@@ -33,7 +42,10 @@ export async function POST(request) {
     if (!response.ok) {
       const errorText = await response.text();
       console.log("Groq Error:", response.status, errorText);
-      throw new Error(`Groq API error: ${response.status}`);
+      return new Response(JSON.stringify({ error: `Groq API error: ${response.status}` }), {
+        status: response.status,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const data = await response.json();
