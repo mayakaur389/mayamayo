@@ -7,17 +7,17 @@
   <style>
     body{margin:0;font-family:sans-serif;background:#1a1a1a;color:#fff;max-width:500px;margin:auto}
     #chat-page{height:100vh;display:flex;flex-direction:column}
-    .chat-header{background:#333;padding:12px;font-weight:bold;position:relative}
-    .chat-box{flex:1;padding:10px;overflow-y:auto;background:#121212}
-    .input-area{display:flex;padding:10px;background:#333}
-    input{flex:1;padding:10px;border:none;background:#555;color:#fff;border-radius:8px 0 0 8px}
-    button{padding:10px 20px;border:none;background:#4CAF50;color:#fff;cursor:pointer;border-radius:0 8px 8px 0}
-    .msg{margin:8px 0;padding:8px;border-radius:8px;max-width:80%}
-    .user-msg{background:#075e54;color:#fff;margin-left:auto;text-align:right;border-radius:8px 0 8px 8px}
-    .ai-msg{background:#262d31;color:#fff;border-radius:0 8px 8px 8px}
-    .quick-replies{margin:8px 0}
-    .quick-replies button{margin:4px;padding:6px 12px;background:#555;border:none;color:white;border-radius:16px;cursor:pointer}
-    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center}
+    .chat-header{background:#075e54;padding:12px;font-weight:bold;position:relative}
+    .chat-box{flex:1;padding:10px;overflow-y:auto;background:#0b141a;background-image: linear-gradient(#0b141a 0%, #0b141a 100%);}
+    .input-area{display:flex;padding:10px;background:#1f2c33}
+    input{flex:1;padding:10px;border:none;background:#2a3942;color:#fff;border-radius:8px 0 0 8px;direction:ltr;text-align:left}
+    button{padding:10px 20px;border:none;background:#00a884;color:#fff;cursor:pointer;border-radius:0 8px 8px 0}
+    .msg{margin:8px 0;padding:10px 12px;border-radius:8px;max-width:75%;word-wrap:break-word}
+    .user-msg{background:#005c4b;color:#fff;margin-left:auto;text-align:right;border-radius:8px 0 8px 8px}
+    .ai-msg{background:#202c33;color:#fff;border-radius:0 8px 8px 8px;margin-right:auto;text-align:left}
+    .quick-replies{margin:8px 0;display:flex;gap:6px}
+    .quick-replies button{margin:0;padding:6px 12px;background:#2a3942;border:none;color:white;border-radius:16px;cursor:pointer;font-size:13px}
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;z-index:999}
     .modal-content{background:#222;padding:20px;border-radius:8px;width:300px;text-align:center}
     .theme-btn{float:right;margin-left:10px;cursor:pointer}
   </style>
@@ -40,11 +40,11 @@
     </div>
   </div>
 
-  <div id="api-modal" class="modal" style="display:flex">
+  <div id="api-modal" class="modal">
     <div class="modal-content">
-      <h3>�n Groq API Key Daalo</h3>
+      <h3>🔑 Groq API Key Daalo</h3>
       <input type="text" id="api-key-input" placeholder="gsk_xxxxx..." style="width:100%;padding:10px;border-radius:8px;border:1px solid #555;background:#111;color:#fff;margin:10px 0;">
-      <button onclick="saveApiKey()" style="background:#4CAF50;color:white;padding:12px;border:none;border-radius:8px;width:100%;">Save & Chat Karo</button>
+      <button onclick="saveApiKey()" style="background:#00a884;color:white;padding:12px;border:none;border-radius:8px;width:100%;">Save & Chat Karo</button>
     </div>
   </div>
 
@@ -53,7 +53,6 @@
       if (!localStorage.getItem('groq_api_key')) {
         document.getElementById('api-modal').style.display = 'flex';
       }
-      // Dark mode toggle
       const themeToggle = document.getElementById('themeToggle');
       if(localStorage.getItem('theme') === 'dark') {
         document.body.style.background = '#1a1a1a';
@@ -97,7 +96,7 @@
         const res = await fetch('/api/chat', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: msg })
+          body: JSON.stringify({ prompt: msg }) // <- Backend ko sirf prompt chahiye
         });
 
         const data = await res.json();
@@ -115,6 +114,7 @@
       }
     }
 
+    // <- quickReply ko bahar nikal diya, ab kaam karega
     function quickReply(text) {
       document.getElementById('user-input').value = text;
       sendMsg();
