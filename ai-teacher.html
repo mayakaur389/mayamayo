@@ -4,24 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Maya Didi Chat</title>
-  <style>
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,sans-serif;background:#0b141a;color:#fff;max-width:600px;margin:auto;height:100vh}
-    #chat-page{height:100vh;display:flex;flex-direction:column}
-    .chat-header{background:#075e54;padding:12px 16px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
-    .chat-box{flex:1;padding:10px;overflow-y:auto;background:#0b141a;background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a2a33' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
-    .input-area{display:flex;padding:8px;background:#1f2c33;gap:8px;align-items:center}
-    input{flex:1;padding:12px 15px;border:none;background:#2a3942;color:#e9edef;border-radius:8px;font-size:15px;outline:none;direction:ltr !important;text-align:left !important;unicode-bidi:normal !important}
-    button{padding:12px 16px;border:none;background:#00a884;color:#fff;cursor:pointer;border-radius:8px;font-weight:600}
-    .msg{margin:6px 0;padding:8px 12px;border-radius:7.5px;max-width:75%;word-wrap:break-word;line-height:1.4;font-size:14.5px;position:relative;clear:both}
-    .user-msg{background:#005c4b;color:#e9edef;margin-left:auto;border-radius:7.5px 0 7.5px 7.5px;float:right}
-    .ai-msg{background:#202c33;color:#e9edef;border-radius:0 7.5px 7.5px 7.5px;float:left}
-    .quick-replies{margin:8px 0;display:flex;gap:6px;clear:both}
-    .quick-replies button{margin:0;padding:6px 12px;background:#2a3942;border:none;color:white;border-radius:16px;cursor:pointer;font-size:13px}
-    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);justify-content:center;align-items:center;z-index:999}
-    .modal-content{background:#222;padding:20px;border-radius:8px;width:300px;text-align:center}
-    .theme-btn{cursor:pointer;font-size:18px}
-  </style>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0c1317;color:#e9edef;max-width:600px;margin:auto;height:100vh;overflow:hidden}
+  #chat-page{height:100vh;display:flex;flex-direction:column}
+  
+  /* Header - WhatsApp jaisa */
+  .chat-header{background:#202c33;padding:12px 16px;font-weight:600;display:flex;justify-content:space-between;align-items:center;color:#e9edef;border-bottom:1px solid #2a3942}
+  
+  /* Chat Box - Dark background with pattern */
+  .chat-box{flex:1;padding:12px;overflow-y:auto;background:#0c1317;background-image:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231a2c38' fill-opacity='0.15'%3E%3Cpath d='M0 20L20 0l20 20L20 40z'/%3E%3C/g%3E%3C/svg%3E");}
+  
+  /* Input Area - Neeche fix */
+  .input-area{display:flex;padding:8px;background:#1f2c33;gap:8px;align-items:center}
+  
+  /* Input - Ulta text fix yahi hai Guru */
+  input{flex:1;padding:12px 15px;border:none;background:#2a3942;color:#e9edef;border-radius:8px;font-size:15px;outline:none;direction:ltr !important;text-align:left !important;unicode-bidi:plaintext !important}
+  
+  /* Send Button */
+  button{padding:12px 16px;border:none;background:#00a884;color:#fff;cursor:pointer;border-radius:8px;font-weight:600}
+  button:active{background:#008069}
+  
+  /* Message Bubble - WhatsApp Style */
+  .msg{margin:6px 0;padding:8px 12px;border-radius:7.5px;max-width:75%;word-wrap:break-word;line-height:1.4;font-size:14.5px;position:relative;clear:both}
+  
+  /* Tu wala message - Right Green */
+  .user-msg{background:#005c4b;color:#e9edef;margin-left:auto;border-radius:7.5px 0 7.5px 7.5px;float:right}
+  
+  /* Maya wala message - Left Grey */
+  .ai-msg{background:#202c33;color:#e9edef;border-radius:0 7.5px 7.5px 7.5px;float:left}
+  
+  .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);justify-content:center;align-items:center;z-index:999}
+  .modal-content{background:#1f2c33;padding:20px;border-radius:8px;width:300px;text-align:center;color:#e9edef}
+</style>
 </head>
 <body>
   <div id="chat-page">
@@ -36,7 +51,7 @@
       <div class="msg ai-msg">Namaste! Main Maya Didi hun. English sikhe? 🙋‍♀️</div>
     </div>
     <div class="input-area">
-      <input type="text" id="user-input" placeholder="Message" onkeypress="if(event.key==='Enter') sendMsg()">
+      <input type="text" id="user-input" placeholder="Message" autocomplete="off" dir="ltr" onkeypress="if(event.key==='Enter') sendMsg()">
       <button onclick="sendMsg()">Bhejo</button>
     </div>
   </div>
