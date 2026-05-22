@@ -410,11 +410,11 @@ const question = practiceMode ? wrongAnswers[0].question : currentLesson.questio
         const response = await fetch('/api/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ msg: msg })
+            body: JSON.stringify({ promt: msg })
         });
         
         const data = await response.json();
-        const reply = data.answer;// ye line change karni hai
+        const reply = data.reply|| data.error;// ye line change karni hai
         chatBox.lastElementChild.innerHTML = `<b>Maya:</b> ${reply}`;
         chatBox.scrollTop = chatBox.scrollHeight;
         
