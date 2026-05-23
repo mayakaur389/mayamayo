@@ -106,7 +106,7 @@
       <div class="msg ai-msg">Namaste! Main Maya Didi hun. English sikhe? 🙋‍♀️</div>
     </div>
     <div class="input-area">
-<input type="text" id="user-input" placeholder="Message" dir="ltr" autocomplete="off">
+    <input type="text" id="chat-input" dir="ltr" style="direction: ltr!important; text-align: left!important;">
   <button id="mic-btn">🎤</button>
   <button id="send-btn" onclick="sendMsg()">➤</button>
 </div>
@@ -154,7 +154,7 @@
     }
 
     async function sendMsg() {
-      const input = document.getElementById('user-input');
+      const input = document.getElementById('chat-input');
       const msg = input.value.trim();
       if (!msg) return;
 
