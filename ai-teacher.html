@@ -38,10 +38,53 @@
   .modal-content{background:#1f2c33;padding:20px;border-radius:8px;width:300px;text-align:center;color:#e9edef}
   .modal-content{background:#1f2c33;padding:...}
 
-input#user-input {
+.input-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: #202c33;
+  border-top: 1px solid #2a3942;
+}
+
+#user-input {
+  flex: 1;
+  height: 42px;
+  border-radius: 20px;
+  border: none;
+  padding: 0 15px;
+  font-size: 15px;
+  background: #2a3942;
+  color: #e9edef;
+  outline: none;
   direction: ltr !important;
   text-align: left !important;
   unicode-bidi: plaintext !important;
+}
+
+#mic-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #00a884;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+#send-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: #00a884;
+  color: white;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 18px;
 }
 
 </style>
@@ -59,9 +102,10 @@ input#user-input {
       <div class="msg ai-msg">Namaste! Main Maya Didi hun. English sikhe? 🙋‍♀️</div>
     </div>
     <div class="input-area">
-      <input type="text" id="user-input" placeholder="Message" autocomplete="off" autocorrect="off" spellcheck="false" dir="ltr" style="direction:ltr !important; text-align:left !important; unicode-bidi:plaintext !important;" onkeypress="if(event.key==='Enter') sendMsg()">
-      <button onclick="sendMsg()">Bhejo</button>
-    </div>
+  <input type="text" id="user-input" placeholder="Message" autocomplete="off" dir="ltr" onkeypress="if(event.key==='Enter') sendMsg()">
+  <button id="mic-btn">🎤</button>
+  <button id="send-btn" onclick="sendMsg()">➤</button>
+</div>
   </div>
 
   <div id="api-modal" class="modal">
