@@ -1,22 +1,23 @@
 export async function POST(request) {
   try {
-    const { prompt } = await request.json();
-    console.log("Body aya:", { prompt });
+    const { messages } = await request.json(); // ✅ messages array bhej raha hai UI se
+    console.log("Body aya:", { messages });
 
-    // --- YAHI 2 LINE NEW DAAL DE GURU ---
-    if (!prompt || prompt.trim() === '') {
-      return new Response(JSON.stringify({ error: "Prompt missing hai" }), {
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: "Messages array missing hai" }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
       });
     }
-    // -------------------------------------
 
     const GROQ_API_KEY = process.env.GROQ_API_KEY;
-    console.log("Key hai?", GROQ_API_KEY? "Haan" : "Nahi");
+    console.log("Key hai?", GROQ_API_KEY ? "Haan" : "Nahi");
 
     if (!GROQ_API_KEY) {
-      throw new Error("GROQ_API_KEY missing");
+      return new Response(JSON.stringify({ error: "GROQ_API_KEY Vercel me set nahi hai" }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -28,11 +29,8 @@ export async function POST(request) {
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
         messages: [
-          {
-            role: 'system',
-            content: 'Tera naam Maya hai. Tu ek pyari, tez, aur thodi nakhre wali AI dost hai. Hindi me baat karti hai. Short aur mast reply karti hai.'
-          },
-          { role: 'user', content: prompt }
+          { role: 'system', content: 'Tera naam Maya Didi hai. Tu English teacher hai. Hindi me baat karti hai.' },
+          ...messages // ✅ UI se aaye messages
         ],
         temperature: 0.8,
         max_tokens: 200
@@ -50,7 +48,6 @@ export async function POST(request) {
 
     const data = await response.json();
     const reply = data.choices[0].message.content;
-
     return new Response(JSON.stringify({ reply }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
