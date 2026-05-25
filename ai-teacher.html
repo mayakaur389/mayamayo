@@ -1,557 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Maya Didi Chat</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maya Didi Chat</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #0b141a; height: 100vh; max-width: 600px; margin: auto; overflow: hidden; color: white; }
 
-<style>
+    .chat-header { height: 60px; background: #202c33; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; border-bottom: 1px solid #2f3b43; }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; background: #00a884; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+    .user-info { display: flex; flex-direction: column; }
+    .name { font-size: 16px; font-weight: 600; }
+    .status { font-size: 12px; color: #8696a0; }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+    .chat-box {
+      height: calc(100vh - 130px);
+      overflow-y: auto;
+      padding: 10px;
+      background: #0b141a;
+      display: flex;
+      flex-direction: column;
+    }
 
-body{
-  font-family:'Segoe UI',sans-serif;
-  background:#0b141a;
-  height:100vh;
-  max-width:600px;
-  margin:auto;
-  overflow:hidden;
-  color:white;
-}
+    .msg {
+      max-width: 78%;
+      padding: 8px 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+      line-height: 1.5;
+      font-size: 15px;
+      word-wrap: break-word;
+      position: relative;
+      animation: fadeIn 0.2s ease;
+    }
+    .user-msg {
+      background: #005c4b;
+      align-self: flex-end;
+      border-top-right-radius: 0;
+    }
+    .ai-msg {
+      background: #202c33;
+      align-self: flex-start;
+      border-top-left-radius: 0;
+    }
 
-/* HEADER */
-
-.chat-header{
-  height:60px;
-  background:#202c33;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 14px;
-  border-bottom:1px solid #2f3b43;
-}
-
-.header-left{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.avatar{
-  width:42px;
-  height:42px;
-  border-radius:50%;
-  overflow:hidden;
-  background:#00a884;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-}
-
-.avatar img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-.user-info{
-  display:flex;
-  flex-direction:column;
-}
-
-.name{
-  font-size:16px;
-  font-weight:600;
-}
-
-.status{
-  font-size:12px;
-  color:#8696a0;
-}
-
-.header-right{
-  display:flex;
-  gap:15px;
-  font-size:20px;
-}
-
-/* CHAT AREA */
-
-.chat-box{
-  height:calc(100vh - 130px);
-  overflow-y:auto;
-  padding:10px;
-  background:#0b141a;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='%231d2b36' fill-opacity='0.2'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z'/%3E%3C/g%3E%3C/svg%3E");
-}
-
-.chat-box::-webkit-scrollbar{
-  width:5px;
-}
-
-.chat-box::-webkit-scrollbar-thumb{
-  background:#2a3942;
-  border-radius:10px;
-}
-
-/* MESSAGE */
-
-.msg{
-  max-width:78%;
-  padding:8px 12px;
-  margin:8px 0;
-  border-radius:10px;
-  line-height:1.5;
-  font-size:15px;
-  word-wrap:break-word;
-  clear:both;
-  position:relative;
-  animation:fadeIn 0.2s ease;
-}
-
-.user-msg{
-  background:#005c4b;
-  float:right;
-  border-top-right-radius:0;
-}
-
-.ai-msg{
-  background:#202c33;
-  float:left;
-  border-top-left-radius:0;
-}
-
-.time{
-  display:block;
-  text-align:right;
-  font-size:11px;
-  margin-top:5px;
-  color:#c7d1d4;
-}
-
-/* TYPING */
-
-.typing{
-  display:flex;
-  gap:4px;
-  align-items:center;
-}
-
-.typing span{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#ccc;
-  animation:blink 1s infinite;
-}
-
-.typing span:nth-child(2){
-  animation-delay:0.2s;
-}
-
-.typing span:nth-child(3){
-  animation-delay:0.4s;
-}
-
-/* QUICK REPLIES */
-
-.quick-replies{
-  clear:both;
-  display:flex;
-  gap:8px;
-  margin:5px 0 10px 0;
-}
-
-.quick-replies button{
-  background:#202c33;
-  border:none;
-  color:white;
-  padding:8px 14px;
-  border-radius:20px;
-  cursor:pointer;
-}
-
-/* INPUT */
-
-.input-area{
-  height:70px;
-  background:#202c33;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:10px;
-  border-top:1px solid #2f3b43;
-}
-
-#chat-input{
-  flex:1;
-  height:45px;
-  border:none;
-  outline:none;
-  border-radius:25px;
-  padding:0 18px;
-  background:#2a3942;
-  color:white;
-  font-size:15px;
-  direction:ltr;
-}
-
-#chat-input::placeholder{
-  color:#8696a0;
-}
-
-#send-btn,
-#mic-btn,
-#theme-btn,
-#upload-btn{
-  width:45px;
-  height:45px;
-  border:none;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:18px;
-  color:white;
-  flex-shrink:0;
-}
-
-#send-btn{
-  background:#00a884;
-}
-
-#mic-btn{
-  background:#e63946;
-}
-
-#theme-btn{
-  background:#2a3942;
-}
-
-#upload-btn{
-  background:#2a3942;
-}
-
-/* ANIMATION */
-
-@keyframes blink{
-  0%{opacity:0.2}
-  50%{opacity:1}
-  100%{opacity:0.2}
-}
-
-@keyframes fadeIn{
-  from{
-    opacity:0;
-    transform:translateY(10px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-.light-mode{
-  background:#efeae2 !important;
-  color:black !important;
-}
-
-.light-mode .chat-box{
-  background:#efeae2;
-}
-
-.light-mode .chat-header,
-.light-mode .input-area{
-  background:#f0f2f5;
-}
-
-.light-mode .ai-msg{
-  background:white;
-  color:black;
-}
-
-</style>
+    .input-area {
+      height: 70px;
+      background: #202c33;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      border-top: 1px solid #2f3b43;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 600px;
+      margin: auto;
+    }
+    #chat-input {
+      flex: 1;
+      height: 45px;
+      border: none;
+      border-radius: 25px;
+      padding: 0 18px;
+      background: #2a3942;
+      color: white;
+    }
+    #send-btn {
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      background: #00a884;
+      color: white;
+      font-size: 18px;
+    }
+  </style>
 </head>
-
 <body>
-
-<!-- HEADER -->
-
-<div class="chat-header">
-
-  <div class="header-left">
-
-    <div class="avatar" id="profile-avatar">
-      👩‍🏫
-    </div>
-
-    <div class="user-info">
-      <div class="name">Maya Didi</div>
-      <div class="status" id="status">online</div>
-    </div>
-
-  </div>
-
-  <div class="header-right">
-
-    <button id="upload-btn">📷</button>
-    <button id="theme-btn">🌙</button>
-
-  </div>
-
-</div>
-
-<!-- CHAT -->
-
-<div class="chat-box" id="chat-box">
-
-  <div class="msg ai-msg">
-    Namaste 🙋‍♀️ Main Maya Didi hun. English sikhe?
-    <span class="time">9:30 PM ✓✓</span>
-  </div>
-
-</div>
-
-<!-- INPUT -->
-
-<div class="input-area">
-
-  <button id="mic-btn">🎤</button>
-
-  <input
-    type="text"
-    id="chat-input"
-    placeholder="Type a message"
-    autocomplete="off"
-  >
-
-  <button id="send-btn">➤</button>
-
-</div>
-
-<input type="file" id="profile-upload" hidden accept="image/*">
-
-<script>
-
-/* ELEMENTS */
-
-const input = document.getElementById("chat-input");
-const sendBtn = document.getElementById("send-btn");
-const chatBox = document.getElementById("chat-box");
-const themeBtn = document.getElementById("theme-btn");
-const micBtn = document.getElementById("mic-btn");
-const uploadBtn = document.getElementById("upload-btn");
-const profileUpload = document.getElementById("profile-upload");
-const profileAvatar = document.getElementById("profile-avatar");
-const statusText = document.getElementById("status");
-
-/* ENTER SEND */
-
-input.addEventListener("keypress",(e)=>{
-  if(e.key==="Enter"){
-    sendMsg();
-  }
-});
-
-/* SEND BUTTON */
-
-sendBtn.onclick = sendMsg;
-
-/* SEND MESSAGE */
-
-async function sendMsg(){
-
-  const msg = input.value.trim();
-
-  if(!msg) return;
-
-  addUserMessage(msg);
-
-  input.value = "";
-
-  showTyping();
-
-  try{
-
-    const res = await fetch('/api/chat',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json'
-      },
-      body:JSON.stringify({
-        prompt:msg
-      })
-    });
-
-    const data = await res.json();
-
-    removeTyping();
-
-    addAIMessage(data.reply || "Maya busy hai 😅");
-
-  }catch(err){
-
-    removeTyping();
-
-    addAIMessage("Error 😔 Maya offline hai");
-  }
-
-}
-
-/* USER MESSAGE */
-
-function addUserMessage(text){
-
-  chatBox.innerHTML += `
-    <div class="msg user-msg">
-      ${text}
-      <span class="time">${getTime()} ✓✓</span>
-    </div>
-  `;
-
-  scrollBottom();
-}
-
-/* AI MESSAGE */
-
-function addAIMessage(text){
-
-  chatBox.innerHTML += `
-    <div class="msg ai-msg">
-      ${text}
-      <span class="time">${getTime()}</span>
-    </div>
-
-    <div class="quick-replies">
-      <button onclick="quickReply('Haan')">Haan</button>
-      <button onclick="quickReply('Nahi')">Nahi</button>
-    </div>
-  `;
-
-  scrollBottom();
-}
-
-/* QUICK REPLY */
-
-function quickReply(text){
-  input.value = text;
-  sendMsg();
-}
-
-/* TYPING */
-
-function showTyping(){
-
-  statusText.innerText = "typing...";
-
-  chatBox.innerHTML += `
-    <div class="msg ai-msg" id="typing-msg">
-      <div class="typing">
-        <span></span>
-        <span></span>
-        <span></span>
+  <div class="chat-header">
+    <div class="header-left">
+      <div class="avatar">👩‍🏫</div>
+      <div class="user-info">
+        <div class="name">Maya Didi</div>
+        <div class="status">online</div>
       </div>
     </div>
-  `;
+  </div>
 
-  scrollBottom();
-}
+  <div class="chat-box" id="chat-box">
+    <div class="msg ai-msg">
+      Namaste 🙋‍♀️ Main Maya Didi hun. English sikhe?
+    </div>
+  </div>
 
-function removeTyping(){
+  <div class="input-area">
+    <input type="text" id="chat-input" placeholder="Type a message">
+    <button id="send-btn">➤</button>
+  </div>
 
-  statusText.innerText = "online";
+  <script>
+    const input = document.getElementById('chat-input');
+    const chatBox = document.getElementById('chat-box');
 
-  const typing = document.getElementById("typing-msg");
+    document.getElementById('send-btn').onclick = sendMsg;
+    input.addEventListener('keypress', e => { if(e.key === 'Enter') sendMsg(); });
 
-  if(typing){
-    typing.remove();
-  }
-}
+    async function sendMsg() {
+      const msg = input.value.trim();
+      if(!msg) return;
 
-/* TIME */
+      chatBox.innerHTML += `<div class="msg user-msg">${msg}</div>`;
+      input.value = '';
+      chatBox.scrollTop = chatBox.scrollHeight;
 
-function getTime(){
-
-  const now = new Date();
-
-  let h = now.getHours();
-  let m = now.getMinutes();
-
-  m = m < 10 ? "0"+m : m;
-
-  return ${h}:${m};
-}
-
-/* SCROLL */
-
-function scrollBottom(){
-  chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-/* THEME */
-
-themeBtn.onclick = ()=>{
-
-  document.body.classList.toggle("light-mode");
-
-  if(document.body.classList.contains("light-mode")){
-    themeBtn.innerText = "☀️";
-  }else{
-    themeBtn.innerText = "🌙";
-  }
-}
-
-/* VOICE INPUT */
-
-micBtn.onclick = ()=>{
-
-  if(!('webkitSpeechRecognition' in window)){
-    alert("Voice input support nahi hai");
-    return;
-  }
-
-  const recognition = new webkitSpeechRecognition();
-
-  recognition.lang = "en-US";
-
-  recognition.start();
-
-  recognition.onresult = (event)=>{
-
-    const text = event.results[0][0].transcript;
-
-    input.value = text;
-  }
-}
-
-/* PROFILE PHOTO */
-
-uploadBtn.onclick = ()=>{
-  profileUpload.click();
-}
-
-profileUpload.onchange = (e)=>{
-
-  const file = e.target.files[0];
-
-  if(!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = function(event){
-
-    profileAvatar.innerHTML = `
-      <img src="${event.target.result}">
-    `;
-  }
-
-  reader.readAsDataURL(file);
-}
-
-</script>
-
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: msg })
+      });
+      const data = await res.json();
+      chatBox.innerHTML += `<div class="msg ai-msg">${data.reply || 'Maya busy hai 😅'}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
 </body>
 </html>
