@@ -1,8 +1,9 @@
 {
-  "rewrites": [
+  "redirects": [
     {
-      "source": "/",
-      "destination": "/ai-teacher.html"
+      "source": "/maya",
+      "destination": "/ai-teacher.html",
+      "permanent": false
     }
   ]
 }
