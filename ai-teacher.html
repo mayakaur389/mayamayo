@@ -16,10 +16,6 @@
    .input-area { display: flex; padding: 15px; background: #1e293b; border-top: 2px solid #334155; gap: 10px; }
     #userInput { flex: 1; padding: 12px; border: none; border-radius: 8px; background: #0f172a; color: #e2e8f0; font-size: 16px; outline: none; }
     button { padding: 12px 20px; border: none; border-radius: 8px; background: #3b82f6; color: white; font-weight: bold; cursor: pointer; }
-    button:hover { background: #2563eb; }
-    #micBtn { background: #ef4444; }
-    #micBtn.recording { background: #22c55e; animation: pulse 1s infinite; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
   </style>
 </head>
 <body>
@@ -33,17 +29,14 @@
 
   <div class="input-area">
     <input type="text" id="userInput" placeholder="Maya se kuch pucho...">
-    <button id="micBtn" onclick="toggleMic()">🎤</button>
     <button onclick="sendMsg()">Bhej</button>
   </div>
 
 <script>
-const API_URL = window.location.origin + "/api/chat"; // ✅ Groq API ka sahi root
-let chatHistory = [];
-let recognition;
-let isRecording = false;
+// ✅✅ YE WALA ROOT SAHI HAI GURU - .js mat lagana
+const API_URL = "/api/chat"; 
 
-// Initial msg
+let chatHistory = [];
 addMsg("Namaste 🙏 Main Maya Didi hu. English seekhni hai? Koi bhi sawal pucho.", 'bot');
 
 function addMsg(text, sender){
@@ -66,13 +59,11 @@ async function sendMsg(){
   chatHistory.push({role: "user", content: text});
 
   try {
-    const res = await fetch(API_URL, {
+    const res = await fetch(API_URL, { // ✅ /api/chat pe request jayegi
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({messages: chatHistory})
     });
-
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const data = await res.json();
     const reply = data.reply || "Sorry, jawab nahi mila.";
@@ -82,53 +73,15 @@ async function sendMsg(){
 
   } catch(e){
     console.error("API Error:", e);
-    addMsg("Maya so rahi hai bhai 😅. `GROQ_API_KEY` Vercel me check kar le ya API down hai.", 'bot'); // ✅ Error fix
+    // ✅ Ab GROQ ka error aayega, OPENROUTER nahi
+    addMsg("Maya so rahi hai bhai 😅. `GROQ_API_KEY` Vercel me check kar le ya API down hai.", 'bot');
     document.getElementById('status').innerText = 'online';
   }
 }
 
-// Enter se bhejo
 document.getElementById('userInput').addEventListener('keypress', (e) => {
   if(e.key === 'Enter') sendMsg();
 });
-
-// Mic wala code
-function toggleMic(){
-  if(!('webkitSpeechRecognition' in window)){
-    alert("Mic support nahi hai bhai");
-    return;
-  }
-
-  if(!recognition){
-    recognition = new webkitSpeechRecognition();
-    recognition.lang = 'hi-IN';
-    recognition.continuous = false;
-
-    recognition.onstart = () => {
-      isRecording = true;
-      document.getElementById('micBtn').classList.add('recording');
-      document.getElementById('status').innerText = 'sun rahi hu...';
-    };
-
-    recognition.onresult = (e) => {
-      const text = e.results[0][0].transcript;
-      document.getElementById('userInput').value = text;
-      sendMsg();
-    };
-
-    recognition.onend = () => {
-      isRecording = false;
-      document.getElementById('micBtn').classList.remove('recording');
-      document.getElementById('status').innerText = 'online';
-    };
-  }
-
-  if(isRecording){
-    recognition.stop();
-  } else {
-    recognition.start();
-  }
-}
 </script>
 
 </body>
