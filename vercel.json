@@ -1,5 +1,9 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/ai-teacher.html" }
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/ai-teacher.html",
+      "permanent": false
+    }
   ]
 }
