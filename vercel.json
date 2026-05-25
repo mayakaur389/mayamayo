@@ -2,7 +2,7 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "/ai-teacher.html",
+      "destination": "/home.html",
       "permanent": false
     }
   ]
