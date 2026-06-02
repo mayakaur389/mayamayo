@@ -1,4 +1,4 @@
-// ads-heart.js - Final Version: Banner + 5 Count Full Ad + Pro Popup
+// ads-heart.js - Final Version: Banner + 5 Count Full Ad + Pro Popup | Space Fixed
 const PAID_KEY = 'maya_paid_user';
 const MODE = window.MAYA_MODE || 'practice';
 
@@ -11,15 +11,12 @@ let messageCount = 0;
     style.innerHTML = `
         #banner-ad {
             position: fixed; bottom: 0; left: 0; width: 100%; z-index: 999;
-            text-align: center; background: #fff; display: none;
-            height: 60px; border-top: 1px solid #ddd;
+            text-align: center; background: #0d1117; display: none;
+            height: 50px; border-top: 1px solid #21262d;
         }
-        /* Chat/Input ko upar uthane ke liye */
+        /* Space fix: Sirf body me padding */
         body {
-            padding-bottom: 60px!important;
-        }
-        .chat-input-container, .input-area, .message-box, .bottom-bar {
-            margin-bottom: 60px!important;
+            padding-bottom: 50px!important;
         }
         #full-ad-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -71,7 +68,10 @@ let messageCount = 0;
 
 // Page Load pe Banner Chalu
 function initAds() {
-    if (localStorage.getItem(PAID_KEY) === 'true') return;
+    if (localStorage.getItem(PAID_KEY) === 'true') {
+        document.body.style.paddingBottom = '0';
+        return;
+    }
     document.getElementById('banner-ad').style.display = 'block';
 }
 
