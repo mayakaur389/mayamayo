@@ -1,4 +1,4 @@
-// ads-heart.js - No Heart, Only Ads Logic
+// ads-heart.js - Final Version: Banner + 5 Count Full Ad + Pro Popup
 const PAID_KEY = 'maya_paid_user';
 const MODE = window.MAYA_MODE || 'practice';
 
@@ -9,33 +9,44 @@ let messageCount = 0;
 (function(){
     const style = document.createElement('style');
     style.innerHTML = `
-        #banner-ad { 
+        #banner-ad {
             position: fixed; bottom: 0; left: 0; width: 100%; z-index: 999;
-            text-align: center; background: #fff; display: none; min-height: 50px;
+            text-align: center; background: #fff; display: none;
+            height: 60px; border-top: 1px solid #ddd;
+        }
+        /* Chat/Input ko upar uthane ke liye */
+        body {
+            padding-bottom: 60px!important;
+        }
+        .chat-input-container, .input-area, .message-box, .bottom-bar {
+            margin-bottom: 60px!important;
         }
         #full-ad-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 10001; display: none; 
-            align-items: center; justify-content: center; color: #fff;
+            background: #000; z-index: 10001; display: none;
+            align-items: center; justify-content: center; color: #fff; text-align: center;
         }
-        #recharge-popup { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #0008; z-index: 10000; display: none; align-items: center; justify-content: center; 
+        #ad-timer {
+            font-size: 48px; font-weight: bold; margin-top: 10px;
         }
-        #recharge-box { 
-            background: #fff; padding: 25px; border-radius: 15px; text-align: center; max-width: 320px; 
+        #recharge-popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0008; z-index: 10000; display: none; align-items: center; justify-content: center;
         }
-        #recharge-box button { 
-            background: #ff9800; color: #fff; border: none; padding: 12px 20px; 
+        #recharge-box {
+            background: #fff; padding: 25px; border-radius: 15px; text-align: center; max-width: 320px; position: relative;
+        }
+        #recharge-box button {
+            background: #ff9800; color: #fff; border: none; padding: 12px 20px;
             border-radius: 10px; font-size: 16px; margin-top: 15px; cursor: pointer; width: 100%;
         }
         .close-popup {
-            position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer;
+            position: absolute; top: 10px; right: 15px; font-size: 24px; cursor: pointer; line-height: 1;
         }
     `;
     document.head.appendChild(style);
-    
-    // Full Ad + Popup ka HTML
+
+    // Full Ad + Popup ka HTML body me daal de
     document.body.insertAdjacentHTML('beforeend', `
         <div id="full-ad-overlay">
             <div>
@@ -64,7 +75,7 @@ function initAds() {
     document.getElementById('banner-ad').style.display = 'block';
 }
 
-// PRACTICE: Har Galat pe Count. 5 Galat = Full Ad
+// PRACTICE: 5 Galat = Full Ad
 function mayaLoseHeartPractice() {
     if (MODE !== 'practice' || localStorage.getItem(PAID_KEY) === 'true') return;
     
@@ -77,7 +88,7 @@ function mayaLoseHeartPractice() {
     }
 }
 
-// MAYA: Har Send pe Count. 5 Send = Full Ad + Popup
+// MAYA: 5 Send = Full Ad + Popup
 function mayaSendMessage() {
     if (MODE !== 'maya' || localStorage.getItem(PAID_KEY) === 'true') return;
     
@@ -92,7 +103,7 @@ function mayaSendMessage() {
 
 // 5 Sec Wala Full Ad
 function showFullAd(seconds, showPopupAfter) {
-    // AdSense Interstitial yaha trigger karo
+    // Yaha AdSense Interstitial Code daalna hai approval ke baad
     // googletag.display('interstitial');
     
     const overlay = document.getElementById('full-ad-overlay');
@@ -117,9 +128,9 @@ function showFullAd(seconds, showPopupAfter) {
 }
 
 function mayaBuyPro() {
-    // Yaha Razorpay link
+    // Yaha Razorpay/PhonePe payment link kholo
     alert('₹99 Payment Page pe le jao');
-    // Success pe: mayaActivatePaid();
+    // Payment success pe ye chalana: mayaActivatePaid();
 }
 
 function closeRecharge() {
@@ -129,6 +140,7 @@ function closeRecharge() {
 function mayaActivatePaid() {
     localStorage.setItem(PAID_KEY, 'true');
     document.getElementById('banner-ad').style.display = 'none';
+    document.body.style.paddingBottom = '0';
     closeRecharge();
     alert('👑 Pro Activated! Ab Ad nahi aayega.');
 }
