@@ -1,10 +1,10 @@
-// ads-heart.js - Final Version: Banner + 5 Count Full Ad + Pro Popup | Space Fixed
+// ads-heart.js - Full Control Version | Per Page Logic
 const PAID_KEY = 'maya_paid_user';
-const MODE = window.MAYA_MODE || 'practice';
+const MODE = window.MAYA_MODE || 'home'; // home, maya, wrong, game, bol, lesson
 
 // Counters
-let wrongCount = 0;
 let messageCount = 0;
+let wrongCount = 0;
 
 (function(){
     const style = document.createElement('style');
@@ -12,10 +12,13 @@ let messageCount = 0;
         #banner-ad {
             position: fixed; bottom: 0; left: 0; width: 100%; z-index: 999;
             text-align: center; background: #0d1117; display: none;
-            height: 50px; border-top: 1px solid #21262d;
+            min-height: 0px; border-top: none;
         }
-        /* Space fix: Sirf body me padding */
-        body {
+        #banner-ad.ads-loaded {
+            min-height: 50px;
+            border-top: 1px solid #21262d;
+        }
+        body.ads-active {
             padding-bottom: 50px!important;
         }
         #full-ad-overlay {
@@ -23,9 +26,7 @@ let messageCount = 0;
             background: #000; z-index: 10001; display: none;
             align-items: center; justify-content: center; color: #fff; text-align: center;
         }
-        #ad-timer {
-            font-size: 48px; font-weight: bold; margin-top: 10px;
-        }
+        #ad-timer { font-size: 48px; font-weight: bold; margin-top: 10px; }
         #recharge-popup {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #0008; z-index: 10000; display: none; align-items: center; justify-content: center;
@@ -43,7 +44,6 @@ let messageCount = 0;
     `;
     document.head.appendChild(style);
 
-    // Full Ad + Popup ka HTML body me daal de
     document.body.insertAdjacentHTML('beforeend', `
         <div id="full-ad-overlay">
             <div>
@@ -51,65 +51,49 @@ let messageCount = 0;
                 <p id="ad-timer">5</p>
             </div>
         </div>
-        
         <div id="recharge-popup">
             <div id="recharge-box">
                 <span class="close-popup" onclick="closeRecharge()">×</span>
                 <h3>Ad Free Chahiye?</h3>
-                <p>5 Message ke baad Ad aata rahega</p>
+                <p>Bar bar Ad dekhna padega</p>
                 <h2>₹99 / Month</h2>
-                <p style="color: #666; font-size: 14px;">Unlimited Chat + No Ads</p>
+                <p style="color: #666; font-size: 14px;">Unlimited + No Ads</p>
                 <button onclick="mayaBuyPro()">Upgrade to Pro ₹99</button>
-                <p style="font-size:12px; margin-top:15px; cursor:pointer; color: #2196F3;" onclick="closeRecharge()">Abhi Nahi, Continue</p>
+                <p style="font-size:12px; margin-top:15px; cursor:pointer; color: #2196F3;" onclick="closeRecharge()">Abhi Nahi</p>
             </div>
         </div>
     `);
 })();
 
-// Page Load pe Banner Chalu
-function initAds() {
+// Banner Ad - Sirf ad aane pe space lega
+function initBanner() {
+    if (localStorage.getItem(PAID_KEY) === 'true') return;
+    const banner = document.getElementById('banner-ad');
+    banner.style.display = 'block';
+    (adsbygoogle = window.adsbygoogle || []).push({});
+    setTimeout(() => {
+        if (banner.querySelector('iframe')) {
+            banner.classList.add('ads-loaded');
+            document.body.classList.add('ads-active');
+        } else {
+            banner.style.display = 'none';
+        }
+    }, 2000);
+}
+
+// 5 Sec Full Ad
+function showFullAd(seconds, showPopupAfter, callback) {
     if (localStorage.getItem(PAID_KEY) === 'true') {
-        document.body.style.paddingBottom = '0';
+        if (callback) callback();
         return;
     }
-    document.getElementById('banner-ad').style.display = 'block';
-}
-
-// PRACTICE: 5 Galat = Full Ad
-function mayaLoseHeartPractice() {
-    if (MODE !== 'practice' || localStorage.getItem(PAID_KEY) === 'true') return;
     
-    wrongCount++;
-    console.log('Galat Count:', wrongCount);
-    
-    if (wrongCount >= 5) {
-        showFullAd(5, false); // 5 sec ad, popup nahi
-        wrongCount = 0; // Reset
-    }
-}
-
-// MAYA: 5 Send = Full Ad + Popup
-function mayaSendMessage() {
-    if (MODE !== 'maya' || localStorage.getItem(PAID_KEY) === 'true') return;
-    
-    messageCount++;
-    console.log('Message Count:', messageCount);
-    
-    if (messageCount >= 5) {
-        showFullAd(5, true); // 5 sec ad + popup dikhega
-        messageCount = 0; // Reset
-    }
-}
-
-// 5 Sec Wala Full Ad
-function showFullAd(seconds, showPopupAfter) {
-    // Yaha AdSense Interstitial Code daalna hai approval ke baad
+    // AdSense Interstitial yaha lagana approval ke baad
     // googletag.display('interstitial');
     
     const overlay = document.getElementById('full-ad-overlay');
     const timer = document.getElementById('ad-timer');
     overlay.style.display = 'flex';
-    
     let sec = seconds;
     timer.innerText = sec;
     
@@ -119,18 +103,62 @@ function showFullAd(seconds, showPopupAfter) {
         if (sec <= 0) {
             clearInterval(interval);
             overlay.style.display = 'none';
-            
             if (showPopupAfter) {
                 document.getElementById('recharge-popup').style.display = 'flex';
             }
+            if (callback) callback();
         }
     }, 1000);
 }
 
+// 1. MAYA SE GUPSHUP - 5-8 msg ke baad ad
+function mayaSendMessage() {
+    if (MODE !== 'maya' || localStorage.getItem(PAID_KEY) === 'true') return;
+    messageCount++;
+    if (messageCount >= 5 && messageCount <= 8) { // 5 se 8 ke beech random
+        showFullAd(5, true);
+        messageCount = 0;
+    }
+}
+
+// 2. WRONG QUESTIONS - Page khulte hi ad
+function mayaWrongPageLoad() {
+    if (MODE !== 'wrong' || localStorage.getItem(PAID_KEY) === 'true') return;
+    showFullAd(5, false); // Page load pe 1 baar
+}
+
+// 3. SUN KE JODO GAME - 5-7 galat pe ad
+function mayaGameWrong() {
+    if (MODE !== 'game' || localStorage.getItem(PAID_KEY) === 'true') return;
+    wrongCount++;
+    if (wrongCount >= 5 && wrongCount <= 7) {
+        showFullAd(5, false);
+        wrongCount = 0;
+    }
+}
+
+// 4. BOL KE PRACTICE - 5-7 galat pe ad
+function mayaBolWrong() {
+    if (MODE !== 'bol' || localStorage.getItem(PAID_KEY) === 'true') return;
+    wrongCount++;
+    if (wrongCount >= 5 && wrongCount <= 7) {
+        showFullAd(5, false);
+        wrongCount = 0;
+    }
+}
+
+// 5. DAY WISE LESSON - Lesson complete pe ad, fir agla open
+function mayaLessonComplete(nextLessonFunction) {
+    if (MODE !== 'lesson' || localStorage.getItem(PAID_KEY) === 'true') {
+        if (nextLessonFunction) nextLessonFunction();
+        return;
+    }
+    showFullAd(5, false, nextLessonFunction); // Ad ke baad agla lesson
+}
+
 function mayaBuyPro() {
-    // Yaha Razorpay/PhonePe payment link kholo
     alert('₹99 Payment Page pe le jao');
-    // Payment success pe ye chalana: mayaActivatePaid();
+    // mayaActivatePaid();
 }
 
 function closeRecharge() {
@@ -140,10 +168,11 @@ function closeRecharge() {
 function mayaActivatePaid() {
     localStorage.setItem(PAID_KEY, 'true');
     document.getElementById('banner-ad').style.display = 'none';
-    document.body.style.paddingBottom = '0';
+    document.body.classList.remove('ads-active');
     closeRecharge();
-    alert('👑 Pro Activated! Ab Ad nahi aayega.');
+    alert('👑 Pro Activated!');
 }
 
 // Start
-initAds();
+initBanner();
+if (MODE === 'wrong') mayaWrongPageLoad(); // Wrong page pe auto ad
