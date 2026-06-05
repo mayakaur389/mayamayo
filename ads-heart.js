@@ -82,35 +82,32 @@ function initBanner() {
 }
 
 // 5 Sec Full Ad
-function showFullAd(seconds, showPopupAfter, callback) {
-    if (localStorage.getItem(PAID_KEY) === 'true') {
-        if (callback) callback();
-        return;
-    }
-    
-    // AdSense Interstitial yaha lagana approval ke baad
-    // googletag.display('interstitial');
-    
-    const overlay = document.getElementById('full-ad-overlay');
-    const timer = document.getElementById('ad-timer');
-    overlay.style.display = 'flex';
-    let sec = seconds;
-    timer.innerText = sec;
-    
-    const interval = setInterval(() => {
-        sec--;
-        timer.innerText = sec;
-        if (sec <= 0) {
-            clearInterval(interval);
-            overlay.style.display = 'none';
-            if (showPopupAfter) {
-                document.getElementById('recharge-popup').style.display = 'flex';
-            }
-            if (callback) callback();
-        }
-    }, 1000);
-}
+// 5 Sec Full Ad - Fixed Version
+function showFullAd(callback) {
+  if (localStorage.getItem(PAID_KEY) === 'true') {
+    if (callback) callback();
+    return;
+  }
 
+  let count = 5;
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);z-index:99999;color:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:24px;font-family:sans-serif';
+  overlay.innerHTML = `<div>Ad Chal Raha Hai...</div><div id="ad-timer" style="font-size:48px;margin-top:20px;font-weight:bold">5</div>`;
+  document.body.appendChild(overlay);
+  
+  const timer = setInterval(() => {
+    count--;
+    document.getElementById('ad-timer').innerText = count;
+    if (count <= 0) {
+      clearInterval(timer);
+      overlay.remove();
+      if (callback) callback();
+    }
+  }, 1000);
+  
+  // AdSense Interstitial yaha lagana approval ke baad
+  // googletag.display('interstitial');
+}
 // 1. MAYA SE GUPSHUP - 5-8 msg ke baad ad
 function mayaSendMessage() {
     if (MODE !== 'maya' || localStorage.getItem(PAID_KEY) === 'true') return;
