@@ -252,12 +252,19 @@ body.dark-mode .top-btn { background: #333; color: #fff; }
     ]
   }
 ];
+<div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<script>window.MAYA_MODE = 'game';</script>
+<script src="/ads-heart.js"></script>
+<script>
 let currentIndex = 0;
-    let score = 0;
-    let hearts = 3;
-    let selectedAnswer = null;
-    let hasSpoken = false;
-    let recognition;
+let score = 0;
+let hearts = 3;
+let selectedAnswer = null;
+let hasSpoken = false;
+let recognition;
+let wrongCount = 0;
+let correctCount = 0;
+
 // Dark mode toggle
 const themeToggle = document.getElementById('themeToggle');
 if(localStorage.getItem('theme') === 'dark') {
@@ -274,147 +281,159 @@ themeToggle.onclick = () => {
         localStorage.setItem('theme', 'light');
     }
 };
-    function shuffle(array) {
-        return array.sort(() => Math.random() - 0.5);
-    }
+function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
 
-    function loadQuestion() {
+function loadQuestion() {
   let q = gameData[currentIndex];
-  
+
   // Question dikhao
   const qText = document.getElementById('question-text');
-if (qText) qText.value = q.english;
-  
+  if (qText) qText.value = q.english;
+
   // Options clear karo
   let optionsDiv = document.getElementById('options');
   optionsDiv.innerHTML = '';
   selectedAnswer = '';
-  
+
   // Naye options banao
   q.options.forEach(opt => {
     let btn = document.createElement('button');
-    btn.innerText = opt.hindi; // Screen pe Hindi dikhegi
-    btn.dataset.english = opt.english; // Hidden me English save hogi
+    btn.innerText = opt.hindi;
+    btn.dataset.english = opt.english;
     btn.className = 'option';
-    
+
     btn.onclick = function() {
-      // Purane selected hatao
       document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
-      // Naya select karo
       btn.classList.add('selected');
-      selectedAnswer = opt.english; // Yahi English se match hoga
+      selectedAnswer = opt.english;
     };
-    
+
     optionsDiv.appendChild(btn);
   });
-  
-  // Result clear
+
   document.getElementById('result').innerText = '';
 }
-    function speakWord() {
-        const q = gameData[currentIndex];
-        const utterance = new SpeechSynthesisUtterance(q.english);
-        utterance.lang = 'en-US';
-        speechSynthesis.speak(utterance);
-        document.getElementById('result').innerText = "Step 2: Sahi Hindi option chuno 👇";
+function speakWord() {
+    const q = gameData[currentIndex];
+    const utterance = new SpeechSynthesisUtterance(q.english);
+    utterance.lang = 'en-US';
+    speechSynthesis.speak(utterance);
+    document.getElementById('result').innerText = "Step 2: Sahi Hindi option chuno 👇";
+}
+
+function selectOption(element, answer) {
+    document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+    element.classList.add('selected');
+    selectedAnswer = answer;
+    document.getElementById('result').innerText = "Step 3: 🎤 Mic daba ke English bolo";
+}
+
+function startListening() {
+    if(!selectedAnswer) {
+        alert('Pehle option chuno bhai!');
+        return;
+    }
+    if (!('webkitSpeechRecognition' in window)) {
+        alert('Chrome browser use kar. Mic support nahi hai.');
+        return;
     }
 
-    function selectOption(element, answer) {
-        document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-        element.classList.add('selected');
-        selectedAnswer = answer;
-        document.getElementById('result').innerText = "Step 3: 🎤 Mic daba ke English bolo";
-    }
+    recognition = new webkitSpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
 
-    function startListening() {
-        if(!selectedAnswer) {
-            alert('Pehle option chuno bhai!');
-            return;
+    const micBtn = document.getElementById('mic-btn');
+    micBtn.classList.add('listening');
+    document.getElementById('result').innerText = "english bolo Sun rahi hu... ";
+
+    recognition.onresult = function(event) {
+      let spoken = event.results[0][0].transcript.toLowerCase().trim();
+      let target = gameData[currentIndex].english.toLowerCase();
+      let correctHindi = gameData[currentIndex].hindi.toLowerCase();
+
+      micBtn.classList.remove('listening');
+      hasSpoken = true;
+
+      if ((spoken === target || spoken.includes(target))
+        && selectedAnswer.toLowerCase() === target) {
+
+        document.getElementById('result').innerText = '✅ Perfect! Sahi bola';
+        document.querySelector('.option.selected').classList.add('correct');
+        score++;
+        correctCount++;
+        wrongCount = 0;
+
+        if (correctCount === 12) {
+          showFullAd(() => {
+            alert('12 Sahi! 🎉 Master ho tum');
+            correctCount = 0;
+            nextQuestion();
+          });
+        } else {
+          setTimeout(nextQuestion, 1500);
         }
-        if (!('webkitSpeechRecognition' in window)) {
-            alert('Chrome browser use kar. Mic support nahi hai.');
-            return;
+
+      } else {
+
+        hearts--;
+        document.getElementById('result').innerText = `❌ Galat. Sahi: ${correctHindi}`;
+
+        if (document.querySelector('.option.selected')) {
+          document.querySelector('.option.selected').classList.add('wrong');
         }
 
-        recognition = new webkitSpeechRecognition();
- recognition.lang = 'en-US';
- recognition.interimResults = false;
- recognition.maxAlternatives = 1;
+        wrongCount++;
+        correctCount = 0;
 
- const micBtn = document.getElementById('mic-btn');
- micBtn.classList.add('listening');
- document.getElementById('result').innerText = "english bolo Sun rahi hu... ";
+        if (wrongCount === 5) {
+          showFullAd(() => {
+            alert('5 Galat ho gaye! 💪 Dhyan do');
+            wrongCount = 0;
+            nextQuestion();
+          });
+        } else if (hearts <= 0) {
+          setTimeout(() => {
+            alert('Hearts khatam! 💀 Game Over');
+            window.location.href = 'index.html';
+          }, 1000);
+        } else {
+          setTimeout(nextQuestion, 2000);
+        }
+      }
 
-recognition.onresult = function(event) {
-  let spoken = event.results[0][0].transcript.toLowerCase().trim();
-  let target = gameData[currentIndex].english.toLowerCase();
-  let correctHindi = gameData[currentIndex].hindi.toLowerCase();
-  
-  micBtn.classList.remove('listening');
-  hasSpoken = true;
+      updateScore();
+    };
 
-  // Check both: Voice + Option
-  if ((spoken === target || spoken.includes(target)) 
-    && selectedAnswer.toLowerCase() === target) {
-    
-    document.getElementById('result').innerText = '✅ Perfect! Sahi bola';
-    document.querySelector('.option.selected').classList.add('correct');
-    score++;
-    
-    setTimeout(nextQuestion, 1500);
+    recognition.onerror = function() {
+        micBtn.classList.remove('listening');
+        document.getElementById('result').innerText = "Mic error. Phir se try karo";
+    };
 
-  } else {
-    
-    hearts--;
-    document.getElementById('result').innerText = ❌ Galat. Sahi: ${correctHindi};
-    
-    if (document.querySelector('.option.selected')) {
-      document.querySelector('.option.selected').classList.add('wrong');
-    }
-    
-    if (hearts <= 0) {
-      setTimeout(() => {
-        alert('Hearts khatam! 💀 Game Over');
-        window.location.href = 'index.html';
-      }, 1000);
-    } else {
-      setTimeout(nextQuestion, 2000);
-    }
-  }
-  
-  updateScore();
-};
+    recognition.start();
+}
 
-        recognition.onerror = function() {
-            micBtn.classList.remove('listening');
-            document.getElementById('result').innerText = "Mic error. Phir se try karo";
-        };
+function nextQuestion() {
+    setTimeout(() => {
+        currentIndex++;
+        if(currentIndex < gameData.length && hearts > 0) {
+            loadQuestion();
+        } else {
+            alert(`Game Khatam! 🎉 Score: ${score}/5 | +${score * 20} XP`);
+            let currentXP = parseInt(localStorage.getItem('maya_xp') || 0);
+            localStorage.setItem('maya_xp', currentXP + (score * 20));
+            window.location.href='index.html';
+        }
+    }, 1500);
+}
 
-        recognition.start();
-    }
+function updateScore() {
+    document.getElementById('score').innerText = `Score: ${score}/5 | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
+}
 
-    function nextQuestion() {
-        setTimeout(() => {
-            currentIndex++;
-            if(currentIndex < gameData.length && hearts > 0) {
-                loadQuestion();
-            } else {
-                alert(Game Khatam! 🎉 Score: ${score}/5 | +${score * 20} XP);
-                let currentXP = parseInt(localStorage.getItem('maya_xp') || 0);
-                localStorage.setItem('maya_xp', currentXP + (score * 20));
-                window.location.href='index.html';
-            }
-        }, 1500);
-    }
-
-    function updateScore() {
-        document.getElementById('score').innerText = Score: ${score}/5 | Hearts: ${hearts} ❤️;
-    }
-
-    loadQuestion();
+loadQuestion();
 </script>
- <div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-<script>window.MAYA_MODE = 'game';</script>
-<script src="/ads-heart.js"></script>  
 </body>
 </html>
