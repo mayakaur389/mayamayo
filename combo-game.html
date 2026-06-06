@@ -252,10 +252,6 @@ body.dark-mode .top-btn { background: #333; color: #fff; }
     ]
   }
 ];
-<div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-<script>window.MAYA_MODE = 'game';</script>
-<script src="/ads-heart.js"></script>
-<script>
 let currentIndex = 0;
 let score = 0;
 let hearts = 3;
@@ -281,40 +277,35 @@ themeToggle.onclick = () => {
         localStorage.setItem('theme', 'light');
     }
 };
+
 function shuffle(array) {
     return array.sort(() => Math.random() - 0.5);
 }
 
 function loadQuestion() {
   let q = gameData[currentIndex];
-
-  // Question dikhao
   const qText = document.getElementById('question-text');
   if (qText) qText.value = q.english;
 
-  // Options clear karo
   let optionsDiv = document.getElementById('options');
   optionsDiv.innerHTML = '';
   selectedAnswer = '';
 
-  // Naye options banao
   q.options.forEach(opt => {
     let btn = document.createElement('button');
     btn.innerText = opt.hindi;
     btn.dataset.english = opt.english;
     btn.className = 'option';
-
     btn.onclick = function() {
       document.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
       selectedAnswer = opt.english;
     };
-
     optionsDiv.appendChild(btn);
   });
-
   document.getElementById('result').innerText = '';
 }
+
 function speakWord() {
     const q = gameData[currentIndex];
     const utterance = new SpeechSynthesisUtterance(q.english);
@@ -353,13 +344,10 @@ function startListening() {
       let spoken = event.results[0][0].transcript.toLowerCase().trim();
       let target = gameData[currentIndex].english.toLowerCase();
       let correctHindi = gameData[currentIndex].hindi.toLowerCase();
-
       micBtn.classList.remove('listening');
       hasSpoken = true;
 
-      if ((spoken === target || spoken.includes(target))
-        && selectedAnswer.toLowerCase() === target) {
-
+      if ((spoken === target || spoken.includes(target)) && selectedAnswer.toLowerCase() === target) {
         document.getElementById('result').innerText = '✅ Perfect! Sahi bola';
         document.querySelector('.option.selected').classList.add('correct');
         score++;
@@ -377,14 +365,11 @@ function startListening() {
         }
 
       } else {
-
         hearts--;
         document.getElementById('result').innerText = `❌ Galat. Sahi: ${correctHindi}`;
-
         if (document.querySelector('.option.selected')) {
           document.querySelector('.option.selected').classList.add('wrong');
         }
-
         wrongCount++;
         correctCount = 0;
 
@@ -403,7 +388,6 @@ function startListening() {
           setTimeout(nextQuestion, 2000);
         }
       }
-
       updateScore();
     };
 
@@ -411,7 +395,6 @@ function startListening() {
         micBtn.classList.remove('listening');
         document.getElementById('result').innerText = "Mic error. Phir se try karo";
     };
-
     recognition.start();
 }
 
@@ -421,7 +404,7 @@ function nextQuestion() {
         if(currentIndex < gameData.length && hearts > 0) {
             loadQuestion();
         } else {
-            alert(`Game Khatam! 🎉 Score: ${score}/5 | +${score * 20} XP`);
+            alert(`Game Khatam! 🎉 Score: ${score}/${gameData.length} | +${score * 20} XP`);
             let currentXP = parseInt(localStorage.getItem('maya_xp') || 0);
             localStorage.setItem('maya_xp', currentXP + (score * 20));
             window.location.href='index.html';
@@ -430,10 +413,14 @@ function nextQuestion() {
 }
 
 function updateScore() {
-    document.getElementById('score').innerText = `Score: ${score}/5 | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
+    document.getElementById('score').innerText = `Score: ${score}/${gameData.length} | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
 }
 
 loadQuestion();
 </script>
+<div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<script>window.MAYA_MODE = 'game';</script>
+<script src="/ads-heart.js"></script>
+<script>    
 </body>
 </html>
