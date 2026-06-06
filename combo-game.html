@@ -252,9 +252,10 @@ body.dark-mode .top-btn { background: #333; color: #fff; }
     ]
   }
 ];
-  <script>
+ <script>
 let currentIndex = 0;
 let score = 0;
+let hearts = 3;
 let selectedAnswer = null;
 let hasSpoken = false;
 let recognition;
@@ -354,7 +355,6 @@ function startListening() {
 
     // Check both: Voice + Option
     if ((spoken === target || spoken.includes(target)) && selectedAnswer.toLowerCase() === target) {
-      // SAHI HUA
       document.getElementById('result').innerText = '✅ Perfect! Sahi bola';
       document.querySelector('.option.selected').classList.add('correct');
       score++;
@@ -365,14 +365,14 @@ function startListening() {
         showFullAd(() => {
           alert('12 Sahi! 🎉 Master ho tum');
           correctCount = 0;
-          setTimeout(nextQuestion, 500);
+          nextQuestion();
         });
       } else {
         setTimeout(nextQuestion, 1500);
       }
 
     } else {
-      // GALAT HUA
+      hearts--;
       document.getElementById('result').innerText = `❌ Galat. Sahi: ${correctHindi}`;
       if (document.querySelector('.option.selected')) {
         document.querySelector('.option.selected').classList.add('wrong');
@@ -382,10 +382,15 @@ function startListening() {
 
       if (wrongCount === 5) {
         showFullAd(() => {
-          alert('5 Galat ho gaye! 💪 Practice karo');
+          alert('5 Galat ho gaye! 💪 Dhyan do');
           wrongCount = 0;
-          setTimeout(nextQuestion, 500);
+          nextQuestion();
         });
+      } else if (hearts <= 0) {
+        setTimeout(() => {
+          alert('Hearts khatam! 💀 Game Over');
+          window.location.href = 'index.html';
+        }, 1000);
       } else {
         setTimeout(nextQuestion, 2000);
       }
@@ -402,26 +407,23 @@ function startListening() {
 }
 
 function nextQuestion() {
-  setTimeout(() => {
-    currentIndex++;
-    if(currentIndex < gameData.length) {
-      loadQuestion();
-    } else {
-      alert(`Game Khatam! 🎉 Score: ${score}/${gameData.length} | +${score * 20} XP`);
-      let currentXP = parseInt(localStorage.getItem('maya_xp') || 0);
-      localStorage.setItem('maya_xp', currentXP + (score * 20));
-      window.location.href='index.html';
-    }
-  }, 1000);
+  currentIndex++;
+  if(currentIndex < gameData.length && hearts > 0) {
+    loadQuestion();
+  } else {
+    alert(`Game Khatam! 🎉 Score: ${score}/5 | +${score * 20} XP`);
+    let currentXP = parseInt(localStorage.getItem('maya_xp') || 0);
+    localStorage.setItem('maya_xp', currentXP + (score * 20));
+    window.location.href='index.html';
+  }
 }
 
 function updateScore() {
-  document.getElementById('score').innerText = `Score: ${score} | Streak Sahi: ${correctCount} | Galat: ${wrongCount}`;
+  document.getElementById('score').innerText = `Score: ${score}/5 | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
 }
 
 loadQuestion();
 </script>
-
 <div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 <script>window.MAYA_MODE = 'game';</script>
 <script src="/ads-heart.js"></script>
