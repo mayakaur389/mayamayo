@@ -373,12 +373,14 @@ function startListening() {
         wrongCount++;
         correctCount = 0;
 
-        if (wrongCount === 5 && typeof showFullAd === 'function') {
-          showFullAd(() => {
-            alert('5 Galat ho gaye! 💪 Dhyan do');
-            wrongCount = 0;
-            nextQuestion();
-          });
+       if (wrongCount === 3 && typeof showFullAd === 'function') {
+    showFullAd(() => {
+        alert('3 Galat ho gaye! 💪 Dhyan do');
+        wrongCount = 0;
+        hearts = 3; // Ad ke baad phir se 3 life de de
+        nextQuestion();
+    });
+}
         } else if (hearts <= 0) {
           setTimeout(() => {
             alert('Hearts khatam! 💀 Game Over');
