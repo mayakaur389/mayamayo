@@ -380,6 +380,7 @@ function startListening() {
                     hearts = 3; 
                     nextQuestion();
                 });
+                 return;
             } else if (hearts <= 0) {
                 setTimeout(() => {
                     alert('Hearts khatam! 💀 Game Over');
