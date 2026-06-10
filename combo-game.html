@@ -373,21 +373,25 @@ function startListening() {
         wrongCount++;
         correctCount = 0;
 
- if (wrongCount === 3 && typeof showFullAd === 'function') {
-    showFullAd(() => {
-        alert('3 Galat ho gaye! 💪 Dhyan do');
-        wrongCount = 0;
-        hearts = 3; 
-        nextQuestion();
-    });
-} else if (hearts <= 0) {
-    setTimeout(() => {
-        alert('Hearts khatam! 💀 Game Over');
-        window.location.href = 'index.html';
-    }, 1000);
-} else {
-    setTimeout(nextQuestion, 2000);
-}
+             if (wrongCount === 3 && typeof showFullAd === 'function') {
+                showFullAd(() => {
+                    alert('3 Galat ho gaye! 💪 Dhyan do');
+                    wrongCount = 0;
+                    hearts = 3; 
+                    nextQuestion();
+                });
+            } else if (hearts <= 0) {
+                setTimeout(() => {
+                    alert('Hearts khatam! 💀 Game Over');
+                    window.location.href = 'index.html';
+                }, 1000);
+            } else {
+                setTimeout(nextQuestion, 2000);
+            }
+        }
+        updateScore();
+    };
+    
     recognition.onerror = function() {
         micBtn.classList.remove('listening');
         document.getElementById('result').innerText = "Mic error. Phir se try karo";
