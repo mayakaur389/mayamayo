@@ -125,24 +125,24 @@ function mayaWrongPageLoad() {
 }
 
 // 3. SUN KE JODO GAME - 5-7 galat pe ad
-//function mayaGameWrong() {
-   // if (MODE !== 'game' || localStorage.getItem(PAID_KEY) === 'true') return;
-   // wrongCount++;
-    //if (wrongCount >= 5 && wrongCount <= 7) {
-      //  showFullAd(5, false);
-       // wrongCount = 0;
-   // }
-//}
+function mayaGameWrong() {
+    if (MODE !== 'game' || localStorage.getItem(PAID_KEY) === 'true') return;
+    wrongCount++;
+    if (wrongCount >= 5 && wrongCount <= 7) {
+      showFullAd(5, false);
+        wrongCount = 0;
+    }
+}
 
 // 4. BOL KE PRACTICE - 5-7 galat pe ad
-//function mayaBolWrong() {
-    //if (MODE !== 'bol' || localStorage.getItem(PAID_KEY) === 'true') return;
-   // wrongCount++;
-    //if (wrongCount >= 5 && wrongCount <= 7) {
-        //showFullAd(5, false);
-       // wrongCount = 0;
-   // }
-//}
+function mayaBolWrong() {
+    if (MODE !== 'bol' || localStorage.getItem(PAID_KEY) === 'true') return;
+    wrongCount++;
+    if (wrongCount >= 5 && wrongCount <= 7) {
+        showFullAd(5, false);
+        wrongCount = 0;
+   }
+}
 
 // 5. DAY WISE LESSON - Lesson complete pe ad, fir agla open
 function mayaLessonComplete(nextLessonFunction) {
