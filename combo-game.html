@@ -373,7 +373,7 @@ function startListening() {
         wrongCount++;
         correctCount = 0;
 
-     if (wrongCount === 3 && typeof showFullAd === 'function') {
+    if (wrongCount === 3 && typeof showFullAd === 'function') {
     showFullAd(() => {
         alert('3 Galat ho gaye! 💪 Dhyan do');
         wrongCount = 0;
