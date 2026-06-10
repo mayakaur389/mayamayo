@@ -3,8 +3,8 @@ const PAID_KEY = 'maya_paid_user';
 const MODE = window.MAYA_MODE || 'home'; // home, maya, wrong, game, bol, lesson
 
 // Counters
-let messageCount = 0;
-let wrongCount = 0;
+//let messageCount = 0;
+//let wrongCount = 0;
 
 (function(){
     const style = document.createElement('style');
