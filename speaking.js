@@ -77,38 +77,34 @@ recognition.onresult = (event) => {
 
     let spoken = event.results[0][0].transcript.toLowerCase().trim();
     let correct = currentQuestions[currentQ].en.toLowerCase().trim();
+
     spoken = spoken.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
     correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
+
+    console.log('BOLE:', spoken, '| SAHI:', correct, '| COUNT:', wrongCount);
 
     if(spoken === correct) {
         wrongCount = 0;
         document.getElementById('speakResult').innerHTML = '✅ Sahi bola!';
         document.getElementById('speakResult').style.color = '#58cc02';
-
-        setTimeout(() => {
-            document.getElementById('speakHindi').innerHTML = currentQuestions[currentQ].hi;
-            document.getElementById('speakHindi').style.display = 'block';
-            setTimeout(() => nextQuestion(), 3000);
-        }, 2000);
+        setTimeout(() => nextQuestion(), 2000);
     } else {
         wrongCount++;
-        document.getElementById('speakResult').innerHTML = `❌ Galat bola<br><br>Sahi: "${currentQuestions[currentQ].en}"<br>Tumne bola: "${event.results[0][0].transcript}"`;
-        document.getElementById('speakResult').style.color = '#ff4b4b';
-        document.getElementById('speakHindi').style.display = 'none';
+        console.log('GALAT. NAYA COUNT:', wrongCount);
+        document.getElementById('speakResult').innerHTML = '❌ Galat! Phir se bolo';
+        document.getElementById('speakResult').style.color = 'red';
 
-        if(!isPracticeMode &&!wrongQuestions.includes(currentQuestions[currentQ])) {
-            wrongQuestions.push(currentQuestions[currentQ]);
-             if (wrongCount === 3 && typeof showFullAd === 'function') {
-        showFullAd(() => {
-            alert('3 Galat ho gaye! 💪 Dhyan se suno aur bolo');
-            wrongCount = 0;
-            nextQuestion();
-        });
-        return;
-    }
+        if (wrongCount === 3) {
+            console.log('3 GALAT - AB AD CHALEGA');
+            showFullAd(() => {
+                alert('3 Galat ho gaye! 💪');
+                wrongCount = 0;
+                nextQuestion();
+            });
+            return;
         }
     }
-}
+} // <-- Ye onresult ka closing hai
 
 recognition.onerror = (event) => {
     if(event.error === 'no-speech') {
