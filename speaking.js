@@ -87,7 +87,18 @@ recognition.onresult = (event) => {
         wrongCount = 0;
         document.getElementById('speakResult').innerHTML = '✅ Sahi bola!';
         document.getElementById('speakResult').style.color = '#58cc02';
-        setTimeout(() => nextQuestion(), 2000);
+
+        // ===== YAHI HAI HINDI WALA CODE =====
+        setTimeout(() => {
+            document.getElementById('speakHindi').innerHTML = currentQuestions[currentQ].hi; // Hindi show
+            document.getElementById('speakHindi').style.display = "block";
+            setTimeout(() => {
+                document.getElementById('speakHindi').style.display = "none"; // Agle sawal pe chupa de
+                nextQuestion();
+            }, 3000);
+        }, 1000);
+        // ===== HINDI CODE END =====
+
     } else {
         wrongCount++;
         console.log('GALAT. NAYA COUNT:', wrongCount);
@@ -97,15 +108,14 @@ recognition.onresult = (event) => {
         if (wrongCount === 3) {
             console.log('3 GALAT - AB AD CHALEGA');
             showFullAd(() => {
-                alert('3 Galat ho gaye! 💪');
+                alert('3 Galat ho gaye! 💪 Dhyan se suno');
                 wrongCount = 0;
                 nextQuestion();
             });
             return;
         }
     }
-} // <-- Ye onresult ka closing hai
-
+}
 recognition.onerror = (event) => {
     if(event.error === 'no-speech') {
         document.getElementById('speakResult').innerHTML = '❌ Kuch suna nahi. Phir se bolo';
