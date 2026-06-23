@@ -7,6 +7,7 @@ const questions = [
 ];
 
 let wrongQuestions = [];
+let wrongCount = 0;
 let currentQuestions = [...questions];
 let currentQ = parseInt(localStorage.getItem('speakingCurrentQ')) || 0;
 if(currentQ >= currentQuestions.length) {
@@ -72,6 +73,7 @@ recognition.onresult = (event) => {
     correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
 
     if(spoken === correct) {
+        wrongCount = 0;
         document.getElementById('speakResult').innerHTML = '✅ Sahi bola!';
         document.getElementById('speakResult').style.color = '#58cc02';
 
@@ -81,12 +83,22 @@ recognition.onresult = (event) => {
             setTimeout(() => nextQuestion(), 3000);
         }, 2000);
     } else {
+        wrongCount++;
         document.getElementById('speakResult').innerHTML = `❌ Galat bola<br><br>Sahi: "${currentQuestions[currentQ].en}"<br>Tumne bola: "${event.results[0][0].transcript}"`;
         document.getElementById('speakResult').style.color = '#ff4b4b';
         document.getElementById('speakHindi').style.display = 'none';
 
         if(!isPracticeMode &&!wrongQuestions.includes(currentQuestions[currentQ])) {
             wrongQuestions.push(currentQuestions[currentQ]);
+             if (wrongCount === 3 && typeof showFullAd === 'function') {
+        showFullAd(() => {
+            alert('3 Galat ho gaye! 💪 Dhyan se suno aur bolo');
+            wrongCount = 0;
+            nextQuestion();
+        });
+        return;
+    }
+}
         }
     }
 };
