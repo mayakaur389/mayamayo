@@ -620,7 +620,7 @@ function startPracticeMode() { alert('Practice mode coming soon'); }
 
 // Start karo
 window.onload = function() {
-  document.getElementById('xp').innerText = localStorage.getItem('xp') || '260';
+  //document.getElementById('xp').innerText = localStorage.getItem('xp') || '260';
   document.getElementById('streak').innerText = localStorage.getItem('streak') || '11';
   document.getElementById('hearts').innerText = localStorage.getItem('hearts') || '1';
   startQuizList();
