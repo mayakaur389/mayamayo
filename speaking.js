@@ -8,6 +8,14 @@ const questions = [
 
 let wrongQuestions = [];
 let wrongCount = 0;
+// ===== AD FUNCTION =====
+function showFullAd(callback) {
+    console.log('Ad trigger hua! 3 galat ho gaye');
+    // Test ke liye abhi alert - baad me real ad code daal dena
+    alert('TEST: Yahan Ad chalna tha!');
+    if (callback) callback();
+}
+// ===== AD FUNCTION END =====
 let currentQuestions = [...questions];
 let currentQ = parseInt(localStorage.getItem('speakingCurrentQ')) || 0;
 if(currentQ >= currentQuestions.length) {
