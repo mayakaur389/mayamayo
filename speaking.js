@@ -108,7 +108,7 @@ recognition.onresult = (event) => {
     }
         }
     }
-
+}
 
 recognition.onerror = (event) => {
     if(event.error === 'no-speech') {
