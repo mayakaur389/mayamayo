@@ -377,15 +377,15 @@ function startListening() {
                 showFullAd(() => {
                     alert('3 Galat ho gaye! 💪 Dhyan do');
                     totalGalti = 0;
-                    hearts = 3; 
+                    //hearts = 3; 
                     nextQuestion();
                 });
                  return;
-            } else if (hearts <= 0) {
-                setTimeout(() => {
-                    alert('Hearts khatam! 💀 Game Over');
-                    window.location.href = 'index.html';
-                }, 1000);
+            //} else if (hearts <= 0) {
+                //setTimeout(() => {
+                    //alert('Hearts khatam! 💀 Game Over');
+                   // window.location.href = 'index.html';
+               // }, 1000);
             } else {
                 setTimeout(nextQuestion, 2000);
             }
