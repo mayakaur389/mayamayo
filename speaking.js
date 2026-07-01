@@ -100,7 +100,7 @@ recognition.onresult = (event) => {
         // ===== HINDI CODE END =====
 
     } else {
-        wrongCount++;
+        totalGalti++;
         console.log('GALAT. NAYA COUNT:', totalGalti);
         document.getElementById('speakResult').innerHTML = '❌ Galat! Phir se bolo';
         document.getElementById('speakResult').style.color = 'red';
