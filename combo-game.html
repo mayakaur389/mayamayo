@@ -258,9 +258,9 @@ let hearts = 3;
 let selectedAnswer = null;
 let hasSpoken = false;
 let recognition;
-let wrongCount = 0;
+//let wrongCount = 0;
 let correctCount = 0;
-
+let totalGalti = 0;
 // Dark mode toggle
 const themeToggle = document.getElementById('themeToggle');
 if(localStorage.getItem('theme') === 'dark') {
@@ -352,7 +352,7 @@ function startListening() {
         document.querySelector('.option.selected').classList.add('correct');
         score++;
         correctCount++;
-        wrongCount = 0;
+        totalGalti = 0;
 
         if (correctCount === 12 && typeof showFullAd === 'function') {
           showFullAd(() => {
@@ -370,13 +370,13 @@ function startListening() {
         if (document.querySelector('.option.selected')) {
           document.querySelector('.option.selected').classList.add('wrong');
         }
-        wrongCount++;
+        totalGalti++;
         correctCount = 0;
 
-             if (wrongCount === 3 && typeof showFullAd === 'function') {
+             if (totalGalti >= 3 && typeof showFullAd === 'function') {
                 showFullAd(() => {
                     alert('3 Galat ho gaye! 💪 Dhyan do');
-                    wrongCount = 0;
+                    totalGalti = 0;
                     hearts = 3; 
                     nextQuestion();
                 });
