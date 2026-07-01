@@ -352,7 +352,7 @@ function startListening() {
         document.querySelector('.option.selected').classList.add('correct');
         score++;
         correctCount++;
-        totalGalti = 0;
+        //totalGalti = 0;
 
         if (correctCount === 12 && typeof showFullAd === 'function') {
           showFullAd(() => {
@@ -360,6 +360,7 @@ function startListening() {
             correctCount = 0;
             nextQuestion();
           });
+            return;
         } else {
           setTimeout(nextQuestion, 1500);
         }
