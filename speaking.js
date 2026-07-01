@@ -81,10 +81,10 @@ recognition.onresult = (event) => {
     spoken = spoken.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
     correct = correct.replace(/[.?!,]/g, '').replace(/\s+/g, ' ');
 
-    console.log('BOLE:', spoken, '| SAHI:', correct, '| COUNT:', wrongCount);
+    console.log('BOLE:', spoken, '| SAHI:', correct, '| COUNT:', totalGalti);
 
     if(spoken === correct) {
-        wrongCount = 0;
+        //wrongCount = 0;
         document.getElementById('speakResult').innerHTML = '✅ Sahi bola!';
         document.getElementById('speakResult').style.color = '#58cc02';
 
