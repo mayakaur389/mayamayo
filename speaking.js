@@ -7,7 +7,7 @@ const questions = [
 ];
 
 let wrongQuestions = [];
-let wrongCount = 0;
+let totalGalti = 0;
 // ===== AD FUNCTION =====
 function showFullAd(callback) {
     console.log('Ad trigger hua! 3 galat ho gaye');
@@ -101,19 +101,17 @@ recognition.onresult = (event) => {
 
     } else {
         wrongCount++;
-        console.log('GALAT. NAYA COUNT:', wrongCount);
+        console.log('GALAT. NAYA COUNT:', totalGalti);
         document.getElementById('speakResult').innerHTML = '❌ Galat! Phir se bolo';
         document.getElementById('speakResult').style.color = 'red';
 
-        if (wrongCount === 3) {
-            console.log('3 GALAT - AB AD CHALEGA');
-            showFullAd(() => {
-                alert('3 Galat ho gaye! 💪 Dhyan se suno');
-                wrongCount = 0;
-                nextQuestion();
-            });
-            return;
-        }
+        if (totalGalti >= 3) {
+    showFullAd(() => {
+        totalGalti = 0;
+        nextQuestion();
+    });
+    return;
+}
     }
 }
 recognition.onerror = (event) => {
