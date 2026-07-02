@@ -404,14 +404,14 @@ function startListening() {
 function nextQuestion() {
     setTimeout(() => {
         currentIndex++;
-        if(currentIndex < gameData.length && hearts > 0) {
-            loadQuestion();
-        } else {
-            alert(`Game Khatam! 🎉 Score: ${score}/${gameData.length} | +${score * 20} XP`);
-            let currentXP = parseInt(localStorage.getItem('maya_xp') || 0);
-            localStorage.setItem('maya_xp', currentXP + (score * 20));
-            window.location.href='index.html';
+
+        // Game kabhi khatam nahi hoga - bas itna hi chahiye
+        if (currentIndex >= gameData.length) {
+            currentIndex = 0; // Wapas Q1 se
         }
+
+        loadQuestion(); // Agla question load karo
+
     }, 1500);
 }
 
