@@ -476,23 +476,38 @@ document.addEventListener('DOMContentLoaded', renderDayBatch);
 // startQuizList ko hata de - ab renderDayBatch use hoga
 window.startQuizList = renderDayBatch; // Backup: agar kahin call ho raha ho
 function selectDay(dayIndex) {
-  // === Ye 3 line add kar - Maya section kholega ===
-  const mayaSection = document.getElementById('maya-section');
-  if (mayaSection) {
-    mayaSection.style.cssText = 'display:block!important';
-    mayaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-  // === Yaha tak add kar ===
-  
-  let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
-  if(dayIndex + 1 > completedDays + 1) return;
-  if(dayIndex >= gameData.length) {
-    alert('Ye day abhi available nahi hai!');
-    return;
-  }
-  currentDay = dayIndex;
-  currentQuestion = 0;
-  loadQuestion(gameData[currentDay].questions[currentQuestion]);
+    // Step 1: Pehle Full Page Ad chalao
+    if (typeof showFullAd === 'function') {
+        showFullAd(() => {
+            // Ad band hone ke baad lesson khulega
+            loadLessonAfterAd(dayIndex);
+        });
+    } else {
+        // Ad function nahi mila to direct lesson
+        console.log('showFullAd function nahi mila');
+        loadLessonAfterAd(dayIndex);
+    }
+}
+
+// Step 2: Lesson load karne ka asli kaam
+function loadLessonAfterAd(dayIndex) {
+    // === Ye 3 line add kar - Maya section kholega ===
+    const mayaSection = document.getElementById('maya-section');
+    if (mayaSection) {
+        mayaSection.style.cssText = 'display:block!important';
+        mayaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    // === Yaha tak add kar ===
+
+    let completedDays = parseInt(localStorage.getItem('completedDays')) || 0;
+    if(dayIndex + 1 > completedDays + 1) return;
+    if(dayIndex >= gameData.length) {
+        alert('Ye day abhi available nahi hai!');
+        return;
+    }
+    currentDay = dayIndex;
+    currentQuestion = 0;
+    loadQuestion(gameData[currentDay].questions[currentQuestion]);
 }
 
 function loadQuestion(qData) {
