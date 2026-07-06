@@ -609,7 +609,16 @@ function nextQuestion() {
         // Day complete - NAYA CODE
         completeDay(currentDay + 1);
         alert('Day Complete! Next Day Unlocked 🎉');
-        startQuizList();
+
+        // === NAYA DAY KHULNE SE PEHLE AD CHALAO ===
+        if (typeof showFullAd === 'function') {
+            showFullAd(() => {
+                // Ad close hone ke baad next day render karo
+                startQuizList();
+            });
+        } else {
+            startQuizList(); // Ad na mile to direct next day
+        }
         return;
     }
     loadQuestion(gameData[currentDay].questions[currentQuestion]);
