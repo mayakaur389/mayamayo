@@ -309,6 +309,9 @@ let selectedWords = [];
 let currentQ = null;
 let gameData = lessons;
 
+const correctSound = new Audio('sounds/correct.mp3');
+document.addEventListener('click', () => correctSound.play().then(() => correctSound.pause()), { once: true });
+
 // ===== AUTO GENERATE 365 DAYS =====
 const baseData = [...lessons];
 const TOTAL_DAYS = 365;
@@ -569,6 +572,7 @@ function checkAnswer() {
   const feedback = document.getElementById('feedback');
 
   if (userAnswer === correctAnswer) {
+    correctSound.play();
     feedback.innerText = "Sahi jawab! 🎉";
     feedback.className = "feedback";
     feedback.style.display = 'block';
