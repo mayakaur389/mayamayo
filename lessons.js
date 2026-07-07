@@ -572,6 +572,7 @@ function checkAnswer() {
   const feedback = document.getElementById('feedback');
 
   if (userAnswer === correctAnswer) {
+    correctSound.currentTime = 0;
     correctSound.play();
     feedback.innerText = "Sahi jawab! 🎉";
     feedback.className = "feedback";
