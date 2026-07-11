@@ -588,6 +588,7 @@ function checkAnswer() {
     localStorage.setItem('xp', xp.innerText);
      }
   } else {
+    console.log('galat answer - wrong sound bajega');
     wrongSound.currentTime = 0;
     wrongSound.play();
        feedback.innerText = "Galat hai, dobara try karo"; // ← YE LINE MISSING THI
