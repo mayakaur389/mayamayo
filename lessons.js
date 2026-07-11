@@ -585,6 +585,8 @@ function checkAnswer() {
     xp.innerText = parseInt(xp.innerText) + 10;
     localStorage.setItem('xp', xp.innerText);
   } else {
+    wrongSound.currentTime = 0;
+    wrongSound.play();
        feedback.innerText = "Galat hai, dobara try karo"; // ← YE LINE MISSING THI
     feedback.className = "feedback wrong";
          feedback.style.display = 'block';
