@@ -653,12 +653,18 @@ function openChat() { alert('Chat feature coming soon'); }
 function startPracticeMode() { alert('Practice mode coming soon'); }
 
 // Start karo
-window.onload = function() {
-  document.getElementById('xp').innerText = localStorage.getItem('xp') || '260';
-  document.getElementById('streak').innerText = localStorage.getItem('streak') || '11';
-  document.getElementById('hearts').innerText = localStorage.getItem('hearts') || '1';
-  startQuizList();
-}
+  window.onload = function() {
+      let xp = document.getElementById('xp');
+      if(xp) xp.innerText = localStorage.getItem('xp') || '260';
+      
+      let streak = document.getElementById('streak');
+      if(streak) streak.innerText = localStorage.getItem('streak') || '11';
+      
+      let hearts = document.getElementById('hearts');
+      if(hearts) hearts.innerText = localStorage.getItem('hearts') || '1';
+      
+      startQuizList();
+  }
 // Day button click - Sirf Maya Quiz kholega, checkAnswer ko haath nahi lagayega
 document.addEventListener('DOMContentLoaded', function() {
   const dayButtons = document.querySelectorAll('.day-grid button');
