@@ -311,7 +311,7 @@ let gameData = lessons;
 
 const correctSound = new Audio('sounds/correct.mp3');
 const wrongSound = new Audio('sounds/wrong.mp3');
-document.addEventListener('click', () => correctSound.play().then(() => correctSound.pause()), { once: true });
+//document.addEventListener('click', () => correctSound.play().then(() => correctSound.pause()), { once: true });
 
 // ===== AUTO GENERATE 365 DAYS =====
 const baseData = [...lessons];
@@ -583,8 +583,10 @@ function checkAnswer() {
 
     // XP badhao
     let xp = document.getElementById('xp');
-    xp.innerText = parseInt(xp.innerText) + 10;
+     if (xp) { 
+       xp.innerText = parseInt(xp.innerText) + 10;
     localStorage.setItem('xp', xp.innerText);
+     }
   } else {
     wrongSound.currentTime = 0;
     wrongSound.play();
