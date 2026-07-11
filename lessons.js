@@ -311,6 +311,8 @@ let gameData = lessons;
 
 const correctSound = new Audio('sounds/correct.mp3');
 const wrongSound = new Audio('sounds/wrong.mp3');
+console.log('Correct:', correctSound.src);
+console.log('Wrong:', wrongSound.src);
 //document.addEventListener('click', () => correctSound.play().then(() => correctSound.pause()), { once: true });
 
 // ===== AUTO GENERATE 365 DAYS =====
