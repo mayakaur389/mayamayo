@@ -260,7 +260,8 @@ let hasSpoken = false;
 let recognition;
 //let wrongCount = 0;
 let correctCount = 0;
-let totalGalti = 0;
+let totalGalti = 0;          
+let gameData = [];     // Tera questions ka array    
 // Dark mode toggle
 const themeToggle = document.getElementById('themeToggle');
 if(localStorage.getItem('theme') === 'dark') {
@@ -416,9 +417,11 @@ function nextQuestion() {
 }
 
 function updateScore() {
-    document.getElementById('score').innerText = `Score: ${score}/${gameData.length} | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
+    const scoreEl = document.getElementById('score');
+  if (scoreEl) {
+    scoreEl.innerText = `Score: ${score}/${gameData.length} | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
 }
-
+    }
 loadQuestion();
 </script>
 <div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
