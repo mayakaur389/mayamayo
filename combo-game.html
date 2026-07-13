@@ -52,7 +52,9 @@ body.dark-mode .top-btn { background: #333; color: #fff; }
            <button class="top-btn" id="themeToggle">🌙 Dark</button>
         </div>
         <p>Maya bolegi, tum pehchano + bolo</p>
-        <button id="speak-btn" onclick="speakWord()">🔊 Suno</button>
+        <!-- ===== YE LINE ADD KAR ===== -->
+     <div id="score">Score: 0/10 | Hearts: 3 ❤️</div>
+        <button id="speak-btn">🔊 Suno</button>
         <div id="options" class="options"></div>
         <button id="mic-btn" onclick="startListening()">🎤</button>
         <div id="result">Pehle suno, phir option chuno, phir bolo</div>
@@ -443,14 +445,18 @@ function nextQuestion() {
 function updateScore() {
   document.getElementById('score').innerText = `Score: ${score}/${gameData.length} | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
 }    
-loadQuestion();
+//loadQuestion();
 // ===== SUNO BUTTON KA CODE START =====
-document.getElementById('suno-btn').onclick = function() {
-  let currentWord = gameData[currentQuestion].english;
-  console.log("Bol raha hu:", currentWord);
-  speakWord(currentWord);
-};
-// ===== SUNO BUTTON KA CODE END =====    
+ document.addEventListener('DOMContentLoaded', function() {
+ loadQuestion(); // ✅ loadQuestion yahan laaya
+ updateScore(); // ✅ Score bhi yahan update kar 
+ document.getElementById('speak-btn').onclick = function() {
+ let currentWord = gameData[currentQuestion].english;
+ console.log("Bol raha hu:", currentWord);
+ speakWord(currentWord);
+ };
+ }); // ✅ DOMContentLoaded band
+ // ===== SUNO BUTTON KA CODE END =====
 </script>
 <div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 <script>window.MAYA_MODE = 'game';</script>
