@@ -263,6 +263,30 @@ let correctCount = 0;
 let totalGalti = 0;          
 //let gameData = [];     // Tera questions ka array    
 // Dark mode toggle
+// ====== AWAAZ WALA CODE START ======
+let voices = [];
+
+// Voices load kar lo page start me hi
+speechSynthesis.onvoiceschanged = () => {
+  voices = speechSynthesis.getVoices();
+};
+
+function speakWord(text) {
+  speechSynthesis.cancel();
+  speechSynthesis.resume(); // Chrome ko jagao
+
+  let utterance = new SpeechSynthesisUtterance(text);
+
+  let englishVoice = voices.find(voice => voice.lang === 'en-US') || voices[0];
+  utterance.voice = englishVoice;
+
+  utterance.volume = 1;
+  utterance.rate = 0.9;
+  utterance.lang = 'en-US';
+
+  speechSynthesis.speak(utterance);
+}
+// ====== AWAAZ WALA CODE END ======    
 const themeToggle = document.getElementById('themeToggle');
 if(localStorage.getItem('theme') === 'dark') {
     document.body.classList.add('dark-mode');
@@ -417,11 +441,16 @@ function nextQuestion() {
 }
 
 function updateScore() {
-    function updateScore() {
   document.getElementById('score').innerText = `Score: ${score}/${gameData.length} | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
-}
 }    
 loadQuestion();
+// ===== SUNO BUTTON KA CODE START =====
+document.getElementById('suno-btn').onclick = function() {
+  let currentWord = gameData[currentQuestion].english;
+  console.log("Bol raha hu:", currentWord);
+  speakWord(currentWord);
+};
+// ===== SUNO BUTTON KA CODE END =====    
 </script>
 <div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 <script>window.MAYA_MODE = 'game';</script>
