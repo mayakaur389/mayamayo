@@ -419,7 +419,7 @@ function nextQuestion() {
 function updateScore() {
     const scoreEl = document.getElementById('score');
   if (scoreEl) {
-    scoreEl.innerText = `Score: ${score}/${gameData.length} | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`;
+  scoreEl.innerText = `Score: ${score}/${gameData.length} | Hearts: ${hearts} ❤️ | Streak: ${correctCount}`; 
 }
     }
 loadQuestion();
