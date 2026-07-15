@@ -1,1 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maya Didi V2 - Multi Language 🎧🎙️</title>
+    <link rel="stylesheet" href="game-v2.css">
+</head>
+<body>
+    <div class="game-box">
+        <div class="header-row">
+            <button class="top-btn" onclick="window.history.back()">← Back</button>
+            <h2 id="gameTitle">🎧🎙️ Sun Ke Jodo</h2>
+            <select id="langSelect" onchange="changeLanguage()">
+                <option value="en-hi">🇮🇳 Hindi</option>
+                <option value="hi-en">🇺🇸 English</option>
+                <option value="en-jp">🇯🇵 Japanese</option>
+                <option value="en-cn">🇨🇳 Chinese</option>
+            </select>
+        </div>
+        <p id="gameDesc">Maya bolegi, tum pehchano + bolo</p>
+        <div id="score">Score: 0/10 | Hearts: 3 ❤️</div>
+        <button id="speak-btn">🔊 Suno</button>
+        <div id="options" class="options"></div>
+        <button id="mic-btn" onclick="startListening()">🎤</button>
+        <div id="result">Pehle suno, phir option chuno, phir bolo</div>
+        <button class="btn-green" onclick="window.location.href='index.html'">🏠 Wapas Jao</button>
+    </div>
 
+    <script src="game-v2.js"></script>
+</body>
+</html>
