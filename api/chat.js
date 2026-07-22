@@ -7,18 +7,10 @@ export default async function handler(req, res) {
   const apiKey = process.env.OPENROUTER_API_KEY
 
   if (!apiKey) {
-    return res.status(500).json({ error: 'OPENROUTER_API_KEY set nahi hai bhai' })
+    return res.status(500).json({ error: 'OPENROUTER_API_KEY set nahi hai' })
   }
 
-  const systemPrompt = `You are Maya Didi, a global language AI tutor.
-Current mode: ${languageMode || 'hi-en'}
-
-Rules:
-1. Hindi→English mode: Reply in Hinglish + give English translation
-2. English→Hindi mode: Reply in simple English + give Hindi meaning
-3. Other languages: Explain in English + give Hindi meaning
-4. Always end with 1 practice question in selected language
-5. If grammar mistake, correct politely with example`
+  const systemPrompt = `You are Maya Didi, a global language AI tutor. Current mode: ${languageMode || 'hi-en'}. Reply in Hinglish. Be encouraging. Always end with 1 practice question.`
 
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -26,7 +18,7 @@ Rules:
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://yamayo.vercel.app',
+        'HTTP-Referer': 'https://mayamayo.vercel.app',  // <-- YE LINE CHANGE HUI HAI
         'X-Title': 'Maya Didi'
       },
       body: JSON.stringify({
@@ -34,24 +26,26 @@ Rules:
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message }
-        ],
-        temperature: 0.7,
-        max_tokens: 1000
+        ]
       })
     })
 
     const data = await response.json()
+    console.log('OpenRouter Response:', data)
 
     if (data.error) {
-      console.log('OpenRouter Error:', data.error)
-      return res.status(500).json({ error: data.error.message })
+      return res.status(500).json({ error: `API Error: ${data.error.message}` })
+    }
+
+    if (!data.choices || !data.choices[0]) {
+      return res.status(500).json({ error: 'OpenRouter se khali jawab aaya' })
     }
 
     const reply = data.choices[0].message.content
     res.status(200).json({ reply: reply })
 
   } catch (error) {
-    console.log('Server Error:', error)
-    res.status(500).json({ error: 'Maya Didi so rahi hai 😴. API key check karo' })
+    console.log('Catch Error:', error)
+    res.status(500).json({ error: `Server Crash: ${error.message}` })
   }
 }
