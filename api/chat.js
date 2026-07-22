@@ -1,43 +1,53 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ reply: 'Method Not Allowed' });
+  if (req.method!== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' })
   }
 
+  const { message, languageMode } = req.body
+  const apiKey = process.env.OPENROUTER_API_KEY
+
+  if (!apiKey) {
+    return res.status(500).json({ error: 'OPENROUTER_API_KEY set nahi hai bhai' })
+  }
+
+  const systemPrompt = `You are Maya Didi, a friendly Hinglish AI tutor. 
+Reply in Hindi-English mix. Be encouraging. 
+If user asks in Hindi, explain in Hinglish + give English translation.
+If grammar mistake, correct politely with example.
+Always end with 1 practice question.`
+
   try {
-    const { messages } = req.body;
-    const GEMINI_KEY = process.env.GEMINI_KEY;
-
-    if (!GEMINI_KEY) {
-      return res.status(500).json({ reply: "Maya so rahi hai bhai 😅. GEMINI_KEY set nahi hai." });
-    }
-
-    const lastMsg = messages[messages.length - 1].content;
-
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${GEMINI_KEY}`, {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'https://yamayo.vercel.app',
+        'X-Title': 'Maya Didi'
+      },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `Tera naam Maya Didi hai. Tu AI teacher hai. Hindi me baat karti hai.
-            Baccho ko English sikhane me help karti hai.
-            Context: ${messages.map(m => m.content).join('\n')}
-            User: ${lastMsg}`
-          }]
-        }]
+        model: 'google/gemini-1.5-flash:free',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: message }
+        ],
+        temperature: 0.7,
+        max_tokens: 1000
       })
-    });
+    })
 
-    if (!response.ok) {
-      throw new Error('Gemini API failed');
+    const data = await response.json()
+
+    if (data.error) {
+      console.log('OpenRouter Error:', data.error)
+      return res.status(500).json({ error: data.error.message })
     }
 
-    const data = await response.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Phir try karo beta 💪";
+    const reply = data.choices[0].message.content
+    res.status(200).json({ reply: reply })
 
-    return res.status(200).json({ reply });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ reply: "Maya so rahi hai bhai 😅. Gemini API check kar ya net slow hai." });
+    console.log('Server Error:', error)
+    res.status(500).json({ error: 'Maya Didi so rahi hai 😴. API key check karo' })
   }
 }
