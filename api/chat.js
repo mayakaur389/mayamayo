@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'mayamayo.vercel.app',  // https:// hata diya
+           'HTTP-Referer': 'mayamayo-gjzpj5auu-mayakaur389s-projects.vercel.app',
         'X-Title': 'Maya Didi'
       },
       body: JSON.stringify({
