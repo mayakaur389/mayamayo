@@ -7,7 +7,7 @@ export default async function handler(req, res) {
       headers: {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://mayamayo-9ongeyddp-mayakaur389s-projects.vercel.app', // ✅ Tera domain
+        'HTTP-Referer': req.headers.referer,
         'X-Title': 'Maya Didi'
       },
       body: JSON.stringify({
