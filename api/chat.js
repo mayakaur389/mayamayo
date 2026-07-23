@@ -18,11 +18,11 @@ export default async function handler(req, res) {
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://mayamayo.vercel.app', // ✅ Domain update kar
+        'HTTP-Referer': 'https://mayamayo.vercel.app', // ✅ Tera main domain
         'X-Title': 'Maya Didi'
       },
       body: JSON.stringify({
-        model: 'google/gemini-1.5-flash:free',
+        model: 'meta-llama/llama-3.1-8b-instruct:free', // ✅ Ye model jyada stable hai
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message }
@@ -35,10 +35,6 @@ export default async function handler(req, res) {
 
     if (data.error) {
       return res.status(500).json({ error: `API Error: ${data.error.message}` })
-    }
-
-    if (!data.choices || !data.choices[0]) {
-      return res.status(500).json({ error: 'OpenRouter se khali jawab aaya' })
     }
 
     const reply = data.choices[0].message.content
