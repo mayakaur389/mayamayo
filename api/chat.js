@@ -49,3 +49,21 @@ export default async function handler(req, res) {
     res.status(500).json({ error: `Server Crash: ${error.message}` })
   }
 }
+app.post('/api/chat', async (req, res) => {
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer sk-or-v1-500...aa7", // Teri maya key
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://mayamayo.vercel.app", // Ye 2 line add kar
+        "X-Title": "MayaMayo"
+      },
+      body: JSON.stringify(req.body)
+    });
+    const data = await response.json();
+    res.json({reply: data.choices[0].message.content});
+  } catch (e) {
+    res.status(500).json({error: "API error"});
+  }
+});
