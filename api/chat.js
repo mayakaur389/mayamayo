@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  if (req.method!== 'POST') {
+  if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
-           'HTTP-Referer': 'mayamayo-gjzpj5auu-mayakaur389s-projects.vercel.app',
+        'HTTP-Referer': 'https://mayamayo.vercel.app', // ✅ Domain update kar
         'X-Title': 'Maya Didi'
       },
       body: JSON.stringify({
@@ -43,27 +43,8 @@ export default async function handler(req, res) {
 
     const reply = data.choices[0].message.content
     res.status(200).json({ reply: reply })
-
   } catch (error) {
     console.log('Catch Error:', error)
     res.status(500).json({ error: `Server Crash: ${error.message}` })
   }
 }
-app.post('/api/chat', async (req, res) => {
-  try {
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer sk-or-v1-500...aa7", // Teri maya key
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://mayamayo.vercel.app", // Ye 2 line add kar
-        "X-Title": "MayaMayo"
-      },
-      body: JSON.stringify(req.body)
-    });
-    const data = await response.json();
-    res.json({reply: data.choices[0].message.content});
-  } catch (e) {
-    res.status(500).json({error: "API error"});
-  }
-});
