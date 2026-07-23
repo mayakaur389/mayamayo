@@ -142,24 +142,32 @@ function addMsg(text, sender, shouldSave = true){
 }
 
 async function sendMsg(){
-  const input = document.getElementById('userInput');
-  const text = input.value.trim();
-  if(!text) return;
-  addMsg(text, 'user');
-  input.value = '';
-  document.getElementById('status').innerText = 'typing...';
-
-  try {
-    const res = await fetch(API_URL, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({messages: chatHistory}) });
-    const data = await res.json();
-    const reply = data.reply || "Sorry, jawab nahi mila.";
-    addMsg(reply, 'bot');
-    document.getElementById('status').innerText = 'online';
-  } catch(e){
-    console.error("API Error:", e);
-    addMsg("Maya so rahi hai bhai 😅. GROQ_API_KEY check kar ya API down hai.", 'bot');
-    document.getElementById('status').innerText = 'online';
-  }
+    const input = document.getElementById('userInput');
+    const text = input.value.trim();
+    if(!text) return;
+    
+    addMsg(text, 'user');
+    input.value = '';
+    document.getElementById('status').innerText = 'typing...';
+    
+    try {
+        const res = await fetch(API_URL, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                message: text,  // ✅ "messages" nahi, "message" bhejo
+                languageMode: 'hi-en'
+            })
+        });
+        const data = await res.json();
+        const reply = data.reply || "Sorry, jawab nahi mila.";
+        addMsg(reply, 'bot');
+        document.getElementById('status').innerText = 'online';
+    } catch(e){
+        console.error("API Error:", e);
+        addMsg("Maya so rahi hai bhai 😅. Server error aa gaya.", 'bot');
+        document.getElementById('status').innerText = 'online';
+    }
 }
 
 function startMic() {
