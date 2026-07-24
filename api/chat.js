@@ -19,7 +19,7 @@ export default async function handler(req) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "model": "meta-llama/llama-3-8b-instruct:free", // <-- Sirf ye line badli hai
+        "model": "mistralai/mistral-7b-instruct:free", // <-- Ye model abhi chalu hai
         "messages": [{ "role": "user", "content": message }]
       })
     });
