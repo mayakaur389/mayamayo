@@ -111,6 +111,19 @@
     <h2>👩‍🏫 Maya Didi <span class="dot"></span></h2>
     <p id="status">online</p>
   </div>
+   <div style="margin: 10px; padding: 12px; background: #f0f8ff; border-radius: 10px; border: 1px solid #ddd;">
+           <label style="font-weight: bold;">Language Mode: </label>
+           <select id="modeSelect" style="padding: 8px; border-radius: 8px; margin-left: 10px; font-size: 14px;">
+             <option value="Hindi-English">Hindi → English</option>
+             <option value="English-Hindi">English → Hindi</option>
+             <option value="Spanish-English">Spanish → English</option>
+             <option value="French-English">French → English</option>
+             <option value="Japanese-English">Japanese → English</option>
+             <option value="German-English">German → English</option>
+           </select>
+         </div>
+         <!-- Dropdown khatam -->
+
   <div id="chat"></div>
   <div class="input-area">
     <input type="text" id="userInput" placeholder="Maya se kuch pucho ya Mic dabao...">
@@ -144,28 +157,30 @@ function addMsg(text, sender, shouldSave = true){
 async function sendMsg(){
     const input = document.getElementById('userInput');
     const text = input.value.trim();
+  const selectedMode = document.getElementById('modeSelect').value; // <- Ye line add kar
     if(!text) return;
+  localStorage.setItem('mayaMode', selectedMode); // <- Ye line add kar
     
     addMsg(text, 'user');
     input.value = '';
     document.getElementById('status').innerText = 'typing...';
     
     try {
-        const res = await fetch(API_URL, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                message: text,  // ✅ "messages" nahi, "message" bhejo
-                languageMode: 'hi-en'
-            })
-        });
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        message: text,
+        mode: selectedMode,   // 'languageMode: hi-en' hata ke ye daal de
+      })
+    });
         const data = await res.json();
         const reply = data.reply || "Sorry, jawab nahi mila.";
-        addMsg(reply, 'bot');
+        addMsg(reply, 'maya');
         document.getElementById('status').innerText = 'online';
     } catch(e){
         console.error("API Error:", e);
-        addMsg("Maya so rahi hai bhai 😅. Server error aa gaya.", 'bot');
+        addMsg("Maya so rahi hai bhai 😅. Server error aa gaya.", 'maya');
         document.getElementById('status').innerText = 'online';
     }
 }
