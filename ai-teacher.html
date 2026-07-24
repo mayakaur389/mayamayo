@@ -108,19 +108,23 @@
   </style>
 </head>
 <body>
+ <body>
   <div class="header">
-    <h2>👩‍🏫 Maya Didi <span class="dot"></span></h2>
+    <h2>🤖 Maya Didi <span class="dot"></span></h2>
     <p id="status">online</p>
-  </div>ing →</button>
   </div>
 
   <div id="chat"></div>
+  
   <div class="input-area">
-    <input type="text" id="userInput" placeholder="Maya se kuch pucho ya Mic dabao...">
+    <input type="text" id="userInput" placeholder="Maya se kuch pucho...">
     <button id="micBtn" onclick="startMic()">🎤</button>
-    118  <button onclick="sendMsg(); if(typeof mayaSendMessage !== 'undefined') mayaSendMessage();">Bhejo</button>
+    <button onclick="sendMsg()">Send</button>
   </div>
 
+  <script>
+    const API_URL = '/api/chat';
+    let chatHistory = []; 
 <script>
 const API_URL = "/api/chat";
 let chatHistory = [];
