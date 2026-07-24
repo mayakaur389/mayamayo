@@ -14,19 +14,18 @@ export default async function handler(req) {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
-        "HTTP-Referer": "https://mayamayo.vercel.app", // Ye line add kar
-        "X-Title": "Maya Didi", // Ye line add kar
+        "HTTP-Referer": "https://mayamayo.vercel.app", 
+        "X-Title": "Maya Didi", 
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "model": "google/gemini-flash-1.5:free", // Model change kar diya
+        "model": "meta-llama/llama-3-8b-instruct:free", // <-- Sirf ye line badli hai
         "messages": [{ "role": "user", "content": message }]
       })
     });
 
     const data = await response.json();
     
-    // Error check kar le
     if (data.error) {
       console.log("OpenRouter Error:", data.error);
       return new Response(JSON.stringify({ reply: "Maya Didi busy hai: " + data.error.message }), {
