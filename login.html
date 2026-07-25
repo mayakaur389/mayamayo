@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login - Maya Didi</title>
+<style>
+  body{font-family:sans-serif;display:flex;justify-content:center;align-items:center;height:100vh;background:#f0f2f5}
+  .box{background:#fff;padding:30px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.1);width:320px}
+  input,button{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px;font-size:16px}
+  button{background:#4CAF50;color:#fff;border:none;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>Maya Didi Login</h2>
+  <input type="tel" id="mobile" placeholder="+91 9876543210">
+  <button onclick="sendOTP()">OTP Bhejo</button>
+  <input type="text" id="otp" placeholder="OTP daalo">
+  <button onclick="verifyOTP()">Login</button>
+</div>
+<script>
+function sendOTP(){ alert("OTP sent - demo me 1234 use karo") }
+function verifyOTP(){
+  if(document.getElementById('otp').value=="1234"){
+    localStorage.setItem("loggedIn","true");
+    window.location.href="language.html";
+  } else { alert("Galat OTP") }
+}
+</script>
+</body>
+</html>
