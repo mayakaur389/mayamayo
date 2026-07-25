@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Select Language</title>
+<style>
+  body{font-family:sans-serif;background:#f0f2f5;padding:20px}
+  .lang{padding:15px;margin:10px 0;background:#fff;border-radius:10px;cursor:pointer;border:2px solid transparent}
+  .lang:hover{border-color:#4CAF50}
+</style>
+</head>
+<body>
+<h2>Apni Language Chuno</h2>
+<div class="lang" onclick="selectLang('hi-en')">🇮🇳 Hindi → English</div>
+<div class="lang" onclick="selectLang('en-hi')">🇬🇧 English → Hindi</div>
+<div class="lang" onclick="selectLang('es-en')">🇪🇸 Spanish → English</div>
+<div class="lang" onclick="selectLang('fr-en')">🇫🇷 French → English</div>
+<div class="lang" onclick="selectLang('ja-en')">🇯🇵 Japanese → English</div>
+<div class="lang" onclick="selectLang('de-en')">🇩🇪 German → English</div>
+
+<script>
+function selectLang(lang){
+  localStorage.setItem("lang",lang);
+  window.location.href="maya.html";
+}
+</script>
+</body>
+</html>
