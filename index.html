@@ -7,7 +7,7 @@
    <meta http-equiv="refresh" content="5; url=/mayamayo/index.html?v=9999">
    <script>
 // Guard: bina login ya language ke wapas bhej dega
- alert("v5 chal raha")      
+alert("loggedIn=" + localStorage.getItem("loggedIn") + " | lang=" + localStorage.getItem("lang"))     
 if(localStorage.getItem("loggedIn") !== "true"){window.location.href="/mayamayo/login.html"}
 if(!localStorage.getItem("lang")){window.location.href="/mayamayo/language.html"}
 </script>
