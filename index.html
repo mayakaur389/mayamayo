@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Maya Didi Grammar</title>
-<link rel="stylesheet" href="style.css?v=2">  
+    <script>
+   // Guard: bina login ya language ke wapas bhej dega
+   if(localStorage.getItem("loggedIn")!="true"){window.location.href="login.html"}
+  if(!localStorage.getItem("lang")){window.location.href="language.html"}
+  </script>
+
+  <link rel="stylesheet" href="style.css?v=2">  
 <style>
     
     
