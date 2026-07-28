@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Maya Didi Grammar</title>
   <script>
-// Guard: bina login ya language ke jane nahi dena
-if(localStorage.getItem("loggedIn") !== "true"){
- window.location.replace("login.html?v=5")    
- // window.location.replace("/login.html")  
-}
-window.location.replace("language.html?v=5")       
-if(!localStorage.getItem("lang")){
-// window.location.replace("/language.html")   
-}
+    // Guard: bina login ya language ke jane nahi dena
+    if(localStorage.getItem("loggedIn") !== "true"){
+        window.location.replace("login.html")
+    } 
+    else if(!localStorage.getItem("lang")){
+        window.location.replace("language.html")
+    }
+    // Agar dono hai to yahi page rahega. Yahan kuch nahi likhna
 </script>
 
   <link rel="stylesheet" href="style.css?v=2">  
