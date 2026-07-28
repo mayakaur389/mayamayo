@@ -13,9 +13,9 @@
     // Guard: Agar pehle se login hai to seedha bhej do
     if(localStorage.getItem("loggedIn") === "true"){
       if(!localStorage.getItem("lang")){
-       window.location.replace("/language.html")   
+      window.location.replace("login.html")   
     } else {
-     window.location.replace("/login.html") 
+    window.location.replace("language.html") 
     }
 }
   </script>
