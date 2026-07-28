@@ -8,18 +8,19 @@ h2{color:#333}
 .lang{padding:18px;margin:12px 0;background:#fff;border-radius:12px;cursor:pointer;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 .lang:hover{background:#667eea;color:#fff}
 </style>
-  <script>
-if(localStorage.getItem("loggedIn") !== "true"){
-    window.location.replace("/login.html?v=9")
-}
-// Guard: Agar pehle se login hai to seedha bhej do
-if(localStorage.getItem("loggedIn") === "true"){
-    if(!localStorage.getItem("lang")){
-        window.location.replace("/language.html?v=9")
-    } else {
-        window.location.replace("/index.html?v=9")
+ <script>
+    // Guard: Agar login nahi hai to login pe bhej do
+    if(localStorage.getItem("loggedIn") !== "true"){
+        window.location.replace("login.html")
+    } 
+    // Agar login hai par language nahi chuni
+    else if(!localStorage.getItem("lang")){
+        window.location.replace("language.html")
     }
-}
+    // Agar dono hai to index pe bhej do
+    else {
+        window.location.replace("index.html")
+    }
 </script>
 </head>
 <body>
