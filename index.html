@@ -146,12 +146,12 @@
         <div class="header-title">Maya Didi</div>
         <div class="stats">
             <span onclick="toggleTheme()">🌙</span>
-           <span onclick="localStorage.clear(); location.reload()" style="cursor:pointer">🚪</span> 
+           <span onclick="logout()" style="cursor:pointer">🚪</span>
         </div>
     </div>
 
     <div class="top-buttons">
-       <button class="btn-purple" onclick="window.location.href='/maya'">
+       <button class="btn-purple" onclick="window.location.href='maya.html'">
   💬 Maya se Gupshup Karo
 </button> 
         <button class="btn-red" onclick="window.location.href='wrong-practice.html'">
@@ -700,6 +700,14 @@ document.addEventListener('DOMContentLoaded', startQuizList);
     <script src="maya-fix.js"></script>
     <div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 <script>window.MAYA_MODE = 'home';</script> 
-<script src="ads-heart.js"></script>   
+<script src="ads-heart.js"></script> 
+<script>
+function logout(){
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("lang");
+    alert("Logout ho gaya");
+    window.location.href = "login.html";
+}
+</script>    
 </body>
 </html>
