@@ -15,4 +15,12 @@ const langData = {
       "btn_back": "戻る"
     }
   }
+ "japanese-english": {
+  "wrong": {
+    "heading": "間違った質問をもう一度学ぶ",
+    "btn_back": "戻る",
+    "total": "合計", 
+    "no_question": "間違った質問はありません！"
+  }
+} 
 };
