@@ -17,11 +17,12 @@
         .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
         .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
     </style>
+   <script src="words.js"></script> 
 </head>
 <body>
     <div class="header">
-        <button class="back-btn" onclick="window.location.href='index.html'">←</button>
-        <h2>❌ Galat Questions</h2>
+       <button id="btn_back" class="back-btn" onclick="window.location.href='index.html'"></button>
+        <h2 id="heading">❌ Galat Questions</h2>
     </div>
 
     <p id="total-count" style="color: #94a3b8; margin-bottom: 20px;"></p>
@@ -31,5 +32,14 @@
     <div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 <script>window.MAYA_MODE = 'wrong';</script>
 <script src="/ads-heart.js"></script>
+<script>
+window.onload = function(){
+    const lang = localStorage.getItem("lang") || "hindi-english";
+    const data = langData[lang].wrong;
+
+    document.getElementById("heading").innerText = "❌ " + data.heading;
+    document.getElementById("btn_back").innerText = "⬅️ " + data.btn_back;
+}
+</script>    
 </body>
 </html>
