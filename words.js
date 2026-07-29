@@ -14,7 +14,7 @@ const langData = {
       "btn_start": "練習を始める",
       "btn_back": "戻る"
     }
-  }
+  },
  "japanese-english": {
   "wrong": {
     "heading": "間違った質問をもう一度学ぶ",
