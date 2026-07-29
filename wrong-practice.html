@@ -35,11 +35,11 @@
 <script>
 window.onload = function(){
     const lang = localStorage.getItem("lang") || "hindi-english";
-    const data = langData[lang].wrong;
+    const data = langData[lang]? langData[lang].wrong : langData["hindi-english"].wrong;
 
     document.getElementById("heading").innerText = "❌ " + data.heading;
     document.getElementById("btn_back").innerText = "⬅️ " + data.btn_back;
 }
-</script>    
+</script>
 </body>
 </html>
