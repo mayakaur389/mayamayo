@@ -24,8 +24,8 @@
        <button id="btn_back" class="back-btn" onclick="window.location.href='index.html'"></button>
         <h2 id="heading">❌ Galat Questions</h2>
     </div>
-
-    <p id="total-count" style="color: #94a3b8; margin-bottom: 20px;"></p>
+<p id="total_text" style="color: #94a3b8"></p>  <!-- YE NAYI LINE ADD KARO -->
+    <p id="no_question_text" class="empty"></p>
     <div id="wrong-list"></div>
 
     <script src="wrong-practice.js"></script>
@@ -39,8 +39,8 @@ window.onload = function(){
 
     document.getElementById("heading").innerText = "❌ " + data.heading;
     document.getElementById("btn_back").innerText = "⬅️ " + data.btn_back;
-    document.getElementById("total_text").innerText = data.total + " 0 " + data.questions_text;
-    document.getElementById("no_question_text").innerText = data.no_question; // id check karna
+    document.getElementById("total-count").innerText = data.total + " 0 " + data.questions_text;
+document.getElementById("no_question_text").innerText = data.no_question;
 }
 </script>
 </body>
