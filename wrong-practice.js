@@ -1,7 +1,8 @@
 // wrong-practice.js
 window.onload = function(){
-    let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
-    const listDiv = document.getElementById('wrong-list');
+  let wrongQuestions = []; // YE NAYI LINE ADD KARO  
+  wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || []; // 2. YE NAYI LINE ADD KARO  
+    const listDiv = document.getElementById('wrong-list')
     const countDiv = document.getElementById('total-count');
 
     if(countDiv){ // Safety check
