@@ -34,8 +34,11 @@
 <script src="/ads-heart.js"></script>
 <script>
 window.onload = function(){
-    const lang = localStorage.getItem("lang") || "hindi-english";
-    const data = langData[lang]? langData[lang].wrong : langData["hindi-english"].wrong;
+    // 1. YE LINE BADLO - dono naam check karo
+    const lang = localStorage.getItem("language") || localStorage.getItem("lang") || "hindi-english";
+    
+    // 2. YE LINE BADLO - agar wrong na mile to default de do
+    const data = langData[lang] && langData[lang].wrong? langData[lang].wrong : langData["hindi-english"].wrong;
 
     document.getElementById("heading").innerText = "❌ " + data.heading;
     document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
@@ -45,5 +48,7 @@ window.onload = function(){
 </script>
 </body>
 </html>
+
+
 
 
