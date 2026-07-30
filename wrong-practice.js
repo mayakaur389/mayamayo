@@ -48,7 +48,7 @@ window.onload = function(){
         cardHTML += '</div>';
         listDiv.innerHTML += cardHTML;
     });
-}
+
 
 function deleteQuestion(index) {
     wrongQuestions.splice(index, 1);
