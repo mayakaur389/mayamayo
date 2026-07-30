@@ -1,13 +1,21 @@
 // wrong-practice.js
-let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
-const listDiv = document.getElementById('wrong-list');
-const countDiv = document.getElementById('total-count');
+window.onload = function(){
+    let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
+    const listDiv = document.getElementById('wrong-list');
+    const countDiv = document.getElementById('total-count');
 
-countDiv.innerText = `Total ${wrongQuestions.length} galat questions hain`;
+    if(countDiv){ // Safety check
+        countDiv.innerText = `Total ${wrongQuestions.length} galat questions hain`;
+    }
 
-if(wrongQuestions.length === 0) {
-    listDiv.innerHTML = '<div class="empty">🎉 Koi galat question nahi hai abhi!</div>';
-} else {
+    if(wrongQuestions.length === 0) { // { YAHAN LAGAO
+        if(listDiv){
+            listDiv.innerHTML = `<div class="empty">🔇 Koi galat question nahi hai abhi</div>`;
+        }
+    } else {
+        // yaha tumhara forEach code rahega
+    }
+}; // YAHAN BAND KARO
     wrongQuestions.forEach((q, index) => {
         let cardHTML = '<div class="question-card">';
         
