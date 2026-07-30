@@ -14,11 +14,8 @@ window.onload = function(){
             listDiv.innerHTML = `<div class="empty">🔇 Koi galat question nahi hai abhi</div>`;
         }
     } else {
-        // yaha tumhara forEach code rahega
-    }
-}; // YAHAN BAND KARO
     wrongQuestions.forEach((q, index) => {
-        let cardHTML = '<div class="question-card">';
+    let cardHTML = `<div class="question-card">`; // SAHI - backtick   
         
         // Type ke hisaab se alag UI
         if(q.type === 'day_quiz') {
