@@ -17,38 +17,27 @@
         .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
         .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
     </style>
-   <script src="words.js"></script> 
+    <script src="words.js"></script>
 </head>
 <body>
     <div class="header">
-       <button id="btn_back" class="back-btn" onclick="window.location.href='index.html'"></button>
+        <button id="btn_back" class="back-btn" onclick="window.location.href='index.html'"></button>
         <h2 id="heading">❌ Galat Questions</h2>
     </div>
-<p id="total_text" style="color: #94a3b8"></p>  <!-- YE NAYI LINE ADD KARO -->
-    <p id="no_question_text" class="empty"></p>
+    <p id="total_text" style="color: #94a3b8"></p>
     <div id="wrong-list"></div>
-
     <script src="wrong-practice.js"></script>
-    <div id="banner-ad"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-<script>window.MAYA_MODE = 'wrong';</script>
-<script src="ads-heart.js"></script>
-<script>
-window.onload = function(){
-    // 1. YE LINE BADLO - dono naam check karo
-    const lang = localStorage.getItem("language") || localStorage.getItem("lang") || "hindi-english";
-    
-    // 2. YE LINE BADLO - agar wrong na mile to default de do
-    const data = langData[lang] && langData[lang].wrong? langData[lang].wrong : langData["hindi-english"].wrong;
+    <script>window.MAYA_MODE = 'wrong';</script>
+    <script src="ads-heart.js"></script>
+    <script>
+        window.onload = function(){
+            const lang = localStorage.getItem("language") || localStorage.getItem("lang") || "hindi-english";
+            const data = langData[lang] && langData[lang].wrong ? langData[lang].wrong : langData["hindi-english"].wrong;
 
-    document.getElementById("heading").innerText = "❌ " + data.heading;
-    document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
-    document.getElementById("total_text").innerText = data.total + " 0 " + data.questions_text;
-    document.getElementById("no_question_text").innerText = data.no_question;
-};
-</script>
+            document.getElementById("heading").innerText = "❌ " + data.heading;
+            document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
+            document.getElementById("total_text").innerText = data.total + " 0 " + data.questions_text;
+        };
+    </script>
 </body>
 </html>
-
-
-
-
