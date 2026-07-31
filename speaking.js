@@ -15,6 +15,26 @@ function showFullAd(callback) {
     alert('TEST: Yahan Ad chalna tha!');
     if (callback) callback();
 }
+// ===== WRONG QUESTION SAVE FUNCTION =====
+function saveWrongQuestion(type, data) {
+    let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
+    
+    let newQ = {
+        type: type,
+        title: data.title,
+        question: data.question,
+        userAnswer: data.userAnswer,
+        correctAnswer: data.correctAnswer
+    };
+    
+    // duplicate na ho isliye check
+    let exists = wrongQuestions.find(q => q.question === newQ.question && q.type === type);
+    if(!exists) {
+        wrongQuestions.push(newQ);
+        localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
+    }
+}
+// ===== END =====
 // ===== AD FUNCTION END =====
 let currentQuestions = [...questions];
 let currentQ = parseInt(localStorage.getItem('speakingCurrentQ')) || 0;
@@ -104,6 +124,14 @@ recognition.onresult = (event) => {
         console.log('GALAT. NAYA COUNT:', totalGalti);
         document.getElementById('speakResult').innerHTML = '❌ Galat! Phir se bolo';
         document.getElementById('speakResult').style.color = 'red';
+        // ===== YE 6 LINE NAYI ADD KARO =====
+    saveWrongQuestion('speaking', {
+        title: 'Bol Ke Practice ' + (currentQ + 1),
+        question: currentQuestions[currentQ].en,
+        userAnswer: spoken,
+        correctAnswer: correct
+    });
+    // ===== END =====
 
         if (totalGalti >= 3) {
     showFullAd(() => {
