@@ -74,7 +74,7 @@ function loadWrongQuestions(filter = 'day_quiz') {
 cardHTML += `<button class="practice-btn practice-again-btn" data-text='${JSON.stringify(q.audioText || q.question).replace(/'/g, "&#39;")}'>🔁 Phir Se Practice</button>`;
 cardHTML += `<button class="practice-btn delete-btn" data-index="${index}" style="background:#475569; margin-top:8px;">🗑️ Delete Karo</button>`;
  }           
-} // speaking khatam        
+ // speaking khatam        
 cardHTML += `</div>`;
         listDiv.innerHTML += cardHTML;
     });
