@@ -6,7 +6,8 @@ const questions = [
     {en: "Good morning", hi: "सुप्रभात"}
 ];
 
-let wrongQuestions = [];
+//let wrongQuestions = [];
+let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
 let totalGalti = 0;
 // ===== AD FUNCTION =====
 function showFullAd(callback) {
