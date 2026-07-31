@@ -1,3 +1,6 @@
+// GALAT SAWAAL LOAD KARO
+let allWrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
+let wrongQuestions = []; // filter ke liye
 function practiceAgain(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'hi-IN';
