@@ -70,12 +70,11 @@ function loadWrongQuestions(filter = 'day_quiz') {
             cardHTML += `<p><b>Bolo:</b> ${q.question}</p>`; // SPEAKING KE LIYE NAYA
             cardHTML += `<p style="color:#ff4b4b">Tumne bola: ${q.userAnswer}</p>`;
             cardHTML += `<p style="color:#22c55e">Sahi: ${q.correctAnswer}</p>`;
-        }
-
-        } // speaking khatam
-
-cardHTML += `<button class="practice-btn" onclick="practiceAgain('${q.audioText || q.question}')">🔁 Phir Se Practice</button>`;
+        
+cardHTML += `<button class="practice-btn" onclick='practiceAgain(${JSON.stringify(q.audioText || q.question)})'>🔁 Phir Se Practice</button>`;
 cardHTML += `<button class="practice-btn" onclick="deleteQuestion(${index})" style="background:#475569; margin-top:8px;">🗑️ Delete Karo</button>`;
+ }           
+} // speaking khatam        
 cardHTML += `</div>`;
         listDiv.innerHTML += cardHTML;
     });
