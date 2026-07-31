@@ -115,4 +115,5 @@ function practiceAgain(text) {
     utterance.rate = 0.9;
     speechSynthesis.speak(utterance);
 }
-
+});
+});
