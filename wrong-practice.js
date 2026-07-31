@@ -1,8 +1,23 @@
-function loadWrongQuestions() {
-    let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
-    
+// TAB BUTTON CLICK + ACTIVE CLASS
+document.getElementById('btn_lessons').onclick = () => {
+    loadWrongQuestions('day_quiz');
+    document.getElementById('btn_lessons').classList.add('active');
+    document.getElementById('btn_speaking').classList.remove('active');
+};
+
+document.getElementById('btn_speaking').onclick = () => {
+    loadWrongQuestions('speaking');
+    document.getElementById('btn_speaking').classList.add('active');
+    document.getElementById('btn_lessons').classList.remove('active');
+};
+
+function loadWrongQuestions(filter = 'day_quiz') {
+    let all = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
+    let wrongQuestions = all.filter(q => q.type === filter); // FILTER ADD KIYA
+
     const listDiv = document.getElementById('wrong-list');
     const countDiv = document.getElementById('total_text');
+
     const lang = localStorage.getItem("language") || localStorage.getItem("lang") || "hindi-english";
     const data = langData[lang] && langData[lang].wrong? langData[lang].wrong : langData["hindi-english"].wrong;
 
@@ -21,35 +36,32 @@ function loadWrongQuestions() {
     listDiv.innerHTML = '';
     wrongQuestions.forEach((q, index) => {
         // Purane data ko support
-        if(!q.type) {
-            q.type = 'day_quiz';
-            q.title = 'LESSON';
-        }
+        if(!q.type) { q.type = 'day_quiz'; q.title = 'LESSON'; }
 
         let cardHTML = `<div class="question-card">`;
-        
+
         if(q.type === 'day_quiz') {
             cardHTML += `<span class="tag tag-day">DAY QUIZ</span>`;
             cardHTML += `<h4>${q.title}</h4>`;
             cardHTML += `<p><b>Q:</b> ${q.question}</p>`;
             cardHTML += `<p style="color:#ff4b4b">Tumhara: ${q.userAnswer}</p>`;
             cardHTML += `<p style="color:#22c55e">Sahi: ${q.correctAnswer}</p>`;
-        } 
+        }
         else if(q.type === 'listening') {
             cardHTML += `<span class="tag tag-listen">LISTENING</span>`;
             cardHTML += `<h4>${q.title}</h4>`;
             cardHTML += `<p>🔊 <b>Audio:</b> "${q.audioText}"</p>`;
             cardHTML += `<p style="color:#ff4b4b">Tumne Hindi chuna: ${q.userHindiChoice}</p>`;
             cardHTML += `<p style="color:#22c55e">Sahi Hindi: ${q.correctHindi}</p>`;
-        } 
+        }
         else if(q.type === 'speaking') {
             cardHTML += `<span class="tag tag-speak">SPEAKING</span>`;
-            cardHTML += `<h4>${q.title}</h4>`;
-            cardHTML += `<p><b>Prompt:</b> ${q.prompt}</p>`;
-            cardHTML += `<p style="color:#ff4b4b">Tumne bola: ${q.userSpoken}</p>`;
-            cardHTML += `<p style="color:#22c55e">Sahi bolo: ${q.correctSpoken}</p>`;
+            cardHTML += `<h4>🗣️ ${q.title}</h4>`;
+            cardHTML += `<p><b>Bolo:</b> ${q.question}</p>`; // SPEAKING KE LIYE NAYA
+            cardHTML += `<p style="color:#ff4b4b">Tumne bola: ${q.userAnswer}</p>`;
+            cardHTML += `<p style="color:#22c55e">Sahi: ${q.correctAnswer}</p>`;
         }
-        
+
         cardHTML += `<button class="practice-btn" onclick="deleteQuestion(${index})">✓ Ho Gaya - Delete Karo</button>`;
         cardHTML += `</div>`;
         listDiv.innerHTML += cardHTML;
@@ -60,8 +72,8 @@ function deleteQuestion(index) {
     let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
     wrongQuestions.splice(index, 1);
     localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
-    loadWrongQuestions(); // page reload nahi, direct refresh
+    loadWrongQuestions('day_quiz'); // FILTER KE SATH REFRESH
 }
 
 // Page load hote hi chalao
-window.addEventListener('load', loadWrongQuestions);
+window.addEventListener('load', () => loadWrongQuestions('day_quiz')); // DEFAULT LESSONS
