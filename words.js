@@ -10,7 +10,7 @@ const langData = {
             "no_question": "🔇 Koi galat question nahi hai abhi"
         }
     },
-    "japanese-english": {
+    "ja-en": { // <-- yaha change kiya
         "wrong": {
             "page_title": "間違った問題を練習する",
             "heading": "間違った質問をもう一度学ぶ",
