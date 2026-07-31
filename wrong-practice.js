@@ -1,3 +1,7 @@
+function practiceAgain(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'hi-IN';
+    speechSynthesis.speak(utterance);
 // TAB BUTTON CLICK + ACTIVE CLASS
 document.getElementById('btn_lessons').onclick = () => {
     loadWrongQuestions('day_quiz');
@@ -10,6 +14,12 @@ document.getElementById('btn_speaking').onclick = () => {
     document.getElementById('btn_speaking').classList.add('active');
     document.getElementById('btn_lessons').classList.remove('active');
 };
+document.getElementById('btn_listening').onclick = () => {
+    loadWrongQuestions('listening');
+    document.getElementById('btn_listening').classList.add('active');
+    document.getElementById('btn_lessons').classList.remove('active');
+    document.getElementById('btn_speaking').classList.remove('active');
+}; // NAYA BUTTON
 
 function loadWrongQuestions(filter = 'day_quiz') {
     let all = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
@@ -48,7 +58,7 @@ function loadWrongQuestions(filter = 'day_quiz') {
             cardHTML += `<p style="color:#22c55e">Sahi: ${q.correctAnswer}</p>`;
         }
         else if(q.type === 'listening') {
-            cardHTML += `<span class="tag tag-listen">LISTENING</span>`;
+           cardHTML += `<span class="tag tag-listen">👂 LISTENING</span>`; // 👂 add kiya
             cardHTML += `<h4>${q.title}</h4>`;
             cardHTML += `<p>🔊 <b>Audio:</b> "${q.audioText}"</p>`;
             cardHTML += `<p style="color:#ff4b4b">Tumne Hindi chuna: ${q.userHindiChoice}</p>`;
@@ -62,8 +72,11 @@ function loadWrongQuestions(filter = 'day_quiz') {
             cardHTML += `<p style="color:#22c55e">Sahi: ${q.correctAnswer}</p>`;
         }
 
-        cardHTML += `<button class="practice-btn" onclick="deleteQuestion(${index})">✓ Ho Gaya - Delete Karo</button>`;
-        cardHTML += `</div>`;
+        } // speaking khatam
+
+cardHTML += `<button class="practice-btn" onclick="practiceAgain('${q.audioText || q.question}')">🔁 Phir Se Practice</button>`;
+cardHTML += `<button class="practice-btn" onclick="deleteQuestion(${index})" style="background:#475569; margin-top:8px;">🗑️ Delete Karo</button>`;
+cardHTML += `</div>`;
         listDiv.innerHTML += cardHTML;
     });
 }
