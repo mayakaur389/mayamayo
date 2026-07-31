@@ -16,6 +16,9 @@
        .tag-speak { background: #22c55e; }
        .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
        .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
+        .filter-tabs{display:flex; gap:10px; margin:15px 0;}
+.tab-btn{padding:8px 16px; border:none; border-radius:8px; background:#334155; color:white; cursor:pointer; font-weight:600;}
+.tab-btn.active{background:#22c55e; color:white;}
     </style>
     <script src="words.js"></script>
 </head>
@@ -24,6 +27,10 @@
         <button id="btn_back" class="back-btn" onclick="window.location.href='index.html'"></button>
         <h2 id="heading">❌ Galat Questions</h2>
     </div>
+    <div class="filter-tabs">
+         <button id="btn_lessons" class="tab-btn active">📝 Lessons</button>
+         <button id="btn_speaking" class="tab-btn">🗣️ Bol Ke Practice</button>
+     </div>
     <p id="total_text" style="color: #94a3b8"></p>
     <div id="wrong-list"></div>
 
