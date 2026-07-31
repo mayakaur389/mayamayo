@@ -24,7 +24,7 @@ document.getElementById('btn_listening').onclick = () => {
     document.getElementById('btn_speaking').classList.remove('active');
 }; // NAYA BUTTON
 
-function loadWrongQuestions(filter = 'day_quiz') {
+function loadWrongQuestions(filter = 'speaking') {
     let all = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
     let wrongQuestions = all.filter(q => q.type === filter); // FILTER ADD KIYA
 
@@ -87,11 +87,11 @@ function deleteQuestion(index) {
     let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
     wrongQuestions.splice(index, 1);
     localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
-    loadWrongQuestions('day_quiz'); // FILTER KE SATH REFRESH
+    loadWrongQuestions('speaking'); // FILTER KE SATH REFRESH
 }
 
 // Page load hote hi chalao
-window.addEventListener('load', () => loadWrongQuestions('day_quiz')); // DEFAULT LESSONS
+window.addEventListener('load', () => loadWrongQuestions('speaking')); // DEFAULT LESSONS
 
 // Event listeners for buttons
 document.addEventListener('click', function(e) {
