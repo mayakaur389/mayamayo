@@ -113,11 +113,3 @@ function practiceAgain(text) {
     speechSynthesis.speak(utterance);
 }
 
-// Question delete karne ka function
-function deleteQuestion(index) {
-    let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions') || '[]');
-    wrongQuestions.splice(index, 1);
-    localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
-    loadWrongQuestions('day_quiz'); // list refresh kar do
-}
-}
