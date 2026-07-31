@@ -91,7 +91,10 @@ function deleteQuestion(index) {
 }
 
 // Page load hote hi chalao
-window.addEventListener('load', () => loadWrongQuestions('speaking')); // DEFAULT LESSONS
+window.addEventListener('load', () => {
+    loadWrongQuestions('speaking');
+    document.getElementById('btn_speaking').classList.add('active');
+});
 
 // Event listeners for buttons
 document.addEventListener('click', function(e) {
