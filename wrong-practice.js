@@ -116,4 +116,4 @@ function practiceAgain(text) {
     speechSynthesis.speak(utterance);
 }
 });
-});
+
