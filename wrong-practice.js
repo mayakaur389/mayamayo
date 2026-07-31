@@ -101,3 +101,19 @@ document.addEventListener('click', function(e) {
         deleteQuestion(index);
     }
 });
+
+// Galat question ko practice karne ka function
+function practiceAgain(text) {
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = 0.9;
+    speechSynthesis.speak(utterance);
+}
+
+// Question delete karne ka function
+function deleteQuestion(index) {
+    let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions') || '[]');
+    wrongQuestions.splice(index, 1);
+    localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
+    loadWrongQuestions('day_quiz'); // list refresh kar do
+}
