@@ -117,3 +117,4 @@ function deleteQuestion(index) {
     localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
     loadWrongQuestions('day_quiz'); // list refresh kar do
 }
+}
