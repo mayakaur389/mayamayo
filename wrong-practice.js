@@ -71,8 +71,8 @@ function loadWrongQuestions(filter = 'day_quiz') {
             cardHTML += `<p style="color:#ff4b4b">Tumne bola: ${q.userAnswer}</p>`;
             cardHTML += `<p style="color:#22c55e">Sahi: ${q.correctAnswer}</p>`;
         
-cardHTML += `<button class="practice-btn" onclick='practiceAgain(${JSON.stringify(q.audioText || q.question)})'>🔁 Phir Se Practice</button>`;
-cardHTML += `<button class="practice-btn" onclick="deleteQuestion(${index})" style="background:#475569; margin-top:8px;">🗑️ Delete Karo</button>`;
+cardHTML += `<button class="practice-btn practice-again-btn" data-text='${JSON.stringify(q.audioText || q.question).replace(/'/g, "&#39;")}'>🔁 Phir Se Practice</button>`;
+cardHTML += `<button class="practice-btn delete-btn" data-index="${index}" style="background:#475569; margin-top:8px;">🗑️ Delete Karo</button>`;
  }           
 } // speaking khatam        
 cardHTML += `</div>`;
@@ -89,3 +89,18 @@ function deleteQuestion(index) {
 
 // Page load hote hi chalao
 window.addEventListener('load', () => loadWrongQuestions('day_quiz')); // DEFAULT LESSONS
+
+// Page load hote hi chalao
+window.addEventListener('load', () => loadWrongQuestions('day_quiz')); // DEFAULT LESSON
+
+// Event listeners for buttons
+document.addEventListener('click', function(e) {
+    if(e.target.classList.contains('practice-again-btn')) {
+        let text = e.target.getAttribute('data-text');
+        practiceAgain(JSON.parse(text));
+    }
+    if(e.target.classList.contains('delete-btn')) {
+        let index = e.target.getAttribute('data-index');
+        deleteQuestion(index);
+    }
+});
