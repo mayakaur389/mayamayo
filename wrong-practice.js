@@ -1,8 +1,8 @@
-function practiceAgain(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'hi-IN';
-    speechSynthesis.speak(utterance);
-// TAB BUTTON CLICK + ACTIVE CLASS
+//function practiceAgain(text) {
+    //const utterance = new SpeechSynthesisUtterance(text);
+    //utterance.lang = 'hi-IN';
+    //speechSynthesis.speak(utterance);
+//// TAB BUTTON CLICK + ACTIVE CLASS
 document.getElementById('btn_lessons').onclick = () => {
     loadWrongQuestions('day_quiz');
     document.getElementById('btn_lessons').classList.add('active');
