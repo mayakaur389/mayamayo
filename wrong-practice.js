@@ -29,13 +29,14 @@ document.getElementById('btn_listening').onclick = () => {
     document.getElementById('btn_listening').classList.add('active');
     document.getElementById('btn_lessons').classList.remove('active');
     document.getElementById('btn_speaking').classList.remove('active');
+};
     // LANGUAGE UPDATE FUNCTION
 function updateButtonText() {
   document.getElementById('btn_lessons').textContent = t('btn_lessons');
   document.getElementById('btn_speaking').textContent = t('btn_speaking');
   document.getElementById('btn_listening').textContent = t('btn_listening');
-}
 };
+
 
 // NAYA BUTTON
 function loadWrongQuestions(filter = 'speaking') {
