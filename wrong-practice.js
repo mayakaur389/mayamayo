@@ -30,13 +30,6 @@ document.getElementById('btn_listening').onclick = () => {
     document.getElementById('btn_lessons').classList.remove('active');
     document.getElementById('btn_speaking').classList.remove('active');
 };
-    // LANGUAGE UPDATE FUNCTION
-function updateButtonText() {
-  document.getElementById('btn_lessons').textContent = t('btn_lessons');
-  document.getElementById('btn_speaking').textContent = t('btn_speaking');
-  document.getElementById('btn_listening').textContent = t('btn_listening');
-};
-
 
 // NAYA BUTTON
 function loadWrongQuestions(filter = 'speaking') {
@@ -129,7 +122,7 @@ document.addEventListener('click', function(e) {
 // Galat question ko practice karne ka function
 function practiceAgain(text) {
   let utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = currentLang === 'ja' ? 'ja-JP' : 'en-US'; // <-- yahi
+  utterance.lang = 'en-US'; // <-- yahi
   utterance.rate = 0.9;
   speechSynthesis.speak(utterance);
 }
