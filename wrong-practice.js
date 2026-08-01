@@ -126,6 +126,6 @@ function practiceAgain(text) {
   utterance.rate = 0.9;
   speechSynthesis.speak(utterance);
 }
-document.addEventListener('DOMContentLoaded', () => {
-  updateButtonText(); 
-});
+//document.addEventListener('DOMContentLoaded', () => {
+ // updateButtonText(); 
+//});
