@@ -26,24 +26,24 @@
 </head>
 <body>
   <div class="box">
-    <h2>Maya Didi Login</h2>
-    <input type="tel" id="mobile" placeholder="+91 9876543210">
-    <button onclick="sendOTP()">OTP Bhejo</button>
+    <h2 data-key="login_title">Maya Didi Login</h2>
+    <input type="tel" id="mobile" placeholder="+91 9876543218">
+    <button onclick="sendOTP()"><span data-key="btn_sendotp">OTP Bhejo</span></button>
     <input type="text" id="otp" placeholder="OTP daalo">
-    <button onclick="verifyOTP()">Login</button>
-  </div>
+    <button onclick="verifyOTP()"><span data-key="btn_login">Login</span></button>
+</div>
   <script>
-    function sendOTP(){
-      alert("OTP sent - demo me 1234 use karo")
-    }
-    function verifyOTP(){
-      if(document.getElementById('otp').value=="1234"){
+   function sendOTP(){
+    alert("OTP sent - demo me 1234 use karo") // isko baad me hatayenge
+}
+function verifyOTP(){
+    if(document.getElementById('otp').value=="1234"){
         localStorage.setItem("loggedIn","true");
         window.location.href="language.html";
-      } else {
-        alert("Galat OTP")
-      }
+    } else {
+        alert("Galat OTP") // isko bhi baad me hatayenge
     }
+}
   </script>
 </body>
 </html>
