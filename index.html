@@ -12,11 +12,10 @@
 <div id="auth-buttons" style="text-align:center; padding:15px; background:#ffe4e6; border-bottom:2px solid #ff4d6d;">
   <button onclick="window.location.href='login.html'" 
     style="padding:12px 25px; margin:8px; border:none; background:#ff4d6d; color:white; font-size:16px; font-weight:bold; border-radius:10px; cursor:pointer;">
-   login karo
     <span data-key="btn_login">login karo</span>
         </button>
         <button onclick="window.location.href='language.html'">
-        language chuno 
+       <span data-key="btn_language">language chuno</span>
         </button>
 ...tumhara baki ka code... 
     
@@ -695,10 +694,12 @@ document.addEventListener('DOMContentLoaded', startQuizList);
 <script>
 function logout(){
     localStorage.removeItem("loggedIn");
-    localStorage.removeItem("lang");
+   // localStorage.removeItem("lang");
     alert("Logout ho gaya");
     window.location.href = "login.html";
 }
-</script>    
+</script>
+<script src="words.js"></script>
+<script src="language.js"></script>    
 </body>
 </html>
