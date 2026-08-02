@@ -24,7 +24,7 @@ h2{color:#333}
 </script>
 </head>
 <body>
-<h2>Apni Language Chuno</h2>
+<h2 data-key="choose_title">Apni Language Chuno</h2>
 <div class="lang" onclick="select('hi-en')">🇮🇳 Hindi → English</div>
 <div class="lang" onclick="select('en-hi')">🇬🇧 English → Hindi</div>
 <div class="lang" onclick="select('es-en')">🇪🇸 Spanish → English</div>
@@ -37,5 +37,7 @@ function select(l){
 window.location.href = "index.html?nocache=1";
 }
 </script>
+<script src="words.js"></script>
+<script src="language.js"></script> 
 </body>
 </html>
