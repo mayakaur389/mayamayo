@@ -10,12 +10,12 @@ function practiceAgain(text) {
 }
 
 // TAB BUTTON CLICK + ACTIVE CLASS
-// document.getElementById('btn_lessons').onclick = () => {
-//     loadWrongQuestions('day_quiz');
-//     document.getElementById('btn_lessons').classList.add('active');
-//     document.getElementById('btn_speaking').classList.remove('active');
-//     document.getElementById('btn_listening').classList.remove('active');
-// };
+ document.getElementById('btn_lessons').onclick = () => {
+     loadWrongQuestions('day_quiz');
+     document.getElementById('btn_lessons').classList.add('active');
+     document.getElementById('btn_speaking').classList.remove('active');
+     document.getElementById('btn_listening').classList.remove('active');
+ };
 
 document.getElementById('btn_speaking').onclick = () => {
     loadWrongQuestions('speaking');
