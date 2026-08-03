@@ -1,43 +1,118 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8"><title>Language Select</title>
+<meta charset="UTF-8">
+<title>Language Select</title>
 <style>
 body{font-family:sans-serif;background:#f0f2f5;padding:20px;text-align:center}
-h2{color:#333}
-.lang{padding:18px;margin:12px 0;background:#fff;border-radius:12px;cursor:pointer;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-.lang:hover{background:#667eea;color:#fff}
+h2{color:#333;margin-bottom:20px}
+.lang{padding:18px;margin:12px 0;background:#fff;border-radius:12px;cursor:pointer;font-size:18px;box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:0.3s}
+.lang:hover{background:#667eea;color:#fff;transform:scale(1.02)}
+.container{max-width:500px;margin:auto}
 </style>
- <script>
-   // // Guard: Agar login nahi hai to login pe bhej do
-    //if(localStorage.getItem("loggedIn") !== "true"){
-       // window.location.replace("login.html")
-    //} 
-    //// Agar login hai par language nahi chuni
-    //else if(!localStorage.getItem("lang")){
-       // window.location.replace("language.html")
-    //}
-    //// Agar dono hai to index pe bhej do
-    //else {
-       // window.location.replace("index.html")
-   // }
-</script>
 </head>
 <body>
-<h2 data-key="choose_title">Apni Language Chuno</h2>
-<div class="lang" onclick="select('hi-en')">🇮🇳 Hindi → English</div>
-<div class="lang" onclick="select('en-hi')">🇬🇧 English → Hindi</div>
-<div class="lang" onclick="select('es-en')">🇪🇸 Spanish → English</div>
-<div class="lang" onclick="select('fr-en')">🇫🇷 French → English</div>
-<div class="lang" onclick="select('ja-en')">🇯🇵 Japanese → English</div>
-<div class="lang" onclick="select('de-en')">🇩🇪 German → English</div>
+<div class="container">
+  <h2 data-key="language.title">Apni Language Chuno</h2>
+
+  <div class="lang" onclick="setLanguage('hindi-english')" data-key="language.hindi_english">🇮🇳 Hindi → English</div>
+  <div class="lang" onclick="setLanguage('english-hindi')" data-key="language.english_hindi">🇬🇧 English → Hindi</div>
+  <div class="lang" onclick="setLanguage('spanish-english')" data-key="language.spanish_english">🇪🇸 Spanish → English</div>
+  <div class="lang" onclick="setLanguage('french-english')" data-key="language.french_english">🇫🇷 French → English</div>
+  <div class="lang" onclick="setLanguage('ja')" data-key="language.japanese_english">🇯🇵 Japanese → English</div>
+  <div class="lang" onclick="setLanguage('de')" data-key="language.german_english">🇩🇪 German → English</div>
+</div>
+
 <script>
-function select(l){
-  localStorage.setItem("lang",l);
-window.location.href = "index.html?nocache=1";
+// STEP 1: WORDS DATA - 6 LANGUAGE
+const langData = {
+  "hindi-english": {
+    "language": {
+      "title": "Apni Language Chuno",
+      "hindi_english": "🇮🇳 Hindi → English",
+      "english_hindi": "🇬🇧 English → Hindi",
+      "spanish_english": "🇪🇸 Spanish → English",
+      "french_english": "🇫🇷 French → English",
+      "japanese_english": "🇯🇵 Japanese → English",
+      "german_english": "🇩🇪 German → English"
+    }
+  },
+  "english-hindi": {
+    "language": {
+      "title": "Choose Your Language",
+      "hindi_english": "🇮🇳 Hindi → English",
+      "english_hindi": "🇬🇧 English → Hindi",
+      "spanish_english": "🇪🇸 Spanish → English",
+      "french_english": "🇫🇷 French → English",
+      "japanese_english": "🇯🇵 Japanese → English",
+      "german_english": "🇩🇪 German → English"
+    }
+  },
+  "spanish-english": {
+    "language": {
+      "title": "Elige Tu Idioma",
+      "hindi_english": "🇮🇳 Hindi → English",
+      "english_hindi": "🇬🇧 English → Hindi",
+      "spanish_english": "🇪🇸 Spanish → English",
+      "french_english": "🇫🇷 French → English",
+      "japanese_english": "🇯🇵 Japanese → English",
+      "german_english": "🇩🇪 German → English"
+    }
+  },
+  "french-english": {
+    "language": {
+      "title": "Choisissez Votre Langue",
+      "hindi_english": "🇮🇳 Hindi → English",
+      "english_hindi": "🇬🇧 English → Hindi",
+      "spanish_english": "🇪🇸 Spanish → English",
+      "french_english": "🇫🇷 French → English",
+      "japanese_english": "🇯🇵 Japanese → English",
+      "german_english": "🇩🇪 German → English"
+    }
+  },
+  "ja": {
+    "language": {
+      "title": "言語を選択してください",
+      "hindi_english": "🇮🇳 Hindi → English",
+      "english_hindi": "🇬🇧 English → Hindi",
+      "spanish_english": "🇪🇸 Spanish → English",
+      "french_english": "🇫🇷 French → English",
+      "japanese_english": "🇯🇵 Japanese → English",
+      "german_english": "🇩🇪 German → English"
+    }
+  },
+  "de": {
+    "language": {
+      "title": "Wähle Deine Sprache",
+      "hindi_english": "🇮🇳 Hindi → English",
+      "english_hindi": "🇬🇧 English → Hindi",
+      "spanish_english": "🇪🇸 Spanish → English",
+      "french_english": "🇫🇷 French → English",
+      "japanese_english": "🇯🇵 Japanese → English",
+      "german_english": "🇩🇪 German → English"
+    }
+  }
+};
+
+// STEP 2: LANGUAGE SWITCH FUNCTION
+function setLanguage(langCode) {
+  localStorage.setItem("selectedLanguage", langCode);
+  window.location.href = "index.html?nocache=1";
 }
+
+function applyTranslations() {
+  const lang = localStorage.getItem("selectedLanguage") || "hindi-english";
+  const data = langData[lang];
+
+  document.querySelectorAll("[data-key]").forEach(el => {
+    const keys = el.getAttribute("data-key").split(".");
+    let text = data;
+    keys.forEach(k => text = text[k]);
+    if(text) el.innerText = text;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", applyTranslations);
 </script>
-<script src="words.js"></script>
-<script src="language.js"></script> 
 </body>
 </html>
