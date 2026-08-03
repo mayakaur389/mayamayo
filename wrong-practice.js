@@ -9,27 +9,27 @@ function practiceAgain(text) {
     speechSynthesis.speak(utterance);
 }
 
-// TAB BUTTON CLICK + ACTIVE CLASS
- document.getElementById('btn_lessons').onclick = () => {
-     loadWrongQuestions('day_quiz');
-     document.getElementById('btn_lessons').classList.add('active');
-     document.getElementById('btn_speaking').classList.remove('active');
-     document.getElementById('btn_listening').classList.remove('active');
- };
+// // TAB BUTTON CLICK + ACTIVE CLASS
+//  document.getElementById('btn_lessons').onclick = () => {
+//      loadWrongQuestions('day_quiz');
+//      document.getElementById('btn_lessons').classList.add('active');
+//      document.getElementById('btn_speaking').classList.remove('active');
+//      document.getElementById('btn_listening').classList.remove('active');
+//  };
 
-document.getElementById('btn_speaking').onclick = () => {
-    loadWrongQuestions('speaking');
-    document.getElementById('btn_speaking').classList.add('active');
-    document.getElementById('btn_lessons').classList.remove('active');
-    document.getElementById('btn_listening').classList.remove('active');
-};
+// document.getElementById('btn_speaking').onclick = () => {
+//     loadWrongQuestions('speaking');
+//     document.getElementById('btn_speaking').classList.add('active');
+//     document.getElementById('btn_lessons').classList.remove('active');
+//     document.getElementById('btn_listening').classList.remove('active');
+// };
 
-document.getElementById('btn_listening').onclick = () => {
-    loadWrongQuestions('listening');
-    document.getElementById('btn_listening').classList.add('active');
-    document.getElementById('btn_lessons').classList.remove('active');
-    document.getElementById('btn_speaking').classList.remove('active');
-};
+// document.getElementById('btn_listening').onclick = () => {
+//     loadWrongQuestions('listening');
+//     document.getElementById('btn_listening').classList.add('active');
+//     document.getElementById('btn_lessons').classList.remove('active');
+//     document.getElementById('btn_speaking').classList.remove('active');
+// };
 
 // NAYA BUTTON
 function loadWrongQuestions(filter = 'speaking') {
