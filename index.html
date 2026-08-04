@@ -17,11 +17,6 @@
         <button onclick="window.location.href='language.html'">
           <span id="btn_language" data-key="btn_language">language chuno</span>
         </button>
-         <select id="langSelect" onchange="changeLanguage(this.value)" 
-        style="padding:12px 25px; margin:8px; border:none; border-radius:8px; font-size:16px; background:#fff;">
-        <option value="hindi">🇮🇳 Hindi</option>
-        <option value="english">🇬🇧 English</option>
-      </select>
 ...tumhara baki ka code... 
     
    // }
@@ -704,58 +699,6 @@ function logout(){
     window.location.href = "login.html";
 }
 </script>
-<script>
-const translations = {
-  hindi: {
-    title: "Maya Didi",
-    gupshup: "💬 Maya se Gupshup Karo",
-    wrong: "❌ Galat Questions Practice Karo",
-    game: "🎧🎤 Sun Ke Jodo Game",
-    speaking: "🎤 Bol ke Practice Karo",
-    unit: "UNIT 1: BASICS - 1-30 DAYS",
-    subtitle: "Day chuno aur seekhna shuru karo"
-  },
-  english: {
-    title: "Maya Didi",
-    gupshup: "💬 Chat with Maya",
-    wrong: "❌ Practice Wrong Questions",
-    game: "🎧🎤 Listen & Match Game",
-    speaking: "🎤 Practice Speaking",
-    unit: "UNIT 1: BASICS - 1-30 DAYS",
-    subtitle: "Choose a day and start learning"
-  }
-}
-
-function changeLanguage(lang){
-  localStorage.setItem('lang', lang);
-  const t = translations[lang];
-
-  const setText = (id, text) => {
-    const el = document.getElementById(id);
-    if(el) el.innerText = text;
-  }
-
-  setText('title', t.title);
-  setText('btn_login', t.btn_login);
-  setText('btn_language', t.btn_language);
-  setText('btn_gupshup', t.gupshup);
-  setText('btn_wrong', t.wrong);
-  setText('btn_game', t.game);
-  setText('btn_speaking', t.speaking);
-  setText('unit_title', t.unit);
-  setText('unit_sub', t.subtitle); // yaha 'subtitle' hi rakhna
-}
-
-// Page load pe language set
-window.onload = () => {
-  const savedLang = localStorage.getItem('lang') || 'hindi';
-  const langSelect = document.getElementById('langSelect');
-  if(langSelect){
-    langSelect.value = savedLang;
-  }
-  changeLanguage(savedLang);
-}
-</script>    
 <script src="words.js"></script>
 </body>
 </html>
