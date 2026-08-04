@@ -54,16 +54,27 @@ const translations = {
     unit: "EINHEIT 1: GRUNDLAGEN - 1-30 TAGE",
     subtitle: "Wähle einen Tag und fang an zu lernen"
   },
-  arabic_en: {
-    btn_login: "تسجيل الدخول",
-    btn_language: "اختر اللغة",
+  portuguese_en: {
+    btn_login: "Entrar",
+    btn_language: "Escolher idioma",
     title: "Maya Didi",
-    gupshup: "💬 دردش مع مايا",
-    wrong: "❌ تدرب على الأسئلة الخاطئة",
-    game: "🎧🎤 لعبة الاستماع والمطابقة",
-    speaking: "🎤 تدرب على التحدث",
-    unit: "الوحدة 1: الأساسيات - 1-30 يوم",
-    subtitle: "اختر يومًا وابدأ التعلم"
+    gupshup: "💬 Bate-papo com Maya",
+    wrong: "❌ Praticar perguntas erradas",
+    game: "🎧🎤 Jogo de ouvir e combinar",
+    speaking: "🎤 Praticar fala",
+    unit: "UNIDADE 1: BÁSICO - 1-30 DIAS",
+    subtitle: "Escolha um dia e comece a aprender"
+  },
+  en_hindi: {
+    btn_login: "Login",
+    btn_language: "Choose Language",
+    title: "Maya Didi",
+    gupshup: "💬 Chat with Maya",
+    wrong: "❌ Practice Wrong Questions",
+    game: "🎧🎤 Listen & Match Game",
+    speaking: "🎤 Practice Speaking",
+    unit: "UNIT 1: BASICS - 1-30 DAYS",
+    subtitle: "Choose a day and start learning"
   }
 }
 
