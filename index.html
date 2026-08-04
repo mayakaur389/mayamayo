@@ -730,13 +730,20 @@ function changeLanguage(lang){
   localStorage.setItem('lang', lang);
   const t = translations[lang];
 
-  document.getElementById('title').innerText = t.title;
-  document.getElementById('btn_gupshup').innerText = t.gupshup;
-  document.getElementById('btn_wrong').innerText = t.wrong;
-  document.getElementById('btn_game').innerText = t.game;
-  document.getElementById('btn_speaking').innerText = t.speaking;
-  document.getElementById('unit_title').innerText = t.unit;
-  document.getElementById('unit_sub').innerText = t.subtitle;
+  const setText = (id, text) => {
+    const el = document.getElementById(id);
+    if(el) el.innerText = text;
+  }
+
+  setText('title', t.title);
+  setText('btn_login', t.btn_login);
+  setText('btn_language', t.btn_language);
+  setText('btn_gupshup', t.gupshup);
+  setText('btn_wrong', t.wrong);
+  setText('btn_game', t.game);
+  setText('btn_speaking', t.speaking);
+  setText('unit_title', t.unit);
+  setText('unit_sub', t.subtitle); // yaha 'subtitle' hi rakhna
 }
 
 // Page load pe language set
