@@ -699,6 +699,51 @@ function logout(){
     window.location.href = "login.html";
 }
 </script>
+<script>
+const translations = {
+  hindi: {
+    title: "Maya Didi",
+    gupshup: "💬 Maya se Gupshup Karo",
+    wrong: "❌ Galat Questions Practice Karo",
+    game: "🎧🎤 Sun Ke Jodo Game",
+    speaking: "🎤 Bol ke Practice Karo",
+    unit: "UNIT 1: BASICS - 1-30 DAYS",
+    subtitle: "Day chuno aur seekhna shuru karo"
+  },
+  english: {
+    title: "Maya Didi",
+    gupshup: "💬 Chat with Maya",
+    wrong: "❌ Practice Wrong Questions",
+    game: "🎧🎤 Listen & Match Game",
+    speaking: "🎤 Practice Speaking",
+    unit: "UNIT 1: BASICS - 1-30 DAYS",
+    subtitle: "Choose a day and start learning"
+  }
+}
+
+function changeLanguage(lang){
+  localStorage.setItem('lang', lang);
+  const t = translations[lang];
+
+  document.getElementById('title').innerText = t.title;
+  document.getElementById('btn_gupshup').innerText = t.gupshup;
+  document.getElementById('btn_wrong').innerText = t.wrong;
+  document.getElementById('btn_game').innerText = t.game;
+  document.getElementById('btn_speaking').innerText = t.speaking;
+  document.getElementById('unit_title').innerText = t.unit;
+  document.getElementById('unit_sub').innerText = t.subtitle;
+}
+
+// Page load pe language set
+window.onload = () => {
+  const savedLang = localStorage.getItem('lang') || 'hindi';
+  const langSelect = document.getElementById('langSelect');
+  if(langSelect){
+    langSelect.value = savedLang;
+  }
+  changeLanguage(savedLang);
+}
+</script>    
 <script src="words.js"></script>
 </body>
 </html>
