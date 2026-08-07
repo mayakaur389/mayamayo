@@ -7,19 +7,20 @@
     
     <script src="lang.js"></script>
     <script>
-      // Page load pe theme set
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      document.body.classList.add(savedTheme + '-mode');
+  // Page load hone ke baad chalega
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.body.classList.add(savedTheme + '-mode');
+  });
 
-      // Dark/Light toggle function
-      function toggleTheme(){
-        document.body.classList.toggle('dark-mode');
-        document.body.classList.toggle('light-mode');
-        const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-        localStorage.setItem('theme', theme);
-      }
-    </script> <!-- YE BAND KARNA THA -->
-    
+  // Dark/Light toggle function
+  function toggleTheme(){
+    document.body.classList.toggle('dark-mode');
+    document.body.classList.toggle('light-mode');
+    const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+    localStorage.setItem('theme', theme);
+  }
+</script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
