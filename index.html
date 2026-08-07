@@ -4,33 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Maya Didi Grammar</title>
-     <script src="lang.js"></script>
-    <script>
-    </head>
-        <body>
-// <!-- LOGIN LANGUAGE BUTTON SHURU -->
-// <div id="auth-buttons" style="text-align:center; padding:15px; background:#ffe4e6; border-bottom:2px solid #ff4d6d;">
-//   <button onclick="window.location.href='login.html'" 
-//     style="padding:12px 25px; margin:8px; border:none; background:#ff4d6d; color:white; font-size:16px; font-weight:bold; border-radius:10px; cursor:pointer;">
-//        <span id="btn_login" data-key="btn_login">login karo</span>
-//         </button>
-//         <button onclick="window.location.href='language.html'">
-//           <span id="btn_language" data-key="btn_language">language chuno</span>
-//         </button>
-//         <select id="langSelect" onchange="changeLanguage(this.value)">
-//   <option value="hindi_en">🇮🇳 Hindi → English</option>
-//   <option value="spanish_en">🇪🇸 Spanish → English</option>
-//   <option value="french_en">🇫🇷 French → English</option>
-//   <option value="japanese_en">🇯🇵 Japanese → English</option>
-//   <option value="german_en">🇩🇪 German → English</option>
-//   <option value="portuguese_en">🇧🇷 Portuguese → English</option>
-//   <option value="en_hindi">🇬🇧 English → Hindi</option>
-// </select>
-//...tumhara baki ka code... 
     
-   // }
-   // // Agar dono hai to yahi page rahega. Yahan kuch nahi likhna
- </script>
+    <script src="lang.js"></script>
+    <script>
+      // Page load pe theme set
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.body.classList.add(savedTheme + '-mode');
+
+      // Dark/Light toggle function
+      function toggleTheme(){
+        document.body.classList.toggle('dark-mode');
+        document.body.classList.toggle('light-mode');
+        const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+      }
+    </script> <!-- YE BAND KARNA THA -->
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN LANGUAGE BUTTON SHURU -->
+<div id="auth-buttons" style="text-align:center; padding:15px; background:#ffe4e6; border-bottom:2px solid #ff4d6d;">
+  <button onclick="window.location.href='login.html'" 
+    style="padding:12px 25px; margin:8px; border:none; background:#ff4d6d; color:white; font-size:16px; font-weight:bold; border-radius:10px; cursor:pointer;">
+       <span id="btn_login" data-key="btn_login">login karo</span>
+  </button>
+  <button onclick="window.location.href='language.html'"
+    style="padding:12px 25px; margin:8px; border:none; background:#4CAF50; color:white; font-size:16px; font-weight:bold; border-radius:10px; cursor:pointer;">
+      <span id="btn_language" data-key="btn_language">language chuno</span>
+  </button>
+  
+  <select id="langSelect" onchange="changeLanguage(this.value)" style="padding:10px; border-radius:8px; margin:8px;">
+    <option value="hindi_en">🇮🇳 Hindi → English</option>
+    <option value="spanish_en">🇪🇸 Spanish → English</option>
+    <option value="french_en">🇫🇷 French → English</option>
+    <option value="japanese_en">🇯🇵 Japanese → English</option>
+    <option value="german_en">🇩🇪 German → English</option>
+    <option value="portuguese_en">🇧🇷 Portuguese → English</option>
+    <option value="en_hindi">🇬🇧 English → Hindi</option>
+  </select>
+</div>
+<!-- LOGIN LANGUAGE BUTTON KHATAM -->
+
+<!-- Tumhara baki ka code yaha aayega -->
+
+<script>
+   // Agar dono hai to yahi page rahega. Yahan kuch nahi likhna 
+</script>
+</body>
+</html>
     <link rel="stylesheet" href="style.css?v=2">   
 <style> 
         * { margin: 0; padding: 0; box-sizing: border-box; }
