@@ -78,8 +78,29 @@ const translations = {
   }
 }
 
+// YE NAYA FUNCTION - word.js se question load karega
+function loadQuestions(lang){
+  // word.js me wordData naam ka object hona chahiye
+  const questions = window.wordData?.[lang] || window.wordData?.['hindi_en'] || [];
+  const container = document.getElementById('question-box'); // tumhare question wale div ka id
+
+  if(!container) return; // agar question page nahi hai to skip
+  container.innerHTML = ''; // purana saaf
+
+  questions.forEach((item, i) => {
+    container.innerHTML += `
+      <div class="q-card">
+        <div class="q">Q${i+1}: ${item.q}</div>
+        <div class="options">
+          ${item.a.map(opt => `<button onclick="checkAnswer('${opt}')">${opt}</button>`).join('')}
+        </div>
+      </div>
+    `;
+  });
+}
+
 function changeLanguage(lang){
-  localStorage.setItem('lang', lang); // 1. Save kar do
+  localStorage.setItem('lang', lang);
   const t = translations[lang] || translations['hindi_en'];
   if(!t) return;
 
@@ -98,13 +119,20 @@ function changeLanguage(lang){
   setText('unit_title', t.unit);
   setText('unit_sub', t.subtitle);
 
-  // 2. Dropdown ki value bhi yahi set kar do - ye naya add kiya
+  // data-key wale sabko bhi badal do - ye naya add kiya
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    if(t[key]) el.innerText = t[key];
+  });
+
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
+
+  // YE NAYI LINE - Question bhi load karo
+  loadQuestions(lang);
 }
 
-// 3. DOMContentLoaded use kiya taaki body pakka load ho jaye
 document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('lang') || 'hindi_en';
-  changeLanguage(savedLang); // Ek hi baar me sab set
+  changeLanguage(savedLang);
 });
