@@ -21,29 +21,25 @@ function loadWrongUI(lang){
   if(!data) return;
   document.getElementById("heading").innerText = "❌ " + data.heading;
   document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
-  document.getElementById("total_text").innerText = data.total + " + data.questions_text;
+  document.getElementById("total_text").innerText = data.total + " " + data.questions_text;
   document.getElementById("no_question_text").innerText = data.no_question;
   document.getElementById("btn_lessons").innerText = data.lessonsBtn;
   document.getElementById("btn_speaking").innerText = data.practiceBtn;
   document.getElementById("btn_listening").innerText = data.listenBtn;
 }
 
-// NAYA FUNCTION: TAB SWITCH KARNE KE LIYE
+// BUTTON KAAM KAREGA AB
 function switchTab(type){
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  if(type === 'lessons') document.getElementById('btn_lessons').classList.add('active');
+  if(type === 'day_quiz') document.getElementById('btn_lessons').classList.add('active');
   if(type === 'speaking') document.getElementById('btn_speaking').classList.add('active');
   if(type === 'listening') document.getElementById('btn_listening').classList.add('active');
   
   const lang = localStorage.getItem('language') || 'hindi_en';
-  loadWrongQuestionsByType(type, lang); // wrong-practice.js me function hona chahiye
-  console.log("Switched to:", type);
-}
-
-function loadWrongQuestionsByType(type, lang){
-  // Ye tumhare wrong-practice.js me banana padega
-  // Abhi ke liye sirf UI update
-  document.getElementById('wrong-list').innerHTML = `<div class="empty">Filtering: ${type}</div>`;
+  // Yaha tumhare wrong-practice.js ka function call hoga
+  if(typeof loadWrongQuestions === "function"){
+      loadWrongQuestions(type); 
+  }
 }
 
 function changeLanguage(lang){
@@ -51,6 +47,7 @@ function changeLanguage(lang){
   const t = translations[lang] || translations['hindi_en'];
   translatePage(t);
   loadWrongUI(lang);
+  switchTab('speaking'); // Language change pe default tab
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
 }
