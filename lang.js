@@ -78,18 +78,20 @@ const translations = {
   }
 }
 
-// UPDATE KIYA HUA FUNCTION
+// SMART FUNCTION - id mile to badlega, nahi mile to skip
 function loadQuestions(lang){
   const data = window.wordData?.[lang] || window.wordData?.['hindi_en'];
   if(!data) return;
 
   const questions = data.questions || [];
-  const ui = data.ui || {}; // word.js se UI bhi uthayenge
-  const container = document.getElementById('question-box');
+  const ui = data.ui || {};
 
-  // 1. "Wrong Questions" page ka UI bhi yahi se set karo
+  // 1. Wrong page ka UI - agar element mila tabhi change karega
+  const setUI = (id, text) => {
+    const el = document.getElementById(id);
+    if(el && text) el.innerText = text;
+  }
   if(ui.wrong){
-    const setUI = (id, text) => { const el = document.getElementById(id); if(el && text) el.innerText = text; }
     setUI('wrong_title', ui.wrong.page_title);
     setUI('wrong_heading', ui.wrong.heading);
     setUI('btn_start', ui.wrong.btn_start);
@@ -97,27 +99,28 @@ function loadQuestions(lang){
     setUI('lessonsBtn', ui.wrong.lessonsBtn);
     setUI('practiceBtn', ui.wrong.practiceBtn);
     setUI('listenBtn', ui.wrong.listenBtn);
+    setUI('no_question_text', ui.wrong.no_question);
   }
 
-  // 2. Questions load karo
-  if(!container) return;
-  container.innerHTML = '';
-
-  if(questions.length === 0){
-    container.innerHTML = `<p>${ui.wrong?.no_question || "No questions"}</p>`;
-    return;
+  // 2. Questions - sirf tab chalega jab #question-box mila
+  const container = document.getElementById('question-box');
+  if(container){
+    container.innerHTML = '';
+    if(questions.length === 0){
+      container.innerHTML = `<p>${ui.wrong?.no_question || "No questions"}</p>`;
+    } else {
+      questions.forEach((item, i) => {
+        container.innerHTML += `
+          <div class="q-card">
+            <div class="q">Q${i+1}: ${item.q}</div>
+            <div class="options">
+              ${item.a.map(opt => `<button onclick="checkAnswer('${opt}')">${opt}</button>`).join('')}
+            </div>
+          </div>
+        `;
+      });
+    }
   }
-
-  questions.forEach((item, i) => {
-    container.innerHTML += `
-      <div class="q-card">
-        <div class="q">Q${i+1}: ${item.q}</div>
-        <div class="options">
-          ${item.a.map(opt => `<button onclick="checkAnswer('${opt}')">${opt}</button>`).join('')}
-        </div>
-      </div>
-    `;
-  });
 }
 
 function changeLanguage(lang){
@@ -125,11 +128,11 @@ function changeLanguage(lang){
   const t = translations[lang] || translations['hindi_en'];
   if(!t) return;
 
+  // 1. id se set karo - nahi mila to error nahi aayega
   const setText = (id, text) => {
     const el = document.getElementById(id);
     if(el && text) el.innerText = text;
   }
-
   setText('btn_login', t.btn_login);
   setText('btn_language', t.btn_language);
   setText('title', t.title);
@@ -140,15 +143,18 @@ function changeLanguage(lang){
   setText('unit_title', t.unit);
   setText('unit_sub', t.subtitle);
 
+  // 2. data-key se set karo - ye sabse safe hai, HTML nahi chhedna padega
   document.querySelectorAll('[data-key]').forEach(el => {
     const key = el.getAttribute('data-key');
     if(t[key]) el.innerText = t[key];
   });
 
+  // 3. Dropdown ki value
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
 
-  loadQuestions(lang); // language badli + question + UI sab badla
+  // 4. Question + UI load
+  loadQuestions(lang);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
