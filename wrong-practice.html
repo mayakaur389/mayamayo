@@ -7,21 +7,21 @@
     <link rel="stylesheet" href="style.css">
     <style>
         body { background: #0f172a; color: white; font-family: Arial; padding: 20px; }
-       .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-       .back-btn { background: #334155; border: none; color: white; padding: 10px 15px; border-radius: 8px; font-size: 18px; cursor: pointer; }
-       .question-card { background: #1e293b; padding: 16px; border-radius: 12px; margin: 12px 0; border-left: 4px solid #ff4b4b; }
-       .tag { font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
-       .tag-day { background: #3b82f6; }
-       .tag-listen { background: #f97316; }
-       .tag-speak { background: #22c55e; }
-       .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
-       .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
- .filter-tabs{display:flex; gap:8px; margin:15px 0; overflow-x:auto; padding-bottom:5px; justify-content:flex-start;}
- .tab-btn{padding:10px 14px; font-size:13px; border:none; border-radius:12px; background:#334155; color:#fff; flex:0 0 auto; white-space:nowrap;}
- .tab-btn.active{background:#22c55e; color:white; box-shadow:0 0 10px #22c55e;}
- .header h2{font-size:18px; line-height:1.4; word-break:break-word; white-space:normal; padding-right:10px;}
- .header{min-height:70px; padding:12px;}  
-  </style>
+      .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+      .back-btn { background: #334155; border: none; color: white; padding: 10px 15px; border-radius: 8px; font-size: 18px; cursor: pointer; }
+      .question-card { background: #1e293b; padding: 16px; border-radius: 12px; margin: 12px 0; border-left: 4px solid #ff4b4b; }
+      .tag { font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
+      .tag-day { background: #3b82f6; }
+      .tag-listen { background: #f97316; }
+      .tag-speak { background: #22c55e; }
+      .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
+      .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
+      .filter-tabs{display:flex; gap:8px; margin:15px 0; overflow-x:auto; padding-bottom:5px; justify-content:flex-start;}
+      .tab-btn{padding:10px 14px; font-size:13px; border:none; border-radius:12px; background:#334155; color:#fff; flex:0 0 auto; white-space:nowrap;}
+      .tab-btn.active{background:#22c55e; color:white; box-shadow:0 0 10px #22c55e;}
+      .header h2{font-size:18px; line-height:1.4; word-break:break-word; white-space:normal; padding-right:10px;}
+      .header{min-height:70px; padding:12px;}
+    </style>
 </head>
 <body>
     <div class="header">
@@ -29,31 +29,24 @@
         <h2 id="heading">❌ Galat Questions</h2>
     </div>
     <div class="filter-tabs">
-    <button class="tab-btn" id="btn_lessons" onclick="loadWrongQuestions('day_quiz')">📖 Lessons</button>   
-         <button id="btn_speaking" class="tab-btn active" onclick="loadWrongQuestions('speaking')">🗣️ Bol Ke Practice</button>
-        <button id="btn_listening" class="tab-btn">👂 Sun Ke Jodo</button> <!-- NAYA BUTTON -->
-     </div>
+        <button class="tab-btn" id="btn_lessons">📖 Lessons</button>
+        <button id="btn_speaking" class="tab-btn active">🗣️ Bol Ke Practice</button>
+        <button id="btn_listening" class="tab-btn">👂 Sun Ke Jodo</button>
+    </div>
     <p id="total_text" style="color: #94a3b8"></p>
     <div id="wrong-list"></div>
+    <p id="no_question_text" class="empty"></p>
 
     <div id="banner-ad" style="margin-top:20px;"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins></div>
 
+    <!-- SCRIPT ORDER IMPORTANT HAI -->
+    <script src="words.js"></script>
+    <script src="lang.js"></script>
     <script src="wrong-practice.js"></script>
     <script>window.MAYA_MODE = 'wrong';</script>
     <script src="ads-heart.js"></script>
     <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
-        window.onload = function(){
-            const lang = localStorage.getItem("language") || localStorage.getItem("lang") || "hindi-english";
-            const data = langData[lang] && langData[lang].wrong? langData[lang].wrong : langData["hindi-english"].wrong;
-            
-            if(data){
-                document.getElementById("heading").innerText = "❌ " + data.heading;
-                document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
-                document.getElementById("total_text").innerText = data.total;
-            }
-        };
     </script>
-    <script src="words.js"></script>
 </body>
 </html>
