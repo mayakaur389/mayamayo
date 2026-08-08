@@ -9,6 +9,16 @@ document.addEventListener('DOMContentLoaded',()=>{
   loadWrongQuestions(); setTab('btn_speaking');
 });
 
+function getTranslation(lang, englishQ, englishA){
+  // english Q/A se har language ka q/a dhoondho
+  const baseQ = wordData['english_hindi']?.questions?.find(x => x.ans === englishA || x.q.includes(englishA));
+  const targetQ = wordData[lang]?.questions?.find(x => x.ans === baseQ?.ans);
+  return {
+    q: targetQ? targetQ.q : englishQ,
+    a: targetQ? targetQ.ans : englishA
+  }
+}
+
 function loadWrongQuestions(){
   const lang = localStorage.getItem('lang') || 'hindi_en';
   const all = JSON.parse(localStorage.getItem('wrongQuestions'))||[];
@@ -21,15 +31,13 @@ function loadWrongQuestions(){
   div.innerHTML='';
 
   list.forEach((q,i)=>{
-    // QUESTION TRANSLATE KARO
-    let qObj = wordData[lang]?.questions?.find(item => item.q === q.question || item.ans === q.correctAnswer);
-    let displayQ = qObj? qObj.q : q.question;
-    let displayA = qObj? qObj.ans : q.correctAnswer;
+    // TRANSLATE KARO
+    const tr = getTranslation(lang, q.question, q.correctAnswer);
 
     let html=`<div class="question-card">`;
-    if(q.type==='day_quiz') html+=`<span class="tag tag-day">DAY QUIZ</span><h4>${q.title||'Lesson'}</h4><p><b>Q:</b> ${displayQ}</p><p style="color:#ff4b4b">Tumhara: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${displayA}</p>`;
-    if(q.type==='listening') html+=`<span class="tag tag-listen">👂 LISTENING</span><h4>${q.title||'Listening'}</h4><p>🔊 <b>Audio:</b> "${q.audioText}"</p><p style="color:#ff4b4b">Tumne chuna: ${q.userHindiChoice}</p><p style="color:#22c55e">Sahi: ${displayA}</p>`;
-    if(q.type==='speaking' ||!q.type) html+=`<span class="tag tag-speak">SPEAKING</span><h4>🗣️ ${q.title||'Practice'}</h4><p><b>Bolo:</b> ${displayQ}</p><p style="color:#ff4b4b">Tumne bola: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${displayA}</p>`;
+    if(q.type==='day_quiz') html+=`<span class="tag tag-day">DAY QUIZ</span><h4>${q.title||'Lesson'}</h4><p><b>Q:</b> ${tr.q}</p><p style="color:#ff4b4b">Tumhara: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${tr.a}</p>`;
+    if(q.type==='listening') html+=`<span class="tag tag-listen">👂 LISTENING</span><h4>${q.title||'Listening'}</h4><p>🔊 <b>Audio:</b> "${q.audioText}"</p><p style="color:#ff4b4b">Tumne chuna: ${q.userHindiChoice}</p><p style="color:#22c55e">Sahi: ${tr.a}</p>`;
+    if(q.type==='speaking' ||!q.type) html+=`<span class="tag tag-speak">SPEAKING</span><h4>🗣️ ${q.title||'Practice'}</h4><p><b>Bolo:</b> ${tr.q}</p><p style="color:#ff4b4b">Tumne bola: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${tr.a}</p>`;
     html+=`<button class="practice-btn practice-again-btn" data-text='${JSON.stringify(q.audioText||q.question).replace(/'/g,"&#39;")}'>🔁 Phir Se Practice</button>`;
     html+=`<button class="practice-btn delete-btn" data-i="${i}" style="background:#475569;margin-top:8px;">🗑️ Delete Karo</button></div>`;
     div.innerHTML+=html;
