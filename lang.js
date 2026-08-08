@@ -13,41 +13,26 @@ function translatePage(t){
   setText('unit_title', t.unit); setText('unit_sub', t.subtitle);
   document.querySelectorAll('[data-key]').forEach(el => { const key = el.getAttribute('data-key'); if(t[key]) el.innerText = t[key]; });
   const textMap = { "Maya se Gupshup Karo": t.gupshup, "Galat Questions Practice Karo": t.wrong, "Sun Ke Jodo Game": t.game, "Bol ke Practice Karo": t.speaking }
-  document.querySelectorAll('h1,h2,h3,h4,p,button,span,label').forEach(el => { let txt = el.innerText.trim(); for(let key in textMap){ if(txt.toLowerCase().includes(key.toLowerCase())){ el.innerText = txt.replace(new RegExp(key, 'gi'), textMap[key]); } })
+  document.querySelectorAll('h1,h2,h3,h4,p,button,span,label').forEach(el => { let txt = el.innerText.trim(); for(let key in textMap){ if(txt.toLowerCase().includes(key.toLowerCase())){ el.innerText = txt.replace(new RegExp(key, 'gi'), textMap[key]); } } })
 }
 
-// YE FUNCTION WRONG PAGE KE LIYE HAI
 function loadWrongUI(lang){
   const data = window.wordData?.[lang]?.ui?.wrong;
   if(!data) return;
-
   document.getElementById("heading").innerText = "❌ " + data.heading;
   document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
-  document.getElementById("total_text").innerText = data.total + " + data.questions_text;
+  document.getElementById("total_text").innerText = data.total + " " + data.questions_text;
   document.getElementById("no_question_text").innerText = data.no_question;
   document.getElementById("btn_lessons").innerText = data.lessonsBtn;
   document.getElementById("btn_speaking").innerText = data.practiceBtn;
   document.getElementById("btn_listening").innerText = data.listenBtn;
-
-  // Active tab ka naam bhi badal do
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    if(btn.classList.contains('active')){
-      if(btn.id === 'btn_speaking') btn.innerText = data.practiceBtn;
-    }
-  })
-}
-
-function loadWordDataQuestions(lang){
-  // isko tumhare wrong-practice.js me call karwana padega
-  console.log("Language changed to:", lang, "Now reload wrong questions from wordData");
 }
 
 function changeLanguage(lang){
   localStorage.setItem('lang', lang);
   const t = translations[lang] || translations['hindi_en'];
   translatePage(t);
-  loadWrongUI(lang); // Wrong page ko bhi call karo
-  loadWordDataQuestions(lang);
+  loadWrongUI(lang);
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
 }
