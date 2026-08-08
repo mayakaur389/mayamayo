@@ -16,11 +16,11 @@ function translateHomePage(t){
 }
 
 function loadWrongUI(lang){
-  const data = window.wordData?.[lang]?.ui?.wrong; // DIRECT LANG USE KIYA
+  const data = window.wordData?.[lang]?.ui?.wrong;
   if(!data) return;
   if(document.getElementById("heading")) document.getElementById("heading").innerText = "❌ " + data.heading;
   if(document.getElementById("btn_back")) document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
-  if(document.getElementById("total_text")) document.getElementById("total_text").innerText = data.total + " + data.questions_text; // <- Yaha bracket thik kiya
+  if(document.getElementById("total_text")) document.getElementById("total_text").innerText = data.total + " + data.questions_text; // YAHAN FIX KIYA
   if(document.getElementById("no_question_text")) document.getElementById("no_question_text").innerText = data.no_question;
   if(document.getElementById("btn_lessons")) document.getElementById("btn_lessons").innerText = data.lessonsBtn;
   if(document.getElementById("btn_speaking")) document.getElementById("btn_speaking").innerText = data.practiceBtn;
@@ -32,7 +32,7 @@ function changeLanguage(lang){
   const t = translations[lang] || translations['hindi_en'];
   translateHomePage(t);
   loadWrongUI(lang);
-  if(typeof loadWrongQuestions === "function"){ loadWrongQuestions('speaking'); }
+  if(typeof loadWrongQuestions === "function"){ loadWrongQuestions(); }
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
 }
