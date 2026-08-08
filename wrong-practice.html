@@ -7,29 +7,38 @@
     <link rel="stylesheet" href="style.css">
     <style>
         body { background: #0f172a; color: white; font-family: Arial; padding: 20px; }
-     .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-     .back-btn { background: #334155; border: none; color: white; padding: 10px 15px; border-radius: 8px; font-size: 18px; cursor: pointer; }
-     .question-card { background: #1e293b; padding: 16px; border-radius: 12px; margin: 12px 0; border-left: 4px solid #ff4b4b; }
-     .tag { font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
-     .tag-day { background: #3b82f6; }
-     .tag-listen { background: #f97316; }
-     .tag-speak { background: #22c55e; }
-     .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
-     .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
-     .filter-tabs{display:flex; gap:8px; margin:15px 0; overflow-x:auto; padding-bottom:5px; justify-content:flex-start;}
-     .tab-btn{padding:10px 14px; font-size:13px; border:none; border-radius:12px; background:#334155; color:#fff; flex:0 0 auto; white-space:nowrap; cursor:pointer;}
-     .tab-btn.active{background:#22c55e; color:white; box-shadow:0 0 10px #22c55e;}
-     .header h2{font-size:18px; line-height:1.4; word-break:break-word; white-space:normal; padding-right:10px;}
-     .header{min-height:70px; padding:12px;}
+    .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+    .back-btn { background: #334155; border: none; color: white; padding: 10px 15px; border-radius: 8px; font-size: 18px; cursor: pointer; }
+    .question-card { background: #1e293b; padding: 16px; border-radius: 12px; margin: 12px 0; border-left: 4px solid #ff4b4b; }
+    .tag { font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
+    .tag-day { background: #3b82f6; }
+    .tag-listen { background: #f97316; }
+    .tag-speak { background: #22c55e; }
+    .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
+    .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
+    .filter-tabs{display:flex; gap:8px; margin:15px 0; overflow-x:auto; padding-bottom:5px; justify-content:flex-start;}
+    .tab-btn{padding:10px 14px; font-size:13px; border:none; border-radius:12px; background:#334155; color:#fff; flex:0 0 auto; white-space:nowrap; cursor:pointer;}
+    .tab-btn.active{background:#22c55e; color:white; box-shadow:0 0 10px #22c55e;}
+    .header h2{font-size:18px; line-height:1.4; word-break:break-word; white-space:normal; padding-right:10px;}
+    .header{min-height:70px; padding:12px;}
+    .lang-select{padding:8px; border-radius:8px; background:#334155; color:white; border:none; margin-left:auto;}
     </style>
 </head>
 <body>
     <div class="header">
         <button id="btn_back" class="back-btn" onclick="window.location.href='index.html'">⬅ Wapas</button>
         <h2 id="heading">❌ Galat Questions</h2>
+        <select id="langSelect" class="lang-select">
+            <option value="hindi_en">IN Hindi → English</option>
+            <option value="spanish_en">ES Spanish → English</option>
+            <option value="french_en">FR French → English</option>
+            <option value="japanese_en">JP Japanese → English</option>
+            <option value="german_en">DE German → English</option>
+            <option value="en_hindi">GB English → Hindi</option>
+        </select>
     </div>
     <div class="filter-tabs">
-        <button class="tab-btn" id="btn_lessons" onclick="switchTab('lessons')">📖 Lessons</button>
+        <button class="tab-btn" id="btn_lessons" onclick="switchTab('day_quiz')">📖 Lessons</button>
         <button id="btn_speaking" class="tab-btn active" onclick="switchTab('speaking')">🗣️ Bol Ke Practice</button>
         <button id="btn_listening" class="tab-btn" onclick="switchTab('listening')">👂 Sun Ke Jodo</button>
     </div>
@@ -39,7 +48,7 @@
 
     <div id="banner-ad" style="margin-top:20px;"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY" data-ad-format="auto"></ins></div>
 
-    <!-- ORDER MAT BADLNA -->
+    <!-- ORDER IMPORTANT -->
     <script src="words.js"></script>
     <script src="lang.js"></script>
     <script src="wrong-practice.js"></script>
