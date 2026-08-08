@@ -79,7 +79,7 @@ const translations = {
 }
 
 function changeLanguage(lang){
-  localStorage.setItem('lang', lang);
+  localStorage.setItem('lang', lang); // 1. Save kar do
   const t = translations[lang] || translations['hindi_en'];
   if(!t) return;
 
@@ -97,13 +97,14 @@ function changeLanguage(lang){
   setText('btn_speaking', t.speaking);
   setText('unit_title', t.unit);
   setText('unit_sub', t.subtitle);
+
+  // 2. Dropdown ki value bhi yahi set kar do - ye naya add kiya
+  const langSelect = document.getElementById('langSelect');
+  if(langSelect) langSelect.value = lang;
 }
 
-window.onload = () => {
+// 3. DOMContentLoaded use kiya taaki body pakka load ho jaye
+document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('lang') || 'hindi_en';
-  const langSelect = document.getElementById('langSelect');
-  if(langSelect){
-    langSelect.value = savedLang;
-  }
-  changeLanguage(savedLang);
-}
+  changeLanguage(savedLang); // Ek hi baar me sab set
+});
