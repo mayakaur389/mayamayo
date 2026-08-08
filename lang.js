@@ -78,18 +78,33 @@ const translations = {
   }
 }
 
-// FIX KIYA HUA FUNCTION
+// UPDATE KIYA HUA FUNCTION
 function loadQuestions(lang){
-  // word.js me wordData[lang].questions hoga
   const data = window.wordData?.[lang] || window.wordData?.['hindi_en'];
-  const questions = data?.questions || []; //.questions add kiya
+  if(!data) return;
+
+  const questions = data.questions || [];
+  const ui = data.ui || {}; // word.js se UI bhi uthayenge
   const container = document.getElementById('question-box');
 
+  // 1. "Wrong Questions" page ka UI bhi yahi se set karo
+  if(ui.wrong){
+    const setUI = (id, text) => { const el = document.getElementById(id); if(el && text) el.innerText = text; }
+    setUI('wrong_title', ui.wrong.page_title);
+    setUI('wrong_heading', ui.wrong.heading);
+    setUI('btn_start', ui.wrong.btn_start);
+    setUI('btn_back', ui.wrong.btn_back);
+    setUI('lessonsBtn', ui.wrong.lessonsBtn);
+    setUI('practiceBtn', ui.wrong.practiceBtn);
+    setUI('listenBtn', ui.wrong.listenBtn);
+  }
+
+  // 2. Questions load karo
   if(!container) return;
   container.innerHTML = '';
 
   if(questions.length === 0){
-    container.innerHTML = "<p>No questions found for this language</p>";
+    container.innerHTML = `<p>${ui.wrong?.no_question || "No questions"}</p>`;
     return;
   }
 
@@ -133,7 +148,7 @@ function changeLanguage(lang){
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
 
-  loadQuestions(lang); // language badalte hi question bhi badal jayenge
+  loadQuestions(lang); // language badli + question + UI sab badla
 }
 
 document.addEventListener('DOMContentLoaded', () => {
