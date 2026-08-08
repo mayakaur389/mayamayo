@@ -78,19 +78,17 @@ const translations = {
   }
 }
 
-// SMART FUNCTION - id mile to badlega, nahi mile to skip
+// 1. WORD.JS SE QUESTION + UI LOAD KAREGA
 function loadQuestions(lang){
   const data = window.wordData?.[lang] || window.wordData?.['hindi_en'];
   if(!data) return;
 
   const questions = data.questions || [];
   const ui = data.ui || {};
+  const container = document.getElementById('question-box');
 
-  // 1. Wrong page ka UI - agar element mila tabhi change karega
-  const setUI = (id, text) => {
-    const el = document.getElementById(id);
-    if(el && text) el.innerText = text;
-  }
+  // word.js wala UI bhi yahi se set hoga
+  const setUI = (id, text) => { const el = document.getElementById(id); if(el && text) el.innerText = text; }
   if(ui.wrong){
     setUI('wrong_title', ui.wrong.page_title);
     setUI('wrong_heading', ui.wrong.heading);
@@ -99,11 +97,9 @@ function loadQuestions(lang){
     setUI('lessonsBtn', ui.wrong.lessonsBtn);
     setUI('practiceBtn', ui.wrong.practiceBtn);
     setUI('listenBtn', ui.wrong.listenBtn);
-    setUI('no_question_text', ui.wrong.no_question);
   }
 
-  // 2. Questions - sirf tab chalega jab #question-box mila
-  const container = document.getElementById('question-box');
+  // Question load
   if(container){
     container.innerHTML = '';
     if(questions.length === 0){
@@ -123,41 +119,62 @@ function loadQuestions(lang){
   }
 }
 
+// 2. BUTTON TEXT AUTO DHUND KAR BADLEGA - ID KI ZARURAT NAHI
+function autoSetButtons(t){
+  const map = {
+    gupshup: ["Maya se Gupshup", "Chat with Maya", "Mit Maya", "Chatear con Maya"],
+    wrong: ["Wrong Questions", "Galat Questions", "Falsche Fragen", "Preguntas Incorrectas"],
+    game: ["Sun Ke Jodo", "Listen & Match", "Hör-", "Juego de escuchar"],
+    speaking: ["Bol ke Practice", "Practice Speaking", "Sprechen üben", "Practicar hablando"],
+    btn_login: ["Anmelden", "login karo", "Login", "Entrar", "Se connecter"]
+  }
+
+  document.querySelectorAll('button, a, h1, h2, p, span').forEach(el => {
+    const txt = el.innerText.toLowerCase();
+    for(let key in map){
+      if(map[key].some(word => txt.includes(word.toLowerCase()))){
+        if(t[key]) el.innerText = t[key];
+      }
+    }
+  })
+}
+
 function changeLanguage(lang){
   localStorage.setItem('lang', lang);
   const t = translations[lang] || translations['hindi_en'];
   if(!t) return;
 
-  // 1. id se set karo - nahi mila to error nahi aayega
-  const setText = (id, text) => {
-    const el = document.getElementById(id);
-    if(el && text) el.innerText = text;
-  }
+  // Method 1: id se
+  const setText = (id, text) => { const el = document.getElementById(id); if(el && text) el.innerText = text; }
   setText('btn_login', t.btn_login);
   setText('btn_language', t.btn_language);
   setText('title', t.title);
-  setText('btn_gupshup', t.gupshup);
-  setText('btn_wrong', t.wrong);
-  setText('btn_game', t.game);
-  setText('btn_speaking', t.speaking);
   setText('unit_title', t.unit);
   setText('unit_sub', t.subtitle);
 
-  // 2. data-key se set karo - ye sabse safe hai, HTML nahi chhedna padega
+  // Method 2: data-key se
   document.querySelectorAll('[data-key]').forEach(el => {
     const key = el.getAttribute('data-key');
     if(t[key]) el.innerText = t[key];
   });
 
-  // 3. Dropdown ki value
+  // Method 3: Auto text dhoond kar - yehi screenshot wala issue fix karega
+  autoSetButtons(t);
+
+  // Dropdown ki value
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
 
-  // 4. Question + UI load
   loadQuestions(lang);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('lang') || 'hindi_en';
   changeLanguage(savedLang);
+
+  // Dropdown change listener
+  const langSelect = document.getElementById('langSelect');
+  if(langSelect){
+    langSelect.addEventListener('change', (e) => changeLanguage(e.target.value));
+  }
 });
