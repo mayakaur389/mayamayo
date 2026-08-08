@@ -1,41 +1,47 @@
 let CURRENT_FILTER = 'speaking';
-const keyMap = { 'hindi_en': 'hindi-english', 'spanish_en': 'spanish-english', 'french_en': 'french-english', 'japanese_en': 'ja', 'german_en': 'de', 'portuguese_en': 'portuguese-english', 'en_hindi': 'english-hindi' }
+function speak(text){ const u = new SpeechSynthesisUtterance(text); u.lang='en-US'; u.rate=0.9; speechSynthesis.speak(u); }
+function setTab(id){ document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
 
-function practiceAgain(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US'; utterance.rate = 0.9;
-    speechSynthesis.speak(utterance);
-}
-function setActiveTab(id){ document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('btn_lessons').onclick = () => { CURRENT_FILTER = 'day_quiz'; setActiveTab('btn_lessons'); loadWrongQuestions(CURRENT_FILTER); };
-  document.getElementById('btn_speaking').onclick = () => { CURRENT_FILTER = 'speaking'; setActiveTab('btn_speaking'); loadWrongQuestions(CURRENT_FILTER); };
-  document.getElementById('btn_listening').onclick = () => { CURRENT_FILTER = 'listening'; setActiveTab('btn_listening'); loadWrongQuestions(CURRENT_FILTER); };
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('btn_lessons').onclick=()=>{CURRENT_FILTER='day_quiz';setTab('btn_lessons');loadWrongQuestions();}
+  document.getElementById('btn_speaking').onclick=()=>{CURRENT_FILTER='speaking';setTab('btn_speaking');loadWrongQuestions();}
+  document.getElementById('btn_listening').onclick=()=>{CURRENT_FILTER='listening';setTab('btn_listening');loadWrongQuestions();}
+  loadWrongQuestions(); setTab('btn_speaking');
 });
 
-function loadWrongQuestions(filter = 'speaking', lang = localStorage.getItem('lang') || 'hindi_en') {
-    CURRENT_FILTER = filter;
-    const mappedKey = keyMap[lang] || 'hindi-english';
-    let all = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
-    let wrongQuestions = all.filter(q => q.type === filter);
-    const listDiv = document.getElementById('wrong-list');
-    const countDiv = document.getElementById('total_text');
-    const data = window.langData[mappedKey] && window.langData[mappedKey].wrong? window.langData[mappedKey].wrong : window.langData["hindi-english"].wrong;
-    if(countDiv){ countDiv.innerText = `${data.total}: ${wrongQuestions.length} ${data.questions_text}`; }
-    if(wrongQuestions.length === 0) { listDiv.innerHTML = `<div class="empty">${data.no_question}</div>`; return; }
-    listDiv.innerHTML = '';
-    wrongQuestions.forEach((q, index) => {
-        if(!q.type) { q.type = 'day_quiz'; q.title = 'LESSON'; }
-        let cardHTML = `<div class="question-card">`;
-        if(q.type === 'day_quiz') { cardHTML += `<span class="tag tag-day">DAY QUIZ</span><h4>${q.title}</h4><p><b>Q:</b> ${q.question}</p><p style="color:#ff4b4b">Tumhara: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${q.correctAnswer}</p>`; }
-        else if(q.type === 'listening') { cardHTML += `<span class="tag tag-listen">👂 LISTENING</span><h4>${q.title}</h4><p>🔊 <b>Audio:</b> "${q.audioText}"</p><p style="color:#ff4b4b">Tumne chuna: ${q.userHindiChoice}</p><p style="color:#22c55e">Sahi: ${q.correctHindi}</p>`; }
-        else if(q.type === 'speaking') { cardHTML += `<span class="tag tag-speak">SPEAKING</span><h4>🗣️ ${q.title}</h4><p><b>Bolo:</b> ${q.question}</p><p style="color:#ff4b4b">Tumne bola: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${q.correctAnswer}</p>`; }
-        cardHTML += `<button class="practice-btn practice-again-btn" data-text='${JSON.stringify(q.audioText || q.question).replace(/'/g, "&#39;")}'>🔁 Phir Se Practice</button>`;
-        cardHTML += `<button class="practice-btn delete-btn" data-index="${index}" style="background:#475569; margin-top:8px;">🗑️ Delete Karo</button></div>`;
-        listDiv.innerHTML += cardHTML;
-    });
+function loadWrongQuestions(){
+  const lang = localStorage.getItem('lang') || 'hindi_en';
+  const all = JSON.parse(localStorage.getItem('wrongQuestions'))||[];
+  const list = all.filter(q=> (q.type||'day_quiz') === CURRENT_FILTER );
+  const d = wordData[lang]?.ui?.wrong || wordData['hindi_en'].ui.wrong;
+
+  document.getElementById('total_text').innerText = `${d.total}: ${list.length} ${d.questions_text}`;
+  const div = document.getElementById('wrong-list');
+  if(list.length===0){ div.innerHTML=`<div class="empty">${d.no_question}</div>`; return; }
+  div.innerHTML='';
+
+  list.forEach((q,i)=>{
+    // QUESTION TRANSLATE KARO
+    let qObj = wordData[lang]?.questions?.find(item => item.q === q.question || item.ans === q.correctAnswer);
+    let displayQ = qObj? qObj.q : q.question;
+    let displayA = qObj? qObj.ans : q.correctAnswer;
+
+    let html=`<div class="question-card">`;
+    if(q.type==='day_quiz') html+=`<span class="tag tag-day">DAY QUIZ</span><h4>${q.title||'Lesson'}</h4><p><b>Q:</b> ${displayQ}</p><p style="color:#ff4b4b">Tumhara: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${displayA}</p>`;
+    if(q.type==='listening') html+=`<span class="tag tag-listen">👂 LISTENING</span><h4>${q.title||'Listening'}</h4><p>🔊 <b>Audio:</b> "${q.audioText}"</p><p style="color:#ff4b4b">Tumne chuna: ${q.userHindiChoice}</p><p style="color:#22c55e">Sahi: ${displayA}</p>`;
+    if(q.type==='speaking' ||!q.type) html+=`<span class="tag tag-speak">SPEAKING</span><h4>🗣️ ${q.title||'Practice'}</h4><p><b>Bolo:</b> ${displayQ}</p><p style="color:#ff4b4b">Tumne bola: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${displayA}</p>`;
+    html+=`<button class="practice-btn practice-again-btn" data-text='${JSON.stringify(q.audioText||q.question).replace(/'/g,"&#39;")}'>🔁 Phir Se Practice</button>`;
+    html+=`<button class="practice-btn delete-btn" data-i="${i}" style="background:#475569;margin-top:8px;">🗑️ Delete Karo</button></div>`;
+    div.innerHTML+=html;
+  });
 }
-function deleteQuestion(index) { let all = JSON.parse(localStorage.getItem('wrongQuestions')) || []; let wrongQuestions = all.filter(q => q.type === CURRENT_FILTER); let originalIndex = all.indexOf(wrongQuestions[index]); all.splice(originalIndex, 1); localStorage.setItem('wrongQuestions', JSON.stringify(all)); loadWrongQuestions(CURRENT_FILTER); }
-window.addEventListener('load', () => { loadWrongQuestions('speaking'); setActiveTab('btn_speaking'); });
-document.addEventListener('click', function(e) { if(e.target.classList.contains('practice-again-btn')) { let text = e.target.getAttribute('data-text'); practiceAgain(JSON.parse(text)); } if(e.target.classList.contains('delete-btn')) { let index = e.target.getAttribute('data-index'); deleteQuestion(index); } });
+
+document.addEventListener('click',e=>{
+  if(e.target.classList.contains('practice-again-btn')) speak(JSON.parse(e.target.dataset.text));
+  if(e.target.classList.contains('delete-btn')){
+    let all=JSON.parse(localStorage.getItem('wrongQuestions'))||[];
+    let list=all.filter(q=>(q.type||'day_quiz')===CURRENT_FILTER);
+    let idx=all.indexOf(list[e.target.dataset.i]);
+    all.splice(idx,1); localStorage.setItem('wrongQuestions',JSON.stringify(all)); loadWrongQuestions();
+  }
+});
