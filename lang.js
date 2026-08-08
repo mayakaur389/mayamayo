@@ -78,14 +78,20 @@ const translations = {
   }
 }
 
-// YE NAYA FUNCTION - word.js se question load karega
+// FIX KIYA HUA FUNCTION
 function loadQuestions(lang){
-  // word.js me wordData naam ka object hona chahiye
-  const questions = window.wordData?.[lang] || window.wordData?.['hindi_en'] || [];
-  const container = document.getElementById('question-box'); // tumhare question wale div ka id
+  // word.js me wordData[lang].questions hoga
+  const data = window.wordData?.[lang] || window.wordData?.['hindi_en'];
+  const questions = data?.questions || []; //.questions add kiya
+  const container = document.getElementById('question-box');
 
-  if(!container) return; // agar question page nahi hai to skip
-  container.innerHTML = ''; // purana saaf
+  if(!container) return;
+  container.innerHTML = '';
+
+  if(questions.length === 0){
+    container.innerHTML = "<p>No questions found for this language</p>";
+    return;
+  }
 
   questions.forEach((item, i) => {
     container.innerHTML += `
@@ -119,7 +125,6 @@ function changeLanguage(lang){
   setText('unit_title', t.unit);
   setText('unit_sub', t.subtitle);
 
-  // data-key wale sabko bhi badal do - ye naya add kiya
   document.querySelectorAll('[data-key]').forEach(el => {
     const key = el.getAttribute('data-key');
     if(t[key]) el.innerText = t[key];
@@ -128,8 +133,7 @@ function changeLanguage(lang){
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
 
-  // YE NAYI LINE - Question bhi load karo
-  loadQuestions(lang);
+  loadQuestions(lang); // language badalte hi question bhi badal jayenge
 }
 
 document.addEventListener('DOMContentLoaded', () => {
