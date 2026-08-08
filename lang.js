@@ -8,8 +8,6 @@ const translations = {
   en_hindi: { btn_login: "Login", btn_language: "Choose Language", title: "Maya Didi", gupshup: "💬 Chat with Maya", wrong: "❌ Practice Wrong Questions", game: "🎧🎤 Listen & Match Game", speaking: "🎤 Practice Speaking", unit: "UNIT 1: BASICS - 1-30 DAYS", subtitle: "Choose a day and start learning" }
 }
 
-const keyMap = { 'hindi_en': 'hindi-english', 'spanish_en': 'spanish-english', 'french_en': 'french-english', 'japanese_en': 'ja', 'german_en': 'de', 'portuguese_en': 'portuguese-english', 'en_hindi': 'english-hindi' }
-
 function translateHomePage(t){
   const setText = (id, text) => { const el = document.getElementById(id); if(el && text) el.innerText = text; }
   setText('btn_login', t.btn_login); setText('btn_language', t.btn_language); setText('title', t.title);
@@ -18,12 +16,11 @@ function translateHomePage(t){
 }
 
 function loadWrongUI(lang){
-  const mappedKey = keyMap[lang] || 'hindi-english';
-  const data = window.langData?.[mappedKey]?.wrong;
+  const data = window.wordData?.[lang]?.ui?.wrong; // DIRECT LANG USE KIYA
   if(!data) return;
   if(document.getElementById("heading")) document.getElementById("heading").innerText = "❌ " + data.heading;
   if(document.getElementById("btn_back")) document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
-  if(document.getElementById("total_text")) document.getElementById("total_text").innerText = data.total + " + data.questions_text; // <- YAHI GALTI THI
+  if(document.getElementById("total_text")) document.getElementById("total_text").innerText = data.total + " + data.questions_text; // <- Yaha bracket thik kiya
   if(document.getElementById("no_question_text")) document.getElementById("no_question_text").innerText = data.no_question;
   if(document.getElementById("btn_lessons")) document.getElementById("btn_lessons").innerText = data.lessonsBtn;
   if(document.getElementById("btn_speaking")) document.getElementById("btn_speaking").innerText = data.practiceBtn;
@@ -33,12 +30,9 @@ function loadWrongUI(lang){
 function changeLanguage(lang){
   localStorage.setItem('lang', lang);
   const t = translations[lang] || translations['hindi_en'];
-
   translateHomePage(t);
   loadWrongUI(lang);
-
-  if(typeof loadWrongQuestions === "function"){ loadWrongQuestions('speaking', lang); }
-
+  if(typeof loadWrongQuestions === "function"){ loadWrongQuestions('speaking'); }
   const langSelect = document.getElementById('langSelect');
   if(langSelect) langSelect.value = lang;
 }
