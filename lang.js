@@ -10,9 +10,15 @@ const translations = {
 
 function translateHomePage(t){
   const setText = (id, text) => { const el = document.getElementById(id); if(el && text) el.innerText = text; }
-  setText('btn_login', t.btn_login); setText('btn_language', t.btn_language); setText('title', t.title);
-  setText('btn_gupshup', t.gupshup); setText('btn_wrong', t.wrong); setText('btn_game', t.game); setText('btn_speaking', t.speaking);
-  setText('unit_title', t.unit); setText('unit_sub', t.subtitle);
+  setText('btn_login', t.btn_login); 
+  setText('btn_language', t.btn_language); 
+  setText('title', t.title);
+  setText('btn_gupshup', t.gupshup); 
+  setText('btn_wrong', t.wrong); 
+  setText('btn_game', t.game); 
+  setText('btn_speaking', t.speaking);
+  setText('unit_title', t.unit); 
+  setText('unit_sub', t.subtitle);
 }
 
 function loadWrongUI(lang){
@@ -20,7 +26,7 @@ function loadWrongUI(lang){
   if(!data) return;
   if(document.getElementById("heading")) document.getElementById("heading").innerText = "❌ " + data.heading;
   if(document.getElementById("btn_back")) document.getElementById("btn_back").innerText = "⬅ " + data.btn_back;
-  if(document.getElementById("total_text")) document.getElementById("total_text").innerText = data.total + " + data.questions_text; // YAHAN FIX KIYA
+  if(document.getElementById("total_text")) document.getElementById("total_text").innerText = data.total + ": 0 " + data.questions_text;
   if(document.getElementById("no_question_text")) document.getElementById("no_question_text").innerText = data.no_question;
   if(document.getElementById("btn_lessons")) document.getElementById("btn_lessons").innerText = data.lessonsBtn;
   if(document.getElementById("btn_speaking")) document.getElementById("btn_speaking").innerText = data.practiceBtn;
@@ -28,18 +34,14 @@ function loadWrongUI(lang){
 }
 
 function changeLanguage(lang){
-  localStorage.setItem('lang', lang);
+  localStorage.setItem('lang', lang); // <- YAHAN SAVE HO JAYEGI
   const t = translations[lang] || translations['hindi_en'];
   translateHomePage(t);
   loadWrongUI(lang);
   if(typeof loadWrongQuestions === "function"){ loadWrongQuestions(); }
-  const langSelect = document.getElementById('langSelect');
-  if(langSelect) langSelect.value = lang;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const savedLang = localStorage.getItem('lang') || 'hindi_en';
+  const savedLang = localStorage.getItem('lang') || 'hindi_en'; // <- YAHAN SE UTHEGI HAR BAAR
   changeLanguage(savedLang);
-  const langSelect = document.getElementById('langSelect');
-  if(langSelect){ langSelect.addEventListener('change', (e) => changeLanguage(e.target.value)); }
 });
