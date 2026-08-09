@@ -1,53 +1,46 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wrong Questions Practice</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body { background: #0f172a; color: white; font-family: Arial; padding: 20px; }
-      .header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; flex-wrap:wrap; }
-      .back-btn { background: #334155; border: none; color: white; padding: 10px 15px; border-radius: 8px; font-size: 18px; cursor: pointer; }
-      .question-card { background: #1e293b; padding: 16px; border-radius: 12px; margin: 12px 0; border-left: 4px solid #ff4b4b; }
-      .tag { font-size: 12px; padding: 4px 8px; border-radius: 6px; font-weight: 700; }
-      .tag-day { background: #3b82f6; }
-      .tag-listen { background: #f97316; }
-      .tag-speak { background: #22c55e; }
-      .practice-btn { width: 100%; padding: 12px; margin-top: 10px; background: #ff4b4b; border: none; border-radius: 8px; color: white; font-weight: 700; cursor: pointer; }
-      .empty { text-align: center; color: #94a3b8; margin-top: 50px; }
-      .filter-tabs{display:flex; gap:8px; margin:15px 0; overflow-x:auto; padding-bottom:5px;}
-      .tab-btn{padding:10px 14px; font-size:13px; border:none; border-radius:12px; background:#334155; color:#fff; cursor:pointer;}
-      .tab-btn.active{background:#22c55e; color:white; box-shadow:0 0 10px #22c55e;}
-      .lang-select{padding:8px; border-radius:8px; background:#334155; color:white; border:none; margin-left:auto;}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galat Questions Practice</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.header h1{font-size:24px}
+.btn-back{background:#334155;border:none;color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer}
+.tabs{display:flex;gap:10px;margin-bottom:20px}
+.tab-btn{background:#1e293b;border:none;color:#94a3b8;padding:10px 20px;border-radius:10px;cursor:pointer;font-weight:600}
+.tab-btn.active{background:#3b82f6;color:#fff}
+.question-card{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:15px}
+.tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;margin-bottom:8px}
+.tag-day{background:#22c55e}.tag-speak{background:#f97316}.tag-listen{background:#8b5cf6}
+.practice-btn{background:#ef4444;border:none;color:#fff;padding:10px;width:100%;border-radius:8px;margin-top:10px;cursor:pointer;font-weight:700}
+.empty{text-align:center;padding:40px;color:#94a3b8}
+</style>
 </head>
 <body>
-    <div class="header">
-        <button id="btn_back" class="back-btn" onclick="window.location.href='index.html'"></button>
-        <h2 id="heading">❌ Galat Questions</h2>
-        <select id="langSelect" class="lang-select">
-            <option value="hindi_en">🇮🇳 Hindi → English</option>
-            <option value="spanish_en">🇪🇸 Spanish → English</option>
-            <option value="french_en">🇫🇷 French → English</option>
-            <option value="japanese_en">🇯🇵 Japanese → English</option>
-            <option value="german_en">🇩🇪 German → English</option>
-            <option value="portuguese_en">🇵🇹 Portuguese → English</option>
-            <option value="en_hindi">🇬🇧 English → Hindi</option>
-        </select>
-    </div>
-    <div class="filter-tabs">
-        <button class="tab-btn" id="btn_lessons">📖 Lessons</button>
-        <button id="btn_speaking" class="tab-btn active">🗣️ Bol Ke Practice</button>
-        <button id="btn_listening" class="tab-btn">👂 Sun Ke Jodo</button>
-     </div>
-    <p id="total_text" style="color: #94a3b8"></p>
-    <div id="wrong-list"></div>
-    <p id="no_question_text" class="empty"></p>
 
-    <!-- ORDER IMPORTANT - YAHI GALTI THI -->
-    <script src="words.js"></script>
-    <script src="lang.js"></script>
-    <script src="wrong-practice.js"></script>
+<div class="header">
+  <h1 id="heading">❌ Galat Sawaal Dobara Sikho</h1>
+  <button class="btn-back" id="btn_back" onclick="window.location.href='index.html'">⬅ Wapas Jao</button>
+  <!-- DROPDOWN YAHAN THA, HATA DIYA -->
+</div>
+
+<p id="total_text">Total: 0 galat questions hain</p>
+
+<div class="tabs">
+  <button class="tab-btn" id="btn_lessons">📖 Lessons</button>
+  <button class="tab-btn active" id="btn_speaking">🎙️ Bol Ke Practice</button>
+  <button class="tab-btn" id="btn_listening">👂 Suno</button>
+</div>
+
+<div id="wrong-list"></div>
+<p id="no_question_text" class="empty" style="display:none;">🔇 Koi galat question nahi hai abhi</p>
+
+<script src="words.js"></script>
+<script src="lang.js"></script>
+<script src="wrong-practice.js"></script>
 </body>
 </html>
