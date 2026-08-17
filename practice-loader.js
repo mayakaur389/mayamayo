@@ -4,21 +4,24 @@ function runPracticeQuestion(){
 
   localStorage.removeItem('practiceNow');
 
-  // Wait karo jab tak lessons load na ho jaye
-  const waitForLessons = setInterval(()=>{
-    if(typeof window.lessons!== 'undefined'){
-      clearInterval(waitForLessons);
-
-      window.lessons = [{
-        day: "Practice",
-        questions: [practiceQ]
-      }];
-      window.currentLessonIndex = 0;
-      window.currentQuestionIndex = 0;
-      window.showCurrentLesson();
-      window.history.replaceState({}, document.title, "index.html");
+  // lessons load hone ka wait karo
+  function waitAndLoad(){
+    if(typeof window.lessons === 'undefined'){
+      setTimeout(waitAndLoad, 100); // 0.1 sec baad fir check
+      return;
     }
-  }, 100);
+
+    // lessons mil gaya ab practice wala set karo
+    window.lessons = [{
+      day: "Practice",
+      questions: [practiceQ]
+    }];
+    window.currentLessonIndex = 0;
+    window.currentQuestionIndex = 0;
+    window.showCurrentLesson();
+    window.history.replaceState({}, document.title, "index.html");
+  }
+  waitAndLoad();
 }
 
 document.addEventListener('DOMContentLoaded', function(){
