@@ -1,33 +1,28 @@
-function runPracticeQuestion(){
+// Sabse pehle startQuizList ko hijack kar do
+const oldStartQuizList = window.startQuizList;
+
+window.startQuizList = function(){
+  const urlParams = new URLSearchParams(window.location.search);
   const practiceQ = JSON.parse(localStorage.getItem('practiceNow'));
-  if(!practiceQ) return;
 
-  localStorage.removeItem('practiceNow');
+  // Agar practice mode hai to
+  if(urlParams.get('practice') === '1' && practiceQ){
+    localStorage.removeItem('practiceNow');
 
-  // lessons load hone ka wait karo
-  function waitAndLoad(){
-    if(typeof window.lessons === 'undefined'){
-      setTimeout(waitAndLoad, 100); // 0.1 sec baad fir check
-      return;
-    }
-
-    // lessons mil gaya ab practice wala set karo
+    // lessons ko force overwrite kar do
     window.lessons = [{
-      day: "Practice",
+      day: "Practice Mode",
       questions: [practiceQ]
     }];
     window.currentLessonIndex = 0;
     window.currentQuestionIndex = 0;
+
+    console.log("Practice Mode ON:", practiceQ);
     window.showCurrentLesson();
     window.history.replaceState({}, document.title, "index.html");
+    return; // normal startQuizList mat chalao
   }
-  waitAndLoad();
+
+  // Nahi to normal chalao
+  oldStartQuizList();
 }
-
-document.addEventListener('DOMContentLoaded', function(){
-  const urlParams = new URLSearchParams(window.location.search);
-
-  if(urlParams.get('practice') === '1'){
-    runPracticeQuestion();
-  }
-});
