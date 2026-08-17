@@ -1,3 +1,9 @@
+// Ye function normal quiz start karega
+function startQuizList(){
+  window.showCurrentLesson();
+}
+
+// Ye function practice wala question load karega
 function runPracticeQuestion(){
   const practiceQ = JSON.parse(localStorage.getItem('practiceNow'));
   if(!practiceQ) return;
@@ -13,7 +19,7 @@ function runPracticeQuestion(){
   window.currentLessonIndex = 0;
   window.currentQuestionIndex = 0;
 
-  // normal wala hi function call karo
+  // normal wala function call
   window.showCurrentLesson();
 }
 
@@ -21,15 +27,10 @@ document.addEventListener('DOMContentLoaded', function(){
   const urlParams = new URLSearchParams(window.location.search);
 
   if(urlParams.get('practice') === '1'){
-    // 2.5 sec wait karo taaki lessons.js load ho jaye
-    setTimeout(runPracticeQuestion, 2500);
+    // practice mode hai to 2 sec baad chalao
+    setTimeout(runPracticeQuestion, 2000);
   } else {
-    // Normal quiz ke liye
-    if(typeof window.startQuizList === 'function'){
-      window.startQuizList();
-    } else {
-      // agar function nahi hai to normal showCurrentLesson chala do
-      window.showCurrentLesson();
-    }
+    // normal mode hai to seedha quiz start
+    setTimeout(startQuizList, 1000);
   }
 });
