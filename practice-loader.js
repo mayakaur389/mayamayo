@@ -6,20 +6,22 @@ document.addEventListener('DOMContentLoaded', function(){
     if(!practiceQ) return;
     localStorage.removeItem('practiceNow');
 
-    function forcePractice(){
-      window.lessons = [{
-        day: "Practice Mode",
-        questions: [practiceQ]
-      }];
+    // lessons.js ko block kar do
+    Object.defineProperty(window, 'lessons', {
+      get: function(){
+        return [{day: "Practice Mode", questions: [practiceQ]}];
+      },
+      set: function(){
+        console.log("lessons.js ko block kar diya");
+      }
+    });
+
+    // 3 second baad zabardasti chalao
+    setTimeout(()=>{
       window.currentLessonIndex = 0;
       window.currentQuestionIndex = 0;
       window.showCurrentLesson();
       window.history.replaceState({}, document.title, "index.html");
-      console.log("Practice Force Kiya");
-    }
-
-    // 2 second baad 2 baar thop do
-    setTimeout(forcePractice, 1500);
-    setTimeout(forcePractice, 2000);
+    }, 3000);
   }
 });
