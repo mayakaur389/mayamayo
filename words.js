@@ -1,4 +1,4 @@
-const wordData = {
+window.wordData = {
   "hindi_en": {
     "ui": {
       "wrong": {
