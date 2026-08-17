@@ -8,31 +8,25 @@ document.addEventListener('DOMContentLoaded', function(){
       localStorage.removeItem('practiceNow');
       
       setTimeout(()=>{
-        // 1. Question ko set karo
-        window.currentQuestion = practiceQ; 
-        // ya fir
-        window.q = practiceQ;
+        // 1. lessons array me naya practice wala lesson bana do
+        window.lessons = [{
+          day: "Practice",
+          questions: [practiceQ]
+        }];
 
-        // 2. Ab function dhoondo aur chalao
-        if(typeof window.loadQuestion === 'function'){
-          window.loadQuestion();
-        } 
-        else if(typeof window.startQuiz === 'function'){
-          window.startQuiz();
-        }
-        else if(typeof window.renderQuestion === 'function'){
-          window.renderQuestion();
-        }
-        else if(typeof window.showQuestion === 'function'){
-          window.showQuestion();
-        }
-        else{
-          alert("Question load karne wala function nahi mila. index.html check karo");
+        // 2. Index reset karo
+        window.currentLessonIndex = 0;
+        window.currentQuestionIndex = 0;
+        window.practiceMode = true;
+
+        // 3. Seedha showCurrentLesson() call karo
+        if(typeof window.showCurrentLesson === 'function'){
+          window.showCurrentLesson();
         }
 
-        // 3. URL saaf karo
+        // 4. URL saaf karo
         window.history.replaceState({}, document.title, "index.html");
-      }, 2000); // 2 sec wait
+      }, 1000);
     }
   }
 });
