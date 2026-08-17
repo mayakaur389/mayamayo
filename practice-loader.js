@@ -1,32 +1,35 @@
+function runPracticeQuestion(){
+  const practiceQ = JSON.parse(localStorage.getItem('practiceNow'));
+  if(!practiceQ) return;
+
+  localStorage.removeItem('practiceNow');
+
+  // lessons ko 1 question wala bana do
+  window.lessons = [{
+    day: "Practice",
+    questions: [practiceQ]
+  }];
+
+  window.currentLessonIndex = 0;
+  window.currentQuestionIndex = 0;
+
+  // normal wala hi function call karo
+  window.showCurrentLesson();
+}
+
 document.addEventListener('DOMContentLoaded', function(){
   const urlParams = new URLSearchParams(window.location.search);
-  
+
   if(urlParams.get('practice') === '1'){
-    const practiceQ = JSON.parse(localStorage.getItem('practiceNow'));
-    
-    if(practiceQ){
-      localStorage.removeItem('practiceNow');
-      
-      setTimeout(()=>{
-        // 1. lessons array me naya practice wala lesson bana do
-        window.lessons = [{
-          day: "Practice",
-          questions: [practiceQ]
-        }];
-
-        // 2. Index reset karo
-        window.currentLessonIndex = 0;
-        window.currentQuestionIndex = 0;
-        window.practiceMode = true;
-
-        // 3. Seedha showCurrentLesson() call karo
-        if(typeof window.showCurrentLesson === 'function'){
-          window.showCurrentLesson();
-        }
-
-        // 4. URL saaf karo
-        window.history.replaceState({}, document.title, "index.html");
-      }, 1000);
+    // 2.5 sec wait karo taaki lessons.js load ho jaye
+    setTimeout(runPracticeQuestion, 2500);
+  } else {
+    // Normal quiz ke liye
+    if(typeof window.startQuizList === 'function'){
+      window.startQuizList();
+    } else {
+      // agar function nahi hai to normal showCurrentLesson chala do
+      window.showCurrentLesson();
     }
   }
 });
