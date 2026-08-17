@@ -1,17 +1,21 @@
 document.addEventListener('DOMContentLoaded', function(){
+  console.log("1. practice-loader loaded");
+  
   const urlParams = new URLSearchParams(window.location.search);
 
-  // Sirf tab kaam karo jab practice=1 ho
   if(urlParams.get('practice') === '1'){
+    console.log("2. Practice mode ON");
+    
     const practiceQ = JSON.parse(localStorage.getItem('practiceNow'));
+    console.log("3. practiceQ:", practiceQ);
     if(!practiceQ) return;
 
     localStorage.removeItem('practiceNow');
 
-    // 500ms wait karo taaki startQuizList pehle khatam ho jaye
     setTimeout(()=>{
+      console.log("4. 500ms baad chal raha hun");
+      console.log("5. showCurrentLesson type:", typeof window.showCurrentLesson);
 
-      // lessons ko force replace kar do
       window.lessons = [{
         day: "Practice Mode",
         questions: [practiceQ]
@@ -19,10 +23,19 @@ document.addEventListener('DOMContentLoaded', function(){
       window.currentLessonIndex = 0;
       window.currentQuestionIndex = 0;
 
-      // ab zabardasti showCurrentLesson chalao
-      window.showCurrentLesson();
+      // Agar showCurrentLesson nahi mila to dusra naam try karo
+      if(typeof window.showCurrentLesson === 'function'){
+        window.showCurrentLesson();
+      } else if(typeof window.showQuestion === 'function'){
+        window.showQuestion();
+      } else if(typeof window.renderQuestion === 'function'){
+        window.renderQuestion();
+      } else {
+        console.error("ERROR: koi bhi show function nahi mila");
+      }
+      
       window.history.replaceState({}, document.title, "index.html");
 
-    }, 500); // 0.5 sec ka delay
+    }, 1000); // 500 se badha ke 1000 kiya
   }
 });
