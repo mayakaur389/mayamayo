@@ -6,17 +6,26 @@ document.addEventListener('DOMContentLoaded', function(){
     if(!practiceQ) return;
     localStorage.removeItem('practiceNow');
 
-    // 365 load hone ka wait karo
-    setTimeout(()=>{
-      if(window.lessons && window.lessons[0]){
-        window.lessons[0].questions.unshift(practiceQ); // Day 1 me sabse upar jod do
+    let injected = false; // 1 baar hi inject ho
 
+    function forceInject(){
+      // Jab tak 365 hai tab tak maarte raho
+      if(window.lessons && window.lessons.length === 365 &&!injected){
+        console.log("PAKAD LIYA! Ab inject kar rahe");
+
+        window.lessons = [{day: "Wrong Practice", questions: [practiceQ]}];
         window.currentLessonIndex = 0;
         window.currentQuestionIndex = 0;
         window.showCurrentLesson();
         window.history.replaceState({}, document.title, "index.html");
-        console.log("Wrong question Day 1 me inject ho gaya");
+        injected = true; // ab aur mat karna
+        return;
       }
-    }, 1500);
+
+      if(!injected){
+        setTimeout(forceInject, 300); // 300ms baad phir try karo
+      }
+    }
+    forceInject(); // shuru karo
   }
 });
