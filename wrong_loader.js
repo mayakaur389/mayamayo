@@ -6,26 +6,20 @@ document.addEventListener('DOMContentLoaded', function(){
     if(!practiceQ) return;
     localStorage.removeItem('practiceNow');
 
-    let injected = false; // 1 baar hi inject ho
+    setTimeout(()=>{
+      if(window.lessons){
+        // Day 366 bana do sabse aakhir me
+        window.lessons.push({
+          day: "Wrong Practice",
+          questions: [practiceQ]
+        });
 
-    function forceInject(){
-      // Jab tak 365 hai tab tak maarte raho
-      if(window.lessons && window.lessons.length === 365 &&!injected){
-        console.log("PAKAD LIYA! Ab inject kar rahe");
-
-        window.lessons = [{day: "Wrong Practice", questions: [practiceQ]}];
-        window.currentLessonIndex = 0;
+        // Sidha usi Day 366 pe le jao
+        window.currentLessonIndex = window.lessons.length - 1;
         window.currentQuestionIndex = 0;
         window.showCurrentLesson();
         window.history.replaceState({}, document.title, "index.html");
-        injected = true; // ab aur mat karna
-        return;
       }
-
-      if(!injected){
-        setTimeout(forceInject, 300); // 300ms baad phir try karo
-      }
-    }
-    forceInject(); // shuru karo
+    }, 2000); // 2 sec wait
   }
 });
