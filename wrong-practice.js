@@ -50,6 +50,7 @@ function loadWrongQuestions(){
   if(!d) return;
 
   document.getElementById('total_text').innerText = `${d.total}: ${list.length} ${d.questions_text}`;
+  document.getElementById('btn_clear_all').style.display = list.length > 0? 'block' : 'none';
   const div = document.getElementById('wrong-list');
   if(list.length===0){ 
     div.innerHTML=`<div class="empty">${d.no_question}</div>`; 
@@ -85,3 +86,10 @@ document.addEventListener('click',e=>{
     loadWrongQuestions();
   }
 });
+// SAB CLEAR KARO BUTTON KA FUNCTION
+function clearAllWrong(){
+  if(confirm("Pakka saare galat questions delete karne hain?")){
+    localStorage.removeItem('wrongQuestions');
+    loadWrongQuestions();
+  }
+}
