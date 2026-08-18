@@ -62,24 +62,6 @@ body.dark-mode .top-btn { background: #333; color: #fff; }
     </div>
 
 <script>
-const urlParams = new URLSearchParams(window.location.search);
-let gameData = []; // PEHLE KHALI DECLARE KAR DO
-
-if(urlParams.get('wrong') === 'true'){
-  const practiceSet = JSON.parse(localStorage.getItem('practiceNowSet'));
-  localStorage.removeItem('practiceNowSet');
-  
-  // wrong wale data daal do
-  gameData = practiceSet.map(q => ({
-    english: q.english || q.q,
-    hindi: q.hindi || q.ans,
-    options: q.options || []
-  }));
-    }
-  //currentQuestion = 0;
-  // loadQuestion(); yaha mat call karna, niche wala khud call karega
-  
-} else {
  const gameData = [
   {
     english: "Hello",
