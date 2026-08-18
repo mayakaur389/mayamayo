@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <title>❌ Galat - Suno aur Jodo</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- combo-game.html ka pura UI yaha copy kar do -->
+  <div class="container">
+    <h2>❌ Galat Questions - Suno aur Jodo</h2>
+    <p id="progress">Question 1/10</p>
+    <p id="question">Loading...</p>
+    <div id="options"></div>
+    <p>Score: <span id="score">0</span></p>
+    <button onclick="playSound()">🔊 Suno</button>
+  </div>
+
+  <script src="js/sounds.js"></script>
+  <script>
+    // 1. LOCALSTORAGE SE GALAT WALE UTHAO
+    const practiceSet = JSON.parse(localStorage.getItem('practiceNowSet'));
+    localStorage.removeItem('practiceNowSet');
+    localStorage.removeItem('practiceMode');
+
+    let gameData = [];
+    if(practiceSet && practiceSet.length > 0){
+      gameData = practiceSet.map(q => ({
+        english: q.english || q.q,
+        hindi: q.hindi || q.ans,
+        options: q.options || []
+      }));
+    } else {
+      document.querySelector('.container').innerHTML = "<h3>Koi galat question nahi hai</h3><a href='wrong-practice.html'>Wapas Jao</a>";
+    }
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion(){
+      if(currentQuestion >= gameData.length){
+        alert("Wrong Practice Pura Hua!");
+        finishWrongPractice();
+        return;
+      }
+
+      let q = gameData[currentQuestion];
+      document.getElementById('progress').innerText = `Question ${currentQuestion+1}/${gameData.length}`;
+      document.getElementById('question').innerText = q.english;
+      playSound(q.english); // sound bajao
+
+      // options banao
+      let optionsDiv = document.getElementById('options');
+      optionsDiv.innerHTML = '';
+      q.options.sort(()=>Math.random()-0.5); // shuffle
+      q.options.forEach(opt => {
+        let btn = document.createElement('button');
+        btn.innerText = opt.hindi;
+        btn.onclick = () => checkAnswer(opt.english === q.english);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(isCorrect){
+      if(isCorrect) {
+        score++;
+        // playCorrectSound();
+      }
+      document.getElementById('score').innerText = score;
+      currentQuestion++;
+      setTimeout(loadQuestion, 800);
+    }
+
+    function playSound(text){
+      // tumhare sounds.js wala function yaha call karo
+      if(typeof speak === 'function') speak(text);
+    }
+
+    function finishWrongPractice(){
+      let all = JSON.parse(localStorage.getItem('wrongQuestions'))||[];
+      let filtered = all.filter(q=> q.type!== 'listening');
+      localStorage.setItem('wrongQuestions', JSON.stringify(filtered));
+      window.location.href = 'wrong-practice.html';
+    }
+
+    loadQuestion(); // game start
+  </script>
+</body>
+</html>
