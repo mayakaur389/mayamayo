@@ -93,10 +93,3 @@ function clearAllWrong(){
     loadWrongQuestions();
   }
 }
-function practiceAgain(index){
-  const all = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
-  const q = all[index];
-  if(!q) return alert("Question nahi mila");
-  localStorage.setItem('practiceNow', JSON.stringify(q));
-  window.location.href = 'index.html?practice=1';
-}
