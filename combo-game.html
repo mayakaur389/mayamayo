@@ -62,6 +62,21 @@ body.dark-mode .top-btn { background: #333; color: #fff; }
     </div>
 
 <script>
+const urlParams = new URLSearchParams(window.location.search);
+if(urlParams.get('wrong') === 'true'){
+  const practiceSet = JSON.parse(localStorage.getItem('practiceNowSet'));
+  localStorage.removeItem('practiceNowSet');
+  
+  // gameData ko galat walo se replace kar do
+  window.gameData = practiceSet.map(q => ({
+    english: q.english || q.q,
+    hindi: q.hindi || q.ans,
+    options: q.options || []
+  }));
+  
+  currentQuestion = 0; // game ka index 0 se start
+  loadQuestion(); // tumhare game me question load karne wala function
+}    
  const gameData = [
   {
     english: "Hello",
