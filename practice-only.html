@@ -1,43 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="hi">
 <head>
   <title>Wrong Practice</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="main-container"></div>
+  <div id="main-container">Loading...</div>
 
-  <!-- TUMHARE 3NO JS FILE YAHI LOAD KARO -->
+  <!-- TUMHARE 2 HI JS FILE YAHI LOAD HONGE -->
   <script src="js/lessons.js"></script> 
-  <script src="js/load.js"></script>  <!-- sun ke jodo wala -->
-  <script src="js/word.js"></script>  <!-- bol ke practice wala -->
+  <script src="js/speaking.js"></script>  <!-- word.js ki jagah speaking.js -->
   
   <script>
     const practiceSet = JSON.parse(localStorage.getItem('practiceNowSet'));
     const mode = localStorage.getItem('practiceMode');
     
     if(!practiceSet || practiceSet.length === 0){ 
-      document.getElementById('main-container').innerHTML = "<h2 style='text-align:center'>Koi galat question nahi hai</h2>";
+      document.getElementById('main-container').innerHTML = "<h2 style='text-align:center; margin-top:50px'>Koi galat question nahi hai</h2>";
     } else {
       localStorage.removeItem('practiceNowSet');
       localStorage.removeItem('practiceMode');
 
       // YAHI PE DECIDE HOGA KIS UI ME BHEJNA HAI
-      if(mode === 'lesson'){
-        startLesson(practiceSet); // TUMHARE LESSON START FUNCTION KA NAAM
+      if(mode === 'day_quiz'){
+        // 1. LESSONS: YAHI KHULEGA
+        if(typeof startLesson === 'function') {
+          startLesson(practiceSet);
+        } else {
+          document.getElementById('main-container').innerHTML = "Error: startLesson function nahi mila lessons.js me";
+        }
       } 
-      else if(mode === 'game'){
-        startGame(practiceSet); // TUMHARE GAME START FUNCTION KA NAAM
+      else if(mode === 'listening'){
+        // 2. SUNO: SEEDHA combo-game.html PE BHEJ DO
+        localStorage.setItem('practiceNowSet', JSON.stringify(practiceSet));
+        window.location.href = 'combo-game.html?wrong=true';
       }
-      else if(mode === 'speak'){
-        startSpeak(practiceSet); // TUMHARE SPEAK START FUNCTION KA NAAM
+      else if(mode === 'speaking'){
+        // 3. BOL KE: YAHI KHULEGA
+        if(typeof startSpeaking === 'function') {
+          startSpeaking(practiceSet);
+        } else {
+          document.getElementById('main-container').innerHTML = "Error: startSpeaking function nahi mila speaking.js me";
+        }
       }
     }
     
     // JAB PRACTICE KHATAM HO TO
     function finishWrongPractice(){
       alert("Wrong Practice Pura Hua!");
+      // galat list se bhi hata do
+      let all = JSON.parse(localStorage.getItem('wrongQuestions'))||[];
+      let filtered = all.filter(q=> q.type !== mode);
+      localStorage.setItem('wrongQuestions', JSON.stringify(filtered));
+      
       window.location.href = 'wrong-practice.html'; // wapas wrong page pe
     }
   </script>
