@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wrong Practice</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="main-container"></div>
+
+  <!-- TUMHARE 3NO JS FILE YAHI LOAD KARO -->
+  <script src="js/lessons.js"></script> 
+  <script src="js/load.js"></script>  <!-- sun ke jodo wala -->
+  <script src="js/word.js"></script>  <!-- bol ke practice wala -->
+  
+  <script>
+    const practiceSet = JSON.parse(localStorage.getItem('practiceNowSet'));
+    const mode = localStorage.getItem('practiceMode');
+    
+    if(!practiceSet || practiceSet.length === 0){ 
+      document.getElementById('main-container').innerHTML = "<h2 style='text-align:center'>Koi galat question nahi hai</h2>";
+    } else {
+      localStorage.removeItem('practiceNowSet');
+      localStorage.removeItem('practiceMode');
+
+      // YAHI PE DECIDE HOGA KIS UI ME BHEJNA HAI
+      if(mode === 'lesson'){
+        startLesson(practiceSet); // TUMHARE LESSON START FUNCTION KA NAAM
+      } 
+      else if(mode === 'game'){
+        startGame(practiceSet); // TUMHARE GAME START FUNCTION KA NAAM
+      }
+      else if(mode === 'speak'){
+        startSpeak(practiceSet); // TUMHARE SPEAK START FUNCTION KA NAAM
+      }
+    }
+    
+    // JAB PRACTICE KHATAM HO TO
+    function finishWrongPractice(){
+      alert("Wrong Practice Pura Hua!");
+      window.location.href = 'wrong-practice.html'; // wapas wrong page pe
+    }
+  </script>
+</body>
+</html>
