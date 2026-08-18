@@ -69,7 +69,7 @@ function loadWrongQuestions(){
     
     if(q.type==='speaking' ||!q.type) html+=`<span class="tag tag-speak">SPEAKING</span><h4>🗣️ ${q.title||'Practice'}</h4><p><b>Bolo:</b> ${tr.q}</p><p style="color:#ff4b4b">Tumne bola: ${q.userAnswer}</p><p style="color:#22c55e">Sahi: ${tr.a}</p>`;
     
- html+=`<button onclick="practiceAgain(${i})" class="practice-btn practice-again-btn">🔁 Phir Se Practice</button>`;
+ html+=<button class="practice-btn practice-again-btn" data-text='${JSON.stringify(q.audioText||q.question).replace(/'/g,"&#39;")}'>🔁 Phir Se Practice</button>; 
     html+=`<button class="practice-btn delete-btn" data-i="${i}" style="background:#475569;margin-top:8px;">🗑️ Delete Karo</button></div>`;
     div.innerHTML+=html;
   });
