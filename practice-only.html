@@ -8,9 +8,8 @@
 <body>
   <div id="main-container">Loading...</div>
 
-  <!-- TUMHARE 2 HI JS FILE YAHI LOAD HONGE -->
   <script src="js/lessons.js"></script> 
-  <script src="js/speaking.js"></script>  <!-- word.js ki jagah speaking.js -->
+  <script src="js/speaking.js"></script>
   
   <script>
     const practiceSet = JSON.parse(localStorage.getItem('practiceNowSet'));
@@ -22,39 +21,30 @@
       localStorage.removeItem('practiceNowSet');
       localStorage.removeItem('practiceMode');
 
-      // YAHI PE DECIDE HOGA KIS UI ME BHEJNA HAI
       if(mode === 'day_quiz'){
-        // 1. LESSONS: YAHI KHULEGA
-        if(typeof startLesson === 'function') {
-          startLesson(practiceSet);
-        } else {
-          document.getElementById('main-container').innerHTML = "Error: startLesson function nahi mila lessons.js me";
-        }
+        // 1. LESSONS: lessons array ko replace karo
+        window.lessons = [{ title: "❌ Galat Questions", day: 999, questions: practiceSet }];
+        loadLesson(999); // agar tumhara function alag hai to naam change kar dena
       } 
       else if(mode === 'listening'){
-        // 2. SUNO: SEEDHA combo-game.html PE BHEJ DO
+        // 2. SUNO: gameData ko replace karke combo-game pe bhej do
         localStorage.setItem('practiceNowSet', JSON.stringify(practiceSet));
         window.location.href = 'combo-game.html?wrong=true';
       }
       else if(mode === 'speaking'){
-        // 3. BOL KE: YAHI KHULEGA
-        if(typeof startSpeaking === 'function') {
-          startSpeaking(practiceSet);
-        } else {
-          document.getElementById('main-container').innerHTML = "Error: startSpeaking function nahi mila speaking.js me";
-        }
+        // 3. BOL KE: questions array ko replace karo
+        window.questions = practiceSet;
+        startSpeaking(); // agar tumhara function alag hai to naam change kar dena
       }
     }
     
-    // JAB PRACTICE KHATAM HO TO
+    // JAB PRACTICE KHATAM HO TO YE CALL KARNA
     function finishWrongPractice(){
       alert("Wrong Practice Pura Hua!");
-      // galat list se bhi hata do
       let all = JSON.parse(localStorage.getItem('wrongQuestions'))||[];
       let filtered = all.filter(q=> q.type !== mode);
       localStorage.setItem('wrongQuestions', JSON.stringify(filtered));
-      
-      window.location.href = 'wrong-practice.html'; // wapas wrong page pe
+      window.location.href = 'wrong-practice.html';
     }
   </script>
 </body>
