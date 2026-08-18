@@ -17,18 +17,19 @@ body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
 .tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;margin-bottom:8px}
 .tag-day{background:#22c55e}.tag-speak{background:#f97316}.tag-listen{background:#8b5cf6}
 .practice-btn{background:#ef4444;border:none;color:#fff;padding:10px;width:100%;border-radius:8px;margin-top:10px;cursor:pointer;font-weight:700}
+
+/* NAYA: Bada practice button */
+.big-btn{background:#22c55e;border:none;color:#fff;padding:14px;width:100%;border-radius:10px;margin:15px 0;font-weight:800;font-size:16px;cursor:pointer}
+.big-btn:disabled{background:#475569;cursor:not-allowed}
+
+.section-box{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:20px}
+.count-text{font-size:14px;color:#94a3b8;margin:5px 0 10px 0}
+
 .empty{text-align:center;padding:40px;color:#94a3b8}
-  .tabs{
-  overflow-x: auto; 
-}
-.tab-btn{
-  flex-shrink: 0;
-}
+.tabs{overflow-x: auto;}
+.tab-btn{flex-shrink: 0;}
 .tabs::-webkit-scrollbar { display: none; }
- .header{
-  background: transparent;
-  padding: 10px 0;
-} 
+.header{background: transparent;padding: 10px 0;} 
 </style>
 </head>
 <body>
@@ -36,7 +37,6 @@ body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
 <div class="header">
   <h1 id="heading">❌ Galat Sawaal Dobara Sikho</h1>
   <button class="btn-back" id="btn_back" onclick="window.location.href='index.html'">⬅ Wapas Jao</button>
-  <!-- DROPDOWN YAHAN THA, HATA DIYA -->
 </div>
 
 <div style="display:flex;justify-content:space-between;align-items:center;margin:15px 0">
@@ -44,12 +44,32 @@ body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
   <button id="btn_clear_all" onclick="clearAllWrong()" style="background:#ef4444;border:none;color:#fff;padding:8px 14px;border-radius:10px;font-size:13px;cursor:pointer">🗑️ Sab Clear Karo</button>
 </div>
 
-<div class="tabs">
-  <button class="tab-btn" id="btn_lessons">📖 Lessons</button>
-  <button class="tab-btn active" id="btn_speaking">🎙️ Bol Ke Practice</button>
-  <button class="tab-btn" id="btn_listening">👂 Suno</button>
+<!-- 3 SECTION BOX -->
+<div class="section-box">
+  <div class="tabs">
+    <button class="tab-btn" id="btn_lessons">📖 Lessons</button>
+  </div>
+  <p class="count-text">Galat: <span id="lesson-count">0</span> questions</p>
+  <button class="big-btn" id="btn_lessons_practice">🔥 Lessons Ke Galat Practice Karo</button>
 </div>
 
+<div class="section-box">
+  <div class="tabs">
+    <button class="tab-btn active" id="btn_speaking">🎙️ Bol Ke Practice</button>
+  </div>
+  <p class="count-text">Galat: <span id="speak-count">0</span> questions</p>
+  <button class="big-btn" id="btn_speaking_practice">🔥 Bol Ke Galat Practice Karo</button>
+</div>
+
+<div class="section-box">
+  <div class="tabs">
+    <button class="tab-btn" id="btn_listening">👂 Suno</button>
+  </div>
+  <p class="count-text">Galat: <span id="game-count">0</span> questions</p>
+  <button class="big-btn" id="btn_listening_practice">🔥 Suno Wale Galat Practice Karo</button>
+</div>
+
+<!-- NICHE WALA LIST WAHI RAHEGA -->
 <div id="wrong-list"></div>
 <p id="no_question_text" class="empty" style="display:none;">🔇 Koi galat question nahi hai abhi</p>
 
