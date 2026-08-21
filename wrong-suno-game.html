@@ -1,70 +1,99 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <title>❌ Galat - Suno aur Jodo</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galat - Suno aur Jodo</title>
+<style>
+  body{font-family:Arial;background:#111;color:#fff;text-align:center;padding:15px;margin:0}
+ .container{max-width:500px;margin:20px auto;background:#222;padding:20px;border-radius:15px;box-shadow:0 0 15px #000}
+  #question{font-size:24px;margin:20px 0;color:#ffd700;min-height:40px}
+ .option-btn{display:block;width:90%;margin:10px auto;padding:14px;background:#333;color:#fff;border:2px solid #555;border-radius:10px;font-size:18px;cursor:pointer}
+ .option-btn:hover{background:#444;border-color:#ffd700}
+  #sunoBtn{padding:12px 25px;font-size:18px;background:#2196F3;color:#fff;border:none;border-radius:25px;cursor:pointer;margin:10px}
+  #progress{color:#aaa}
+</style>
 </head>
 <body>
-  <!-- combo-game.html ka body yaha paste kar do -->
-  <div class="container">
-    <h2>❌ Galat Questions - Suno aur Jodo</h2>
-    <p id="progress"></p>
-    <p id="question"></p>
-    <button id="sunoBtn">🔊 Suno</button>
-    <div id="options"></div>
-    <p>Score: <span id="score">0</span>/<span id="total">0</span></p>
-  </div>
+<div class="container">
+  <h2>❌ Galat Questions - Suno aur Jodo</h2>
+  <p id="progress">Loading...</p>
+  <h3 id="question"></h3>
+  <button id="sunoBtn" onclick="speakCurrent()">🔊 Suno</button>
+  <div id="options"></div>
+  <p>Score: <span id="score">0</span>/<span id="total">0</span></p>
+  <a href="wrong-practice.html" style="color:#aaa;">← Wapas</a>
+</div>
 
-  <script src="js/sounds.js"></script>
-  <script>
-    // SEEDHA GALAT WALE UTHAO
-    const practiceSet = JSON.parse(localStorage.getItem('practiceNowSet'));
-    localStorage.removeItem('practiceNowSet');
+<script>
+// 1. SOUND - Sahi/Galat pe bajega (js/sounds.js ki zarurat nahi)
+function playCorrectSound(){
+  try{ let a=new Audio('https://actions.google.com/sounds/v1/cartoon/pop.ogg'); a.volume=0.8; a.play(); }catch(e){}
+}
+function playWrongSound(){
+  try{ let a=new Audio('https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg'); a.volume=0.8; a.play(); }catch(e){}
+}
+function speakCurrent(){
+  const text = window.currentEng || "";
+  if(!text) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=0.9;
+  speechSynthesis.speak(u);
+}
 
-    let gameData = practiceSet.map(q => ({
-      english: q.english || q.q,
-      hindi: q.hindi || q.ans,
-      options: q.options || []
-    }));
+// 2. DATA LOAD - Null error fix
+let practiceSet = [];
+try{ practiceSet = JSON.parse(localStorage.getItem('practiceNowSet') || '[]'); }catch(e){ practiceSet=[]; }
 
-    let currentQuestion = 0;
-    let score = 0;
+if(!practiceSet || practiceSet.length===0){
+  document.querySelector('.container').innerHTML = `<h3>Koi galat question nahi mila!</h3><p>Seedha ye file mat kholo.<br>wrong-practice.html se 'Abhyas Karen' pe click karo.</p><a href='wrong-practice.html' style='color:#2196F3'>Wapas Jao</a>`;
+} else {
+  let gameData = practiceSet.map(q=>({
+    english: q.english || q.q || "",
+    hindi: q.hindi || q.ans || "",
+    options: q.options || []
+  }));
 
-    function loadQuestion(){
-      if(currentQuestion >= gameData.length){
-        alert("Wrong Practice Khatam!");
-        // galat list se hata do
-        let all = JSON.parse(localStorage.getItem('wrongQuestions'))||[];
-        all = all.filter(q=> q.type!== 'listening');
-        localStorage.setItem('wrongQuestions', JSON.stringify(all));
-        window.location.href = 'wrong-practice.html';
-        return;
-      }
+  let currentQuestion=0, score=0;
+  window.currentEng = "";
 
-      let q = gameData[currentQuestion];
-      document.getElementById('progress').innerText = `Question ${currentQuestion+1}/${gameData.length}`;
-      document.getElementById('total').innerText = gameData.length;
-      document.getElementById('question').innerText = q.english;
-      speak(q.english); // sound
-
-      // options
-      let optionsDiv = document.getElementById('options');
-      optionsDiv.innerHTML = '';
-      q.options.sort(()=>Math.random()-0.5);
-      q.options.forEach(opt => {
-        let btn = document.createElement('button');
-        btn.innerText = opt.hindi;
-        btn.onclick = () => {
-          if(opt.english === q.english) score++;
-          document.getElementById('score').innerText = score;
-          currentQuestion++;
-          setTimeout(loadQuestion, 600);
-        }
-        optionsDiv.appendChild(btn);
-      });
+  function loadQuestion(){
+    if(currentQuestion >= gameData.length){
+      alert(`Khatam! Score ${score}/${gameData.length}`);
+      localStorage.removeItem('practiceNowSet');
+      let all = JSON.parse(localStorage.getItem('wrongQuestions')||'[]');
+      all = all.filter(q=> q.type!=='listening');
+      localStorage.setItem('wrongQuestions', JSON.stringify(all));
+      window.location.href='wrong-practice.html';
+      return;
     }
-    loadQuestion();
-  </script>
+    let q = gameData[currentQuestion];
+    window.currentEng = q.english;
+    document.getElementById('progress').innerText = `Question ${currentQuestion+1}/${gameData.length}`;
+    document.getElementById('total').innerText = gameData.length;
+    document.getElementById('score').innerText = score;
+    document.getElementById('question').innerText = q.english;
+    speakCurrent();
+
+    let optionsDiv = document.getElementById('options');
+    optionsDiv.innerHTML='';
+    let opts = q.options.length>=2? q.options : gameData.map(x=>({hindi:x.hindi, english:x.english})).sort(()=>0.5-Math.random()).slice(0,4);
+    opts = [...opts].sort(()=>0.5-Math.random());
+
+    opts.forEach(opt=>{
+      let btn=document.createElement('button');
+      btn.className='option-btn';
+      btn.innerText=opt.hindi;
+      btn.onclick=()=>{
+        if(opt.english===q.english){ score++; playCorrectSound(); } else { playWrongSound(); }
+        currentQuestion++;
+        setTimeout(loadQuestion, 800);
+      };
+      optionsDiv.appendChild(btn);
+    });
+  }
+  loadQuestion();
+}
+</script>
 </body>
 </html>
