@@ -1,39 +1,124 @@
 <!DOCTYPE html>
-<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Lesson Practice</title>
-<style>body{font-family:Arial;background:#0f0f1e;color:#fff;text-align:center;padding:15px}.container{max-width:500px;margin:20px auto;background:#1e1e3a;padding:25px;border-radius:15px}.option-btn{display:block;width:90%;margin:12px auto;padding:14px;background:#2a2a4a;color:#fff;border:2px solid #444;border-radius:12px;font-size:18px;cursor:pointer} #question{color:#ffd700;font-size:22px;margin:20px 0}</style></head><body>
-<div class="container"><h2>📖 Galat Lesson Practice</h2><p id="progress"></p><h3 id="question"></h3><div id="options"></div><p>Score: <span id="score">0</span>/<span id="total">0</span></p><a href="wrong-practice.html" style="color:#aaa">← Wapas</a></div>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wrong Lesson Practice</title>
+<style>
+  body{font-family:Inter,Arial;background:#eef2ff;margin:0;padding:12px;color:#1e293b}
+ .card{max-width:480px;margin:15px auto;background:#fff;border-radius:20px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
+ .top{font-weight:700;font-size:18px;color:#334155}
+ .sub{font-size:13px;color:#64748b;margin-bottom:15px}
+ .qCount{text-align:center;font-weight:600;margin:10px 0;color:#475569}
+ .hindiQ{text-align:center;font-size:20px;font-weight:700;margin:8px 0;color:#0f172a}
+ .engQ{text-align:center;font-size:18px;margin:12px 0;color:#334155;display:flex;justify-content:center;align-items:center;gap:8px}
+ .num{width:32px;height:32px;background:#1e293b;color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+ .dropBox{min-height:65px;border:2px dashed #cbd5e1;border-radius:14px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;margin:15px 0;padding:10px}
+ .chip{padding:10px 18px;background:#1e293b;color:#fff;border-radius:12px;font-weight:600;cursor:pointer;border:none;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+ .chip.selected{background:#e2e8f0;color:#1e293b;border:2px solid #1e293b}
+ .options{display:flex;gap:12px;justify-content:center;margin:15px 0;flex-wrap:wrap}
+ .options.chip{background:#1e293b}
+  #nextBtn{width:100%;padding:14px;background:#3b82f6;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;margin-top:10px}
+  #feedback{width:100%;padding:14px;border-radius:12px;text-align:center;font-weight:600;margin-top:12px;display:none}
+ .ok{background:#10b981;color:#fff}
+ .bad{background:#ef4444;color:#fff}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top">Maya ke Saath Grammar + Quiz 📝</div>
+  <div class="sub">Day-wise seekho, Maya se gupshup karo, Practice karo</div>
+  <div class="qCount" id="qCount">Q 1/8</div>
+  <div class="hindiQ">सही अनुवाद करिए।</div>
+  <div class="hindiQ" id="hindiText">मैं रोज स्कूल जाता हूँ</div>
+  <div class="engQ"><span class="num" id="qNum">1</span><span id="engText">I _ to school daily.</span></div>
+  <div class="dropBox" id="dropBox"><span style="color:#94a3b8">Yahan lagao</span></div>
+  <div class="options" id="options"></div>
+  <button id="nextBtn" onclick="nextQuestion()">Next</button>
+  <div id="feedback"></div>
+  <div style="text-align:center;margin-top:12px"><a href="wrong-practice.html" style="color:#64748b;text-decoration:none;font-size:14px">← Wapas</a></div>
+</div>
+
 <script>
+// SOUND - sahi/galat pe
 function playCorrectSound(){ try{ new Audio('https://actions.google.com/sounds/v1/cartoon/pop.ogg').play(); }catch(e){} }
 function playWrongSound(){ try{ new Audio('https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg').play(); }catch(e){} }
 
-let practiceSet=[]; try{ practiceSet=JSON.parse(localStorage.getItem('practiceNowSet')||'[]'); }catch(e){}
+let practiceSet=[];
+try{ practiceSet=JSON.parse(localStorage.getItem('practiceNowSet')||'[]'); }catch(e){}
 
-if(!practiceSet.length){ document.querySelector('.container').innerHTML="<h3>Koi data nahi!</h3><a href='wrong-practice.html'>Wapas</a>"; }
-else{
-  let gameData=practiceSet.map(q=>({
-    english: q.english || q.q || q.question || q.audioText || q.title || "",
-    hindi: q.hindi || q.ans || q.answer || q.correctHindi || "",
-    options: q.allOptions || q.options || []
+if(!practiceSet.length){
+  document.querySelector('.card').innerHTML="<h3 style='text-align:center'>Koi galat lesson nahi mila!<br><small>wrong-practice.html se start karo</small></h3>";
+} else {
+  // TUMHARE DATA KE HISAB SE MAPPING
+  let gameData = practiceSet.map(q=>({
+    hindi: q.hindi || q.correctHindi || q.question || q.hindiSentence || "मैं रोज स्कूल जाता हूँ",
+    english: q.english || q.engText || q.sentence || q.q || q.title || "I _ to school daily.",
+    answer: q.answer || q.correctAnswer || q.correct || q.correctWord || q.audioText || "go",
+    options: q.options || q.allOptions || q.choices || ["go","going","goes"]
   }));
-  let cur=0, score=0;
+
+  let cur=0, score=0, selected=null;
+
   function loadQuestion(){
-    if(cur>=gameData.length){ alert(`Khatam! ${score}/${gameData.length}`); localStorage.removeItem('practiceNowSet'); let all=JSON.parse(localStorage.getItem('wrongQuestions')||'[]'); all=all.filter(q=>(q.type||'').toLowerCase()!=='lesson'); localStorage.setItem('wrongQuestions',JSON.stringify(all)); location.href='wrong-practice.html'; return; }
+    if(cur>=gameData.length){
+      alert(`Khatam! Score ${score}/${gameData.length}`);
+      localStorage.removeItem('practiceNowSet');
+      let all=JSON.parse(localStorage.getItem('wrongQuestions')||'[]');
+      all=all.filter(x=> (x.type||'').toLowerCase()!=='lesson' && (x.type||'').toLowerCase()!=='grammar');
+      localStorage.setItem('wrongQuestions', JSON.stringify(all));
+      location.href='wrong-practice.html';
+      return;
+    }
     let q=gameData[cur];
-    document.getElementById('progress').innerText=`Question ${cur+1}/${gameData.length}`;
-    document.getElementById('total').innerText=gameData.length;
-    document.getElementById('score').innerText=score;
-    document.getElementById('question').innerText=q.english;
-    let optionsDiv=document.getElementById('options'); optionsDiv.innerHTML='';
-    let opts=q.options.length>0? q.options : gameData.map(x=>x.hindi).filter((v,i,a)=>a.indexOf(v)===i).sort(()=>0.5-Math.random()).slice(0,4);
-    if(!opts.includes(q.hindi)) opts[0]=q.hindi;
-    opts=[...opts].sort(()=>0.5-Math.random());
-    opts.forEach(text=>{
-      let label=typeof text==='string'? text : (text.hindi||text.correctHindi||text);
-      let btn=document.createElement('button'); btn.className='option-btn'; btn.innerText=label;
-      btn.onclick=()=>{ if(label.trim().toLowerCase()===q.hindi.trim().toLowerCase()){score++; playCorrectSound();} else {playWrongSound();} cur++; setTimeout(loadQuestion,700); };
-      optionsDiv.appendChild(btn);
+    document.getElementById('qCount').innerText=`Q ${cur+1}/${gameData.length}`;
+    document.getElementById('qNum').innerText=cur+1;
+    document.getElementById('hindiText').innerText=q.hindi;
+    document.getElementById('engText').innerText=q.english;
+    document.getElementById('dropBox').innerHTML='<span style="color:#94a3b8">Yahan lagao</span>';
+    document.getElementById('feedback').style.display='none';
+    selected=null;
+
+    let optsDiv=document.getElementById('options');
+    optsDiv.innerHTML='';
+    let opts=[...q.options];
+    if(!opts.includes(q.answer)) opts[0]=q.answer;
+    opts=[...new Set(opts)].sort(()=>0.5-Math.random());
+
+    opts.forEach(opt=>{
+      let word = typeof opt==='string'? opt : (opt.hindi||opt.english||opt);
+      let b=document.createElement('button');
+      b.className='chip'; b.innerText=word;
+      b.onclick=()=>{
+        selected=word;
+        document.getElementById('dropBox').innerHTML=`<button class="chip selected">${word}</button>`;
+        document.querySelectorAll('.options.chip').forEach(c=>c.style.opacity=c.innerText===word?'0.4':'1');
+        checkAnswer();
+      };
+      optsDiv.appendChild(b);
     });
   }
+
+  function checkAnswer(){
+    let q=gameData[cur];
+    let fb=document.getElementById('feedback');
+    if(selected && selected.toLowerCase().trim()===q.answer.toLowerCase().trim()){
+      fb.className='ok'; fb.innerText='Sahi jawab! 🔊'; fb.style.display='block'; fb.classList.add('ok');
+      playCorrectSound(); score++;
+    } else {
+      fb.className='bad'; fb.innerText=`Galat! Sahi hai: ${q.answer}`; fb.style.display='block';
+      fb.classList.add('bad');
+      playWrongSound();
+    }
+  }
+
+  window.nextQuestion=()=>{
+    if(!selected){ alert('Pehle option chuno guru!'); return; }
+    cur++; loadQuestion();
+  }
+
   loadQuestion();
 }
-</script></body></html>
+</script>
+</body>
+</html>
