@@ -17,19 +17,17 @@ body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
 .tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;margin-bottom:8px}
 .tag-day{background:#22c55e}.tag-speak{background:#f97316}.tag-listen{background:#8b5cf6}
 .practice-btn{background:#ef4444;border:none;color:#fff;padding:10px;width:100%;border-radius:8px;margin-top:10px;cursor:pointer;font-weight:700}
-
-/* NAYA: Bada practice button */
 .big-btn{background:#22c55e;border:none;color:#fff;padding:14px;width:100%;border-radius:10px;margin:15px 0;font-weight:800;font-size:16px;cursor:pointer}
 .big-btn:disabled{background:#475569;cursor:not-allowed}
-
 .section-box{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:20px}
 .count-text{font-size:14px;color:#94a3b8;margin:5px 0 10px 0}
-
 .empty{text-align:center;padding:40px;color:#94a3b8}
 .tabs{overflow-x: auto;}
 .tab-btn{flex-shrink: 0;}
 .tabs::-webkit-scrollbar { display: none; }
 .header{background: transparent;padding: 10px 0;} 
+/* OPTION ke liye naya style joda */
+.opt-chip{display:inline-block;background:#334155;color:#fff;padding:6px 12px;border-radius:8px;margin:4px;font-size:13px;font-weight:600}
 </style>
 </head>
 <body>
@@ -44,7 +42,6 @@ body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
   <button id="btn_clear_all" onclick="clearAllWrong()" style="background:#ef4444;border:none;color:#fff;padding:8px 14px;border-radius:10px;font-size:13px;cursor:pointer">🗑️ Sab Clear Karo</button>
 </div>
 
-<!-- 3 SECTION BOX -->
 <div class="section-box">
   <div class="tabs">
     <button class="tab-btn" id="btn_lessons">📖 Lessons</button>
@@ -87,8 +84,6 @@ function startPracticeFixed(type){
   let all = getAllWrongFix();
   console.log("TOTAL:", all);
   if(all.length===0){ alert('Koi galat question nahi hai!'); return; }
-
-  // type ignore karke sab bhej do taaki 404/empty na aaye
   let filtered = all;
   try{
     if(type==='lesson'){
@@ -104,16 +99,13 @@ function startPracticeFixed(type){
       if(f.length>0) filtered=f;
     }
   }catch(e){ filtered=all; }
-
   localStorage.setItem('practiceNowSet', JSON.stringify(filtered));
   console.log("practiceNowSet set:", filtered.length);
-
   if(type==='lesson') window.location.href='wrong-lesson-game.html';
   else if(type==='listening') window.location.href='wrong-suno-game.html';
   else if(type==='speaking') window.location.href='wrong-bol-game.html';
 }
 
-// tumhare purane button ko override kar rahe hain taaki sahi jagah jaye
 setTimeout(()=>{
   let b1=document.getElementById('btn_lessons_practice');
   let b2=document.getElementById('btn_speaking_practice');
@@ -122,7 +114,6 @@ setTimeout(()=>{
   if(b2) b2.onclick = ()=> startPracticeFixed('speaking');
   if(b3) b3.onclick = ()=> startPracticeFixed('listening');
 
-  // counts sahi kar do agar purana js fail ho
   let all=getAllWrongFix();
   let lt=document.getElementById('lesson-count');
   let st=document.getElementById('speak-count');
@@ -132,7 +123,26 @@ setTimeout(()=>{
   if(lt) lt.innerText=all.length;
   if(st) st.innerText=all.length;
   if(gt) gt.innerText=all.length;
-},500);
+
+  // ===== NAYA: OPTION DIKHANE KA CODE JODA =====
+  let listDiv = document.getElementById('wrong-list');
+  if(listDiv && listDiv.innerHTML.trim()==='' && all.length>0){
+    let html='';
+    all.forEach((q,i)=>{
+      let ques = q.hindi||q.question||q.english||q.sentence||'Question '+(i+1);
+      let opts = q.options||q.choices||[];
+      let optsHtml = '';
+      if(opts.length){
+        optsHtml = '<div style="margin-top:8px">Options: '+ opts.map(o=>`<span class="opt-chip">${o}</span>`).join('') + '</div>';
+      }else{
+        optsHtml = `<div style="margin-top:8px;color:#94a3b8;font-size:13px">Answer: <b style="color:#22c55e">${q.answer||q.correct||q.correctAnswer||''}</b></div>`;
+      }
+      html+=`<div class="question-card"><div class="tag tag-day">Q${i+1}</div><div>${ques}</div>${optsHtml}</div>`;
+    });
+    listDiv.innerHTML=html;
+    document.getElementById('no_question_text').style.display='none';
+  }
+},600);
 </script>
 
 </body>
