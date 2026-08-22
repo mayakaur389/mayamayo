@@ -17,19 +17,15 @@ body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
 .tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:700;margin-bottom:8px}
 .tag-day{background:#22c55e}.tag-speak{background:#f97316}.tag-listen{background:#8b5cf6}
 .practice-btn{background:#ef4444;border:none;color:#fff;padding:10px;width:100%;border-radius:8px;margin-top:10px;cursor:pointer;font-weight:700}
-
-/* NAYA: Bada practice button */
 .big-btn{background:#22c55e;border:none;color:#fff;padding:14px;width:100%;border-radius:10px;margin:15px 0;font-weight:800;font-size:16px;cursor:pointer}
 .big-btn:disabled{background:#475569;cursor:not-allowed}
-
 .section-box{background:#1e293b;padding:15px;border-radius:12px;margin-bottom:20px}
 .count-text{font-size:14px;color:#94a3b8;margin:5px 0 10px 0}
-
 .empty{text-align:center;padding:40px;color:#94a3b8}
 .tabs{overflow-x: auto;}
 .tab-btn{flex-shrink: 0;}
 .tabs::-webkit-scrollbar { display: none; }
-.header{background: transparent;padding: 10px 0;} 
+.header{background: transparent;padding: 10px 0;}
 </style>
 </head>
 <body>
@@ -44,37 +40,97 @@ body{background:#0f172a;color:#fff;font-family:sans-serif;margin:0;padding:20px}
   <button id="btn_clear_all" onclick="clearAllWrong()" style="background:#ef4444;border:none;color:#fff;padding:8px 14px;border-radius:10px;font-size:13px;cursor:pointer">🗑️ Sab Clear Karo</button>
 </div>
 
-<!-- 3 SECTION BOX -->
 <div class="section-box">
-  <div class="tabs">
-    <button class="tab-btn" id="btn_lessons">📖 Lessons</button>
-  </div>
+  <div class="tabs"><button class="tab-btn" id="btn_lessons">📖 Lessons</button></div>
   <p class="count-text">Galat: <span id="lesson-count">0</span> questions</p>
   <button class="big-btn" id="btn_lessons_practice">🔥 Lessons Ke Galat Practice Karo</button>
 </div>
 
 <div class="section-box">
-  <div class="tabs">
-    <button class="tab-btn active" id="btn_speaking">🎙️ Bol Ke Practice</button>
-  </div>
+  <div class="tabs"><button class="tab-btn active" id="btn_speaking">🎙️ Bol Ke Practice</button></div>
   <p class="count-text">Galat: <span id="speak-count">0</span> questions</p>
   <button class="big-btn" id="btn_speaking_practice">🔥 Bol Ke Galat Practice Karo</button>
 </div>
 
 <div class="section-box">
-  <div class="tabs">
-    <button class="tab-btn" id="btn_listening">👂 Suno</button>
-  </div>
+  <div class="tabs"><button class="tab-btn" id="btn_listening">👂 Suno</button></div>
   <p class="count-text">Galat: <span id="game-count">0</span> questions</p>
   <button class="big-btn" id="btn_listening_practice">🔥 Suno Wale Galat Practice Karo</button>
 </div>
 
-<!-- NICHE WALA LIST WAHI RAHEGA -->
 <div id="wrong-list"></div>
 <p id="no_question_text" class="empty" style="display:none;">🔇 Koi galat question nahi hai abhi</p>
 
 <script src="words.js"></script>
 <script src="lang.js"></script>
 <script src="wrong-practice.js"></script>
+
+<script>
+// ===== GURU FINAL FIX - YE NAYA CODE HAI =====
+function getAllWrong(){
+  try{ return JSON.parse(localStorage.getItem('wrongQuestions')||'[]'); }catch(e){ return []; }
+}
+
+function startPracticeFixed(type){
+  let all = getAllWrong();
+  let filtered = [];
+
+  if(type==='lesson'){
+    filtered = all.filter(q=>{
+      let t=(q.type||'').toLowerCase();
+      return t.includes('lesson') || t.includes('grammar') || t.includes('fill') || t.includes('day');
+    });
+  } else if(type==='listening'){
+    filtered = all.filter(q=>{
+      let t=(q.type||'').toLowerCase();
+      return t.includes('listen') || t.includes('suno') || t.includes('game');
+    });
+  } else if(type==='speaking'){
+    filtered = all.filter(q=>{
+      let t=(q.type||'').toLowerCase();
+      return t.includes('speak') || t.includes('bol') || t.includes('talk');
+    });
+  }
+
+  if(filtered.length===0){
+    alert('Is type ka koi galat question nahi hai guru!');
+    return;
+  }
+
+  localStorage.setItem('practiceNowSet', JSON.stringify(filtered));
+  console.log('PracticeNowSet set:', filtered.length, filtered[0]);
+
+  if(type==='lesson') location.href='wrong-lesson-game.html';
+  else if(type==='listening') location.href='wrong-suno-game.html';
+  else if(type==='speaking') location.href='wrong-bol-game.html';
+}
+
+document.getElementById('btn_lessons_practice').onclick = ()=> startPracticeFixed('lesson');
+document.getElementById('btn_listening_practice').onclick = ()=> startPracticeFixed('listening');
+document.getElementById('btn_speaking_practice').onclick = ()=> startPracticeFixed('speaking');
+
+function clearAllWrong(){
+  if(confirm('Sab clear karna hai?')){
+    localStorage.removeItem('wrongQuestions');
+    localStorage.removeItem('practiceNowSet');
+    location.reload();
+  }
+}
+
+// Counts update karo
+(function updateCounts(){
+  let all=getAllWrong();
+  let l=all.filter(q=>(q.type||'').toLowerCase().includes('lesson')||(q.type||'').toLowerCase().includes('grammar')||(q.type||'').toLowerCase().includes('day')).length;
+  let s=all.filter(q=>(q.type||'').toLowerCase().includes('speak')||(q.type||'').toLowerCase().includes('bol')).length;
+  let li=all.filter(q=>(q.type||'').toLowerCase().includes('listen')||(q.type||'').toLowerCase().includes('suno')||(q.type||'').toLowerCase().includes('game')).length;
+  document.getElementById('lesson-count').innerText=l;
+  document.getElementById('speak-count').innerText=s;
+  document.getElementById('game-count').innerText=li;
+  document.getElementById('total_text').innerText=`Total: ${all.length} galat questions hain`;
+  document.getElementById('btn_lessons_practice').disabled = l===0;
+  document.getElementById('btn_speaking_practice').disabled = s===0;
+  document.getElementById('btn_listening_practice').disabled = li===0;
+})();
+</script>
 </body>
 </html>
