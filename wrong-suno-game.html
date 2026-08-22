@@ -7,7 +7,7 @@
 :root{--bg:#eef2ff;--card:#fff;--text:#1e293b;--opt:#e2e8f0}
 body.dark{--bg:#0f172a;--card:#1e293b;--text:#fff;--opt:#334155}
 body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;display:flex;justify-content:center;min-height:100vh;padding:10px}
-.app{background:var(--card);width:100%;max-width:430px;border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.15);height:fit-content}
+.app{background:var(--card);width:100%;max-width:430px;border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
 .top{display:flex;justify-content:space-between;align-items:center}
 .btn-small{border:1px solid #cbd5e1;background:var(--card);padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:600;color:var(--text)}
 .sub{text-align:center;color:#64748b;font-size:14px;margin:8px 0}
@@ -15,98 +15,125 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;disp
 .sunoWrap{display:flex;justify-content:center;margin:16px 0}
 .btn-suno{background:#3b82f6;color:#fff;border:none;padding:12px 28px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
-.optBtn{background:var(--opt);border:none;padding:16px 10px;border-radius:14px;font-size:17px;font-weight:600;cursor:pointer;color:var(--text)}
+.optBtn{background:var(--opt);border:none;padding:16px 10px;border-radius:14px;font-size:16px;font-weight:600;cursor:pointer;color:var(--text)}
 .optBtn.correct{background:#22c55e!important;color:#fff}
 .optBtn.wrong{background:#ef4444!important;color:#fff}
-.micWrap{display:flex;justify-content:center;margin:20px 0}
-.micBtn{width:72px;height:72px;border-radius:50%;background:#ef4444;border:none;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;color:#fff}
+.optBtn:disabled{opacity:0.7}
+.micWrap{display:flex;flex-direction:column;align-items:center;margin:20px 0}
+.micBtn{width:72px;height:72px;border-radius:50%;background:#ef4444;border:none;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;color:#fff;transition:0.2s}
+.micBtn.listening{background:#22c55e;transform:scale(1.1)}
 #statusText{text-align:center;min-height:20px;font-weight:600;margin:10px 0;color:#64748b}
-#nextBtn{width:100%;padding:14px;background:#22c55e;color:#fff;border:none;border-radius:12px;font-weight:800;display:none;cursor:pointer;font-size:16px}
+#nextBtn{width:100%;padding:14px;background:#22c55e;color:#fff;border:none;border-radius:12px;font-weight:800;display:none;cursor:pointer;font-size:16px;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top"><button class="btn-small" onclick="location.href='wrong-practice.html'">← Back</button><div style="font-weight:800">🎧 Sun Ke Jodo - Galat</div><button class="btn-small" onclick="document.body.classList.toggle('dark')">🌙</button></div>
+  <div class="top"><button class="btn-small" onclick="location.href='wrong-practice.html'">← Back</button><div style="font-weight:800">🎧 Galat - Suno</div><button class="btn-small" onclick="document.body.classList.toggle('dark')">🌙</button></div>
   <div class="sub">Maya bolegi, tum pehchano + bolo</div>
   <div class="stats" id="stats"></div>
   <div class="sunoWrap"><button class="btn-suno" id="sunoBtn">🔊 Suno</button></div>
   <div class="grid" id="optGrid"></div>
-  <div id="statusText"></div>
-  <div class="micWrap"><button class="micBtn" id="micBtn">🎙️</button></div>
+  <div id="statusText">Suno dabao</div>
+  <div class="micWrap"><button class="micBtn" id="micBtn">🎙️</button><div style="font-size:12px;color:#64748b;margin-top:6px">Mic dabao aur English bolo</div></div>
   <button id="nextBtn">Next →</button>
 </div>
 
 <script>
 let wrongSet=[]; try{ wrongSet=JSON.parse(localStorage.getItem('practiceNowSet')||'[]'); }catch(e){}
 if(!wrongSet.length){ try{ wrongSet=JSON.parse(localStorage.getItem('wrongQuestions')||'[]'); }catch(e){} }
-
-console.log("RAW DATA:",wrongSet);
-
-let filtered=wrongSet.filter(q=>{ let t=String(q.type||'').toLowerCase(); return t.includes('listen')||t.includes('suno')||t.includes('jodo')||q.hindi||q.english; });
-if(filtered.length) wrongSet=filtered;
+wrongSet = wrongSet.filter(q=> (q.type||'').toLowerCase().includes('listen'));
 
 if(!wrongSet.length){
   document.getElementById('optGrid').innerHTML="<p style='grid-column:1/3;text-align:center'>Koi galat nahi</p>";
 }else{
-  let cur=0, score=0, hindiOK=false;
-  function updateStats(){ document.getElementById('stats').innerText=`Question: ${cur+1}/${wrongSet.length} | Score: ${score}/${wrongSet.length}`; }
-  function speak(t){ if(!t) return; speechSynthesis.cancel(); let u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.9; speechSynthesis.speak(u); }
+  let cur=0, score=0, hindiOK=false, micOK=false;
+  const statsEl=document.getElementById('stats'), statusEl=document.getElementById('statusText'), gridEl=document.getElementById('optGrid'), nextBtn=document.getElementById('nextBtn'), sunoBtn=document.getElementById('sunoBtn'), micBtn=document.getElementById('micBtn');
+
+  function updateStats(){ statsEl.innerText=`Question: ${cur+1}/${wrongSet.length} | Score: ${score}/${wrongSet.length}`; }
+  
+  function speak(text){
+    if(!text){ statusEl.innerText="Audio text khali hai!"; return; }
+    window.speechSynthesis.cancel();
+    let u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US'; u.rate=0.9;
+    u.onstart=()=>statusEl.innerText=`🔊 Bol raha hai: ${text}`;
+    u.onend=()=>statusEl.innerText="Sahi Hindi chuno";
+    window.speechSynthesis.speak(u);
+  }
 
   function loadQ(){
-    if(cur>=wrongSet.length){ localStorage.removeItem('practiceNowSet'); alert(`Khatam! ${score}/${wrongSet.length}`); location.href='wrong-practice.html'; return; }
-    hindiOK=false; document.getElementById('nextBtn').style.display='none';
+    if(cur>=wrongSet.length){ localStorage.removeItem('practiceNowSet'); alert(`Khatam! Score ${score}/${wrongSet.length}`); location.href='wrong-practice.html'; return; }
+    hindiOK=false; micOK=false; nextBtn.style.display='none'; micBtn.classList.remove('listening');
     let q=wrongSet[cur];
     updateStats();
-    document.getElementById('statusText').innerText='Suno dabao, phir Hindi chuno';
+    let english = q.english || q.audioText || q.title || "";
+    let correctHindi = q.hindi || q.correctHindi || "";
+    let options = q.options || [];
 
-    // ===== YAHAN FIX - UNDEFINED KA SOLUTION =====
-    let english = q.english || q.sentence || q.word || q.text || "";
-    let correctHindi = q.hindi || q.correctHindi || q.answer || q.correct || "";
-
-    // Agar options nahi hai to dusre galat questions se banao (wahi ke questions se)
-    let options = q.options || q.choices || q.hindiOptions;
-    if(!options ||!Array.isArray(options) || options.length===0){
-      // wrongSet me jitne bhi alag hindi hain unko option banao
-      let otherHindis = [...new Set(wrongSet.map(x=>x.hindi||x.correctHindi).filter(h=>h && h!==correctHindi))];
-      // agar abhi bhi kam hai to backup list
-      let backup = ["नमस्ते","धन्यवाद","अलविदा","कृपया","हाँ","नहीं"];
-      let pool = [...otherHindis,...backup].filter((v,i,a)=>a.indexOf(v)===i).slice(0,3);
-      options = [correctHindi,...pool].slice(0,4);
+    // Agar options me undefined hai to sahi karo
+    options = options.filter(o=>o && o!=="undefined");
+    if(options.length<4){
+      let allH = [...new Set(wrongSet.map(x=>x.hindi||x.correctHindi).filter(h=>h && h!==correctHindi))].slice(0,3);
+      options = [correctHindi,...allH]; while(options.length<4) options.push(correctHindi);
+      options=[...new Set(options)];
     }
-    // undefined filter
-    options = options.filter(o=>o && o!=="undefined" && o!=="null").slice(0,4);
-    // agar abhi bhi 4 nahi hua to correct ko repeat mat karo
-    while(options.length<4){ options.push(correctHindi); options=[...new Set(options)]; if(options.length<4) options.push("नमस्ते"); }
-
     options = options.sort(()=>0.5-Math.random());
 
-    console.log(`Q${cur+1}:`,english,correctHindi,options);
-
-    let grid=document.getElementById('optGrid'); grid.innerHTML='';
+    gridEl.innerHTML='';
     options.forEach(opt=>{
       let b=document.createElement('button'); b.className='optBtn'; b.innerText=opt;
       b.onclick=()=>{
         if(hindiOK) return;
-        if(opt===correctHindi){
+        if(opt===correctHindi || opt.toLowerCase()===correctHindi.toLowerCase()){
           b.classList.add('correct'); hindiOK=true;
-          document.getElementById('statusText').innerText=`Sahi! Ab bolo: "${english}"`;
+          statusEl.innerText=`✅ Sahi! Ab mic dabao aur bolo: "${english}"`;
           speak(english);
+          // saare buttons disable mat karo, galat wale bhi dikhne do
         }else{
           b.classList.add('wrong');
-          document.getElementById('statusText').innerText=`Galat! Sahi hai: ${correctHindi}`;
+          statusEl.innerText=`❌ Galat! Sahi hai: ${correctHindi}`;
         }
       };
-      grid.appendChild(b);
+      gridEl.appendChild(b);
     });
-    setTimeout(()=>speak(english),300);
+    statusEl.innerText="🔊 Suno dabao, phir Hindi chuno";
+    setTimeout(()=>speak(english),400);
   }
-  document.getElementById('sunoBtn').onclick=()=>{ let q=wrongSet[cur]; speak(q.english||q.sentence||""); };
-  document.getElementById('micBtn').onclick=()=>{
-    if(!hindiOK){ alert('Pehle sahi Hindi chuno'); return; }
-    score++; updateStats(); document.getElementById('nextBtn').style.display='block';
-    document.getElementById('statusText').innerText='✅ Next!';
+
+  sunoBtn.onclick=()=>{
+    let q=wrongSet[cur];
+    speak(q.english || q.audioText || "");
   };
-  document.getElementById('nextBtn').onclick=()=>{ cur++; loadQ(); };
+
+  // MIC LOGIC - AB BINA BOLE NEXT NAHI HOGA
+  let recognition;
+  if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
+    let SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SR();
+    recognition.lang='en-US';
+    recognition.onstart=()=>{ micBtn.classList.add('listening'); statusEl.innerText="🎧 Sun raha hu... bolo"; };
+    recognition.onend=()=>{ micBtn.classList.remove('listening'); };
+    recognition.onresult=(e)=>{
+      let said = e.results[0][0].transcript;
+      statusEl.innerText=`Tumne bola: "${said}"`;
+      // Bina check ke pass kar dete hain practice ke liye, agar exact match chahiye to compare kar sakte ho
+      micOK=true; score++; updateStats();
+      statusEl.innerText=`✅ Shabash! "${said}" - Next dabao`;
+      nextBtn.style.display='block';
+    };
+    recognition.onerror=()=>{
+      statusEl.innerText="Mic error - phir se try karo";
+      micBtn.classList.remove('listening');
+    };
+  }
+
+  micBtn.onclick=()=>{
+    if(!hindiOK){ alert('Pehle sahi Hindi option chuno!'); return; }
+    if(!recognition){ alert('Tumhara browser mic support nahi karta'); score++; nextBtn.style.display='block'; return; }
+    try{ recognition.start(); }catch(e){ recognition.stop(); setTimeout(()=>recognition.start(),200); }
+  };
+
+  nextBtn.onclick=()=>{ cur++; loadQ(); };
   loadQ();
 }
 </script>
