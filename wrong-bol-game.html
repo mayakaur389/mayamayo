@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Bol Ke Practice</title>
+<style>body{font-family:Arial;background:#0f0f1e;color:#fff;text-align:center;padding:15px}.container{max-width:500px;margin:20px auto;background:#1e1e3a;padding:25px;border-radius:15px} #question{color:#ffd700;font-size:26px;margin:20px 0}.bol-btn{padding:14px 30px;font-size:18px;background:#00c6ff;color:#fff;border:none;border-radius:25px;cursor:pointer;margin:10px} #result{margin-top:15px;min-height:24px}</style></head><body>
+<div class="container"><h2>🎤 Bol Ke Practice</h2><p id="progress"></p><h3 id="question"></h3><p id="hindiHint" style="color:#aaa"></p><button class="bol-btn" onclick="startListening()">🎤 Bolo</button><button class="bol-btn" style="background:#444" onclick="speakCurrent()">🔊 Suno</button><p id="result"></p><p>Score: <span id="score">0</span>/<span id="total">0</span></p><a href="wrong-practice.html" style="color:#aaa">← Wapas</a></div>
+<script>
+function playCorrectSound(){ try{ new Audio('https://actions.google.com/sounds/v1/cartoon/pop.ogg').play(); }catch(e){} }
+function playWrongSound(){ try{ new Audio('https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg').play(); }catch(e){} }
+
+let practiceSet=[]; try{ practiceSet=JSON.parse(localStorage.getItem('practiceNowSet')||'[]'); }catch(e){}
+
+if(!practiceSet.length){ document.querySelector('.container').innerHTML="<h3>Koi data nahi!</h3><a href='wrong-practice.html'>Wapas</a>"; }
+else{
+  let gameData=practiceSet.map(q=>({ english: q.english || q.audioText || q.q || q.sentence || "", hindi: q.hindi || q.correctHindi || q.ans || "" }));
+  let cur=0, score=0;
+  window.speakCurrent=()=>{ let u=new SpeechSynthesisUtterance(gameData[cur].english); u.lang='en-US'; speechSynthesis.speak(u); }
+  function loadQuestion(){
+    if(cur>=gameData.length){ alert(`Khatam! ${score}/${gameData.length}`); localStorage.removeItem('practiceNowSet'); let all=JSON.parse(localStorage.getItem('wrongQuestions')||'[]'); all=all.filter(q=>(q.type||'').toLowerCase()!=='speaking' && (q.type||'').toLowerCase()!=='bol'); localStorage.setItem('wrongQuestions',JSON.stringify(all)); location.href='wrong-practice.html'; return; }
+    let q=gameData[cur];
+    document.getElementById('progress').innerText=`Question ${cur+1}/${gameData.length}`;
+    document.getElementById('total').innerText=gameData.length;
+    document.getElementById('score').innerText=score;
+    document.getElementById('question').innerText=q.english;
+    document.getElementById('hindiHint').innerText=q.hindi;
+    document.getElementById('result').innerText='';
+    speakCurrent();
+  }
+  window.startListening=()=>{
+    let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SpeechRecognition){ alert("Mic is browser me support nahi hai, Chrome use karo"); return; }
+    let rec=new SpeechRecognition(); rec.lang='en-US';
+    rec.onstart=()=>{ document.getElementById('result').innerText="Sun raha hu..."; };
+    rec.onresult=(e)=>{
+      let spoken=e.results[0][0].transcript.toLowerCase();
+      let target=gameData[cur].english.toLowerCase();
+      document.getElementById('result').innerText=`Tumne bola: ${spoken}`;
+      if(target.includes(spoken) || spoken.includes(target.split(' ')[0])){ playCorrectSound(); score++; document.getElementById('result').innerText+=" ✅ Sahi!"; cur++; setTimeout(loadQuestion,1200); }
+      else { playWrongSound(); document.getElementById('result').innerText+=" ❌ Phir se bolo"; }
+    };
+    rec.start();
+  };
+  loadQuestion();
+}
+</script></body></html>
