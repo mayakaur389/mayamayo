@@ -404,13 +404,16 @@ function startListening() {
         }
         totalGalti++;
         correctCount = 0;
-         // ====== WRONG PRACTICE ME SAVE ======
+        // ====== WRONG PRACTICE ME SAVE ======
     let wrongQ = {
         type: 'listening',
         title: `Sun Ke Jodo - Q${currentIndex+1}`,
         audioText: gameData[currentIndex].english,
-        userHindiChoice: selectedAnswer, 
-        correctHindi: gameData[currentIndex].hindi, 
+        english: gameData[currentIndex].english,
+        hindi: gameData[currentIndex].hindi,
+        userHindiChoice: selectedAnswer,
+        correctHindi: gameData[currentIndex].hindi,
+        options: gameData[currentIndex].options,
         day: currentIndex+1
     };
     let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
