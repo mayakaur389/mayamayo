@@ -34,13 +34,12 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;disp
     <button class="btn-small" onclick="document.body.classList.toggle('dark')">🌙</button>
   </div>
   <div class="sub">Maya bolegi, tum pehchano + bolo</div>
-  <div class="stats" id="stats">Score: 0/0</div>
+  <div class="stats" id="stats">Question: 0/0 | Score: 0/0</div>
   <div class="sunoWrap"><button class="btn-suno" id="sunoBtn">🔊 Suno</button></div>
   <div class="grid" id="optGrid"></div>
   <div id="statusText">Suno dabao, phir Hindi chuno</div>
   <div class="micWrap"><button class="micBtn" id="micBtn">🎙️</button></div>
   <button id="nextBtn">Next →</button>
-  <div style="text-align:center;margin-top:12px"><a href="wrong-practice.html" style="color:#94a3b8;text-decoration:none">← Wapas</a></div>
 </div>
 
 <script>
@@ -48,7 +47,8 @@ let wrongSet=[];
 try{ wrongSet = JSON.parse(localStorage.getItem('practiceNowSet')||'[]'); }catch(e){}
 if(!wrongSet.length){ try{ wrongSet = JSON.parse(localStorage.getItem('wrongQuestions')||'[]'); }catch(e){} }
 
-// Sirf suno wale galat filter
+let DEFAULT_HINDI = ["नमस्ते","अलविदा","धन्यवाद","कृपया","हाँ","नहीं","पानी","खाना","घर","स्कूल","दोस्त","प्यार","सुबह","रात","अच्छा"];
+
 let filtered = wrongSet.filter(q=>{
   let t=String(q.type||'').toLowerCase();
   return t.includes('listen')||t.includes('suno')||t.includes('jodo')||q.hindi||q.english;
@@ -56,15 +56,11 @@ let filtered = wrongSet.filter(q=>{
 if(filtered.length) wrongSet=filtered;
 
 if(!wrongSet.length){
-  document.getElementById('optGrid').innerHTML="<p style='grid-column:1/3;text-align:center'>Koi galat nahi hai!<br>Ab sab clear hai ✅</p>";
+  document.getElementById('optGrid').innerHTML="<p style='grid-column:1/3;text-align:center'>Koi galat nahi hai!</p>";
 }else{
-  let allHindi = wrongSet.map(q=>q.hindi||"").filter(Boolean);
   let gameData = wrongSet.map((q,idx)=>({
-    id: idx,
-    original: q,
     english: (q.english||q.audioText||q.sentence||"Hello").toString(),
     hindi: (q.hindi||"नमस्ते").toString(),
-    options: q.options||[]
   }));
 
   let cur=0, score=0, hindiOK=false;
@@ -72,18 +68,23 @@ if(!wrongSet.length){
   function updateStats(){ document.getElementById('stats').innerText=`Question: ${cur+1}/${gameData.length} | Score: ${score}/${gameData.length}`; }
   function speak(t){ speechSynthesis.cancel(); let u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.9; speechSynthesis.speak(u); }
 
+  function get4Options(correct){
+    // FIX: hamesha 4 alag option banao
+    let pool = [...new Set([...gameData.map(g=>g.hindi),...DEFAULT_HINDI])].filter(h=>h && h!==correct);
+    pool = pool.sort(()=>0.5-Math.random()).slice(0,3);
+    let opts = [correct,...pool].sort(()=>0.5-Math.random());
+    console.log("OPTIONS for",correct,":",opts);
+    return opts;
+  }
+
   function loadQ(){
     if(cur>=gameData.length){
-      // jo sahi hue unko wrongQuestions se nikal do
-      let remaining = JSON.parse(localStorage.getItem('wrongQuestions')||'[]');
-      let correctEnglish = gameData.filter((_,i)=>i<score).map(g=>g.english);
-      // simple: agar is session me sab sahi kiya to pura clear, nahi to bache hue rakho
       if(score===gameData.length){
-        // sirf dusre type ke galat rakho, suno wale hata do
-        let other = remaining.filter(q=>{ let t=String(q.type||'').toLowerCase(); return!(t.includes('listen')||t.includes('suno')||t.includes('jodo')); });
+        let remaining = JSON.parse(localStorage.getItem('wrongQuestions')||'[]');
+        let other = remaining.filter(q=>{ let t=String(q.type||'').toLowerCase(); return!(t.includes('listen')||t.includes('suno')||t.includes('jodo')||q.hindi); });
         localStorage.setItem('wrongQuestions', JSON.stringify(other));
       }
-      alert(`Khatam! ${score}/${gameData.length} sahi kiye`);
+      alert(`Khatam! ${score}/${gameData.length} sahi`);
       localStorage.removeItem('practiceNowSet');
       location.href='wrong-practice.html';
       return;
@@ -93,10 +94,8 @@ if(!wrongSet.length){
     document.getElementById('statusText').innerText='Suno dabao, phir Hindi chuno';
     let q=gameData[cur]; updateStats();
     let grid=document.getElementById('optGrid'); grid.innerHTML='';
-    let opts = q.options.length>=4? q.options : [...new Set([q.hindi,...allHindi])].filter(Boolean).sort(()=>0.5-Math.random()).slice(0,4);
-    if(!opts.includes(q.hindi)) opts[0]=q.hindi;
-    opts=opts.sort(()=>0.5-Math.random()).slice(0,4);
 
+    let opts = get4Options(q.hindi);
     opts.forEach(opt=>{
       let b=document.createElement('button'); b.className='optBtn'; b.innerText=opt;
       b.onclick=()=>{
@@ -104,10 +103,10 @@ if(!wrongSet.length){
         if(opt===q.hindi){
           b.classList.add('correct'); hindiOK=true;
           document.getElementById('statusText').innerText=`Sahi! Ab mic se bolo: "${q.english}"`;
-          speak("Now say "+q.english);
+          speak(q.english);
         }else{
           b.classList.add('wrong');
-          document.getElementById('statusText').innerText=`Galat! Sahi: ${q.hindi} - Dobara suno`;
+          document.getElementById('statusText').innerText=`Galat! Sahi hai: ${q.hindi}`;
         }
       };
       grid.appendChild(b);
@@ -115,7 +114,6 @@ if(!wrongSet.length){
     setTimeout(()=>speak(q.english),400);
   }
 
-  // MIC
   const SR = window.SpeechRecognition||window.webkitSpeechRecognition;
   let rec=null;
   if(SR){ rec=new SR(); rec.lang='en-US';
@@ -128,7 +126,7 @@ if(!wrongSet.length){
         document.getElementById('statusText').innerText='✅ Sahi bola!';
         score++; updateStats(); document.getElementById('nextBtn').style.display='block';
       }else{
-        document.getElementById('statusText').innerText=`Tumne bola "${e.results[0][0].transcript}" - Phir bolo: "${gameData[cur].english}"`;
+        document.getElementById('statusText').innerText=`Bola "${e.results[0][0].transcript}" - Target: "${gameData[cur].english}"`;
       }
     };
   }
