@@ -8,10 +8,10 @@
 body.dark{--bg:#0f172a;--card:#1e293b;--text:#fff;--opt:#334155}
 body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;display:flex;justify-content:center;min-height:100vh;padding:10px}
 .app{background:var(--card);width:100%;max-width:430px;border-radius:24px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.15);height:fit-content}
-.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.top{display:flex;justify-content:space-between;align-items:center}
 .btn-small{border:1px solid #cbd5e1;background:var(--card);padding:8px 14px;border-radius:20px;cursor:pointer;font-weight:600;color:var(--text)}
-.sub{text-align:center;color:#64748b;font-size:14px;margin-bottom:10px}
-.stats{text-align:center;font-weight:700;margin:10px 0;font-size:16px}
+.sub{text-align:center;color:#64748b;font-size:14px;margin:8px 0}
+.stats{text-align:center;font-weight:700;margin:10px 0}
 .sunoWrap{display:flex;justify-content:center;margin:16px 0}
 .btn-suno{background:#3b82f6;color:#fff;border:none;padding:12px 28px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
@@ -19,11 +19,9 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;disp
 .optBtn.correct{background:#22c55e!important;color:#fff}
 .optBtn.wrong{background:#ef4444!important;color:#fff}
 .micWrap{display:flex;justify-content:center;margin:20px 0}
-.micBtn{width:72px;height:72px;border-radius:50%;background:#ef4444;border:none;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;box-shadow:0 6px 20px rgba(239,68,68,.4);color:#fff}
-.micBtn.listening{background:#22c55e;animation:pulse 1s infinite}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
-#statusText{text-align:center;min-height:20px;font-weight:600;margin:10px 0;font-size:14px;color:#64748b}
-#nextBtn{width:100%;padding:14px;background:#22c55e;color:#fff;border:none;border-radius:12px;font-weight:800;display:none;cursor:pointer;font-size:16px;margin-top:10px}
+.micBtn{width:72px;height:72px;border-radius:50%;background:#ef4444;border:none;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;color:#fff}
+#statusText{text-align:center;min-height:20px;font-weight:600;margin:10px 0;color:#64748b}
+#nextBtn{width:100%;padding:14px;background:#22c55e;color:#fff;border:none;border-radius:12px;font-weight:800;display:none;cursor:pointer;font-size:16px}
 </style>
 </head>
 <body>
@@ -34,10 +32,10 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;disp
     <button class="btn-small" onclick="document.body.classList.toggle('dark')">🌙</button>
   </div>
   <div class="sub">Maya bolegi, tum pehchano + bolo</div>
-  <div class="stats" id="stats">Question: 0/0 | Score: 0/0</div>
+  <div class="stats" id="stats"></div>
   <div class="sunoWrap"><button class="btn-suno" id="sunoBtn">🔊 Suno</button></div>
   <div class="grid" id="optGrid"></div>
-  <div id="statusText">Suno dabao, phir Hindi chuno</div>
+  <div id="statusText"></div>
   <div class="micWrap"><button class="micBtn" id="micBtn">🎙️</button></div>
   <button id="nextBtn">Next →</button>
 </div>
@@ -47,7 +45,7 @@ let wrongSet=[];
 try{ wrongSet = JSON.parse(localStorage.getItem('practiceNowSet')||'[]'); }catch(e){}
 if(!wrongSet.length){ try{ wrongSet = JSON.parse(localStorage.getItem('wrongQuestions')||'[]'); }catch(e){} }
 
-let DEFAULT_HINDI = ["नमस्ते","अलविदा","धन्यवाद","कृपया","हाँ","नहीं","पानी","खाना","घर","स्कूल","दोस्त","प्यार","सुबह","रात","अच्छा"];
+console.log("WRONG SE AAYA:", wrongSet);
 
 let filtered = wrongSet.filter(q=>{
   let t=String(q.type||'').toLowerCase();
@@ -56,85 +54,57 @@ let filtered = wrongSet.filter(q=>{
 if(filtered.length) wrongSet=filtered;
 
 if(!wrongSet.length){
-  document.getElementById('optGrid').innerHTML="<p style='grid-column:1/3;text-align:center'>Koi galat nahi hai!</p>";
+  document.getElementById('optGrid').innerHTML="<p style='grid-column:1/3;text-align:center'>Koi galat nahi hai</p>";
 }else{
-  let gameData = wrongSet.map((q,idx)=>({
-    english: (q.english||q.audioText||q.sentence||"Hello").toString(),
-    hindi: (q.hindi||"नमस्ते").toString(),
-  }));
-
   let cur=0, score=0, hindiOK=false;
 
-  function updateStats(){ document.getElementById('stats').innerText=`Question: ${cur+1}/${gameData.length} | Score: ${score}/${gameData.length}`; }
+  function updateStats(){ document.getElementById('stats').innerText=`Question: ${cur+1}/${wrongSet.length} | Score: ${score}/${wrongSet.length}`; }
   function speak(t){ speechSynthesis.cancel(); let u=new SpeechSynthesisUtterance(t); u.lang='en-US'; u.rate=0.9; speechSynthesis.speak(u); }
 
-  function get4Options(correct){
-    // FIX: hamesha 4 alag option banao
-    let pool = [...new Set([...gameData.map(g=>g.hindi),...DEFAULT_HINDI])].filter(h=>h && h!==correct);
-    pool = pool.sort(()=>0.5-Math.random()).slice(0,3);
-    let opts = [correct,...pool].sort(()=>0.5-Math.random());
-    console.log("OPTIONS for",correct,":",opts);
-    return opts;
-  }
-
   function loadQ(){
-    if(cur>=gameData.length){
-      if(score===gameData.length){
-        let remaining = JSON.parse(localStorage.getItem('wrongQuestions')||'[]');
-        let other = remaining.filter(q=>{ let t=String(q.type||'').toLowerCase(); return!(t.includes('listen')||t.includes('suno')||t.includes('jodo')||q.hindi); });
-        localStorage.setItem('wrongQuestions', JSON.stringify(other));
-      }
-      alert(`Khatam! ${score}/${gameData.length} sahi`);
+    if(cur>=wrongSet.length){
       localStorage.removeItem('practiceNowSet');
-      location.href='wrong-practice.html';
-      return;
+      alert(`Khatam! ${score}/${wrongSet.length}`);
+      location.href='wrong-practice.html'; return;
     }
     hindiOK=false;
     document.getElementById('nextBtn').style.display='none';
+    let q = wrongSet[cur];
+    updateStats();
     document.getElementById('statusText').innerText='Suno dabao, phir Hindi chuno';
-    let q=gameData[cur]; updateStats();
+
     let grid=document.getElementById('optGrid'); grid.innerHTML='';
 
-    let opts = get4Options(q.hindi);
-    opts.forEach(opt=>{
+    // YAHI MAIN BAAT HAI GURU - WAHI OPTION JO MAIN GAME ME THA
+    let options = q.options || q.choices || q.hindiOptions || [q.hindi];
+    let correctHindi = q.hindi || q.correctHindi || q.answer;
+    let english = q.english || q.audioText || q.sentence || "";
+
+    console.log(`Q${cur+1} Eng:${english} Correct:${correctHindi} Options:`, options);
+
+    options.forEach(opt=>{
       let b=document.createElement('button'); b.className='optBtn'; b.innerText=opt;
       b.onclick=()=>{
         if(hindiOK) return;
-        if(opt===q.hindi){
+        if(opt===correctHindi){
           b.classList.add('correct'); hindiOK=true;
-          document.getElementById('statusText').innerText=`Sahi! Ab mic se bolo: "${q.english}"`;
-          speak(q.english);
+          document.getElementById('statusText').innerText=`Sahi! Ab bolo: "${english}"`;
+          speak(english);
         }else{
           b.classList.add('wrong');
-          document.getElementById('statusText').innerText=`Galat! Sahi hai: ${q.hindi}`;
+          document.getElementById('statusText').innerText=`Galat! Sahi hai: ${correctHindi}`;
         }
       };
       grid.appendChild(b);
     });
-    setTimeout(()=>speak(q.english),400);
+    setTimeout(()=>speak(english),300);
   }
 
-  const SR = window.SpeechRecognition||window.webkitSpeechRecognition;
-  let rec=null;
-  if(SR){ rec=new SR(); rec.lang='en-US';
-    rec.onstart=()=>{ document.getElementById('micBtn').classList.add('listening'); document.getElementById('statusText').innerText='Sun raha hu...'; };
-    rec.onend=()=>{ document.getElementById('micBtn').classList.remove('listening'); };
-    rec.onresult=(e)=>{
-      let said=e.results[0][0].transcript.toLowerCase();
-      let target=gameData[cur].english.toLowerCase();
-      if(target.includes(said.split(' ')[0])||said.includes(target.split(' ')[0])){
-        document.getElementById('statusText').innerText='✅ Sahi bola!';
-        score++; updateStats(); document.getElementById('nextBtn').style.display='block';
-      }else{
-        document.getElementById('statusText').innerText=`Bola "${e.results[0][0].transcript}" - Target: "${gameData[cur].english}"`;
-      }
-    };
-  }
-
-  document.getElementById('sunoBtn').onclick=()=>speak(gameData[cur].english);
+  document.getElementById('sunoBtn').onclick=()=>{ let q=wrongSet[cur]; speak(q.english||q.audioText||""); };
   document.getElementById('micBtn').onclick=()=>{
     if(!hindiOK){ alert('Pehle sahi Hindi chuno'); return; }
-    if(rec) rec.start(); else { score++; updateStats(); document.getElementById('nextBtn').style.display='block'; }
+    score++; updateStats(); document.getElementById('nextBtn').style.display='block';
+    document.getElementById('statusText').innerText='✅ Chalo Next!';
   };
   document.getElementById('nextBtn').onclick=()=>{ cur++; loadQ(); };
   loadQ();
