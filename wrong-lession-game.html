@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Lesson Practice</title>
+<style>body{font-family:Arial;background:#0f0f1e;color:#fff;text-align:center;padding:15px}.container{max-width:500px;margin:20px auto;background:#1e1e3a;padding:25px;border-radius:15px}.option-btn{display:block;width:90%;margin:12px auto;padding:14px;background:#2a2a4a;color:#fff;border:2px solid #444;border-radius:12px;font-size:18px;cursor:pointer} #question{color:#ffd700;font-size:22px;margin:20px 0}</style></head><body>
+<div class="container"><h2>📖 Galat Lesson Practice</h2><p id="progress"></p><h3 id="question"></h3><div id="options"></div><p>Score: <span id="score">0</span>/<span id="total">0</span></p><a href="wrong-practice.html" style="color:#aaa">← Wapas</a></div>
+<script>
+function playCorrectSound(){ try{ new Audio('https://actions.google.com/sounds/v1/cartoon/pop.ogg').play(); }catch(e){} }
+function playWrongSound(){ try{ new Audio('https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg').play(); }catch(e){} }
 
+let practiceSet=[]; try{ practiceSet=JSON.parse(localStorage.getItem('practiceNowSet')||'[]'); }catch(e){}
+
+if(!practiceSet.length){ document.querySelector('.container').innerHTML="<h3>Koi data nahi!</h3><a href='wrong-practice.html'>Wapas</a>"; }
+else{
+  let gameData=practiceSet.map(q=>({
+    english: q.english || q.q || q.question || q.audioText || q.title || "",
+    hindi: q.hindi || q.ans || q.answer || q.correctHindi || "",
+    options: q.allOptions || q.options || []
+  }));
+  let cur=0, score=0;
+  function loadQuestion(){
+    if(cur>=gameData.length){ alert(`Khatam! ${score}/${gameData.length}`); localStorage.removeItem('practiceNowSet'); let all=JSON.parse(localStorage.getItem('wrongQuestions')||'[]'); all=all.filter(q=>(q.type||'').toLowerCase()!=='lesson'); localStorage.setItem('wrongQuestions',JSON.stringify(all)); location.href='wrong-practice.html'; return; }
+    let q=gameData[cur];
+    document.getElementById('progress').innerText=`Question ${cur+1}/${gameData.length}`;
+    document.getElementById('total').innerText=gameData.length;
+    document.getElementById('score').innerText=score;
+    document.getElementById('question').innerText=q.english;
+    let optionsDiv=document.getElementById('options'); optionsDiv.innerHTML='';
+    let opts=q.options.length>0? q.options : gameData.map(x=>x.hindi).filter((v,i,a)=>a.indexOf(v)===i).sort(()=>0.5-Math.random()).slice(0,4);
+    if(!opts.includes(q.hindi)) opts[0]=q.hindi;
+    opts=[...opts].sort(()=>0.5-Math.random());
+    opts.forEach(text=>{
+      let label=typeof text==='string'? text : (text.hindi||text.correctHindi||text);
+      let btn=document.createElement('button'); btn.className='option-btn'; btn.innerText=label;
+      btn.onclick=()=>{ if(label.trim().toLowerCase()===q.hindi.trim().toLowerCase()){score++; playCorrectSound();} else {playWrongSound();} cur++; setTimeout(loadQuestion,700); };
+      optionsDiv.appendChild(btn);
+    });
+  }
+  loadQuestion();
+}
+</script></body></html>
