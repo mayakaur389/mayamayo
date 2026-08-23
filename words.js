@@ -24,10 +24,13 @@ window.wordData = {
       }
     },
     "questions": [
-      { "q": "Apple ka Hindi kya hai?", "a": ["Aam", "Seb", "Kela"], "ans": "Seb" },
-      { "q": "Cat ko Hindi me kya kehte hai?", "a": ["Kutta", "Billi", "Gay"], "ans": "Billi" },
-      { "q": "Paani ko English me kya kehte hai?", "a": ["Water", "Milk", "Tea"], "ans": "Water" },
-      { "q": "School ko Hindi me kya kehte hai?", "a": ["Ghar", "Vidyalay", "Dukan"], "ans": "Vidyalay" }
+      { "q": "Apple का हिंदी क्या है?", "a": ["आम", "सेब", "केला"], "ans": "सेब" },
+      { "q": "Cat को हिंदी में क्या कहते है?", "a": ["कुत्ता", "बिल्ली", "गाय"], "ans": "बिल्ली" },
+      { "q": "पानी को English में क्या कहते है?", "a": ["Water", "Milk", "Tea"], "ans": "Water" },
+      { "q": "School को हिंदी में क्या कहते है?", "a": ["घर", "विद्यालय", "दुकान"], "ans": "विद्यालय" },
+      { "q": "Monday का हिंदी क्या है?", "a": ["रविवार", "सोमवार", "मंगलवार"], "ans": "सोमवार" },
+      { "q": "Tuesday का हिंदी क्या है?", "a": ["मंगलवार", "बुधवार", "सोमवार"], "ans": "मंगलवार" },
+      { "q": "Wednesday का हिंदी क्या है?", "a": ["बुधवार", "गुरुवार", "शुक्रवार"], "ans": "बुधवार" }
     ]
   },
 
@@ -56,9 +59,9 @@ window.wordData = {
       }
     },
     "questions": [
-      { "q": "What is the English of Seb?", "a": ["Mango", "Apple", "Banana"], "ans": "Apple" },
-      { "q": "What is Billi in English?", "a": ["Dog", "Cat", "Cow"], "ans": "Cat" },
-      { "q": "What is Paani in English?", "a": ["Water", "Milk", "Tea"], "ans": "Water" }
+      { "q": "What is the English of सेब?", "a": ["Mango", "Apple", "Banana"], "ans": "Apple" },
+      { "q": "What is बिल्ली in English?", "a": ["Dog", "Cat", "Cow"], "ans": "Cat" },
+      { "q": "What is पानी in English?", "a": ["Water", "Milk", "Tea"], "ans": "Water" }
     ]
   },
 
