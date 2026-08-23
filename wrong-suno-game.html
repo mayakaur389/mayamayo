@@ -38,30 +38,67 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;disp
 </div>
 
 <script>
-// === GURU FIX - ROMAN TO DEVANAGARI + DUPLICATE KHATAM ===
-function cleanOptions(options){
-  const map = {
-    "namaste":"नमस्ते", "alvida":"अलविदा", "dhanyawad":"धन्यवाद",
-    "dhanyavaad":"धन्यवाद", "kripya":"कृपया", "haan":"हाँ", "nahi":"नहीं",
-    "somvaar":"सोमवार", "mangalvaar":"मंगलवार", "budhvaar":"बुधवार",
-    "ravivaar":"रविवार", "shukravaar":"शुक्रवार", "shanivaar":"शनिवार",
-    "guruwar":"गुरुवार", "shubh prabhat":"सुप्रभात", "shubh ratri":"शुभ रात्रि"
-  };
-  let fixed = options.map(o => {
-    let k = o.toString().toLowerCase().trim();
-    return map[k] || o;
+// === UNIVERSAL FIX - KITNA BHI QUESTION ADD KARO, ROMAN DUPLICATE KHATAM ===
+let MASTER_HINDI_MAP = {};
+try{
+  // Main game ke words se map banao agar wordData ho
+  let wd = JSON.parse(localStorage.getItem('wordData')||'null');
+  if(wd){
+    Object.values(wd).forEach(v=>{
+      if(Array.isArray(v)){
+        v.forEach(it=>{ if(it.english && it.hindi) MASTER_HINDI_MAP[it.english.toLowerCase()]=it.hindi; });
+      } else if(v && typeof v==='object'){
+         Object.values(v).forEach(dayArr=>{
+           if(Array.isArray(dayArr)) dayArr.forEach(it=>{ if(it.english && it.hindi) MASTER_HINDI_MAP[it.english.toLowerCase()]=it.hindi; });
+         });
+      }
+    });
+  }
+}catch(e){}
+
+// wrongQuestions se bhi seekho
+try{
+  let allWrong = JSON.parse(localStorage.getItem('wrongQuestions')||'[]');
+  allWrong.forEach(q=>{
+    if(q.english && (q.hindi||q.correctHindi)){
+      MASTER_HINDI_MAP[q.english.toLowerCase().trim()] = q.hindi || q.correctHindi;
+    }
+    // agar hindi roman me save hai to uska english key se hindi map
+    if(q.hindi) MASTER_HINDI_MAP[q.hindi.toLowerCase().trim()] = q.hindi;
   });
-  return [...new Set(fixed)];
+}catch(e){}
+
+// Permanent backup - sabse common
+Object.assign(MASTER_HINDI_MAP, {
+  "namaste":"नमस्ते","alvida":"अलविदा","dhanyawad":"धन्यवाद","dhanyavaad":"धन्यवाद",
+  "kripya":"कृपया","haan":"हाँ","nahi":"नहीं","somvaar":"सोमवार","mangalvaar":"मंगलवार",
+  "budhvaar":"बुधवार","guruwar":"गुरुवार","shukravaar":"शुक्रवार","shanivaar":"शनिवार",
+  "ravivaar":"रविवार","pila":"पीला","peela":"पीला","laal":"लाल","hara":"हरा",
+  "neela":"नीला","kala":"काला","safed":"सफ़ेद","narangi":"नारंगी","gulabi":"गुलाबी"
+});
+
+function isRoman(str){
+  return /^[A-Za-z\s]+$/.test(str.trim()) && str.trim().length>0;
+}
+function cleanOptions(options){
+  let converted = options.map(o=>{
+    if(!o) return o;
+    let k = o.toString().trim();
+    let low = k.toLowerCase();
+    // Roman hai to Hindi me badlo
+    if(isRoman(k)){
+      return MASTER_HINDI_MAP[low] || k;
+    }
+    // Agar Devanagari map me uska Roman roop hai to bhi convert (duplicate case)
+    // jaise "pila" aur "पीला" dono aaye to ek hi ban jayega
+    return MASTER_HINDI_MAP[low] || k;
+  });
+  return [...new Set(converted)];
 }
 function toDevanagariSingle(text){
   if(!text) return text;
-  let k = text.toString().toLowerCase().trim();
-  const map = {
-    "namaste":"नमस्ते", "alvida":"अलविदा", "dhanyawad":"धन्यवाद",
-    "dhanyavaad":"धन्यवाद", "kripya":"कृपया", "haan":"हाँ", "nahi":"नहीं",
-    "somvaar":"सोमवार", "mangalvaar":"मंगलवार", "budhvaar":"बुधवार"
-  };
-  return map[k] || text;
+  let low = text.toString().toLowerCase().trim();
+  return MASTER_HINDI_MAP[low] || text;
 }
 // === FIX END ===
 
@@ -102,9 +139,8 @@ if(!wrongSet.length){
       return "";
     }).filter(Boolean);
 
-    // FIX LAGAYA YAHAN
     rawOptions = cleanOptions(rawOptions);
-    let backup = ["नमस्ते","अलविदा","धन्यवाद","कृपया","हाँ","नहीं"];
+    let backup = ["नमस्ते","अलविदा","धन्यवाद","कृपया","हाँ","नहीं","पीला","लाल","हरा","नीला"];
     let otherHindis = wrongSet.map(x=> toDevanagariSingle(x.hindi||x.correctHindi) ).filter(h=>h && h!==correctHindi);
     let pool = cleanOptions([...rawOptions,...otherHindis,...backup]);
 
