@@ -38,6 +38,33 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;disp
 </div>
 
 <script>
+// === GURU FIX - ROMAN TO DEVANAGARI + DUPLICATE KHATAM ===
+function cleanOptions(options){
+  const map = {
+    "namaste":"नमस्ते", "alvida":"अलविदा", "dhanyawad":"धन्यवाद",
+    "dhanyavaad":"धन्यवाद", "kripya":"कृपया", "haan":"हाँ", "nahi":"नहीं",
+    "somvaar":"सोमवार", "mangalvaar":"मंगलवार", "budhvaar":"बुधवार",
+    "ravivaar":"रविवार", "shukravaar":"शुक्रवार", "shanivaar":"शनिवार",
+    "guruwar":"गुरुवार", "shubh prabhat":"सुप्रभात", "shubh ratri":"शुभ रात्रि"
+  };
+  let fixed = options.map(o => {
+    let k = o.toString().toLowerCase().trim();
+    return map[k] || o;
+  });
+  return [...new Set(fixed)];
+}
+function toDevanagariSingle(text){
+  if(!text) return text;
+  let k = text.toString().toLowerCase().trim();
+  const map = {
+    "namaste":"नमस्ते", "alvida":"अलविदा", "dhanyawad":"धन्यवाद",
+    "dhanyavaad":"धन्यवाद", "kripya":"कृपया", "haan":"हाँ", "nahi":"नहीं",
+    "somvaar":"सोमवार", "mangalvaar":"मंगलवार", "budhvaar":"बुधवार"
+  };
+  return map[k] || text;
+}
+// === FIX END ===
+
 let wrongSet=[];
 try{ wrongSet=JSON.parse(localStorage.getItem('practiceNowSet')||'[]'); }catch(e){}
 if(!wrongSet.length){ try{ wrongSet=JSON.parse(localStorage.getItem('wrongQuestions')||'[]'); }catch(e){} }
@@ -66,9 +93,8 @@ if(!wrongSet.length){
     let q=wrongSet[cur]; updateStats();
 
     let english = q.english || q.audioText || q.title || "";
-    let correctHindi = q.hindi || q.correctHindi || "";
+    let correctHindi = toDevanagariSingle(q.hindi || q.correctHindi || "");
 
-    // ===== FINAL FIX - OBJECT YA STRING DONO HANDLE + 4 OPTION FORCE =====
     let rawOptions = (q.options || []).map(o => {
       if(typeof o === 'string') return o;
       if(o && o.hindi) return o.hindi;
@@ -76,9 +102,11 @@ if(!wrongSet.length){
       return "";
     }).filter(Boolean);
 
+    // FIX LAGAYA YAHAN
+    rawOptions = cleanOptions(rawOptions);
     let backup = ["नमस्ते","अलविदा","धन्यवाद","कृपया","हाँ","नहीं"];
-    let otherHindis = wrongSet.map(x=>x.hindi||x.correctHindi).filter(h=>h && h!==correctHindi);
-    let pool = [...new Set([...rawOptions,...otherHindis,...backup])].filter(Boolean);
+    let otherHindis = wrongSet.map(x=> toDevanagariSingle(x.hindi||x.correctHindi) ).filter(h=>h && h!==correctHindi);
+    let pool = cleanOptions([...rawOptions,...otherHindis,...backup]);
 
     let finalOptions = [correctHindi];
     for(let p of pool){
@@ -86,9 +114,10 @@ if(!wrongSet.length){
       if(!finalOptions.includes(p)) finalOptions.push(p);
     }
     while(finalOptions.length<4){
-      finalOptions.push(backup[finalOptions.length % backup.length]);
+      let b = backup[finalOptions.length % backup.length];
+      if(!finalOptions.includes(b)) finalOptions.push(b);
+      else finalOptions.push("सुप्रभात");
       finalOptions=[...new Set(finalOptions)];
-      if(finalOptions.length<4) finalOptions.push("नमस्ते");
     }
     let options = finalOptions.slice(0,4).sort(()=>0.5-Math.random());
 
