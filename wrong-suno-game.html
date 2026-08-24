@@ -38,67 +38,52 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:sans-serif;disp
 </div>
 
 <script>
-// === UNIVERSAL FIX - KITNA BHI QUESTION ADD KARO, ROMAN DUPLICATE KHATAM ===
+// === FINAL FIX - COPY SYSTEM + ROMAN HATAO ===
 let MASTER_HINDI_MAP = {};
 try{
-  // Main game ke words se map banao agar wordData ho
   let wd = JSON.parse(localStorage.getItem('wordData')||'null');
   if(wd){
     Object.values(wd).forEach(v=>{
-      if(Array.isArray(v)){
-        v.forEach(it=>{ if(it.english && it.hindi) MASTER_HINDI_MAP[it.english.toLowerCase()]=it.hindi; });
-      } else if(v && typeof v==='object'){
-         Object.values(v).forEach(dayArr=>{
-           if(Array.isArray(dayArr)) dayArr.forEach(it=>{ if(it.english && it.hindi) MASTER_HINDI_MAP[it.english.toLowerCase()]=it.hindi; });
-         });
-      }
+      if(Array.isArray(v)){ v.forEach(it=>{ if(it.english && it.hindi) MASTER_HINDI_MAP[it.english.toLowerCase()]=it.hindi; }); }
+      else if(v && typeof v==='object'){ Object.values(v).forEach(dayArr=>{ if(Array.isArray(dayArr)) dayArr.forEach(it=>{ if(it.english && it.hindi) MASTER_HINDI_MAP[it.english.toLowerCase()]=it.hindi; }); }); }
     });
   }
 }catch(e){}
 
-// wrongQuestions se bhi seekho
-try{
-  let allWrong = JSON.parse(localStorage.getItem('wrongQuestions')||'[]');
-  allWrong.forEach(q=>{
-    if(q.english && (q.hindi||q.correctHindi)){
-      MASTER_HINDI_MAP[q.english.toLowerCase().trim()] = q.hindi || q.correctHindi;
-    }
-    // agar hindi roman me save hai to uska english key se hindi map
-    if(q.hindi) MASTER_HINDI_MAP[q.hindi.toLowerCase().trim()] = q.hindi;
-  });
-}catch(e){}
-
-// Permanent backup - sabse common
 Object.assign(MASTER_HINDI_MAP, {
   "namaste":"नमस्ते","alvida":"अलविदा","dhanyawad":"धन्यवाद","dhanyavaad":"धन्यवाद",
-  "kripya":"कृपया","haan":"हाँ","nahi":"नहीं","somvaar":"सोमवार","mangalvaar":"मंगलवार",
-  "budhvaar":"बुधवार","guruwar":"गुरुवार","shukravaar":"शुक्रवार","shanivaar":"शनिवार",
-  "ravivaar":"रविवार","pila":"पीला","peela":"पीला","laal":"लाल","hara":"हरा",
-  "neela":"नीला","kala":"काला","safed":"सफ़ेद","narangi":"नारंगी","gulabi":"गुलाबी"
+  "kripya":"कृपया","haan":"हाँ","nahi":"नहीं",
+  "pila":"पीला","peela":"पीला","peelaa":"पीला","yellow":"पीला",
+  "laal":"लाल","red":"लाल",
+  "hara":"हरा","harra":"हरा","green":"हरा",
+  "neela":"नीला","neelaa":"नीला","blue":"नीला",
+  "kala":"काला","kaala":"काला","black":"काला",
+  "safed":"सफ़ेद","white":"सफ़ेद",
+  "narangi":"नारंगी","orange":"नारंगी",
+  "gulabi":"गुलाबी","gulaabi":"गुलाबी","gulaabii":"गुलाबी","pink":"गुलाबी",
+  "baingani":"बैंगनी","purple":"बैंगनी"
 });
 
-function isRoman(str){
-  return /^[A-Za-z\s]+$/.test(str.trim()) && str.trim().length>0;
-}
-function cleanOptions(options){
-  let converted = options.map(o=>{
-    if(!o) return o;
-    let k = o.toString().trim();
-    let low = k.toLowerCase();
-    // Roman hai to Hindi me badlo
-    if(isRoman(k)){
-      return MASTER_HINDI_MAP[low] || k;
-    }
-    // Agar Devanagari map me uska Roman roop hai to bhi convert (duplicate case)
-    // jaise "pila" aur "पीला" dono aaye to ek hi ban jayega
-    return MASTER_HINDI_MAP[low] || k;
-  });
-  return [...new Set(converted)];
-}
+function isRoman(str){ return /^[A-Za-z\s]+$/.test(str.trim()) && str.trim().length>0; }
 function toDevanagariSingle(text){
   if(!text) return text;
   let low = text.toString().toLowerCase().trim();
+  if(isRoman(text)){
+    return MASTER_HINDI_MAP[low] || MASTER_HINDI_MAP[low.replace(/aa/g,'a')] || text;
+  }
   return MASTER_HINDI_MAP[low] || text;
+}
+function cleanOptions(options){
+  let converted = options.map(o=>{
+    if(!o) return null;
+    let k = o.toString().trim(); if(!k) return null;
+    let low = k.toLowerCase();
+    if(isRoman(k)){
+      return MASTER_HINDI_MAP[low] || MASTER_HINDI_MAP[low.replace(/aa/g,'a')] || null;
+    }
+    return k;
+  }).filter(Boolean);
+  return [...new Set(converted)];
 }
 // === FIX END ===
 
@@ -112,7 +97,6 @@ if(!wrongSet.length){
 }else{
   let cur=0,score=0,hindiOK=false;
   const statsEl=document.getElementById('stats'), statusEl=document.getElementById('statusText'), gridEl=document.getElementById('optGrid'), nextBtn=document.getElementById('nextBtn'), sunoBtn=document.getElementById('sunoBtn'), micBtn=document.getElementById('micBtn');
-
   function updateStats(){ statsEl.innerText=`Question: ${cur+1}/${wrongSet.length} | Score: ${score}/${wrongSet.length}`; }
   function speak(text){
     if(!text) return;
@@ -129,33 +113,29 @@ if(!wrongSet.length){
     hindiOK=false; nextBtn.style.display='none'; micBtn.classList.remove('listening');
     let q=wrongSet[cur]; updateStats();
 
-    let english = q.english || q.audioText || q.title || "";
-    let correctHindi = toDevanagariSingle(q.hindi || q.correctHindi || "");
+    let english = q.english || q.audioText || "";
+    let correctHindi = toDevanagariSingle(q.correctHindi || q.hindi || "");
 
-    let rawOptions = (q.options || []).map(o => {
-      if(typeof o === 'string') return o;
-      if(o && o.hindi) return o.hindi;
-      if(o && typeof o === 'object') return o.hindi || "";
-      return "";
-    }).filter(Boolean);
-
-    rawOptions = cleanOptions(rawOptions);
-    let backup = ["नमस्ते","अलविदा","धन्यवाद","कृपया","हाँ","नहीं","पीला","लाल","हरा","नीला"];
-    let otherHindis = wrongSet.map(x=> toDevanagariSingle(x.hindi||x.correctHindi) ).filter(h=>h && h!==correctHindi);
-    let pool = cleanOptions([...rawOptions,...otherHindis,...backup]);
-
-    let finalOptions = [correctHindi];
-    for(let p of pool){
-      if(finalOptions.length>=4) break;
-      if(!finalOptions.includes(p)) finalOptions.push(p);
+    // === TUMHARA IDEA - COPY SYSTEM ===
+    let options = [];
+    if(q.savedOptions && q.savedOptions.length >= 3){
+      // Main game wale 4 option hi copy karo - wahi sahi Hindi wale
+      options = cleanOptions(q.savedOptions);
+      // correctHindi usme ho na ho, force add karo
+      if(!options.includes(correctHindi)) options[0]=correctHindi;
+      console.log("COPY SYSTEM: Main game wale options use hue", options);
+    } else {
+      // Purane questions ke liye backup logic
+      let rawOptions = (q.options || []).map(o => typeof o === 'string'? o : (o.hindi||"")).filter(Boolean);
+      rawOptions = cleanOptions(rawOptions);
+      let backup = ["पीला","लाल","हरा","नीला","गुलाबी","काला","सफ़ेद","नारंगी"];
+      let pool = [...rawOptions,...backup];
+      let finalOptions = [correctHindi];
+      for(let p of pool){ if(finalOptions.length>=4) break; if(!finalOptions.includes(p)) finalOptions.push(p); }
+      options = finalOptions;
     }
-    while(finalOptions.length<4){
-      let b = backup[finalOptions.length % backup.length];
-      if(!finalOptions.includes(b)) finalOptions.push(b);
-      else finalOptions.push("सुप्रभात");
-      finalOptions=[...new Set(finalOptions)];
-    }
-    let options = finalOptions.slice(0,4).sort(()=>0.5-Math.random());
+
+    options = [...new Set(options)].slice(0,4).sort(()=>0.5-Math.random());
 
     gridEl.innerHTML='';
     options.forEach(opt=>{
@@ -178,7 +158,6 @@ if(!wrongSet.length){
   }
 
   sunoBtn.onclick=()=>{ let q=wrongSet[cur]; speak(q.english || q.audioText || ""); };
-
   let recognition;
   if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
     let SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -193,13 +172,11 @@ if(!wrongSet.length){
     };
     recognition.onerror=()=>{ micBtn.classList.remove('listening'); statusEl.innerText="Mic error, fir se try karo"; };
   }
-
   micBtn.onclick=()=>{
     if(!hindiOK){ alert('Pehle sahi Hindi chuno'); return; }
     if(!recognition){ score++; updateStats(); nextBtn.style.display='block'; return; }
     try{ recognition.start(); }catch{ recognition.stop(); setTimeout(()=>recognition.start(),200); }
   };
-
   nextBtn.onclick=()=>{ cur++; loadQ(); };
   loadQ();
 }
