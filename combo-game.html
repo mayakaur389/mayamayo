@@ -405,18 +405,20 @@ function startListening() {
         totalGalti++;
         correctCount = 0;
       // ====== WRONG PRACTICE ME SAVE - FINAL ======
-    let wrongQ = {
-        type: 'listening',
-        title: `Sun Ke Jodo - Q${currentIndex+1}`,
-        audioText: gameData[currentIndex].english,
-        english: gameData[currentIndex].english,
-        hindi: gameData[currentIndex].hindi,
-        userHindiChoice: selectedAnswer,
-        correctHindi: gameData[currentIndex].hindi,
-        // YE LINE SABSE IMPORTANT HAI GURU
-        options: gameData[currentIndex].options.map(o => o.hindi || o),
-        day: currentIndex+1
-    };
+   let wrongQ = {
+  type: 'listening',
+  title: `Sun Ke Jodo - Q${currentIndex+1}`,
+  audioText: gameData[currentIndex].english,
+  english: gameData[currentIndex].english,
+  hindi: gameData[currentIndex].hindi,
+  correctHindi: gameData[currentIndex].hindi,
+  userHindiChoice: selectedAnswer,
+  // === NAYA LINK SYSTEM - MAIN GAME WALE 4 OPTION COPY ===
+  options: gameData[currentIndex].options.map(o => o.hindi || o),
+  savedOptions: gameData[currentIndex].options.map(o => o.hindi || o),
+  // =======================================================
+  day: currentIndex+1
+};
     let wrongQuestions = JSON.parse(localStorage.getItem('wrongQuestions')) || [];
     wrongQuestions.push(wrongQ);
     localStorage.setItem('wrongQuestions', JSON.stringify(wrongQuestions));
